@@ -4,7 +4,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://despical.github.io/docs',
+    site: 'https://despical.github.io',
+    base: '/docs',
 	integrations: [
 		starlight({
 			title: 'Plugin Docs',
