@@ -1,0 +1,33 @@
+---
+title: Home
+description: Documentation for Despical plugins, currently featuring Easter Eggs, with more plugins coming soon.
+template: splash
+editUrl: false
+lastUpdated: false
+hero:
+    title: Plugin Docs
+    tagline: Documentation for Despical plugins, currently featuring Easter Eggs, with more plugins coming soon.
+    image:
+        file: /src/assets/despical-dark.png
+        alt: Despical Logo
+---
+
+import { CardGrid } from "@astrojs/starlight/components";
+import { ContributorList } from "starlight-contributor-list";
+import LinkCard from "/src/components/LinkCard.astro";
+
+<CardGrid>
+    <LinkCard title="Easter Eggs" href="/easter-eggs" icon="easter-eggs">
+        Elevate your server's gameplay with a feature-rich Easter Egg system. Includes native MySQL support, intuitive GUI management, and highly configurable rewards.
+    </LinkCard>
+</CardGrid>
+
+<br/>
+
+## [Contribute](https://github.com/Despical/docs)
+
+Thanks to all the contributors who helped this project grow. Your ideas, fixes and support really made a difference.
+And a special thanks to everyone who bought the plugin and decided to use it in their own servers.
+Your trust and support keep this whole thing moving forward, and it genuinely means a lot.
+
+<ContributorList githubRepo="Despical/KOTL"/>

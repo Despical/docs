@@ -1,0 +1,176 @@
+---
+title: Creating New Eggs
+description: Learn how to create, configure, and place custom Easter Eggs on your Minecraft server.
+sidebar:
+    order: 2
+---
+
+import { Steps, Aside, Badge } from '@astrojs/starlight/components';
+
+This guide explains how to add new Easter Eggs to your server configuration and place them in your world.
+
+## Creating a New Easter Egg
+
+Before you can place a custom egg in the game, you need to define it in the `config.yml` file. Locate the `easter-eggs` section to add your new entry.
+
+Here is a minimal example of a new egg definition:
+
+```yaml title="config.yml"
+easter-eggs:
+  # This ID (green_present) acts as the unique identifier.
+  green_present:
+    # The texture is the only REQUIRED field.
+    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA4Y2U3ZGViYTU2YjcyNmE4MzJiNjExMTVjYTE2MzM2MTM1OWMzMDQzNGY3ZDVlM2MzZmFhNmZlNDA1MiJ9fX0="
+```
+
+<Aside type="tip">
+    You can find thousands of custom head textures on websites like [Minecraft-Heads](https://minecraft-heads.com).
+    Simply copy the **Value** string found under the **"For Developers"** section of any head.
+</Aside>
+
+---
+
+## Placing the Egg
+
+Once your egg is defined in the configuration, follow these steps to add it to your world.
+
+<Steps>
+
+1.  **Get the Easter Egg Item**
+
+    Run the following command in-game to receive the egg item. Replace `green_present` with the ID you defined in the config.
+
+    ```bash
+    /eggs green_present
+    ```
+
+2.  **Place the Egg**
+
+    Place the egg anywhere in your world. It immediately becomes interactable and ready for players to collect.
+
+3.  **Test It**
+
+    Right-click the egg you just placed to verify it works.
+
+    - 🎉 You should see particle effects.
+    - 🔊 You should hear a sound.
+    - 💬 You should receive a chat message confirming you found it.
+
+</Steps>
+
+---
+
+## Configuration Attributes
+
+You can customize every aspect of an egg, from the rewards to the visual effects. Below are the all available options for the `easter-eggs` section.
+
+### 🖼️ Texture <Badge text="Required" variant="success" />
+
+Defines the visual appearance of the block using a Base64 encoded string.
+
+```yaml
+texture: "BASE64_STRING_HERE"
+```
+
+### 💬 Messages <Badge text="Optional" variant="tip" />
+
+You can override the default language messages for specific Easter Eggs.
+
+| Attribute | Description | Internal Placeholders |
+| :--- | :--- | :--- |
+| `new-egg-found` | Sent when a player collects this egg for the first time. | `{0}` found count, `{1}` total count |
+| `egg-already-found` | Sent when a player interacts with an egg they have already collected. | `{0}` found count, `{1}` total count |
+| `all-eggs-found` | Sent when collecting this egg completes the entire collection. | `{0}` found count, `{1}` total count |
+| `has-blacklisted-perm` | Sent to players who are restricted from collecting this egg due to the blacklist. | None |
+| `no-whitelisted-perm` | Sent to players who lack the required whitelisted permission to collect this egg. | None |
+
+<Aside type="tip">
+    **PlaceholderAPI Support**
+    All message fields above fully support **PlaceholderAPI**.
+    Even if a message lists "None" for internal placeholders, you can still use standard PAPI placeholders (e.g., `%player_name%`, `%server_online%`).
+</Aside>
+
+### 📜 Executing Commands <Badge text="Optional" variant="tip" />
+
+You can define specific commands to be executed when players interact with an Easter Egg.
+
+* **Console Commands:** By default, all commands are executed by the console.
+* **Player Commands:** To make the player execute the command (e.g., for chat macros or GUI openers), prefix the command with `p:`
+
+**Available Placeholders:**
+* `%player%` - The name of the player interacting with the egg.
+* `%egg_id%` - The ID of the specific egg.
+
+#### Command Triggers
+
+The following hooks are available to trigger commands based on the interaction result:
+
+| Attribute | Trigger Condition |
+| :--- | :--- |
+| `new-egg-found` | Executed when a player successfully collects the egg for the **first time**. |
+| `egg-already-found` | Executed when a player interacts with an egg they have **already collected**. |
+| `all-eggs-found` | Executed when collecting **this specific egg** results in the player completing the entire collection. |
+| `has-blacklisted-perm` | Executed when a player tries to collect the egg but is blocked by a **blacklisted permission**. |
+| `no-whitelisted-perm` | Executed when a player tries to collect the egg but lacks the required **whitelisted permission**. |
+
+#### Example Configuration
+
+```yaml
+commands:
+  new-egg-found:
+    - "give %player% diamond 1"        # Console gives a diamond to the player
+    - "p:say I found a hidden egg!"    # Player says a message in chat
+
+  egg-already-found:
+    - "msg %player% &cYou already looted this prize!"
+
+  all-eggs-found:
+    - "broadcast &a&l%player% has found all the Easter Eggs!"
+    - "crate give key legendary %player%"
+```
+
+### 🔒 Permissions <Badge text="Optional" variant="tip" />
+
+Control exactly who can collect this specific egg.
+
+* **Whitelist:** Only players with **at least one** of these permissions can collect the egg.
+* **Blacklist:** Players with **any** of these permissions are blocked from collecting the egg.
+
+```yaml
+permissions:
+  whitelist:
+    - "eggs.collection.vip"
+  blacklist: []
+```
+
+### ✨ Particles <Badge text="Optional" variant="tip" />
+
+You can define ambient particle effects that spawn continuously around the Easter Egg to make it easier (or harder) to spot.
+
+* **`not-found`**: The particle effect shown to players who have **not yet found** this egg. (Default: `VILLAGER_HAPPY`)
+* **`found`**: The particle effect shown to players who have **already collected** this egg. (Default: `CRIT`)
+
+Set any value to `NONE` to disable that specific state.
+
+```yaml
+particles:
+  found: CRIT
+  not-found: VILLAGER_HAPPY
+```
+
+<Aside type="note">
+    Global settings (spawn rate, view distance, etc.) for these particles are configured under the `particles` section.
+</Aside>
+
+### ⏱️ Miscellaneous Settings <Badge text="Optional" variant="tip" />
+
+Advanced settings for behavior control.
+
+| Attribute | Default | Description |
+| :--- | :--- | :--- |
+| `persistent` | `true` | If `false`, data is not saved to the database. Progress is kept in memory but **resets upon server restart or reload**. |
+| `cooldown` | `0` | Time in seconds a player must wait before collecting the egg again. |
+| `action-bar-disabled`| `false`| If `true`, hides the action bar message upon collection. |
+| `remove-on-collect`| | **Sub-section:** Handles block removal logic. |
+| └ `enabled` | `false` | Removes the block physically after collection if true. |
+| └ `convert-to` | `AIR` | The material to replace the egg with (e.g., `AIR`, `STONE`). |

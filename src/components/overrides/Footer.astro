@@ -1,0 +1,39 @@
+---
+import Default from "@astrojs/starlight/components/Footer.astro";
+import { Icon } from "@astrojs/starlight/components";
+---
+
+<Default><slot /></Default>
+<div>
+    <p class="footer-item">Copyright © {new Date().getFullYear()} Berke Akçen and contributors.
+    <p class="footer-item muted">
+        This documentation is an independent project and is neither affiliated with nor endorsed by Mojang Studios or Microsoft.
+        Minecraft® is a registered trademark of Mojang Synergies AB. All other trademarks are the property of their respective owners.
+    </p>
+    <p class="footer-item">
+        <br/> Built with <Icon name="starlight" class="icon" />
+        <a href="https://starlight.astro.build/" target="_blank">Starlight</a>
+    </p>
+
+</div>
+
+<style>
+    .footer-item {
+        text-align: center;
+        font-size: var(--sl-text-2xs);
+        color: var(--sl-color-gray-2);
+        margin-bottom: 0.25rem;
+    }
+
+    .footer-item a:not(:hover) {
+        text-decoration: none;
+    }
+
+    .icon {
+        color: var(--sl-color-orange);
+    }
+
+    .muted {
+        color: var(--sl-color-gray-3);
+    }
+</style>

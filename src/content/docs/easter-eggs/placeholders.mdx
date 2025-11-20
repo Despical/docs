@@ -1,0 +1,49 @@
+---
+title: Placeholders
+description: List of available PlaceholderAPI placeholders for Easter Eggs.
+sidebar:
+    order: 3
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+This page lists all available placeholders you can use in scoreboards, chat, or GUI menus.
+
+<Aside type="caution" title="Requirement">
+    To use these placeholders, you must have **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** installed on your server.
+</Aside>
+
+## General Statistics
+
+These placeholders display global statistics about the player's progress and the server configuration.
+
+| Placeholder | Description |
+| :--- | :--- |
+| `%eastereggs_total%` | The total number of Easter Eggs placed in the world. |
+| `%eastereggs_total_type%` | The total number of unique Easter Egg **types** defined in config. |
+| `%eastereggs_total_found%` | The total number of Easter Eggs the player has found so far. |
+| `%eastereggs_total_left%` | The number of Easter Eggs the player has **not** found yet. |
+
+## Specific Egg Statistics
+
+Use these placeholders to get data about a specific Egg ID (e.g., `green_present`).
+
+| Placeholder | Description |
+| :--- | :--- |
+| `%eastereggs_total:<egg_id>%` | The total number of placed eggs with this specific ID. |
+| `%eastereggs_found:<egg_id>%` | The number of eggs with this ID that the player has found. |
+| `%eastereggs_left:<egg_id>%` | The number of eggs with this ID that the player needs to collect. |
+| `%eastereggs_<egg_id>:persistent%` | Returns `true` or `false` depending on whether the egg is persistent. |
+
+## Leaderboard Placeholders
+
+You can display a dynamic leaderboard showing the players who have found the most Easter Eggs.
+
+<Aside type="tip">
+    Replace `<position>` with the rank number you want to display (e.g., `1`, `2`, `10`).
+</Aside>
+
+| Placeholder | Description |
+| :--- | :--- |
+| `%eastereggs_leaderboard_<position>%` | Displays the **name** of the player at the specified rank.<br/>*(e.g. `%eastereggs_leaderboard_1%`)* |
+| `%eastereggs_leaderboard_value_<position>%` | Displays the **score** (eggs found) of the player at the specified rank.<br/>*(e.g. `%eastereggs_leaderboard_value_1%`)* |
