@@ -5,12 +5,14 @@ interface Props {
     size?: string;
 }
 
-const ICONS: Record<string, string> = {
-    "easter-eggs": "../src/assets/easter-eggs.svg"
+import easterEggs from "../assets/easter-eggs.svg";
+
+const ICONS: Record<string, any> = {
+    "easter-eggs": easterEggs,
 };
 
 const src = ICONS[Astro.props.name];
 const style = Astro.props.size ? `width: ${Astro.props.size}; height: ${Astro.props.size};` : undefined;
 ---
 
-{src ? <img src={src} alt={Astro.props.name} class={Astro.props.class} style={style} /> : <slot />}
+{src ? (<img src={src} alt={Astro.props.name} class={Astro.props.class} style={style} />): (<slot />)}
