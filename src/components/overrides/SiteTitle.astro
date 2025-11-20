@@ -1,50 +1,51 @@
 ---
 import { Image } from "astro:assets";
-const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+import despicalLight from "../../assets/despical-light.png";
+import despicalDark from "../../assets/despical-dark.png";
+import easterLight from "../../assets/easter-eggs-light.svg";
+import easterDark from "../../assets/easter-eggs-dark.svg";
 
-const SPECIAL_LOGOS = {
-    '/easter-eggs': { filenameLight: 'easter-eggs-light.svg', filenameDark: 'easter-eggs-dark.svg', isCircle: false }
-};
-
-const DEFAULT_FILENAME_LIGHT = 'despical-light.png';
-const DEFAULT_FILENAME_DARK = 'despical-dark.png';
-const DEFAULT_IS_CIRCLE = true;
-
-let currentLogo = {
-    filenameLight: DEFAULT_FILENAME_LIGHT,
-    filenameDark: DEFAULT_FILENAME_DARK,
-    isCircle: DEFAULT_IS_CIRCLE
+const LOGO_MAP = {
+    default: {
+        light: despicalLight,
+        dark: despicalDark,
+        circle: true,
+    },
+    "/easter-eggs": {
+        light: easterLight,
+        dark: easterDark,
+        circle: false,
+    }
 };
 
 const { pathname } = Astro.url;
 
-for (const endpoint of Object.keys(SPECIAL_LOGOS)) {
-    if (pathname.startsWith(endpoint)) {
-        currentLogo = SPECIAL_LOGOS[endpoint as keyof typeof SPECIAL_LOGOS];
+let current = LOGO_MAP.default;
+
+for (const key of Object.keys(LOGO_MAP)) {
+    if (pathname.startsWith(key) && key !== "default") {
+        current = LOGO_MAP[key as keyof typeof LOGO_MAP];
         break;
     }
 }
 
-const lightSource = await import(`../../assets/${currentLogo.filenameLight}`);
-const darkSource = await import(`../../assets/${currentLogo.filenameDark}`);
-
-const logoClass = currentLogo.isCircle ? "circle-logo" : "";
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 ---
 
 <a href={siteTitleHref} class="site-title sl-flex">
     <Image
             width="96"
             height="96"
-            class:list={["light:sl-hidden print:hidden", logoClass]}
+            class:list={["light:sl-hidden print:hidden", current.circle ? "circle-logo" : ""]}
             alt="Logo (Light)"
-            src={lightSource}
+            src={current.light}
     />
     <Image
             width="96"
             height="96"
-            class:list={["dark:sl-hidden print:block", logoClass]}
+            class:list={["dark:sl-hidden print:block", current.circle ? "circle-logo" : ""]}
             alt="Logo (Dark)"
-            src={darkSource}
+            src={current.dark}
     />
     <span class="sr-only notranslate" translate="no">{siteTitle}</span>
 </a>
