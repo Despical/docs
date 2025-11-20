@@ -6,24 +6,17 @@ import easterLight from "../../assets/easter-eggs-light.svg";
 import easterDark from "../../assets/easter-eggs-dark.svg";
 
 const LOGO_MAP = {
-    default: {
-        light: despicalLight,
-        dark: despicalDark,
-        circle: true,
-    },
-    "/easter-eggs": {
-        light: easterLight,
-        dark: easterDark,
-        circle: false,
-    }
+    default: { light: despicalLight, dark: despicalDark, circle: true },
+    "/easter-eggs": { light: easterLight, dark: easterDark, circle: false }
 };
 
-const { pathname } = Astro.url;
 
+const { pathname } = Astro.url;
+const cleanPath = pathname.replace(/^\/docs/, "") || "/";
 let current = LOGO_MAP.default;
 
 for (const key of Object.keys(LOGO_MAP)) {
-    if (pathname.startsWith(key) && key !== "default") {
+    if (cleanPath.startsWith(key) && key !== "default") {
         current = LOGO_MAP[key as keyof typeof LOGO_MAP];
         break;
     }
