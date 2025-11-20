@@ -25,8 +25,9 @@ for (const endpoint of Object.keys(SPECIAL_LOGOS)) {
     }
 }
 
-const lightSource = "/src/assets/" + currentLogo.filenameLight;
-const darkSource = "/src/assets/" + currentLogo.filenameDark;
+const lightSource = await import(`../../assets/${currentLogo.filenameLight}`);
+const darkSource = await import(`../../assets/${currentLogo.filenameDark}`);
+
 const logoClass = currentLogo.isCircle ? "circle-logo" : "";
 ---
 
