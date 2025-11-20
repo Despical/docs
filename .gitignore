@@ -19,3 +19,12 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+.idea/
+.iml
+
+# Cache/Temporary directories
+.cache/
+tmp/
+coverage/
+out/
