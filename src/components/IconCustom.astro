@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 interface Props {
     name: string;
     class?: string;
@@ -15,4 +17,4 @@ const src = ICONS[Astro.props.name];
 const style = Astro.props.size ? `width:${Astro.props.size};height:${Astro.props.size};` : "";
 ---
 
-{src ? (<img src={src} alt={Astro.props.name} class={Astro.props.class} style={style} />): (<slot />)}
+{src ? (<Image src={src} alt={Astro.props.name} class={Astro.props.class} style={style} />) : (<slot />)}
