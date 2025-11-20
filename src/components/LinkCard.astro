@@ -11,7 +11,7 @@ interface Props {
 const { icon, title, href, destructive } = Astro.props;
 ---
 
-<a href={href} class:list={["not-content", "card", destructive && "card-destructive"]}>
+<a href={`/docs/${href}`} class:list={["not-content", "card", destructive && "card-destructive"]}>
     <article class="sl-flex">
         <div class="title sl-flex">
             {icon && <IconCustom name={icon} class="icon" size="2em" />}
