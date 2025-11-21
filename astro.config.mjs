@@ -32,6 +32,12 @@ export default defineConfig({
                             ],
                         },
                         {
+                            label: 'Configuration Files',
+                            items: [
+                                {label: 'Config Files', slug: 'easter-eggs/configuration'}
+                            ],
+                        },
+                        {
                             label: 'Commands',
                             items: [
                                 {label: 'Commands & Permissions', slug: 'easter-eggs/commands-and-permissions'}

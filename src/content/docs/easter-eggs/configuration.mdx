@@ -1,0 +1,109 @@
+---
+title: Configuration Files
+description: Learn how to customize global settings, messages, and review the structure of all configuration files.
+sidebar:
+    order: 8
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This guide provides an overview of all configuration and data files used by the **Easter Eggs** plugin.
+Understanding this structure is crucial for server configuration and maintenance.
+
+## File Hierarchy
+
+The plugin generates the following files inside your `/plugins/EasterEggs` folder:
+
+### 📁 Configurable Files
+
+| File | Purpose | Reference |
+| :--- | :--- | :--- |
+| `config.yml` | Core settings, particle effects, sounds, and global commands. | Current Page [(Below)](/docs/easter-eggs/configuration#global-settings-configyml) |
+| `messages.yml` | All chat messages, GUI titles, and lore. | Current Page [(Below)](/docs/easter-eggs/configuration#messaging-and-localization-messagesyml) |
+| `mysql.yml` | **Database connection settings.** | [Database Configuration](/docs/easter-eggs/database) |
+
+### 🚫 Automatic Data Files
+
+These files are managed automatically by the plugin. **Do not modify them manually.**
+
+| File | Purpose |
+| :--- | :--- |
+| `data.yml` | Stores individual **player statistics** (collected eggs). |
+| `locations.yml` | Stores the precise **location** of every placed Easter Egg in the world. |
+
+<Aside type="caution">
+    Manually editing `data.yml` or `locations.yml` can cause severe data loss, corruption, or console errors.
+    Only edit files explicitly listed as configurable.
+</Aside>
+
+---
+
+## Global Settings (`config.yml`)
+
+These settings control the plugin's overall behavior and features.
+
+| Attribute | Default | Description |
+| :--- | :--- | :--- |
+| `mysql-enabled` | `false` | If `true`, the plugin uses MySQL for data storage and cross-server syncing. **Requires `mysql.yml` setup.** |
+| `general-cooldown` | `0` | Time in seconds a player must wait between collecting *any* type of Easter Egg. (0 = no global cooldown) |
+| `auto-data-saving` | `300` | Interval in seconds between automatic player data saves. (Set to `0` to disable auto-saving; data will only save on shutdown/reload). |
+| `update-notifier` | `true` | If `true`, the plugin checks for new versions on startup. |
+
+### Sensory Settings (Sounds, Particles, Fireworks)
+
+These sections in `config.yml` control visual and auditory feedback. Refer to the [FAQ page](/docs/easter-eggs/faq) for lists of available particle and sound names.
+
+| Section | Key Attributes | Description |
+| :--- | :--- | :--- |
+| `particles` | `interval`, `distance-limit`, `disabled` | Global settings for particle density, visibility range, and overall toggling. |
+| `sounds` | `new-egg-found`, `cooldown`, `all-eggs-found` | Configures the sound effects played for various player interactions. |
+| `fireworks` | `enabled`, `color`, `type`, `power` | Controls whether a firework spawns when an egg is found, and defines its appearance. |
+| `commands` | `found-all-the-eggs` | Commands executed by the console or player when a player successfully finds **all** eggs defined in the configuration. |
+
+---
+
+## Action Bar Configuration
+
+The `action-bar` section controls the message displayed to players when they are near an uncollected Easter Egg.
+
+| Attribute | Default | Description |
+| :--- | :--- | :--- |
+| `enabled` | `true` | Toggles the action bar feature on or off. |
+| `radius` | `9.5` | The block radius in which players will begin receiving the action bar message. |
+| `interval` | `30` | How often (in ticks) the action bar message rotates or updates. (20 ticks = 1 second) |
+| `sort` | `true` | If `true`, the plugin sorts nearby eggs so the message refers to the **closest** egg. |
+| `only-not-found`| `true` | If `true`, the action bar only sends messages about eggs the player hasn't collected yet. |
+| `permission` | `""` | The permission required to see the action bar. (Leave empty to allow all players). |
+| `messages` | List | The list of messages that rotate in the action bar. Placeholders: `%player%`, `%egg_id%`. |
+
+---
+
+## Messaging and Localization (`messages.yml`)
+
+This file contains all player-facing messages, GUI names, and item lore.
+
+### Message Formatting
+* **Hex Color Support:** The file supports modern color codes using the standard Hex format (`<#RRGGBB>`).
+* **Disable Messages:** To prevent a message from being sent, set its value to `%do_not_send%`.
+
+### Menu Configuration (`eggs-menu`)
+
+This sub-section defines the specific items and text used within the main Easter Eggs GUI.
+
+| Item/Section | Description | Notes |
+| :--- | :--- | :--- |
+| `title` | The title of the GUI window. | `{0}` total eggs, `{1}` filtered status. |
+| `close-item` | The item used to close the menu (`BARRIER`). | |
+| `next-page` / `previous-page` | Items used for GUI pagination. | |
+| `egg` | Defines the name and lore shown for each egg in the GUI. | Lore contains teleport/remove instructions for staff. |
+
+### Placeholder Defaults (`placeholders` section)
+
+This section defines the fallback strings used when specific placeholder states are queried.
+
+| Placeholder String | Description |
+| :--- | :--- |
+| `persistent` | String returned when `%eastereggs_ID:persistent%` is `true`. |
+| `not-persistent` | String returned when `%eastereggs_ID:persistent%` is `false`. |
+| `empty-position` | Fallback name used on leaderboards when a rank has no player. |
+| `empty-value` | Fallback score used on leaderboards when a rank has no score. |
