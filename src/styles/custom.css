@@ -109,3 +109,7 @@
     /* return to Starlight default */
     --sl-color-orange-low: hsl(var(--sl-hue-orange), 90%, 88%);
 }
+
+table td code {
+    white-space: nowrap;
+}
