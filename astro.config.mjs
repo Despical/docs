@@ -28,7 +28,13 @@ export default defineConfig({
                             label: 'Getting Started',
                             items: [
                                 {label: 'Installation', slug: 'easter-eggs/get-started'},
-                                {label: 'Creating new eggs', slug: 'easter-eggs/creating-new-eggs'},
+                                {label: 'Creating New Eggs', slug: 'easter-eggs/creating-new-eggs'},
+                            ],
+                        },
+                        {
+                            label: 'Database',
+                            items: [
+                                {label: 'MySQL Configuration', slug: 'easter-eggs/database'}
                             ],
                         },
                         {

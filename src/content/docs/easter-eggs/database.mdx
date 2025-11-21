@@ -1,0 +1,119 @@
+---
+title: MySQL Configuration
+description: Learn how to connect the Easter Eggs plugin to a MySQL database for cross-server sync and data persistence.
+sidebar:
+    order: 4
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This guide explains how to configure the `mysql.yml` file to connect **Easter Eggs** with a MySQL database.
+Below you will find detailed descriptions of every setting, ensuring a secure connection and enabling features like
+cross-server synchronization.
+
+## MySQL Configuration
+
+By default, **Easter Eggs** stores player data using local files. However, you can configure the plugin to use a **MySQL database** instead.
+
+Using MySQL is highly recommended for production servers as it offers better performance, reliability, and enables **Cross-Server Synchronization**
+(syncing player progress between multiple servers).
+
+<Aside type="caution">
+    Before editing the `mysql.yml` file, please ensure that you have enabled MySQL storage in your main **`config.yml`** file
+    (e.g., `mysql-enabled: true`).
+</Aside>
+
+---
+
+## Configuration Breakdown
+
+The `mysql.yml` file controls how the plugin connects to your database server. Below is a detailed explanation of each setting to help you
+configure it correctly without errors.
+
+### 1. Database Address (`address`)
+
+This is the **JDBC Connection URL**. It tells the plugin exactly where your database is located and how to talk to it.
+
+**Default Value:**
+```yaml
+address: jdbc:mysql://localhost:3306/<database_name>?useSSL=false&autoReConnect=true&createDatabaseIfNotExist=true
+```
+
+Since this line is complex, let's break it down part by part:
+
+| Part | Description |
+| :--- | :--- |
+| `jdbc:mysql://` | The standard protocol for MySQL connections. **Do not change this.** |
+| `localhost` | **Host/IP:** The IP address of your database server. If the database is on the same machine as your server, leave it as `localhost` or `127.0.0.1`. If using a remote host, enter that IP here. |
+| `3306` | **Port:** The network port MySQL is listening on. The default is `3306`. (Check your hosting panel if you are on a shared host, as this might differ). |
+| `<database_name>` | **Database Name:** The specific name of your database. You **must** replace this with your actual database name (e.g., `eastereggs_db`). |
+
+**URL Parameters (Flags):**
+The text after the `?` symbol consists of settings for the connection driver:
+* `useSSL=false`: Disables SSL encryption. Keep this `false` unless your database is explicitly configured for SSL; otherwise, the connection will fail.
+* `autoReConnect=true`: Enables the plugin to automatically try to reconnect if the connection drops.
+* `createDatabaseIfNotExist=true`: If the database name you provided doesn't exist, the plugin will attempt to create it automatically.
+
+---
+
+### 2. Username (`user`)
+
+The username required to authenticate with your MySQL server.
+
+```yaml
+user: root
+```
+* Replace `root` with your specific MySQL username.
+
+---
+
+### 3. Password (`password`)
+
+The password associated with the username above.
+
+```yaml
+password: <your_password>
+```
+* Replace `<your_password>` with your actual database password.
+* This password is stored in plain text. Do not share this file with untrusted parties.
+
+---
+
+### 4. Table Name (`table`)
+
+This setting defines the name of the table *inside* your database where the plugin will store player statistics.
+
+```yaml
+table: eastereggs_stats
+```
+
+Changing this value will cause the plugin to generate a new, empty table. Your previous player data will remain in
+the database but will **not** be visible in-game until you switch the name back.
+
+<Aside type="tip" title="Season-Based Statistics">
+    You can use this behavior to your advantage! If you run a seasonal server (e.g., SkyBlock), simply change the table
+    name (e.g., `eastereggs_stats_season2`) to start a fresh leaderboard for the new season.
+
+    This allows you to start with a clean slate while keeping the old data safely archived in your database.
+</Aside>
+---
+
+### 5. Test on Startup (`test-on-startup`)
+
+Controls whether the plugin attempts to verify the database connection immediately when the server boots up.
+
+```yaml
+test-on-startup: true
+```
+
+* **`true` (Recommended):** The plugin connects to the database during the server startup sequence. If the password is
+wrong or the database is offline, it prints an error in the console immediately. This is best for debugging.
+* **`false`:** The plugin will not check the connection until data actually needs to be saved or loaded.
+
+---
+
+## Common Issues
+
+* **"Access Denied" Error:** Usually means your `user` or `password` is incorrect, or the user does not have permission to access the specified database.
+* **"Communications Link Failure":** The plugin cannot reach the server. Check if the **Port** is correct and if your firewall allows connections.
+* **Unknown Database:** If `createDatabaseIfNotExist` is false, you must create the database manually in **phpMyAdmin** or your console before starting the server.
