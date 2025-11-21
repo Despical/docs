@@ -93,13 +93,18 @@ Permanently removes **every** placed instance of a specific Easter Egg ID from t
 * **Permission:** `eastereggs.removeall`
 
 ### Reload
-Reloads all configuration files (`config.yml`, `messages.yml`, etc.) and refreshes the Easter Egg data.
-Use this to apply changes made to the files without restarting the server.
+Reloads all configuration files (`config.yml`, `messages.yml`, etc.) and refreshes the Easter Egg data. Use this to apply configuration changes
+instantly without restarting the server.
 
 ```bash
 /eastereggs reload
 ```
 * **Permission:** `eastereggs.reload`
+
+<Aside type="caution">
+    Changes made to player statistics file (`stats.yml`) will **not** be applied upon reload. This is because user data is cached internally
+    for better performance and efficiency.
+</Aside>
 
 ### Info
 Displays detailed debugging information about the plugin, including the version, server software, and Java environment.
@@ -120,7 +125,7 @@ You can hover over the commands in the chat to see more details.
 
 ---
 
-### Extra Permissions
+## Extra Permissions
 
 These permissions are not tied to a specific command but control player interactions with the eggs.
 
