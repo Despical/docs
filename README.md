@@ -1,49 +1,48 @@
-# Starlight Starter Kit: Basics
+# Despical Docs
+[![Discord](https://img.shields.io/discord/1291011225467224148.svg?color=7289DA&label=discord)](https://discord.gg/YOUR_SERVER)
+![Deploy](https://github.com/despical/docs/actions/workflows/deploy.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+This repository contains all the documentation for Despical's plugins and related projects.  
+Content in this repo is automatically published to **https://despical.github.io/docs/**.
 
+## Getting Started
+Setting up the project for local development.
+
+### Prerequisites
+
+- [node 22](https://nodejs.org)
+- [pnpm](https://pnpm.io/installation)
+
+## Local Development
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/despical/docs.git && cd docs
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Start development server
+pnpm run dev
 ```
-pnpm create astro@latest -- --template starlight
+
+The server will run on http://localhost:4321
+
+## Building
+This command creates a production-ready build. The generated files can be deployed to any static content hosting provider.
+
+```bash
+pnpm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Contributing
+Contributions are welcome!
 
-## 🚀 Project Structure
+If you'd like to improve the documentation, fix issues or help expand the content, feel free to [open an issue](https://github.com/Despical/docs/issues/new)
+or submit a [pull request](https://github.com/Despical/docs/pulls).
 
-Inside of your Astro + Starlight project, you'll see the following folders and files:
+## License
+This code is under the [MIT License](https://opensource.org/license/mit).
 
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
-```
-
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
-
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
-
-Static assets, like favicons, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+See the [LICENSE](../LICENSE) file for required notices and attributions.
