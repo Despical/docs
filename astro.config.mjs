@@ -49,6 +49,12 @@ export default defineConfig({
                                 {label: 'PlaceholderAPI', slug: 'easter-eggs/placeholders'}
                             ],
                         },
+                        {
+                            label: 'FAQ',
+                            items: [
+                                {label: 'Frequently Asked Questions', slug: 'easter-eggs/faq'}
+                            ],
+                        },
                     ],
                 },
             ],

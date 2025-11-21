@@ -1,0 +1,90 @@
+---
+title: FAQ
+description: Quick answers regarding licensing, requirements, and access to the Easter Eggs plugin.
+sidebar:
+    order: 6
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers covering licensing, prerequisites,
+technical resources (sounds and particles), and source code access.
+
+---
+
+### What is the license for the Easter Eggs plugin?
+
+The **Easter Eggs** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**, which may be updated by the
+author at any time:
+
+* All payments are final and non-refundable.
+* Redistribution or resale of this plugin is prohibited.
+* You are not permitted to modify, decompile, or extract any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers. We cannot offer support for plugins obtained through
+unauthorized or illegal means.
+
+---
+
+### Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 and newer versions** are
+required to run the Easter Eggs plugin.
+
+<Aside type="note">
+    We always strive to adopt the latest stable Java version for optimal performance and security. We strongly
+    recommend keeping your server updated, as future plugin updates may raise the minimum required Java version.
+</Aside>
+
+---
+
+### Which Minecraft versions are supported?
+
+We provide official support for Minecraft versions ranging from **1.8 up to 1.21.10**.
+
+Maintaining compatibility with new versions is a core commitment; upcoming Minecraft versions will always be
+supported promptly following their official release.
+
+---
+
+### Can I access the plugin's source code?
+
+Yes, if you are a **legitimate customer** who has purchased the plugin, you can request access to the source
+code repository.
+
+To gain access, please follow these steps:
+1.  Join our official [**Discord server**](https://discord.gg/uXVU8jmtpU).
+2.  Open a **support ticket**.
+3.  Provide **proof of purchase** (Transaction ID, receipt or Spigot username).
+4.  Provide your **GitHub username**.
+
+Once verified, you will be granted access to the private GitHub repository.
+
+### What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions (1.8 – 1.21+).
+This means the sound names you use in your configuration files might differ from standard vanilla names.
+
+The official list of all available and supported sound names can be found on the library's GitHub page:
+
+[**List of All Available Sound Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+<Aside type="caution">
+    While XSeries aims for wide support, you must verify that the chosen sound name exists within the specific Minecraft
+    version your server is running (e.g., a sound added in 1.16 will not play on a 1.8 server).
+</Aside>
+
+### What are the available particle effect names?
+
+The plugin utilizes the Despical's **ParticleLib** library to manage and display all particle effects, ensuring high
+customization and handling version differences.
+
+You can find the official list of all available particle effect names that can be used in the configuration files here:
+
+[**List of All Available Particle Effect Names**](https://github.com/Despical/ParticleLib/blob/master/src/main/java/me/despical/particle/ParticleEffect.java#L51)
+
+<Aside type="caution">
+    While the library aims for wide support, you must ensure that the specific effect you choose is supported by the
+    Minecraft version your server is currently running. For instance, particles introduced in 1.13+ will not display on a 1.8 server.
+</Aside>
