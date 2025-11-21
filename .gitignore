@@ -21,7 +21,7 @@ pnpm-debug.log*
 .DS_Store
 
 .idea/
-.iml
+*.iml
 
 # Cache/Temporary directories
 .cache/
