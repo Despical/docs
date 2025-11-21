@@ -1,0 +1,188 @@
+---
+title: Developer API
+description: Learn how to hook into the Easter Eggs plugin using the Event API and User Manager.
+sidebar:
+    order: 7
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The **Easter Eggs** plugin provides a lightweight yet powerful API. It allows other plugins to listen for events
+and directly access the `User` objects to manipulate player statistics and cooldowns.
+
+This guide explains how to add the plugin as a dependency, access player data, and handle custom events.
+
+---
+
+## Setup & Dependency
+
+Since **Easter Eggs** is a premium resource, it is not hosted on a public Maven repository. You must add the downloaded
+JAR file to your project manually.
+
+### 1. Adding the JAR
+Create a folder named `libs` in your project's root directory and place the `easter-eggs-x-x-x.jar` file inside it.
+
+### 2. Build Tools Configuration
+
+Select your build tool below to see how to import the local JAR.
+
+#### Maven (`pom.xml`)
+```xml
+<dependency>
+    <groupId>me.despical</groupId>
+    <artifactId>easter-eggs</artifactId>
+    <version>LATEST</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/libs/easter-eggs-x-x-x.jar</systemPath>
+</dependency>
+```
+
+#### Gradle (`build.gradle`)
+```groovy
+dependencies {
+    compileOnly files('libs/easter-eggs-x-x-x.jar')
+}
+```
+
+### 3. plugin.yml
+Don't forget to add **Easter Eggs** as a dependency in your `plugin.yml` to ensure it loads before your plugin.
+
+```yaml
+name: YourPlugin
+version: 1.0
+main: com.yourname.YourPlugin
+depend:
+  - EasterEggs
+```
+
+---
+
+## User API
+
+The plugin wraps every `Player` in a custom `User` object. This object holds all cached data, including collected
+eggs, statistics, and active cooldowns.
+
+### Accessing the Manager
+You can retrieve the `UserManager` directly from the main plugin instance.
+
+```java
+// Get the main instance
+Main api = JavaPlugin.getPlugin(Main.class);
+
+// Get the manager
+UserManager userManager = api.getUserManager();
+```
+
+### The User Object
+Once you have the manager, you can retrieve a `User`.
+
+```java
+Player player = null; // Get your player instance here
+User user = userManager.getUser(player); // Returns existing user or creates/loads a new one
+```
+
+#### Key Methods
+
+| Method | Return Type | Description |
+| :--- | :--- | :--- |
+| `getUniqueId()` | `UUID` | Returns the player's unique ID. |
+| `getPlayer()` | `Player` | Returns the Bukkit Player object. |
+| `getStat(String key)` | `T` | Retrieves a statistic value (e.g., list of found eggs). |
+| `setStat(String key, Object val)` | `void` | Updates a specific statistic. |
+| `getCooldown(String key)` | `double` | Returns the remaining seconds of a cooldown (0 if none). |
+| `setCooldown(String key, double sec)` | `void` | Sets a cooldown for the specified duration. |
+
+<Aside type="tip">
+    The plugin stores the list of found egg IDs under the key `"eggscollected"`.
+    You can cast this to List of Strings to check player progress.
+</Aside>
+
+---
+
+## Custom Events
+
+The API exposes two primary events that you can listen to using Bukkit's standard `Listener` system. All events extend
+the base `EasterEggsEvent` class, which provides the `getUser()` method.
+
+### FoundNewEggEvent
+Triggered when a player interacts (right-clicks) with an Easter Egg block.
+
+* **Package:** `me.despical.eastereggs.api.FoundNewEggEvent`
+* **Methods:**
+  * `getUser()`: Returns the `User` object wrapper for the player.
+  * `getEggId()`: Returns the String ID of the egg being interacted with.
+  * `isAlreadyFound()`: Returns `true` if the player has previously collected this egg.
+
+### EasterEggPlaceEvent
+Triggered when an administrator or allowed player places an Easter Egg block in the world using the special head item.
+
+* **Package:** `me.despical.eastereggs.api.EasterEggPlaceEvent`
+* **Methods:**
+  * `getUser()`: Returns the `User` object of the placer.
+  * `getEggId()`: Returns the String ID of the egg being placed.
+
+---
+
+## Example Code
+
+Here is a complete, copy-paste-ready example class. It demonstrates how to access the API, retrieve User data,
+check statistics, and handle events.
+
+```java
+import me.despical.eastereggs.Main;
+import me.despical.eastereggs.api.FoundNewEggEvent;
+import me.despical.eastereggs.user.User;
+import org.bukkit.ChatColor;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
+
+public class EasterEggListener implements Listener {
+
+    private final Main api;
+
+    public EasterEggListener() {
+        // Retrieve the instance of the Easter Eggs plugin
+        this.api = JavaPlugin.getPlugin(Main.class);
+    }
+
+    /**
+     * Example: Checking user stats and custom cooldowns when they find an egg.
+     */
+    @EventHandler
+    public void onEggFind(FoundNewEggEvent event) {
+        User user = event.getUser();
+        String eggId = event.getEggId();
+
+        // 1. Check a custom API Cooldown
+        if (user.getCooldown("my_custom_cooldown") > 0) {
+            user.getPlayer().sendMessage(ChatColor.RED + "Please wait a moment before collecting more eggs!");
+            return;
+        }
+
+        // 2. Access Statistics (List of found eggs)
+        List<String> foundEggs = user.getStat("eggscollected");
+        int foundCount = (foundEggs != null) ? foundEggs.size() : 0;
+
+        if (!event.isAlreadyFound()) {
+            user.getPlayer().sendMessage(ChatColor.GREEN + "You found egg " + eggId + "! Total found: " + (foundCount + 1));
+
+            // Set a custom 5-second cooldown using the User API
+            user.setCooldown("my_custom_cooldown", 5.0);
+        }
+    }
+}
+```
+
+<Aside type="caution">
+    Don't forget to register this listener in your main class's `onEnable` method!
+
+    ```java
+    @Override
+    public void onEnable() {
+        getServer().getPluginManager().registerEvents(new EasterEggListener(), this);
+    }
+    ```
+</Aside>

@@ -50,6 +50,12 @@ export default defineConfig({
                             ],
                         },
                         {
+                            label: 'API',
+                            items: [
+                                {label: 'Developer API', slug: 'easter-eggs/developer-api'}
+                            ],
+                        },
+                        {
                             label: 'FAQ',
                             items: [
                                 {label: 'Frequently Asked Questions', slug: 'easter-eggs/faq'}
