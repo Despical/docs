@@ -1,0 +1,131 @@
+---
+title: Commands & Permissions
+description: A comprehensive guide to all commands and permissions available in Easter Eggs.
+sidebar:
+    order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page details every command available in the **Easter Eggs** plugin. While the primary command label is `/eastereggs`, you can also use the shorter aliases `/eggs` or `/egg` for convenience.
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `eastereggs.*` will provide access to every command and feature listed on this page.
+</Aside>
+
+---
+
+### Get Egg
+Gives you the specified Easter Egg item to place in the world.
+If you have created an egg with an ID that conflicts with a command name (e.g., an egg named "help" or "reload"),
+you **must** use the `get` subcommand to retrieve it.
+
+```bash
+/eastereggs <egg id>
+# OR
+/eastereggs get <egg id>
+```
+* **Permission:** `eastereggs.get`
+
+### Menu
+Opens the interactive Easter Eggs GUI. This allows you to visually browse and take eggs.
+You can provide an optional filter string to show only eggs that contain that specific text in their ID.
+
+```bash
+/eastereggs menu [id to filter]
+```
+* **Permission:** `eastereggs.menu`
+
+### List
+Displays a text-based list of all registered Easter Egg IDs in the chat.
+This is useful for quickly checking available egg names without opening the GUI.
+
+```bash
+/eastereggs list
+```
+* **Permission:** `eastereggs.list`
+
+### Copy
+Copies the Easter Egg that you are currently looking at.
+This is a builder utility; if you are looking at a placed egg, this command gives you that exact egg item in your inventory.
+
+```bash
+/eastereggs copy
+```
+* **Permission:** `eastereggs.copy`
+
+### Texture
+Updates the texture of the Easter Egg item you are currently holding.
+The item in your hand must be a valid Easter Egg (player head). The new item will retain the properties of an egg but will visually change to the ID you specify.
+
+```bash
+/eastereggs texture <id of the new texture>
+```
+* **Permission:** `eastereggs.texture`
+
+### Reset Statistics
+Resets the collection progress. This command is flexible and works in three ways:
+1.  **No arguments:** Resets **your own** stats.
+2.  **Player name:** Resets **all** found eggs for that player.
+3.  **Player + Egg ID:** Resets only the **specified egg** for that player.
+
+```bash
+/eastereggs resetstats [player] [egg id]
+```
+* **Permission:** `eastereggs.resetstats`
+
+### Save Statistics
+Manually saves all cached player data to your database.
+While the plugin saves data automatically, this is useful before server maintenance. Use the `--silent` flag to run it without sending a message to the chat.
+
+```bash
+/eastereggs savestats [--silent]
+```
+* **Permission:** `eastereggs.savestats`
+
+### Remove All
+Permanently removes **every** placed instance of a specific Easter Egg ID from the world.
+**Warning:** This will delete the blocks from the map and remove their locations from the database.
+
+```bash
+/eastereggs removeall <egg id>
+```
+* **Permission:** `eastereggs.removeall`
+
+### Reload
+Reloads all configuration files (`config.yml`, `messages.yml`, etc.) and refreshes the Easter Egg data.
+Use this to apply changes made to the files without restarting the server.
+
+```bash
+/eastereggs reload
+```
+* **Permission:** `eastereggs.reload`
+
+### Info
+Displays detailed debugging information about the plugin, including the version, server software, and Java environment.
+
+```bash
+/eastereggs info
+```
+* **Permission:** `eastereggs.info`
+
+### Help
+Displays a comprehensive list of all available commands along with their descriptions.
+You can hover over the commands in the chat to see more details.
+
+```bash
+/eastereggs help
+```
+* **Permission:** `eastereggs.help`
+
+---
+
+### Extra Permissions
+
+These permissions are not tied to a specific command but control player interactions with the eggs.
+
+**`eastereggs.break`**
+* Allows the player to physically break and remove Easter Egg blocks placed in the world. By default, players cannot break eggs to prevent griefing.
+
+**`eastereggs.tabcompleter`**
+* Grants permission to use the tab-completion feature. When typing `/eastereggs`, the player will see a list of valid sub-commands and egg IDs.

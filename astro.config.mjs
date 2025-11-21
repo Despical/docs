@@ -32,6 +32,12 @@ export default defineConfig({
                             ],
                         },
                         {
+                            label: 'Commands',
+                            items: [
+                                {label: 'Commands & Permissions', slug: 'easter-eggs/commands-and-permissions'}
+                            ],
+                        },
+                        {
                             label: 'Database',
                             items: [
                                 {label: 'MySQL Configuration', slug: 'easter-eggs/database'}
