@@ -1,17 +1,19 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
+
+const googleAnalyticsId = 'G-SGNN9QLBSE';
 
 // https://astro.build/config
 export default defineConfig({
     site: 'https://despical.github.io',
     base: '/docs',
-	integrations: [
-		starlight({
-			title: 'Plugin Docs',
-			social: [
-                { icon: 'github', label: 'GitHub', href: 'https://github.com/Despical' },
-                { icon: 'discord', label: 'GitHub', href: 'https://discord.gg/uXVU8jmtpU' }
+    integrations: [
+        starlight({
+            title: 'Plugin Docs',
+            social: [
+                {icon: 'github', label: 'GitHub', href: 'https://github.com/Despical'},
+                {icon: 'discord', label: 'GitHub', href: 'https://discord.gg/uXVU8jmtpU'}
             ],
             lastUpdated: true,
             editLink: {
@@ -80,7 +82,25 @@ export default defineConfig({
                 SiteTitle: "./src/components/overrides/SiteTitle.astro",
                 Footer: "./src/components/overrides/Footer.astro",
                 LastUpdated: "./src/components/overrides/LastUpdated.astro",
-            }
-		}),
-	],
+            },
+            head: [
+                {
+                    tag: 'script',
+                    attrs: {
+                        src: `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
+                    },
+                },
+                {
+                    tag: 'script',
+                    content: `
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+            
+                      gtag('config', '${googleAnalyticsId}');
+                      `,
+                },
+            ],
+        }),
+    ],
 });
