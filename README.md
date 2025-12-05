@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 This repository contains all the documentation for Despical's plugins and related projects.  
-Content in this repo is automatically published to **https://despical.github.io/docs/**.
+Content in this repo is automatically published to **https://docs.despical.dev/**.
 
 ## Getting Started
 Setting up the project for local development.
