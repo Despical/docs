@@ -6,8 +6,8 @@ const googleAnalyticsId = 'G-SGNN9QLBSE';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://despical.github.io',
-    base: '/docs',
+    site: 'https://docs.despical.dev',
+    base: '/',
     integrations: [
         starlight({
             title: 'Plugin Docs',
