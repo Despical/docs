@@ -1,0 +1,229 @@
+---
+title: Command Examples
+description: A comprehensive guide on registering, creating, and customizing commands.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This guide covers the lifecycle of command creation, from registration to complex implementations like sub-commands, tab completions, and usage examples.
+
+## Registering Commands
+
+To use the framework, you must create a `CommandFramework` instance and register your command classes. The framework will automatically scan the registered class for methods annotated with `@Command` or `@Completer`.
+
+<Aside type="tip">
+    Make sure you have shaded the framework into your project before using it.
+</Aside>
+
+```java title="ExampleClass.java"
+public class ExampleClass extends JavaPlugin {
+
+    private CommandFramework commandFramework;
+
+    @Override
+    public void onEnable() {
+        // Initialize the framework with your plugin instance
+        commandFramework = new CommandFramework(this);
+
+        // Register the class containing your command methods.
+        // There is no need to define these commands in your plugin.yml.
+        commandFramework.registerCommands(this);
+    }
+}
+```
+
+## Creating a Command
+
+To create a command, define a method with the `CommandArguments` parameter and annotate it with `@Command`.
+
+For a full list of available attributes, refer to the **Commands** wiki page.
+
+```java
+// The method requires the @Command annotation and a CommandArguments parameter.
+@Command(
+    name = "example",
+    aliases = {"firstAlias", "secondAlias"},
+    permission = "example.permission",
+    desc = "Sends an example message to sender",
+    usage = "/example",
+    min = 1,
+    max = 5,
+    onlyOp = false, // If true, ignores permission checks
+    async = false,  // Set to true for async execution (ensure thread safety)
+    senderType = Command.SenderType.CONSOLE
+)
+public void exampleCommand(CommandArguments arguments) {
+    arguments.sendMessage("This is how you can create an example command using the framework.");
+}
+```
+
+## Creating Sub-Commands
+
+Sub-commands are defined using dot notation in the `name` attribute. The framework automatically parses the arguments.
+
+**Example:**
+If the name is `one.two.three`:
+1.  Command structure: `/one two three <args>`
+2.  Arguments passed to method: Everything typed *after* "three".
+
+```java
+@Command(
+    name = "example.subcommand"
+)
+public void exampleSubCommandMethod(CommandArguments arguments) {
+    // This method handles: /example subcommand
+    arguments.sendMessage("You executed the sub-command!");
+}
+```
+
+## Creating Tab Completions
+
+To add tab completion, create a method that returns a `List<String>` and annotate it with `@Completer`.
+
+<Aside type="note">
+    The `CommandArguments` parameter is optional for completer methods, but recommended if you need context logic.
+</Aside>
+
+```java
+@Completer(
+    name = "example",
+    aliases = {"firstAlias", "secondAlias"}
+)
+public List<String> exampleCommandCompletion(CommandArguments arguments) {
+    // Returns suggestions for the target command
+    return Arrays.asList("first", "second", "third");
+}
+```
+
+## Creating Commands Without Arguments
+
+You can define methods that do not require the `CommandArguments` parameter if you do not need to access command data.
+
+```java
+@Command(
+    name = "nocommandargs"
+)
+public void noCommandArgsTest() {
+    Logger.getLogger(this.getClass().getSimpleName()).info("This command is running without any parameters.");
+}
+```
+
+## Comprehensive Example
+
+Below is a complete example demonstrating custom parameters, cooldowns, confirmations, and parameter injection in a single class.
+
+```java title="ExampleClass.java"
+public class ExampleClass extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+
+        // 1. Register a simple custom parameter for "String"
+        commandFramework.addCustomParameter(String.class, CommandArguments::getFirst);
+
+        // 2. Register a complex custom parameter for "secondAsInt"
+        commandFramework.addCustomParameter("secondAsInt", arguments -> arguments.getLength() > 1 ? arguments.getArgumentAsInt(1) : null);
+
+        commandFramework.registerCommands(this);
+    }
+
+    // --- Standard Command with Cooldown ---
+    @Command(
+        name = "example",
+        fallbackPrefix = "prefix",
+        aliases = {"firstAlias", "secondAlias"},
+        permission = "example.permission",
+        desc = "Sends an example message to sender",
+        usage = "/example",
+        min = 1,
+        max = 5,
+        senderType = Command.SenderType.CONSOLE
+    )
+    @Cooldown(
+        cooldown = 10,
+        timeUnit = TimeUnit.SECONDS,
+        bypassPerm = "command.cooldownBypass",
+        overrideConsole = true // Console is also affected by cooldown
+    )
+    public void exampleCommand(CommandArguments arguments) {
+        arguments.sendMessage("This is how you can create an example command using the framework.");
+    }
+
+    // --- Command without Parameters ---
+    @Command(
+        name = "noParams"
+    )
+    public void commandWithoutParameters() {
+        Bukkit.getConsoleSender().sendMessage("This command is running without any parameters.");
+    }
+
+    // --- Custom Parameter Injection (Implicit) ---
+    // Uses the "String" custom parameter registered in onEnable
+    @Command(
+        name = "customParamWithoutAnnotations",
+        min = 1
+    )
+    public void customParamCommand(String firstParameter, CommandArguments arguments) {
+        arguments.sendMessage("First parameter is " + firstParameter);
+    }
+
+    // --- Custom Parameter Injection (Explicit) ---
+    // Uses @Param and @Default annotations
+    @Command(
+        name = "customParams",
+        min = 1
+    )
+    public void customParamsCommand(
+        CommandArguments arguments,
+        @Param("secondAsInt")
+        @Default("50")
+        int secondArg
+    ) {
+        // If the argument is missing, it defaults to 50.
+        arguments.sendMessage("Second argument as integer is " + secondArg);
+    }
+
+    // --- Command with Confirmation ---
+    @Command(
+        name = "confirmationTest"
+    )
+    @Confirmation(
+        message = "Are you sure? Please execute the command again to confirm.",
+        expireAfter = 10,
+        bypassPerm = "confirmation.bypass",
+        timeUnit = TimeUnit.SECONDS,
+        overrideConsole = true
+    )
+    public void confirmationCommand(CommandArguments arguments) {
+        arguments.sendMessage("Confirmation successful.");
+    }
+
+    // --- Tab Completer ---
+    @Completer(
+        name = "example",
+        aliases = {"firstAlias", "secondAlias"}
+    )
+    public List<String> exampleCommandCompletion() {
+        return Arrays.asList("first", "second", "third");
+    }
+
+    @Completer(
+        name = "example",
+        permission = "plugin.tabcompleter"
+    )
+    public List<String> onTabComplete(CommandArguments arguments, CompleterHelper helper) {
+        int index = arguments.getLength() - 1;
+
+        return switch (index) {
+            case 0 -> helper.copyMatches(0, commands);
+            case 1 -> switch (arguments.getFirst()) {
+                case "delete", "edit", "join" -> helper.copyMatches(1, List.of("arena1", "arena2", "arena3"));
+                case null, default -> helper.empty();
+            };
+
+            default -> helper.empty();
+        };
+    }
+}
+```

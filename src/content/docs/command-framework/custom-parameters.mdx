@@ -1,0 +1,172 @@
+---
+title: Custom Parameters
+description: Learn how to register and use custom command parameters with the Command Framework.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This guide explains how to register and utilize custom parameters within your commands. You can register parameters by type, use annotations for specific mapping, or define default values.
+
+<Aside type="caution">
+    Always register your commands after adding the custom parameter providers.
+</Aside>
+
+## Custom Parameters without Annotations
+
+If you register a custom parameter using only the simple name of the class (e.g., "String"), all parameters of that type in your command method will receive the same output.
+
+<Aside type="caution">
+    When using this method, if you add multiple arguments of the same type, they will all resolve to the same value. To handle multiple arguments of the same type distinctively, check the section below.
+</Aside>
+
+```java title="ExampleClass.java"
+public class ExampleClass extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+        commandFramework.addCustomParameter(String.class, CommandArguments::getFirst);
+        commandFramework.registerCommands(this);
+    }
+
+    // /example test
+    // Output: "Value: test"
+    @Command(name = "example")
+    public void exampleCommand(CommandArguments arguments, String arg) {
+        arguments.sendMessage("Value: " + arg);
+    }
+}
+```
+
+## Custom Parameters using @Param
+
+The `@Param` annotation allows you to use the same object type multiple times within a single command by binding them to specific keys.
+
+```java title="ExampleClass.java"
+public class ExampleClass extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+        commandFramework.addCustomParameter("firstArg", CommandArguments::getFirst );
+        commandFramework.addCustomParameter("second arg", arguments -> arguments.getArgument(1));
+        commandFramework.registerCommands(this);
+    }
+
+    // /example firstArg secondArg
+    // Output: "First argument is 'firstArg' and the second is 'secondArg'."
+    @Command(name = "example", min = 2)
+    public void exampleCommand(CommandArguments arguments, @Param("firstArg") String first, @Param("second arg") String second) {
+        arguments.sendMessage("First argument is '" + first + "' and the second is '" + second + "'.");
+    }
+}
+```
+
+## Custom Parameters using @Param and @Default
+
+You can combine `@Param` with `@Default` to provide fallback values when an argument is not supplied by the user.
+
+<Aside type="note">
+    **Supported class types:**
+    `long`, `double`, `int`, `short`, `float`, `byte`, `char`, `boolean`, and `String` are supported directly.
+</Aside>
+
+```java title="ExampleClass.java"
+public class ExampleClass extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+        commandFramework.addCustomParameter("arg", CommandArguments::getFirst);
+        commandFramework.addCustomParameter("secondAsInt", arguments -> arguments.getLength() > 1 ? arguments.getArgumentAsInt(1) : null);
+        commandFramework.registerCommands(this);
+    }
+
+    // /example
+    // Output: "Value: default value of the argument"
+    // /example test
+    // Output: "Value: test"
+    @Command(name = "example")
+    public void exampleCommand(
+        CommandArguments arguments,
+        @Default("default value of the argument")
+        @Param("arg")
+        String value
+    ) {
+        arguments.sendMessage("Value: " + value);
+    }
+
+    // /intExample firstArg 123
+    // Output: "Second argument as int is 123"
+    // /intExample firstArg
+    // Output: "Second argument as int is 100" (Default value used)
+    @Command(name = "intExample")
+    public void exampleCommand(
+        CommandArguments arguments,
+        @Default("100")
+        @Param("secondAsInt")
+        int secondArg
+    ) {
+        arguments.sendMessage("Second argument as int is " + secondArg);
+    }
+}
+```
+
+## Custom Parameters for Non-Primitive Classes
+
+For non-primitive types, you can still use `@Default`. However, the class must contain a static method named `valueOf(String value)` that returns an instance of the class.
+
+**Required Static Method:**
+
+```java
+public static TestValue valueOf(String value) {
+    return new TestValue(value);
+}
+```
+
+**Full Implementation Example:**
+
+```java title="Main.java"
+public class Main extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+
+        // Logic to return null if argument count is insufficient, triggering the default value
+        commandFramework.addCustomParameter("test", arguments -> arguments.getLength() != 1 ? null : new TestValue(arguments.getFirst()));
+        commandFramework.registerCommands(this);
+    }
+
+    // /test somRandomTextAsFirstArg
+    // Output: "Value: somRandomTextAsFirstArg"
+    // /test
+    // Output: "Value: Default value"
+    @Command(name = "test")
+    public void test(
+        CommandArguments arguments,
+        @Default("Default value")
+        @Param("test")
+        TestValue testValue
+    ) {
+        arguments.sendMessage("Value:" + testValue.getValue());
+    }
+
+    public static class TestValue {
+
+        private final String value;
+
+        public TestValue(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public static TestValue valueOf(String value) {
+            return new TestValue(value);
+        }
+    }
+}
+```

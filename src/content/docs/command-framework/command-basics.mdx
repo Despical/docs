@@ -1,0 +1,56 @@
+---
+title: Command Basics
+description: Learn how to install the Command Framework and understand the basic command parameters.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Adding to Your Project
+
+To add this project as a dependency, include the code below in your `pom.xml`, `build.gradle` or `build.gradle.kts` file.
+
+<Tabs>
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>dev.despical</groupId>
+            <artifactId>command-framework</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Groovy)">
+        ```gradle
+        dependencies {
+            implementation 'dev.despical:command-framework:1.5.5'
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+            implementation("dev.despical:command-framework:1.5.5")
+        }
+        ```
+    </TabItem>
+</Tabs>
+
+## Basic Command Parameters
+
+This section outlines the essential parameters you can use to define commands within the Command Framework. Each parameter allows for customization of command behavior and usage.
+
+| Parameter | Type | Optional | Description |
+| :--- | :---: | :---: | :--- |
+| **name** | `String` | ❌ | Name of the command. |
+| **fallbackPrefix** | `String` | ✅ | A prefix which is prepended to the command with a `:` one or more times to make the command unique. |
+| **permission** | `String` | ✅ | Permission required to execute the command. |
+| **aliases** | `String[]` | ✅ | Alternative names for the command. |
+| **desc** | `String` | ✅ | Brief description of the command. |
+| **usage** | `String` | ✅ | Instruction on how to use the command. |
+| **min** | `Integer` | ✅ | Minimum number of required arguments. |
+| **max** | `Integer` | ✅ | Maximum number of allowed arguments. |
+| **onlyOp** | `Boolean` | ✅ | Whether only operator (op-ed) players can run this command. |
+| **async** | `Boolean` | ✅ | If true, executes the command in a new thread to prevent main thread blockage. |
+| **senderType** | `SenderType` | ✅ | Type of sender allowed (e.g., `BOTH`, `PLAYER`, `CONSOLE`). |
