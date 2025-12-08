@@ -1,0 +1,80 @@
+---
+title: Command Cooldowns
+description: Learn how to manage command usage limits using General and Inline cooldowns.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The Command Framework offers two distinct ways to handle cooldowns (usage limits) for your commands:
+
+1.  **General Cooldowns:** Automatically handled by the framework before the command method is executed.
+2.  **Inline Cooldowns:** Manually triggered within the command method body. This type stops code execution immediately if the user is on cooldown, removing the need for manual `return` statements.
+
+## General Cooldowns
+
+This is the simplest way to add a cooldown. By annotating your command method with `@Cooldown`, the framework handles all checks automatically. If a user is on cooldown, the method body will not be executed at all.
+
+```java title="Main.java"
+public class Main extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+        commandFramework.registerCommands(this);
+    }
+
+    // The command method will only run if the user is not on cooldown.
+    // If they are, the framework handles the rejection message automatically.
+    @Command(name = "test")
+    @Cooldown(cooldown = 5)
+    public void testCommand(CommandArguments args) {
+        args.sendMessage("Test command executed successfully.");
+    }
+}
+```
+
+## Inline Cooldowns
+
+Inline cooldowns allow you to control exactly *when* the cooldown check occurs inside your method. This is useful if you want to perform certain logic (like validation) before checking the timer.
+
+<Aside type="caution">
+    **Requirement:** To use inline checks, you must explicitly enable the `CUSTOM_COOLDOWN_CHECKER` option in your `onEnable` method.
+</Aside>
+
+### How it works
+You use the `args.checkCooldown()` method.
+* **If on cooldown:** The code execution stops immediately at that line (no manual `return` needed).
+* **If not on cooldown:** The code continues, and the cooldown timer starts.
+
+<Aside type="danger">
+    **Restrictions:**
+    1.  Do not use this method inside a Tab Completer.
+    2.  Using this method inside an `if` condition (e.g., `if (args.checkCooldown())`) is not recommended, as it is designed to halt the execution flow directly.
+</Aside>
+
+```java title="Main.java"
+public class Main extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+        commandFramework.registerCommands(this);
+
+        // precise configuration is required to use the inline check method
+        commandFramework.enableOption(Option.CUSTOM_COOLDOWN_CHECKER);
+    }
+
+    @Command(name = "test")
+    @Cooldown(cooldown = 5)
+    public void testCommand(CommandArguments args) {
+        // You can do pre-check logic here...
+
+        // This line checks the cooldown.
+        // 1. First run: Code continues.
+        // 2. Second run (within 5s): Code stops HERE. The user gets a "wait" message.
+        args.checkCooldown();
+
+        args.sendMessage("Test command executed successfully.");
+    }
+}
+```

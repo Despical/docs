@@ -1,0 +1,148 @@
+---
+title: Command Arguments
+description: Learn how to utilize the CommandArguments class to handle command parameters and utilities effectively.
+---
+
+`CommandArguments` is a utility wrapper around Bukkit command parameters that provides easy access to the sender and arguments, along with helpful methods to simplify command handling.
+
+## Basic Methods
+
+The following example demonstrates how to retrieve core components like the command sender, label, and arguments.
+
+```java
+// We have created a basic command named "example"
+@Command(
+    name = "example"
+)
+public void exampleCommandMethod(CommandArguments arguments) {
+    // --- Sender & Command Info ---
+
+    // Retrieve the command sender
+    CommandSender sender = arguments.getSender();
+
+    // Check the type of the sender
+    if (arguments.isSenderPlayer()) {
+        // The sender is a player
+    } else {
+        // The sender is the console
+    }
+
+    // Retrieve the underlying Bukkit Command object
+    org.bukkit.command.Command bukkitCommand = arguments.getBukkitCommand();
+
+    // Retrieve the Annotation Command object associated with these arguments
+    dev.despical.commandframework.annotations.Command command = arguments.getCommand();
+
+    // Get the command label used
+    String label = arguments.getLabel();
+
+    // --- Argument Retrieval Basics ---
+
+    // Get all arguments as an array
+    String[] args = arguments.getArguments();
+
+    // Check if the argument array is empty
+    boolean isArgsEmpty = arguments.isArgumentsEmpty();
+
+    // Get the number of arguments
+    int argumentsLength = arguments.getLength();
+
+    // Get a specific argument by index (0-based)
+    // Returns null if the index is out of bounds (no exception thrown)
+    String firstArgument = arguments.getArgument(0);
+
+    // Returns the first argument
+    // Equivalent to arguments.getArgument(0))
+    String firstArg = arguments.getFirst();
+
+    // Returns the last argument
+    // Equivalent to arguments.getArgument(arguments.getLength() - 1))
+    String lastArg = arguments.getLast();
+
+    // Get a specific argument with a default fallback value
+    // Returns "default value" if index 0 is out of bounds
+    String notNullArgument = arguments.getArgument(0, "default value");
+
+    // Retrieves the first argument and parses it as an integer
+    int argAsInt = argument.getArgumentAsInt(0);
+
+    // Retrieves the first argument and parses it as a double
+    double argAsDouble = argument.getArgumentAsDouble(0);
+
+    // Retrieves the first argument and parses it as a float
+    float argAsFloat = argument.getArgumentAsFloat(0);
+
+    // Retrieves the first argument and parses it as a long
+    long argAsLong = argument.getArgumentAsLong(0);
+
+    // Retrieves the first argument and parses it as a boolean
+    boolean argAsBoolean = argument.getArgumentAsBoolean(0);
+
+    // --- Permissions & Messaging ---
+
+    // Send a message directly to the sender
+    // Supports color codes, HEX colors are not supported by default
+    // See Message.setFormatter() method to apply your own color converter
+    arguments.sendMessage("&cHey there!");
+
+    // Sends a parameterized message directly to the sender
+    arguments.sendMessage("&aHey there, {0}!", arguments.getSender().getName());
+
+    // Check permissions without manually retrieving the sender object
+    if (arguments.hasPermission("command.framework")) {
+        // Sender has the permission
+    }
+}
+```
+
+## Useful Utility Methods
+
+This section covers helper methods for player retrieval, string concatenation, numeric validation, and cooldown management.
+
+```java
+@Command(
+    name = "example"
+)
+public void exampleCommandMethod(CommandArguments arguments) {
+    // --- Player Retrieval ---
+
+    // Get an online player by name (returns Optional)
+    Optional<Player> playerFromName = arguments.getPlayer("Despical");
+    playerFromName.ifPresent(player -> player.sendMessage("Hello World!"));
+
+    // Get an online player from an argument index (returns Optional)
+    Optional<Player> playerFromArgs = arguments.getPlayer(0);
+    playerFromArgs.ifPresent(player -> player.sendMessage("Hello World!"));
+
+    // --- String Concatenation ---
+
+    // Assume arguments = ["example", "array", "with", "multiple", "arguments"]
+
+    // Concatenate all arguments into a single string
+    String concatenatedArgs = arguments.concatArguments();
+    // Result: "example array with multiple arguments"
+
+    // Concatenate a range of arguments (fromIndex inclusive, toIndex exclusive)
+    String concatRangeOf = arguments.concatRangeOf(1, 4);
+    // Result: "array with multiple arguments"
+
+    // --- Numeric Checks ---
+
+    // Checks if the argument at index 0 is a valid number.
+    boolean isNumeric = arguments.isNumeric(0);
+
+    // Checks if the argument is a valid Integer.
+    boolean isInteger = arguments.isInteger(0);
+
+    // Checks if the argument is a floating point number (Double/Float).
+    boolean isFloatingDecimal = arguments.isFloatingDecimal(0);
+
+    // --- Miscellaneous ---
+
+    // Check if the sender is currently on cooldown for this command
+    boolean hasCooldown = arguments.checkCooldown();
+
+    // Send a pre-defined error message from the Message enum
+    boolean success = arguments.sendMessage(Message.SHORT_ARG_SIZE);
+}
+```

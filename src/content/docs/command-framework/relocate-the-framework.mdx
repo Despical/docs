@@ -1,0 +1,82 @@
+---
+title: Relocate the Framework
+description: Learn how to properly shade and relocate the Command Framework to avoid conflicts.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+To ensure your plugin works correctly alongside other plugins that might be using different versions of the **Command Framework**,
+you **must** relocate the library into your own package namespace. This process is known as **shading** and **relocating**.
+
+## How to Relocate
+
+Below are the configurations for both Maven and Gradle build systems. Replace `your.package.here` with your plugin's unique package path (e.g., `com.example.myplugin.libs`).
+
+<Tabs>
+    <TabItem label="Maven">
+        ```xml
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.4.1</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <relocations>
+                            <relocation>
+                                <pattern>dev.despical.commandframework</pattern>
+                                <shadedPattern>your.package.here</shadedPattern>
+                            </relocation>
+                        </relocations>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Groovy)">
+        ```gradle
+        plugins {
+            id 'com.github.johnrengelman.shadow' version '8.1.1'
+        }
+
+        shadowJar {
+            // Replace 'your.package.here' with your own package path
+            relocate 'dev.despical.commandframework', 'your.package.here'
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        plugins {
+            id("com.github.johnrengelman.shadow") version "8.1.1"
+        }
+
+        tasks.shadowJar {
+            // Replace 'your.package.here' with your own package path
+            relocate("dev.despical.commandframework", "your.package.here")
+        }
+        ```
+    </TabItem>
+</Tabs>
+
+## Testing Without Relocation
+
+If you need to test your plugin quickly without configuring the relocation steps above, you can suppress the framework's internal warning.
+
+<Aside type="danger">
+    **For Testing Purposes Only**
+    Do not use this method in a production environment. Skipping relocation will likely cause `ClassNotFoundException` or method signature errors if users have other plugins installed that use this framework.
+</Aside>
+
+To suppress the warning, add the following flag to your server's startup command line parameters:
+
+```bash
+-Dcommandframework.suppress.relocation=true
+```
