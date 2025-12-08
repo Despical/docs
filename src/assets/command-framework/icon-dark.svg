@@ -1,0 +1,17 @@
+<svg viewBox="0 0 200 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 9L3 12L6 15" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M18 9L21 12L18 15" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10 19L14 5" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <text
+        x="28"
+        y="17"
+        fill="black"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+        font-weight="800"
+        font-size="14"
+        letter-spacing="-0.5"
+    >
+        COMMAND FRAMEWORK
+    </text>
+</svg>
