@@ -1,0 +1,49 @@
+---
+import config from "virtual:starlight/user-config";
+import IconCustom from ".././IconCustom.astro";
+
+const { isPageWithTopic, topics } = Astro.locals.starlightSidebarTopics;
+const currentTopic = isPageWithTopic ? topics.find((t) => t.isCurrent) : null;
+
+const project = currentTopic?.label?.toLowerCase().replace(' ', '-');
+
+const links = (config.social || [])
+    .filter((l) => {
+        if (project && l.label.startsWith(`${project}:`))
+            return true;
+
+        if (l.label.startsWith("home:"))
+            return !project;
+
+        return !l.label.includes(":");
+    })
+    .map((link) => {
+        const index = link.label.indexOf(":");
+        return index !== -1 ? { ...link, label: link.label.substring(index + 1) } : link;
+    })
+    .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
+---
+
+{
+    links.length > 0 && (
+    <>
+        {links.map(({ label, href, icon }) => (
+            <a {href} rel="me" class="sl-flex">
+                <span class="sr-only">{label}</span>
+                <IconCustom name={icon} class="icon" size="20px" />
+            </a>
+        ))}
+    </>
+        )
+    }
+
+<style>
+    a {
+        color: var(--sl-color-text-accent);
+        padding: 0.5em;
+        margin: -0.5em;
+    }
+    a:hover {
+        opacity: 0.66;
+    }
+</style>
