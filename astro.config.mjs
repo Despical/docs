@@ -1,6 +1,7 @@
 // @ts-check
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightSidebarTopics from "starlight-sidebar-topics";
 
 const googleAnalyticsId = 'G-SGNN9QLBSE';
 
@@ -8,12 +9,17 @@ const googleAnalyticsId = 'G-SGNN9QLBSE';
 export default defineConfig({
     site: 'https://docs.despical.dev',
     base: '/',
+    build: {
+        inlineStylesheets: "always",
+    },
     integrations: [
         starlight({
             title: 'Plugin Docs',
             social: [
-                {icon: 'github', label: 'GitHub', href: 'https://github.com/Despical'},
-                {icon: 'discord', label: 'GitHub', href: 'https://discord.gg/uXVU8jmtpU'}
+                {icon: 'github', label: 'home:GitHub', href: 'https://github.com/Despical'},
+                {icon: "github", label: "command-framework:Github", href: "https://github.com/Despical/CommandFramework",},
+                {icon: "seti:java", label: "command-framework:Javadoc", href: "https://despical.github.io/CommandFramework/"},
+                {icon: 'discord', label: 'Discord', href: 'https://discord.gg/uXVU8jmtpU'},
             ],
             lastUpdated: true,
             editLink: {
@@ -22,56 +28,6 @@ export default defineConfig({
             logo: {
                 src: "/src/assets/despical-light.png"
             },
-            sidebar: [
-                {
-                    label: 'Easter Eggs',
-                    items: [
-                        {
-                            label: 'Getting Started',
-                            items: [
-                                {label: 'Installation', slug: 'easter-eggs/get-started'},
-                                {label: 'Creating New Eggs', slug: 'easter-eggs/creating-new-eggs'},
-                            ],
-                        },
-                        {
-                            label: 'Configuration Files',
-                            items: [
-                                {label: 'Config Files', slug: 'easter-eggs/configuration'}
-                            ],
-                        },
-                        {
-                            label: 'Commands',
-                            items: [
-                                {label: 'Commands & Permissions', slug: 'easter-eggs/commands-and-permissions'}
-                            ],
-                        },
-                        {
-                            label: 'Database',
-                            items: [
-                                {label: 'MySQL Configuration', slug: 'easter-eggs/database'}
-                            ],
-                        },
-                        {
-                            label: 'Placeholders',
-                            items: [
-                                {label: 'PlaceholderAPI', slug: 'easter-eggs/placeholders'}
-                            ],
-                        },
-                        {
-                            label: 'API',
-                            items: [
-                                {label: 'Developer API', slug: 'easter-eggs/developer-api'}
-                            ],
-                        },
-                        {
-                            label: 'FAQ',
-                            items: [
-                                {label: 'Frequently Asked Questions', slug: 'easter-eggs/faq'}
-                            ],
-                        },
-                    ],
-                },
-            ],
             customCss: [
                 "@fontsource/poppins/400.css",
                 "@fontsource/jetbrains-mono/400.css",
@@ -80,9 +36,127 @@ export default defineConfig({
             ],
             components: {
                 SiteTitle: "./src/components/overrides/SiteTitle.astro",
+                PageFrame: "./src/components/overrides/PageFrame.astro",
                 Footer: "./src/components/overrides/Footer.astro",
                 LastUpdated: "./src/components/overrides/LastUpdated.astro",
+                SocialIcons: "./src/components/overrides/SocialIcons.astro",
+                Sidebar: "@astrojs/starlight/components/Sidebar.astro",
             },
+            plugins: [
+                starlightSidebarTopics([
+                    {
+                        id: "easter-eggs",
+                        label: 'Easter Eggs',
+                        link: '/easter-eggs/',
+                        icon: 'easter-eggs',
+                        items: [
+                            {
+                                label: 'Easter Eggs',
+                                items: [
+                                    {
+                                        label: 'Getting Started',
+                                        items: [
+                                            {label: 'Installation', slug: 'easter-eggs/get-started'},
+                                            {label: 'Creating New Eggs', slug: 'easter-eggs/creating-new-eggs'},
+                                        ],
+                                    },
+                                    {
+                                        label: 'Configuration Files',
+                                        items: [
+                                            {label: 'Config Files', slug: 'easter-eggs/configuration'}
+                                        ],
+                                    },
+                                    {
+                                        label: 'Commands',
+                                        items: [
+                                            {
+                                                label: 'Commands & Permissions',
+                                                slug: 'easter-eggs/commands-and-permissions'
+                                            }
+                                        ],
+                                    },
+                                    {
+                                        label: 'Database',
+                                        items: [
+                                            {label: 'MySQL Configuration', slug: 'easter-eggs/database'}
+                                        ],
+                                    },
+                                    {
+                                        label: 'Placeholders',
+                                        items: [
+                                            {label: 'PlaceholderAPI', slug: 'easter-eggs/placeholders'}
+                                        ],
+                                    },
+                                    {
+                                        label: 'API',
+                                        items: [
+                                            {label: 'Developer API', slug: 'easter-eggs/developer-api'}
+                                        ],
+                                    },
+                                    {
+                                        label: 'FAQ',
+                                        items: [
+                                            {label: 'Frequently Asked Questions', slug: 'easter-eggs/faq'}
+                                        ],
+                                    },
+                                ],
+                            },
+                        ]
+                    },
+                    {
+                        label: "Command Framework",
+                        link: '/command-framework/',
+                        icon: 'command-framework',
+                        items: [
+                            {
+                                label: 'Command Framework',
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        items: [
+                                            {label: "Overview", slug: 'command-framework/getting-started'},
+                                            {label: "Command Basics", slug: 'command-framework/command-basics'},
+                                        ]
+                                    },
+                                    {
+                                        label: "Core Features",
+                                        items: [
+                                            {label: "Command Arguments", slug: 'command-framework/command-arguments'},
+                                            {label: "Custom Parameters", slug: 'command-framework/custom-parameters'},
+                                            {label: "Command Cooldowns", slug: 'command-framework/command-cooldowns'},
+                                        ]
+                                    },
+                                    {
+                                        label: "Examples",
+                                        items: [
+                                            {label: "Command Examples", slug: "command-framework/examples"},
+                                        ]
+                                    },
+                                    {
+                                        label: "Support",
+                                        items: [
+                                            {label: "Issue Tracker", link: "https://github.com/Despical/CommandFramework/issues/new/choose", attrs: {target: "_blank"}},
+                                            {label: "Spigot Discussion", link: "https://spigotmc.org/threads/494383/page-100", attrs: {target: "_blank"}},
+                                        ]
+                                    },
+                                    {
+                                        label: "Documents",
+                                        items: [
+                                            {label: "Javadocs", link: "https://despical.github.io/CommandFramework/", attrs: {target: "_blank"}},
+                                        ]
+                                    },
+                                    {
+                                        label: "FAQ",
+                                        items: [
+                                            {label: "Relocate the Framework", slug: "command-framework/relocate-the-framework"}
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ])
+            ],
             head: [
                 {
                     tag: 'script',
