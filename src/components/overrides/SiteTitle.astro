@@ -2,12 +2,15 @@
 import { Image } from "astro:assets";
 import despicalLight from "../../assets/despical-light.png";
 import despicalDark from "../../assets/despical-dark.png";
-import easterLight from "../../assets/easter-eggs-light.svg";
-import easterDark from "../../assets/easter-eggs-dark.svg";
+import easterLight from "../../assets/easter-eggs/icon-light.svg";
+import easterDark from "../../assets/easter-eggs/icon-dark.svg";
+import commandLight from "../../assets/command-framework/icon-light.svg";
+import commandDark from "../../assets/command-framework/icon-dark.svg";
 
 const LOGO_MAP = {
     default: { light: despicalLight, dark: despicalDark, circle: true },
-    "/easter-eggs": { light: easterLight, dark: easterDark, circle: false }
+    "/easter-eggs": { light: easterLight, dark: easterDark, circle: false },
+    "/command-framework": { light: commandLight, dark: commandDark, circle: false }
 };
 
 
