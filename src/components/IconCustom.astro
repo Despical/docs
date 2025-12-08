@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "@astrojs/starlight/components";
 
 interface Props {
     name: string;
@@ -7,14 +8,20 @@ interface Props {
     size?: string;
 }
 
-import easterEggs from "../assets/easter-eggs.svg";
+import easterEggs from "../assets/easter-eggs/icon.svg";
+import commandFramework from "../assets/command-framework/icon.svg";
 
 const ICONS: Record<string, any> = {
     "easter-eggs": easterEggs,
+    "command-framework": commandFramework,
 };
 
-const src = ICONS[Astro.props.name];
-const style = Astro.props.size ? `width:${Astro.props.size};height:${Astro.props.size};` : "";
+const { name, size, class: cls } = Astro.props;
+const src = ICONS[name];
+const style = size ? `width:${size};height:${size};` : "";
 ---
 
-{src ? (<Image src={src} alt={Astro.props.name} class={Astro.props.class} style={style} />) : (<slot />)}
+{src
+    ? <Image src={src} alt={name} class={cls} style={style} />
+    : <Icon name={name as any} class={cls} />
+    }
