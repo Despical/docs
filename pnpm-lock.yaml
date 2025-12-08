@@ -26,6 +26,9 @@ importers:
       starlight-contributor-list:
         specifier: ^0.3.1
         version: 0.3.1(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))
+      starlight-sidebar-topics:
+        specifier: ^0.6.2
+        version: 0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))
       starlight-sidebar-topics-dropdown:
         specifier: ^0.5.2
         version: 0.5.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))(starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3))))
