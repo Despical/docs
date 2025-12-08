@@ -1,12 +1,12 @@
 ---
-title: Home
-description: Documentation for Despical's plugins, currently featuring Easter Eggs, with more plugins coming soon.
+title: Welcome
+description: Documentation for Despical's plugins and frameworks, with more plugins coming soon.
 template: splash
 editUrl: false
 lastUpdated: false
 hero:
     title: Plugin Docs
-    tagline: Documentation for Despical's plugins, currently featuring Easter Eggs, with more plugins coming soon.
+    tagline: Documentation for Despical's plugins and frameworks, with more plugins coming soon.
     image:
         file: /src/assets/despical-dark.png
         alt: Logo
@@ -19,6 +19,11 @@ import LinkCard from "/src/components/LinkCard.astro";
 <CardGrid>
     <LinkCard title="Easter Eggs" href="/easter-eggs" icon="easter-eggs">
         Elevate your server's gameplay with a feature-rich Easter Egg system. Includes native MySQL support, intuitive GUI management, and highly configurable rewards.
+    </LinkCard>
+
+    <LinkCard title="Command Framework" href="/command-framework" icon="command-framework">
+        Command Framework is a lightweight, annotation-based command system that eliminates the need to manually register commands in your **plugin.yml** and provides
+        helper utilities for cleaner and easier command handling.
     </LinkCard>
 </CardGrid>
 
