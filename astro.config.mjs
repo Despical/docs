@@ -20,6 +20,7 @@ export default defineConfig({
                 {icon: "github", label: "command-framework:Github", href: "https://github.com/Despical/CommandFramework",},
                 {icon: "seti:java", label: "command-framework:Javadoc", href: "https://despical.github.io/CommandFramework/"},
                 {icon: 'discord', label: 'Discord', href: 'https://discord.gg/uXVU8jmtpU'},
+                {icon: 'patreon', label: 'Patreon', href: 'https://patreon.com/despical'},
             ],
             lastUpdated: true,
             editLink: {
