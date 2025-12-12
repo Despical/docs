@@ -6,11 +6,13 @@ description: Learn how to properly shade and relocate the Command Framework to a
 import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
 To ensure your plugin works correctly alongside other plugins that might be using different versions of the **Command Framework**,
-you **must** relocate the library into your own package namespace. This process is known as **shading** and **relocating**.
+you **must** relocate the library into your own package.
 
 ## How to Relocate
 
-Below are the configurations for both Maven and Gradle build systems. Replace `your.package.here` with your plugin's unique package path (e.g., `com.example.myplugin.libs`).
+Below are the configurations for both **Maven** and **Gradle** build systems.
+
+Replace `your.package.here` with your plugin's unique package path (e.g., `com.example.myplugin.libs`).
 
 <Tabs>
     <TabItem label="Maven">
@@ -42,7 +44,7 @@ Below are the configurations for both Maven and Gradle build systems. Replace `y
     <TabItem label="Gradle (Groovy)">
         ```gradle
         plugins {
-            id 'com.github.johnrengelman.shadow' version '8.1.1'
+            id 'com.gradleup.shadow' version '9.3.0'
         }
 
         shadowJar {
@@ -55,7 +57,7 @@ Below are the configurations for both Maven and Gradle build systems. Replace `y
     <TabItem label="Gradle (Kotlin)">
         ```kotlin
         plugins {
-            id("com.github.johnrengelman.shadow") version "8.1.1"
+            id("com.gradleup.shadow") version "9.3.0"
         }
 
         tasks.shadowJar {
@@ -66,17 +68,28 @@ Below are the configurations for both Maven and Gradle build systems. Replace `y
     </TabItem>
 </Tabs>
 
-## Testing Without Relocation
+## Testing Without Relocating
 
 If you need to test your plugin quickly without configuring the relocation steps above, you can suppress the framework's internal warning.
+
+To suppress the warning:
+
+1.  JVM Startup Parameter
+    ```bash
+    -Dcommandframework.suppress.relocation=true
+    ```
+
+2.  Setting the Property Programmatically
+
+    Alternatively, you may set the system property directly in your plugin’s `onEnable` method:
+    ```java
+    @Override
+    public void onEnable() {
+        System.setProperty("commandframework.suppress.relocation", "true");
+    }
+    ```
 
 <Aside type="danger">
     **For Testing Purposes Only**
     Do not use this method in a production environment. Skipping relocation will likely cause `ClassNotFoundException` or method signature errors if users have other plugins installed that use this framework.
 </Aside>
-
-To suppress the warning, add the following flag to your server's startup command line parameters:
-
-```bash
--Dcommandframework.suppress.relocation=true
-```

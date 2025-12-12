@@ -91,7 +91,7 @@ To add tab completion, create a method that returns a `List<String>` and annotat
 )
 public List<String> exampleCommandCompletion(CommandArguments arguments) {
     // Returns suggestions for the target command
-    return Arrays.asList("first", "second", "third");
+    return List.of("first", "second", "third");
 }
 ```
 
@@ -205,7 +205,7 @@ public class ExampleClass extends JavaPlugin {
         aliases = {"firstAlias", "secondAlias"}
     )
     public List<String> exampleCommandCompletion() {
-        return Arrays.asList("first", "second", "third");
+        return List.of("first", "second", "third");
     }
 
     @Completer(
