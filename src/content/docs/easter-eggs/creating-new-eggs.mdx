@@ -166,11 +166,11 @@ particles:
 
 Advanced settings for behavior control.
 
-| Attribute | Default | Description |
-| :--- | :--- | :--- |
-| `persistent` | `true` | If `false`, data is not saved to the database. Progress is kept in memory but **resets upon server restart or reload**. |
-| `cooldown` | `0` | Time in seconds a player must wait before collecting the egg again. |
-| `action-bar-disabled`| `false`| If `true`, hides the action bar message upon collection. |
-| `remove-on-collect`| | **Sub-section:** Handles block removal logic. |
-| └ `enabled` | `false` | Removes the block physically after collection if true. |
-| └ `convert-to` | `AIR` | The material to replace the egg with (e.g., `AIR`, `STONE`). |
+| Attribute | Default | Description                                                                                                         |
+| :--- | :--- |:--------------------------------------------------------------------------------------------------------------------|
+| `persistent` | `true` | If `false`, data is not saved to the database. Progress is kept in memory but resets upon server restart or reload. |
+| `cooldown` | `0` | Time in seconds a player must wait before collecting the egg again.                                                 |
+| `action-bar-disabled`| `false`| If `true`, hides action bar messages when the player is near an egg.                                                       |
+| `remove-on-collect`| |                                                                      |
+| └ `enabled` | `false` | If `true`, the block is replaced with the material specified in `convert-to` after being collected.                                                              |
+| └ `convert-to` | `AIR` | The material to replace the egg with (e.g., `AIR`, `STONE`).                                                        |
