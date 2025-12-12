@@ -28,7 +28,8 @@ you **must** use the `get` subcommand to retrieve it.
 * **Permission:** `eastereggs.get`
 
 ### Menu
-Opens the interactive Easter Eggs GUI. This allows you to visually browse and take eggs.
+Opens an interactive GUI. This interface allows you to visually browse eggs, teleport to them,
+remove them, get a copy, or remove all.
 You can provide an optional filter string to show only eggs that contain that specific text in their ID.
 
 ```bash
@@ -46,8 +47,7 @@ This is useful for quickly checking available egg names without opening the GUI.
 * **Permission:** `eastereggs.list`
 
 ### Copy
-Copies the Easter Egg that you are currently looking at.
-This is a builder utility; if you are looking at a placed egg, this command gives you that exact egg item in your inventory.
+If you are looking at a placed egg, this command gives you that exact egg item in your inventory, which you can then place elsewhere.
 
 ```bash
 /eastereggs copy
@@ -56,7 +56,7 @@ This is a builder utility; if you are looking at a placed egg, this command give
 
 ### Texture
 Updates the texture of the Easter Egg item you are currently holding.
-The item in your hand must be a valid Easter Egg (player head). The new item will retain the properties of an egg but will visually change to the ID you specify.
+The item in your hand must be a valid Easter Egg. The new item will retain the properties of an egg but will visually change to the ID you specify.
 
 ```bash
 /eastereggs texture <id of the new texture>
@@ -85,12 +85,15 @@ While the plugin saves data automatically, this is useful before server maintena
 
 ### Remove All
 Permanently removes **every** placed instance of a specific Easter Egg ID from the world.
-**Warning:** This will delete the blocks from the map and remove their locations from the database.
 
 ```bash
 /eastereggs removeall <egg id>
 ```
 * **Permission:** `eastereggs.removeall`
+
+<Aside type="caution">
+    This command will delete the blocks from the world and remove their locations from the database.
+</Aside>
 
 ### Reload
 Reloads all configuration files (`config.yml`, `messages.yml`, etc.) and refreshes the Easter Egg data. Use this to apply configuration changes
@@ -107,7 +110,9 @@ instantly without restarting the server.
 </Aside>
 
 ### Info
-Displays detailed debugging information about the plugin, including the version, server software, and Java environment.
+Displays comprehensive diagnostic information about the plugin, including the plugin version, server software, and Java environment.
+
+When submitting a support ticket, it is strongly recommended to include the output of this command.
 
 ```bash
 /eastereggs info

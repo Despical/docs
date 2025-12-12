@@ -56,7 +56,7 @@ export default defineConfig({
                                     {
                                         label: 'Getting Started',
                                         items: [
-                                            {label: 'Installation', slug: 'easter-eggs/get-started'},
+                                            {label: 'Installation', slug: 'easter-eggs/getting-started'},
                                             {label: 'Creating New Eggs', slug: 'easter-eggs/creating-new-eggs'},
                                         ],
                                     },
