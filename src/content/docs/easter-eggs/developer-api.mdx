@@ -1,59 +1,57 @@
 ---
 title: Developer API
 description: Learn how to hook into the Easter Eggs plugin using the Event API and User Manager.
-sidebar:
-    order: 7
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 import { Aside } from '@astrojs/starlight/components';
 
-The **Easter Eggs** plugin provides a lightweight yet powerful API. It allows other plugins to listen for events
+**Easter Eggs** provides a lightweight yet powerful API. It allows other plugins to listen for events
 and directly access the `User` objects to manipulate player statistics and cooldowns.
 
-This guide explains how to add the plugin as a dependency, access player data, and handle custom events.
-
 ---
-
-## Setup & Dependency
 
 Since **Easter Eggs** is a premium resource, it is not hosted on a public Maven repository. You must add the downloaded
 JAR file to your project manually.
 
-### 1. Adding the JAR
+## Dependency Setup
 Create a folder named `libs` in your project's root directory and place the `easter-eggs-x-x-x.jar` file inside it.
 
-### 2. Build Tools Configuration
+To use the API, you first need to add the Easter Eggs plugin to your project dependencies.
 
-Select your build tool below to see how to import the local JAR.
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        dependencies {
+            compileOnly files('libs/easter-eggs-x-x-x.jar')
+        }
+        ```
+    </TabItem>
 
-#### Maven (`pom.xml`)
-```xml
-<dependency>
-    <groupId>me.despical</groupId>
-    <artifactId>easter-eggs</artifactId>
-    <version>LATEST</version>
-    <scope>system</scope>
-    <systemPath>${project.basedir}/libs/easter-eggs-x-x-x.jar</systemPath>
-</dependency>
-```
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+            compileOnly(files("libs/easter-eggs-x-x-x.jar"))
+        }
+        ```
+    </TabItem>
 
-#### Gradle (`build.gradle`)
-```groovy
-dependencies {
-    compileOnly files('libs/easter-eggs-x-x-x.jar')
-}
-```
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>dev.despical</groupId>
+            <artifactId>carousel</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/easter-eggs-x-x-x.jar</systemPath>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
 
-### 3. plugin.yml
-Don't forget to add **Easter Eggs** as a dependency in your `plugin.yml` to ensure it loads before your plugin.
-
-```yaml
-name: YourPlugin
-version: 1.0
-main: com.yourname.YourPlugin
-depend:
-  - EasterEggs
-```
+<Aside type="caution">
+    Don't forget to add `Carousel` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
+</Aside>
 
 ---
 
@@ -107,7 +105,7 @@ the base `EasterEggsEvent` class, which provides the `getUser()` method.
 ### FoundNewEggEvent
 Triggered when a player interacts (right-clicks) with an Easter Egg block.
 
-* **Package:** `me.despical.eastereggs.api.FoundNewEggEvent`
+* **Package:** `dev.despical.eastereggs.api.FoundNewEggEvent`
 * **Methods:**
   * `getUser()`: Returns the `User` object wrapper for the player.
   * `getEggId()`: Returns the String ID of the egg being interacted with.
@@ -116,7 +114,7 @@ Triggered when a player interacts (right-clicks) with an Easter Egg block.
 ### EasterEggPlaceEvent
 Triggered when an administrator or allowed player places an Easter Egg block in the world using the special head item.
 
-* **Package:** `me.despical.eastereggs.api.EasterEggPlaceEvent`
+* **Package:** `dev.despical.eastereggs.api.EasterEggPlaceEvent`
 * **Methods:**
   * `getUser()`: Returns the `User` object of the placer.
   * `getEggId()`: Returns the String ID of the egg being placed.
@@ -129,9 +127,9 @@ Here is a complete, copy-paste-ready example class. It demonstrates how to acces
 check statistics, and handle events.
 
 ```java
-import me.despical.eastereggs.Main;
-import me.despical.eastereggs.api.FoundNewEggEvent;
-import me.despical.eastereggs.user.User;
+import dev.despical.eastereggs.Main;
+import dev.despical.eastereggs.api.FoundNewEggEvent;
+import dev.despical.eastereggs.user.User;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
