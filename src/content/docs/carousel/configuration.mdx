@@ -1,0 +1,68 @@
+---
+title: Configuration Files
+description: Manage global settings, permissions, and localization for your carousels.
+---
+
+This guide covers the main configuration files found in the plugin folder. You can tweak global settings in `config.yml` and translate or customize in-game text via `messages.yml`.
+
+## ⚙️ Global Configuration
+
+The `config.yml` file handles the core mechanics, optimization settings, and sound effects for the plugin.
+
+```yaml title="config.yml"
+# Leave the permission empty to allow every player to ride the horses.
+riding-horse-permission: ""
+
+# Should we check for updates when the plugin enables?
+update-notifier: true
+
+# Set 'NONE' to disable.
+sounds:
+  mount: NONE
+  dismount: NONE
+```
+
+### Config Options Explained
+
+Here is a detailed breakdown of each setting available in the configuration:
+
+| Option | Type | Description |
+| :--- | :--- | :--- |
+| `riding-horse-permission` | **String** | Permission required to ride carousel horses.<br/>• Leave as `""` to allow **everyone** to ride.<br/>• Set a custom permission (e.g. `carousel.ride`) to restrict access. |
+| `update-notifier` | **Boolean** | Enables update checks on startup and notifies admins if a new version is available. |
+| `sounds` | **Section** | Defines sound effects for interactions. Set to `NONE` to disable sounds for a specific action.<br/>• **mount:** Played when a player mounts a horse.<br/>• **dismount:** Played when a player dismounts. |
+
+---
+
+## 💬 Localization
+
+You can fully translate or customize all chat messages using the `messages.yml` file. This file supports standard color codes (e.g., `&a`, `&c`)
+and HEX colors in the `<#RRGGBB>` format.
+
+```yaml title="messages.yml"
+commands:
+  correct-usage: "&cCorrect usage: {0}"
+  no-permission: "&cYou must be admin or higher to use this command!"
+  did-you-mean: "&cDid you mean {0}?"
+  already-created: "&cThere is already a created carousel named {0}!"
+  created-carousel: "&aYou have successfully created a new carousel named {0}!"
+  no-carousel-like-that: "&cThere is no carousel named {0}!"
+  set-location: "&aYou set the center location for the carousel named {0}."
+  already-started: "&cThis carousel is already started!"
+  started-carousel: "&aYou have successfully started the carousel."
+  destroyed-carousel: "&aYou have destroyed the carousel named {0}."
+  deleted-carousel: "&aYou have deleted the carousel named {0}."
+  invalid-setting: "&cNo setting found with the name {0}!"
+  settings-updated: "&aSettings of {0} carousel is successfully updated!"
+  no-carousels-created: "&cThere is no created carousel to show!"
+  carousel-list: "&aCarousels: &7{0}"
+
+carousel:
+ # Leave the message empty if you don't want to send.
+ mount: ""
+ dismount: ""
+```
+
+:::tip[PlaceholderAPI Support]
+All messages in this file support **PlaceholderAPI**! You can use any PAPI placeholders (like `%player_name%`) to create dynamic and personalized messages.
+:::

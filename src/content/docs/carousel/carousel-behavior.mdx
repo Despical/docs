@@ -1,0 +1,81 @@
+---
+title: Carousel Behavior & Physics
+description: Deep dive into the mechanics of carousel movement and how to fine-tune physics settings.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+While the default settings work great for most servers, you might want to fine-tune exactly how your carousel moves. Whether you want a giant, slow-moving ferris wheel or a small, fast-spinning top, you can achieve it by modifying the **Behavior Settings**.
+
+All settings below can be modified using the following command structure:
+
+```bash
+/carousel setting <id> <setting> <value>
+```
+
+---
+
+## Movement & Speed
+
+These settings control how frequently the carousel updates and how fast it spins.
+
+### Ticks (Update Interval)
+**Command:** `/carousel setting <id> ticks <value>`
+
+This determines the delay (in Minecraft ticks) between each movement update.
+* **Default:** `1` (Update every tick)
+* **Concept:** Think of this as the **Refresh Rate** or **FPS** of your carousel.
+* **Logic:** Minecraft runs at 20 ticks per second.
+  * `1` = Super smooth movement (Updates 20 times/sec).
+  * `5` = Choppier movement (Updates 4 times/sec).
+
+<Aside type="tip">
+    For the smoothest experience, keep this at **1**. Only increase this value if you have a massive carousel causing performance issues and you want to reduce CPU usage.
+</Aside>
+
+### Degree Increase (Rotation Speed)
+**Command:** `/carousel setting <id> degreeIncrease <value>`
+
+This controls the **Angular Velocity**. It defines how many degrees the horse moves around the center circle during each update (tick).
+* **Higher Value:** The carousel spins **faster**.
+* **Lower Value:** The carousel spins **slower**.
+
+<Aside type="note">
+    If you set this value too high (e.g., 90+), the horses might look like they are teleporting rather than spinning smoothly.
+</Aside>
+
+---
+
+## Shape & Size
+
+### Radius
+**Command:** `/carousel setting <id> radius <value>`
+
+This sets the distance (in blocks) from the center of the carousel to the horses.
+* **Concept:** This effectively changes the **size** (width) of the carousel.
+* Increasing the radius pushes the horses further away from the center block.
+
+---
+
+## Vertical Motion (Bobbing)
+
+Real carousels don't just spin; horses go up and down! These two settings control that "wave" motion.
+
+### Step Height
+**Command:** `/carousel setting <id> stepHeight <value>`
+
+This controls the **vertical speed** of the bobbing motion. It determines how much Y-level (height) is added or subtracted in every movement step.
+* **Higher Value:** Horses move up and down very quickly (jerky motion).
+* **Lower Value:** Horses move up and down slowly and gently.
+
+### Max Height
+**Command:** `/carousel setting <id> maxHeight <value>`
+
+This controls the **amplitude** or **range** of the vertical movement. It sets the maximum number of blocks a horse can travel upwards from its starting point before it starts going back down.
+* **Example:** If set to `1.0`, the horse will gently float up 1 block, then down 1 block.
+* **Example:** If set to `5.0`, the horse will travel a significant distance up and down (like a roller coaster).
+
+<Aside type="tip">
+    **How they work together:**
+    If you want a gentle motion, keep `Step Height` low (e.g., 0.1) and `Max Height` moderate (e.g., 1.0).
+</Aside>

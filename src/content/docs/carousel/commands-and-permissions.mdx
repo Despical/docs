@@ -1,0 +1,160 @@
+---
+title: Commands & Permissions
+description: A comprehensive guide to all commands and permissions available in Carousel.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page details every command available in the **Carousel** plugin. The primary command label is `/carousel`.
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `carousel.*` will provide access to every command and feature listed on this page.
+</Aside>
+
+---
+
+### Create
+Creates a new carousel instance with the specified ID at your current location.
+
+```bash
+/carousel create <id>
+```
+* **Permission:** `carousel.create`
+
+### Edit
+Opens the interactive GUI editor. This menu allows you to visually customize properties like horse amounts, leash settings, glowing settings, and more.
+
+```bash
+/carousel edit <id>
+```
+* **Permission:** `carousel.edit`
+
+### Start
+Spawns the horses and starts the animation for the specified carousel.
+
+```bash
+/carousel start <id>
+```
+* **Permission:** `carousel.start`
+
+### Teleport
+Teleports you directly to the center of the specified carousel.
+
+```bash
+/carousel teleport <id>
+```
+* **Permission:** `carousel.teleport`
+
+### List
+Displays a list of all created carousel instances currently on the server.
+
+```bash
+/carousel list
+```
+* **Permission:** `carousel.list`
+
+### Delete
+**Permanently** deletes the carousel instance from the configuration and removes all associated entities.
+
+```bash
+/carousel delete <id>
+```
+* **Permission:** `carousel.delete`
+
+### Destroy
+Removes the horses of the carousel from the world but **keeps** the configuration.
+The carousel will respawn when the server is restarted or reloaded.
+
+```bash
+/carousel destroy <id>
+```
+* **Permission:** `carousel.destroy`
+
+<Aside type="caution">
+    Use `destroy` if you want to temporarily hide the carousel. Use `delete` if you want to remove it forever.
+</Aside>
+
+---
+
+## Configuration Commands
+These commands allow you to customize the behavior of a carousel.
+
+### Modify Settings
+Allows you to manually modify specific numerical settings for a carousel without using the GUI.
+
+**General Usage:**
+```bash
+/carousel setting <id> <setting> <value>
+```
+* **Permission:** `carousel.setting`
+
+**Available Settings:**
+
+* **Ticks (Interval):** Sets the delay (in ticks) between each movement update.
+  ```bash
+  /carousel setting <id> ticks <value>
+    ```
+* **Degree Increase (Speed):** Sets how much the carousel rotates per tick. Higher values mean faster rotation.
+  ```bash
+  /carousel setting <id> degreeIncrease <value>
+    ```
+* **Step Height:** Sets the vertical amplitude (how high/low horses move).
+  ```bash
+  /carousel setting <id> stepHeight <value>
+    ```
+* **Max Height:** Sets the total vertical range limit.
+  ```bash
+  /carousel setting <id> maxHeight <value>
+    ```
+* **Radius:** Sets the distance of the horses from the center point.
+  ```bash
+  /carousel setting <id> radius <value>
+    ```
+
+---
+
+## Administrative Commands
+These commands are intended for configuration, cleanup, and troubleshoot the plugin
+
+### Reload
+Reloads all configuration files and applies configuration changes instantly without restarting the server.
+
+```bash
+/carousel reload
+```
+* **Permission:** `carousel.reload`
+
+### Purge
+Removes all stuck or "ghost" carousel entities from the world. Use this if you see horses left behind after a crash or improper shutdown.
+
+```bash
+/carousel purge
+```
+* **Permission:** `carousel.purge`
+
+### Version
+Displays comprehensive diagnostic information about the plugin, including the plugin version, server software, and Java environment.
+
+When submitting a support ticket, it is strongly recommended to include the output of this command.
+
+```bash
+/carousel version
+```
+* **Permission:** `carousel.version`
+
+### Help
+Displays a comprehensive list of all available commands along with their descriptions. You can hover over the commands in the chat to see more details.
+
+```bash
+/carousel help
+```
+* **Permission:** `carousel.help`
+
+---
+
+## Extra Permissions
+
+These permissions control specific interactions or features not tied to a single command.
+
+**`carousel.tabcompleter`**
+* Grants permission to use the tab-completion feature. When typing `/carousel`, the player will see a list of valid sub-commands and IDs.

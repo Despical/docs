@@ -1,0 +1,100 @@
+---
+title: Frequently Asked Questions
+description: Quick answers regarding licensing, requirements, and access to the Carousel plugin.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources.
+
+---
+
+## What is the license for the Carousel plugin?
+
+The **Carousel** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**, which may be updated by the
+author at any time:
+
+* All payments are final and non-refundable.
+* Redistribution or resale of this plugin is prohibited.
+* You are not permitted to modify, decompile, or extract any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers. We cannot offer support for plugins obtained through
+unauthorized or illegal means.
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 and newer versions** are
+required to run the Easter Eggs plugin.
+
+<Aside type="note">
+    We always strive to adopt the latest stable Java version for optimal performance and security. We strongly
+    recommend keeping your server updated, as future plugin updates may raise the minimum required Java version.
+</Aside>
+
+---
+
+## Which Minecraft versions are supported?
+
+We provide official support for Minecraft versions ranging from **1.8 up to 1.21.11**.
+
+Maintaining compatibility with new versions is a core commitment; upcoming Minecraft versions will always be
+supported promptly following their official release.
+
+---
+
+## Can I access the plugin's source code?
+
+Yes, if you are a **legitimate customer** who has purchased the plugin, you can request access to the source
+code repository.
+
+To gain access, please follow these steps:
+1.  Join our official [**Discord server**](https://discord.gg/uXVU8jmtpU).
+2.  Open a **support ticket**.
+3.  Provide **proof of purchase** (Transaction ID, receipt or Spigot username).
+4.  Provide your **GitHub username**.
+
+Once verified, you will be granted access to the private GitHub repository.
+
+## What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions (1.8 – 1.21+).
+This means the sound names you use in your configuration files might differ from standard vanilla names.
+
+The official list of all available and supported sound names can be found on the library's GitHub page:
+
+[**List of All Available Sound Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+<Aside type="caution">
+    While XSeries aims for wide support, you must verify that the chosen sound name exists within the specific Minecraft
+    version your server is running (e.g., a sound added in 1.16 will not play on a 1.8 server).
+</Aside>
+
+## Why do my entities disappear randomly?
+
+The plugin uses a unique, invisible identifier (tag) stored in the entity's custom name to track which horses belong to a carousel. This allows the plugin to clean up "ghost" entities that might get stuck after a restart.
+
+**The internal tag used is:** `§8§8§0§c§d`
+
+:::caution[Avoid using this tag]
+If you manually give any entity a custom name containing this exact color code sequence (`§8§8§0§c§d`), the plugin will mistake it for a stuck carousel entity.
+
+As a result, that entity will be **deleted automatically** when the server restarts or when you run the `/carousel purge` command.
+:::
+
+## Entities stuck after a reload or crash?
+
+If your server crashes, shuts down unexpectedly, or if you reload while a carousel is spinning, you might notice "ghost" horses remaining in the world.
+
+:::tip[Resolved in v1.8.9+]
+This issue has been automatically resolved starting from version **1.8.9**. The plugin now intelligently detects and cleans up these stuck entities when the server starts up.
+:::
+
+However, if you still encounter stuck entities or want to manually clean them up without restarting, we have added a specific command for this:
+
+```bash
+/carousel purge
+```
+Running this command will instantly scan the worlds and remove any stuck carousel entities.

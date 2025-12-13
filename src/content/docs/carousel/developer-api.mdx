@@ -1,0 +1,108 @@
+---
+title: Developer API
+description: Learn how to hook into Carousel and listen to custom events using the API.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+
+**Carousel** provides a lightweight API that allows other plugins to interact with carousel entities and listen to player interactions.
+
+Since **Easter Eggs** is a premium resource, it is not hosted on a public Maven repository. You must add the downloaded
+JAR file to your project manually.
+
+## Dependency Setup
+Create a folder named `libs` in your project's root directory and place the `carousel-x-x-x.jar` file inside it.
+
+To use the API, you first need to add the Easter Eggs plugin to your project dependencies.
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        dependencies {
+            compileOnly files('libs/carousel-x-x-x.jar')
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+            compileOnly(files("libs/carousel-x-x-x.jar"))
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>dev.despical</groupId>
+            <artifactId>carousel</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/carousel-x-x-x.jar</systemPath>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+<Aside type="caution">
+    Don't forget to add `EasterEggs` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
+</Aside>
+
+---
+
+## Custom Events
+
+Carousel fires custom Bukkit events that you can listen to just like any other server event. All events are located in the `dev.despical.carousel.api.events` package.
+
+| Event Class | Description | Cancellable |
+| :--- | :--- | :---: |
+| **`CarouselMountEvent`** | Fired when a player tries to mount a carousel horse. | Yes |
+| **`CarouselDismountEvent`** | Fired when a player tries to dismount a carousel horse. | Yes |
+
+### Example Usage
+
+Here is a complete example class showing how to listen for mount and dismount events, access the player and carousel data, and cancel the interaction if needed.
+
+```java title="CarouselEvents.java"
+import dev.despical.carousel.api.events.CarouselDismountEvent;
+import dev.despical.carousel.api.events.CarouselMountEvent;
+
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class CarouselEvents extends JavaPlugin implements Listener {
+
+    @Override
+    public void onEnable() {
+        // Register the event listener
+        getServer().getPluginManager().registerEvents(this, this);
+    }
+
+    @EventHandler
+    public void onMount(CarouselMountEvent event) {
+        Player player = event.getPlayer();
+
+        // You can access the specific carousel instance involved
+        // Carousel carousel = event.getCarousel();
+
+        // Example: Cancel the event to prevent mounting
+        // event.setCancelled(true);
+
+        player.sendMessage("You have mounted the carousel!");
+    }
+
+    @EventHandler
+    public void onDismount(CarouselDismountEvent event) {
+        Player player = event.getPlayer();
+
+        // This event can also be cancelled to prevent the player from leaving
+        event.setCancelled(false);
+
+        player.sendMessage("You have dismounted!");
+    }
+}
+```

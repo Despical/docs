@@ -95,9 +95,78 @@ export default defineConfig({
                                         ],
                                     },
                                     {
+                                        label: "Support",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "Discord Server", link: "https://discord.gg/uXVU8jmtpU", attrs: {target: "_blank"}},
+                                            {label: "Spigot Discussion", link: "https://www.spigotmc.org/threads/643570/page-100", attrs: {target: "_blank"}},
+                                        ]
+                                    },
+                                    {
                                         label: 'FAQ',
                                         items: [
                                             {label: 'Frequently Asked Questions', slug: 'easter-eggs/faq'}
+                                        ],
+                                    },
+                                ],
+                            },
+                        ]
+                    },
+                    {
+                        id: "carousel",
+                        label: 'Carousel',
+                        link: '/carousel/',
+                        icon: 'carousel',
+                        items: [
+                            {
+                                label: 'Carousel',
+                                items: [
+                                    {
+                                        label: 'Getting Started',
+                                        items: [
+                                            {label: 'Installation', slug: 'carousel/getting-started'},
+                                            {label: 'Creating Carousels', slug: 'carousel/creating-carousels'},
+                                        ],
+                                    },
+                                    {
+                                        label: 'Configuration Files',
+                                        items: [
+                                            {label: 'Config Files', slug: 'carousel/configuration'}
+                                        ],
+                                    },
+                                    {
+                                        label: 'Movement Mechanics',
+                                        items: [
+                                            {label: 'Carousel Behavior', slug: 'carousel/carousel-behavior'}
+                                        ],
+                                    },
+                                    {
+                                        label: 'Commands',
+                                        items: [
+                                            {
+                                                label: 'Commands & Permissions',
+                                                slug: 'carousel/commands-and-permissions'
+                                            }
+                                        ],
+                                    },
+                                    {
+                                        label: 'API',
+                                        items: [
+                                            {label: 'Developer API', slug: 'carousel/developer-api'}
+                                        ],
+                                    },
+                                    {
+                                        label: "Support",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "Discord Server", link: "https://discord.gg/uXVU8jmtpU", attrs: {target: "_blank"}},
+                                            {label: "Spigot Discussion", link: "https://www.spigotmc.org/threads/644299/page-100", attrs: {target: "_blank"}},
+                                        ]
+                                    },
+                                    {
+                                        label: 'FAQ',
+                                        items: [
+                                            {label: 'Frequently Asked Questions', slug: 'carousel/faq'}
                                         ],
                                     },
                                 ],
@@ -135,6 +204,7 @@ export default defineConfig({
                                     },
                                     {
                                         label: "Support",
+                                        collapsed: true,
                                         items: [
                                             {label: "Issue Tracker", link: "https://github.com/Despical/CommandFramework/issues/new/choose", attrs: {target: "_blank"}},
                                             {label: "Spigot Discussion", link: "https://spigotmc.org/threads/494383/page-100", attrs: {target: "_blank"}},
