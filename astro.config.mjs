@@ -219,7 +219,8 @@ export default defineConfig({
                                     {
                                         label: "FAQ",
                                         items: [
-                                            {label: "Relocate the Framework", slug: "command-framework/relocate-the-framework"}
+                                            {label: "Relocate the Framework", slug: "command-framework/relocate-the-framework"},
+                                            {label: "Register Commands inside a Package", slug: "command-framework/register-commands-in-a-package"},
                                         ]
                                     }
                                 ]

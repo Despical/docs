@@ -1,0 +1,100 @@
+---
+title: Register Commands inside a Package
+description: Learn how to register all command classes in a package.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The Command Framework provides a convenient way to **automatically discover and register command classes**
+by scanning an entire package at runtime.
+
+This feature removes the need to manually instantiate and register each command class one by one.
+
+## The #registerAllInPackage method.
+
+```java
+CommandFramework commandFramework = ...;
+commandFramework.registerAllInPackage("com.example.project.commands");
+```
+
+This method scans **all top-level classes** inside the given package and its sub-packages, creates instances of them,
+and registers them as commands.
+
+### How It Works
+
+When `registerAllInPackage` is called, the framework:
+
+1. Scans all classes under the specified package
+2. Skips:
+    - Interfaces
+    - Abstract classes
+3. Attempts to create an instance using a **public no-args constructor**
+4. Registers the instance if successful
+
+Classes without a public no-args constructor **cannot be instantiated** and therefore cannot be registered.
+
+## Scan Warnings (REPORT_SCAN_WARNINGS)
+
+During scanning, the framework can optionally report **potential misconfigurations**.
+
+This behavior is controlled by the following option:
+
+```java
+FrameworkOption.REPORT_SCAN_WARNINGS
+```
+
+### What Triggers a Warning?
+
+A warning is logged **only if all conditions below are met**:
+
+- The class contains at least one method annotated with:
+    - `@Command`
+    - `@Completer`
+- The class **does not** have a public no-args constructor
+- `REPORT_SCAN_WARNINGS` option is enabled
+
+Example warning:
+
+```
+Class 'ExampleCommand' contains command annotations but is missing a public no-args constructor.
+```
+
+If multiple warnings are issued, the framework will also log a reminder explaining how to disable them.
+
+## Disabling Scan Warnings
+
+If this behavior is intentional (for example, you prefer manual instantiation),
+you may disable scan warnings globally:
+
+```java
+CommandFramework commandFramework = ...;
+commandFramework
+    .options()
+    .disableOption(FrameworkOption.REPORT_SCAN_WARNINGS);
+```
+
+Once disabled, the framework will silently skip non-instantiable classes.
+
+<Aside type="tip">
+    Automatic package scanning is best suited for simple command classes with
+    stateless behavior and public no-args constructors.
+</Aside>
+
+## When Should You Use Package Scanning?
+
+Package scanning is ideal when:
+
+- You want minimal boilerplate.
+- Your command classes are lightweight.
+- You prefer convention over manual registration.
+
+Manual registration may be preferable if:
+
+- Commands require constructor dependencies.
+- You want full control over instantiation.
+- Commands are created dynamically.
+
+<Aside type="caution">
+    Classes that rely on constructor injection will not work with automatic package scanning.
+    Use **#registerCommands(Object)** method instead.
+</Aside>
