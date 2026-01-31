@@ -1,0 +1,62 @@
+---
+title: items.yml
+description: Comprehensive guide for customizing in-game items and lobby tools.
+---
+
+The `items.yml` file allows you to define the visual and functional properties of items used within the plugin, such as the lobby leave tool or special game-specific items.
+
+---
+
+### Basic Item Structure
+
+Every item in the configuration follows a standard format. Here is an example of the default lobby leave item:
+
+```yaml
+lobby-items:
+  leave-item:
+    material: RED_BED
+    slot: 8
+    name: "<red><bold>Return to Lobby <gray>(Right Click)"
+    lore:
+      - "<gray>Right-click to leave to the lobby!"
+    glow: true
+    unbreakable: true
+```
+
+---
+
+### Supported Properties
+
+You can use the following keys to further customize your items:
+
+| Key | Description | Example |
+| :--- | :--- | :--- |
+| `material` | The material name for the item. | `DIAMOND_SWORD` |
+| `amount` | The quantity of the item in the stack. | `1` |
+| `name` | The display name of the item. | `<gold>Santa's Blade` |
+| `lore` | A list of lines for the item's description. | `- "<gray>Line 1"` |
+| `glow` | If true, adds an enchantment glow without visible enchants. | `true` |
+| `enchants` | A list of enchantments and levels. | `SHARPNESS:5` |
+| `itemFlags` | Hides certain item attributes (e.g., attributes, enchants). | `HIDE_ENCHANTS` |
+| `unbreakable` | Prevents the item from losing durability. | `true` |
+| `durability` | Sets the remaining durability of the item. | `100` |
+| `hideTooltip` | Hides the default Minecraft tooltip for the item. | `true` |
+| `data` | Used for specific legacy data values. | `1` |
+
+---
+
+### Oraxen Support
+
+Santa Says features native integration with **Oraxen**, allowing you to use high-quality custom textures and 3D models for your game items.
+
+To use an Oraxen item, instead of defining a standard `material`, use the `oraxen:` prefix followed by the item ID defined in your configuration.
+
+#### Example Configuration
+```yaml
+custom-game-item:
+  material: "oraxen:flame_sword"
+  name: "<gradient:orange:red>Flame Sword</gradient>"
+  glow: true
+```
+
+---
