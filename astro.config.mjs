@@ -174,6 +174,124 @@ export default defineConfig({
                         ]
                     },
                     {
+                        label: "Santa Says",
+                        link: "/santa-says/",
+                        icon: "santa-says",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        link: "/santa-says/getting-started",
+                                    },
+                                    {
+                                        label: "Gameplay Overview",
+                                        link: "/santa-says/gameplay",
+                                    },
+                                    {
+                                        label: "Arena Setup",
+                                        link: "/santa-says/arena-setup",
+                                    },
+                                ],
+                            },
+
+                            {
+                                label: "Tasks",
+                                items: [
+                                    {
+                                        label: "Participation Tasks",
+                                        link: "/santa-says/tasks/participation",
+                                    },
+                                    {
+                                        label: "Placement Tasks",
+                                        link: "/santa-says/tasks/placement",
+                                    },
+                                ],
+                            },
+
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Player Commands",
+                                        link: "/santa-says/player-commands",
+                                    },
+                                    {
+                                        label: "Arena Commands",
+                                        link: "/santa-says/arena-commands",
+                                    },
+                                    {
+                                        label: "Admin Commands",
+                                        link: "/santa-says/admin-commands",
+                                    },
+                                    {
+                                        label: "Debug Commands",
+                                        link: "/santa-says/debug-commands",
+                                    },
+                                ],
+                            },
+
+                            {
+                                label: "Configuration",
+                                items: [
+                                    { label: "config.yml", link: "/santa-says/configuration/config" },
+                                    { label: "messages.yml", link: "/santa-says/configuration/messages" },
+                                    { label: "scoreboard.yml", link: "/santa-says/configuration/scoreboard" },
+                                    { label: "bossbar.yml", link: "/santa-says/configuration/bossbar" },
+                                    { label: "items.yml", link: "/santa-says/configuration/items" },
+                                    {
+                                        label: "GUI Menus",
+                                        collapsed: true,
+                                        items: [
+                                            { label: "stats-menu.yml", link: "/santa-says/configuration/menu/stats" },
+                                            { label: "setup-menu.yml", link: "/santa-says/configuration/menu/setup" },
+                                        ]
+                                    },
+                                    { label: "mysql.yml", link: "/santa-says/configuration/mysql" },
+                                    { label: "System Files", link: "/santa-says/system-files" },
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {
+                                        label: "General Placeholders",
+                                        link: "/santa-says/placeholders/general",
+                                    },
+                                    {
+                                        label: "Leaderboard Placeholders",
+                                        link: "/santa-says/placeholders/leaderboards",
+                                    },
+                                ],
+                            },
+
+                            {
+                                label: "Music",
+                                items: [
+                                    {
+                                        label: "NoteBlockAPI",
+                                        link: "/santa-says/music",
+                                    },
+                                ],
+                            },
+
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "Developer API",
+                                        link: "/santa-says/developer-api",
+                                    },
+                                    {
+                                        label: "FAQ",
+                                        link: "/santa-says/faq",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Command Framework",
                         link: '/command-framework/',
                         icon: 'command-framework',
