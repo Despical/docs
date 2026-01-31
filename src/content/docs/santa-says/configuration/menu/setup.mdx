@@ -1,0 +1,62 @@
+---
+title: setup-menu.yml
+description: Configuration for the interactive arena setup GUI used by administrators.
+---
+
+The `setup-menu.yml` file defines the appearance and feedback messages of the interactive GUI opened via `/santasays edit <arena>`. This menu guides administrators through the process of setting up locations, player limits, and game platforms.
+
+---
+
+## Setup Categories
+---
+
+### 1. Location Settings
+These items allow you to define the critical teleport points for your arena.
+
+| Item Key | Purpose |
+| :--- | :--- |
+| `lobby` | Sets the waiting area where players spawn before the game starts. |
+| `start` | Sets the location where players are teleported when the match begins. |
+| `end` | Sets the celebration/spectator area for the end of the game. |
+
+### 2. Player Amounts
+Configures the capacity of the arena.
+* **`min-player-amount`**: The threshold to start the game countdown.
+* **`max-player-amount`**: The hard limit of players allowed in the arena.
+* **Click Logic:** Usually configured so that **Left Click** increases and **Right Click** decreases the value within the GUI.
+
+### 3. The Platform Selector
+The `platform-selector` is the most advanced tool in the setup menu. It defines the physical area where tasks take place.
+
+**Administrator Controls (Blaze Rod Tool):**
+* **Left Click:** Select **Position 1** (or add to area).
+* **Right Click:** Select **Position 2** (or remove from area).
+* **Sneak + Left Click:** Remove a single specific block from the platform.
+* **Sneak + Right Click:** Add a single specific block to the platform.
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  lobby:
+    name: "&e&lSet Lobby Location"
+    material: COMPASS
+    message: "&aLobby location set successfully!"
+
+  min-player-amount:
+    name: "&e&lSet Minimum Players"
+    material: GLOWSTONE_DUST
+    lore:
+      - "&8• &7LEFT click to increase"
+      - "&8• &7RIGHT click to decrease"
+      - "&7Current requirement for countdown."
+
+  register-arena:
+    name: "&e&lRegister the Arena"
+    material: FIREWORK
+    hideTooltip: true
+```
+
+---
