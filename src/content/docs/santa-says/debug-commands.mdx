@@ -9,7 +9,7 @@ Debug commands are powerful tools designed for testing and resolving issues. To 
 
 ---
 
-### Enabling Debug Mode
+## Enabling Debug Mode
 
 Before you can use these commands, you must enable debug mode in your `config.yml`. This toggle acts as a safety gate for advanced administrative operations.
 
@@ -26,7 +26,7 @@ event-profiling:
 ```
 ---
 
-### Timer Command
+## Timer Command
 
 Administrators with the `santasays.debug.timer` permission can manually override the active game timer. This is particularly useful during testing to skip long waiting periods.
 
@@ -38,7 +38,7 @@ If used without an arena name, the command targets the arena you are currently i
 
 ---
 
-### State Command
+## State Command
 
 Administrators with the `santasays.debug.state` permission can force a match into a specific game state (e.g., `WAITING`, `STARTING`, `IN_GAME`, `ENDING`, `RESTARTING`). This allows you to manually progress the game lifecycle for debugging purposes.
 
@@ -50,7 +50,7 @@ Similar to the timer command, this targets your current arena unless a specific 
 
 ---
 
-### Tasks Command
+## Tasks Command
 
 Administrators with the `santasays.debug.tasks` permission can access an interactive registry of all tasks available in the plugin. This is the primary interface for exploring, searching, and testing individual challenges.
 
@@ -67,7 +67,7 @@ You can also use the search flag to filter the list by task name.
 
 ---
 
-### Run Task Command
+## Run Task Command
 
 While primarily functioning as a background utility for the `/santasays debug tasks` command, administrators with the `santasays.debug.tasks` permission can also trigger this command manually for specific testing scenarios.
 
@@ -83,7 +83,7 @@ If you are currently in an arena, it sets the specified task as the next one to 
 
 ---
 
-### Join Command
+## Join Command
 
 Administrators with the `santasays.debug.join` permission can use this powerful command to instantly set up a test environment. Unlike the standard join command, this version bypasses the usual waiting phases and allows you to simulate a full game scenario with specific players and tasks.
 
@@ -93,18 +93,18 @@ When executed, it forces the specified arena's state directly to `IN_GAME`. You 
 /santasays debug join <arena> [--players=p1,p2,...] [--tasks=1,2,3]
 ```
 
-#### Options
+### Options
 * `--players=name1,name2`: Automatically pulls the specified online players into the arena with you.
 * `--tasks=id1,id2`: Forces the game to run specific tasks in the given order.
 
-#### Example
+### Example
 ```bash
 /santasays debug join winter-arena --players=mrdespi,mSquid_ --tasks=5,12,8
 ```
 
 ---
 
-### Next Command
+## Next Command
 
 Administrators with the `santasays.debug.next` permission can manually queue the upcoming tasks for their current arena. This command is perfect for testing specific task transitions or chaining challenges together to see how they flow.
 
@@ -114,14 +114,14 @@ When you specify task IDs, the plugin will provide a confirmation message in cha
 /santasays debug next <task_id_1> [task_id_2] ...
 ```
 
-#### Example
+### Example
 ```bash
 /santasays debug next 5 12 3
 ```
 
 ---
 
-### Round Command
+## Round Command
 
 Administrators with the `santasays.debug.round` permission can manually set the current round number of the match. This is a critical tool for testing round-specific logic or jumping directly to the final round to verify winner calculations and rewards.
 
@@ -131,14 +131,14 @@ The command requires a valid integer. Once executed, the match's internal round 
 /santasays debug round <number>
 ```
 
-#### Example
+### Example
 ```bash
 /santasays debug round 15
 ```
 
 ---
 
-### Component Command
+## Component Command
 
 Administrators with the `santasays.debug.component` permission can use this command to preview chat formatting and component parsing in real-time. Instead of constantly reloading configuration files to see how a message looks, you can test colors, hex codes, and placeholders directly in-game.
 
@@ -148,14 +148,14 @@ The plugin will parse the input using its internal chat manager and send the res
 /santasays debug component <message>
 ```
 
-#### Example
+### Example
 ```bash
 /santasays debug component <gradient:red:gold>Test Message!</gradient>
 ```
 
 ---
 
-### Dump Command
+## Dump Command
 
 Administrators with the `santasays.debug.component` permission can generate a comprehensive performance report of the plugin's internal events. This command is directly tied to the **Event Profiling** system in the `config.yml`.
 
@@ -165,7 +165,7 @@ When executed, the plugin will send a timings report to the sender, detailing ho
 /santasays debug dump
 ```
 
-#### Details
+### Details
 * **Prerequisite:** `event-profiling` must be enabled in `config.yml` for meaningful data.
 * **Output:** Displays execution timings for all registered Santa Says event listeners.
 
