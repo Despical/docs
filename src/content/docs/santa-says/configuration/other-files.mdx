@@ -1,0 +1,42 @@
+---
+title: System Files
+description: Overview of internal data files managed automatically by Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+While Santa Says provides many configuration files for customization, it also manages several internal files that act as the plugin's "memory." These files are structured specifically for machine reading and high-speed data access.
+
+<Aside type="danger">
+    **DO NOT MANUAL EDIT:** Manual modification of these files is strictly prohibited. Editing them while the server is running can cause data corruption, loss of arena settings, or plugin crashes. Use in-game commands or menus to modify your setups instead.
+</Aside>
+
+---
+
+## Managed Files Overview
+
+| File Path                       | Primary Function                                                    | Management Method                            |
+|:--------------------------------|:--------------------------------------------------------------------|:---------------------------------------------|
+| `arenas.yml`                    | Stores all physical data for arenas (locations, regions, settings). | Managed via `/ss setup` menu.                |
+| `stats.yml`                     | Local database for player statistics (Wins, Losses, Streaks).       | Used only when `database: flat` is selected. |
+| `recovery/arena-recoveries.yml` | Stores active game states to prevent data loss during crashes.      | Managed automatically by the game.           |
+
+---
+
+## Detailed Breakdown
+---
+
+### arenas.yml
+This is the most critical system file. It contains every coordinate, region boundary, and specific option for every arena you have created.
+* **Why you shouldn't touch it:** A single missing comma or a slightly wrong coordinate format will prevent the arena from loading, often requiring a complete redo of the setup.
+* **How to update:** Use the **Setup Menu** to change locations or arena options.
+
+### stats.yml
+When your server is set to `flat` database mode, all festive achievements (wins, losses, streaks) are recorded here.
+
+* **Why you shouldn't touch it:** The plugin keeps a live cache of player data in the server's memory. If you modify this file while the server is running, the plugin will eventually overwrite your changes with its own cached data, causing your manual edits to be lost forever.
+* **How to update:** If you absolutely must edit this file manually, you **must shut down the server completely** first. After the server is offline, you can make your changes and then start it back up.
+
+### recovery/arena-recoveries.yml
+This file is part of our arena protection system. If your server restarts unexpectedly or crashes while a game is in progress, this file helps the plugin understand which arenas need a "clean reset" or a state recovery.
+* **Why you shouldn't touch it:** It is a temporary storage. Manually deleting it while a game is "hanging" might lead to internal errors on the next boot.
