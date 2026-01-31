@@ -1,0 +1,33 @@
+---
+title: Player Commands
+description: Commands available to regular players for joining games, leaving matches, and viewing statistics.
+---
+
+Player Commands are available to **regular players** and do not require administrative permissions. These commands allow players to interact with Santa Says gameplay by joining arenas, leaving matches, and viewing statistics.
+
+All commands can be used via `/santasays` or its alias `/ss`.
+
+### Join Command
+
+Allows a player to join a Santa Says arena. The plugin automatically checks arena availability, game state, and capacity before allowing the player to join.
+```bash
+/santasays join <arena>
+```
+
+### Leave Command
+
+Safely removes the player from the current Santa Says game. This command can be used at any time during gameplay and will return the player to the lobby location.
+```bash
+/santasays leave
+```
+
+### Stats Command
+
+Displays detailed Santa Says statistics through an in-game menu.
+
+By default, the command opens your own statistics, including completed games, placements, and overall performance.
+When a player name is provided, the same statistics are shown for the specified player.
+Statistics can be viewed for both online and offline players.
+```bash
+/santasays stats [player]
+```
