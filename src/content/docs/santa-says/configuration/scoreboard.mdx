@@ -11,15 +11,15 @@ The `scoreboard.yml` file allows you to customize the information displayed on t
 
 These placeholders are available in **every stage** of the game (Waiting, Starting, In-Game, and Ending).
 
-| Placeholder | Description |
-| :--- | :--- |
-| `%player%` | The name of the player viewing the scoreboard. |
-| `%date%` | The current date (formatted automatically). |
-| `%timer%` | Remaining time in seconds (e.g., `30`). |
+| Placeholder         | Description                                       |
+|:--------------------|:--------------------------------------------------|
+| `%player%`          | The name of the player viewing the scoreboard.    |
+| `%date%`            | The current date (formatted automatically).       |
+| `%timer%`           | Remaining time in seconds (e.g., `30`).           |
 | `%formatted_timer%` | Remaining time in `MM:SS` format (e.g., `00:30`). |
-| `%players%` | Current number of players in the arena. |
-| `%min_players%` | The minimum players required to start. |
-| `%max_players%` | The maximum capacity of the arena. |
+| `%players%`         | Current number of players in the arena.           |
+| `%min_players%`     | The minimum players required to start.            |
+| `%max_players%`     | The maximum capacity of the arena.                |
 
 ---
 
@@ -70,22 +70,24 @@ waiting:
     - "<gray>%date%"
     - ""
     - "<white>Players: <green>%players%/%max_players%"
-    - "<white>Need <green>%players_needed% <white>more player%s%"
+    - ""
+    - "<white>Starting in <green>%formatted_timer% <white>if"
+    - "<green>%players_needed% <white>more player%s% join"
     - ""
     - "<yellow>www.greenmc.io"
 
 in-game:
   title: "<yellow><bold>SANTA SAYS"
   lines:
-    - "<gray>1. %player_1%: <green>%player_1_score%"
-    - "<gray>2. %player_2%: <green>%player_2_score%"
-    - "<gray>3. %player_3%: <green>%player_3_score%"
-    - "%if_not_in_top3%<white>. . ."
-    - "%if_not_in_top3%<gray>%player%: <green>%score%"
+    - "<gray>%date%"
     - ""
-    - "<white>Round: <green>%round%/15"
+    - "<gray>%player_1%<white>: <green>%player_1_score%"
+    - "<gray>%player_2%<white>: <green>%player_2_score%"
+    - "<gray>%player_3%<white>: <green>%player_3_score%"
+    - "%if_not_in_top3%<white>. . ."
+    - "%if_not_in_top3%<gray>%player%<white>: <green>%score%"
+    - ""
+    - "<white>Game: <green>%round%/15"
     - ""
     - "<yellow>www.greenmc.io"
-  ```
-
----
+```
