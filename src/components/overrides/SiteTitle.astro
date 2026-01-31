@@ -12,13 +12,16 @@ import commandDark from "../../assets/command-framework/icon-dark.svg";
 import carouselLight from "../../assets/carousel/icon-light.svg";
 import carouselDark from "../../assets/carousel/icon-dark.svg";
 
+import santaLight from "../../assets/carousel/icon-light.svg";
+import santaDark from "../../assets/carousel/icon-dark.svg";
+
 const LOGO_MAP = {
     default: { light: despicalLight, dark: despicalDark, circle: true },
     "/easter-eggs": { light: easterLight, dark: easterDark, circle: false },
     "/command-framework": { light: commandLight, dark: commandDark, circle: false },
     "/carousel": { light: carouselLight, dark: carouselDark, circle: false },
+    "/santa-says": { light: santaLight, dark: santaDark, circle: false },
 };
-
 
 const { pathname } = Astro.url;
 let current = LOGO_MAP.default;
