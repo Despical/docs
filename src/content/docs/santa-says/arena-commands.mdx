@@ -1,0 +1,44 @@
+---
+title: Arena Commands
+description: Commands for creating, managing, and configuring Santa Says arenas.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Arena management commands allow administrators to build and maintain the game environments. These commands are essential for the initial setup and ongoing management of your Santa Says maps.
+
+### Create Command
+
+Administrators with the `santasays.arena.create` permission can register a new arena instance. This command initializes a unique ID for the arena, which will be used for all subsequent configurations.
+
+```bash
+/santasays create <arena_id>
+```
+
+### Delete Command
+
+Administrators with the `santasays.arena.delete` permission can permanently remove an arena instance. This action unregisters the arena and its associated game instance.
+
+```bash
+/santasays delete <arena_id>
+```
+
+### List Command
+
+Administrators with the `santasays.arena.list` permission can display a complete list of all registered arena IDs. This is useful for checking active arenas and verifying their names for other commands.
+
+```bash
+/santasays list
+```
+
+### Edit Command
+
+Administrators with the `santasays.arena.edit` permission can open the interactive **Setup Menu** for a specific arena. This command is only accessible to players as it opens a GUI to visually configure spawns, boundaries, and other essential arena settings.
+
+```bash
+/santasays edit <arena_id>
+```
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `santasays.arena.*` will provide access to every command listed on this page.
+</Aside>
