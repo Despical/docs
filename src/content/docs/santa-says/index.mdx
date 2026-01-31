@@ -1,0 +1,174 @@
+---
+title: Santa Says Documentation
+description: The official documentation for Santa Says, the fast-paced Minecraft minigame.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## Santa Says 🎅
+
+**Santa Says** is a fast-paced Minecraft minigame built around quick challenges, competitive scoring, and round-based gameplay.
+Players must complete a series of short tasks under time pressure, earning points through participation and top placements.
+After 15 intense rounds, the player with the highest score wins the game.
+
+Designed for fast matches, high replayability, and competitive servers, Santa Says is easy to learn but hard to master.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="Install Santa Says and get your server ready for gameplay in minutes."
+        href="/santa-says/getting-started"
+    />
+
+    <LinkCard
+        title="Arena Setup"
+        description="Create and configure arenas to host Santa Says matches."
+        href="/santa-says/arena-setup"
+    />
+
+    <LinkCard
+        title="Gameplay Overview"
+        description="Learn how matches work, how points are earned, and how winners are decided."
+        href="/santa-says/gameplay"
+    />
+</CardGrid>
+
+## Tasks System
+
+Santa Says features a large pool of unique tasks that are randomly selected during each game.
+Each match consists of **15 tasks**, mixing different task types to keep gameplay unpredictable and exciting.
+
+<CardGrid>
+    <LinkCard
+        title="Participation Tasks"
+        description="All players who successfully complete the task earn 1 point."
+        href="/santa-says/tasks/participation"
+    />
+
+    <LinkCard
+        title="Placement Tasks"
+        description="Only the fastest or top-performing players earn points based on placement."
+        href="/santa-says/tasks/placement"
+    />
+</CardGrid>
+
+## Commands
+
+All Santa Says commands are grouped by purpose to keep server management clean and intuitive.
+
+<CardGrid>
+    <LinkCard
+        title="Player Commands"
+        description="Commands that can be used by players to join or leave games and view player statistics."
+        href="/santa-says/commands/player"
+    />
+
+    <LinkCard
+        title="Arena Commands"
+        description="Commands used to create, edit, and manage arenas."
+        href="/santa-says/commands/arena"
+    />
+
+    <LinkCard
+        title="Admin Commands"
+        description="Administrative commands for managing games and settings."
+        href="/santa-says/commands/admin"
+    />
+
+    <LinkCard
+        title="Debug Commands"
+        description="Advanced commands for testing and troubleshooting."
+        href="/santa-says/commands/debug"
+    />
+</CardGrid>
+
+## Configuration Files
+
+Santa Says offers extensive configuration through multiple files, allowing full control over visuals, messages, and gameplay behavior.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Main configuration file controlling core gameplay behavior and plugin settings."
+        href="/santa-says/configuration/config"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="Customize all in-game messages, titles, subtitles, and text outputs used by Santa Says."
+        href="/santa-says/configuration/messages"
+    />
+
+    <LinkCard
+        title="scoreboard.yml"
+        description="Configure the in-game scoreboard layout, lines, and displayed values."
+        href="/santa-says/configuration/scoreboard"
+    />
+
+    <LinkCard
+        title="bossbar.yml"
+        description="Customize boss bars used during gameplay, including colors, styles, and messages."
+        href="/santa-says/configuration/bossbar"
+    />
+
+    <LinkCard
+        title="items.yml"
+        description="Configure lobby items such as the leave item, including their name, material, slot, and lore."
+        href="/santa-says/configuration/items"
+    />
+
+    <LinkCard
+        title="Other Files"
+        description="Automatically managed internal files used by the Santa Says plugin."
+        href="/santa-says/system-files"
+    />
+</CardGrid>
+
+## Placeholders
+
+Santa Says provides built-in placeholders and full **PlaceholderAPI** support, allowing you to display game, arena, and player data across your server.
+
+<CardGrid>
+    <LinkCard
+        title="General Placeholders"
+        description="Placeholders for game state, arena information, and player-related data."
+        href="/santa-says/placeholders/general"
+    />
+
+    <LinkCard
+        title="Leaderboard Placeholders"
+        description="Placeholders specifically designed to display leaderboard rankings and statistics."
+        href="/santa-says/placeholders/leaderboards"
+    />
+</CardGrid>
+
+## Music Support
+
+Santa Says supports in-game music playback through **NoteBlockAPI**, allowing custom songs to be played during gameplay.
+
+<CardGrid>
+    <LinkCard
+        title="NoteBlockAPI Integration"
+        description="Learn how to enable and configure music playback using NoteBlockAPI."
+        href="/santa-says/music"
+    />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard
+        title="Developer API"
+        description="Developer-focused documentation for integrating Santa Says with other plugins."
+        href="/santa-says/developer-api"
+    />
+
+    <LinkCard
+        title="FAQ"
+        description="Common questions, known issues, and troubleshooting information."
+        href="/santa-says/faq"
+    />
+</CardGrid>
