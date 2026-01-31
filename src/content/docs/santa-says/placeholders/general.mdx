@@ -1,0 +1,47 @@
+---
+title: Placeholders
+description: List of available PlaceholderAPI placeholders for Santa Says.
+---
+
+To use these placeholders, you must have the **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** plugin installed on your server. These can be used in any plugin that supports PlaceholderAPI (Scoreboards, Chat, Menus, etc.).
+
+---
+
+## Player Placeholders
+These placeholders are used to display the statistics of the player who is viewing the placeholder.
+
+| Placeholder                     | Description                                     |
+|:--------------------------------|:------------------------------------------------|
+| `%santasays_name%`              | Returns the player's name.                      |
+| `%santasays_uuid%`              | Returns the player's unique ID.                 |
+| `%santasays_win%`               | Total number of games won.                      |
+| `%santasays_win_streak%`        | Current win streak of the player.               |
+| `%santasays_win_streak_record%` | The highest win streak ever reached.            |
+| `%santasays_lose%`              | Total number of games lost.                     |
+| `%santasays_games_played%`      | Total games the player participated in.         |
+| `%santasays_rounds_played%`     | Total rounds the player has survived or played. |
+
+---
+
+## Arena Placeholders
+
+These placeholders allow you to fetch real-time data from specific arenas.
+
+---
+
+### Arena Settings
+| Placeholder                                | Description                                       |
+|:-------------------------------------------|:--------------------------------------------------|
+| `%santasays_arena:min_players:<arena_id>%` | Minimum players required for the specified arena. |
+| `%santasays_arena:max_players:<arena_id>%` | Maximum players allowed for the specified arena.  |
+
+### Live Game Data
+Format: `%santasays_arena:<arena_id>:<stat>%`
+
+| Placeholder                              | Description                                                    |
+|:-----------------------------------------|:---------------------------------------------------------------|
+| `%santasays_arena:<id>:players%`         | Current number of players in the game.                         |
+| `%santasays_arena:<id>:round%`           | The current round number of the active game.                   |
+| `%santasays_arena:<id>:state%`           | Current state of the arena (e.g., WAITING, STARTING, IN_GAME). |
+| `%santasays_arena:<id>:timer%`           | Remaining time in seconds.                                     |
+| `%santasays_arena:<id>:formatted_timer%` | Remaining time formatted as `MM:SS`.                           |
