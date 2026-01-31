@@ -1,0 +1,69 @@
+---
+title: Admin Commands
+description: Administrative commands used to manage Santa Says games, arenas, and plugin configuration.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Admin Commands are designed for **server administrators and staff members** to manage Santa Says games, arenas, and plugin behavior.
+
+All commands can be used via `/santasays` or its alias `/ss`. Unless otherwise stated, all commands can also be executed from the console.
+
+### Main Command
+
+Displays basic plugin information and provides access to the help menu.
+
+When executed without arguments, the command shows the current Santa Says version and authors.
+If the sender has administrative permissions, it also points to the help command.
+
+```bash
+/santasays
+```
+
+### Start Command
+
+Administrators with the `santasays.admin.start` permission can use this command to bypass waiting timers and immediately begin a match.
+
+This command allows you to force-start the match in the arena you are currently joined to by using it without arguments, or to start a specific arena remotely by providing its name. Note that a match cannot be started if there are no players currently joined to the arena.
+
+```bash
+/santasays start [arena]
+```
+
+### Stop Command
+
+Administrators with the `santasays.admin.stop` permission can use this command to immediately terminate an ongoing match without waiting for its natural conclusion.
+
+This command allows you to stop the match you are currently participating in by using it without arguments, or to shut down a specific arena remotely by providing its name.
+Importantly, matches terminated via this command are considered cancelled, meaning player statistics and game progress will not be saved.
+
+```bash
+/santasays stop [arena]
+```
+
+### Help Command
+
+Administrators with the `santasays.admin.help` permission can use this command to display a comprehensive list of available commands and their usage instructions.
+
+This command provides an organized overview of the plugin's functionality. The help menu is dynamic; depending on the sender's specific permissions and whether debug mode is enabled in the configuration, it will automatically expand to include administrative and debugging commands.
+
+```bash
+/santasays help
+```
+
+### Reload Command
+
+Essential for server administrators with the `santasays.admin.reload` permission to apply changes made to configuration files without requiring a server restart.
+
+This command performs a comprehensive synchronization, updating the plugin's internal state. It reloads the messages, config options,
+custom items, event profiler, boss bar and scoreboard contents.
+
+```bash
+/santasays reload
+```
+
+---
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `santasays.admin.*` will provide access to every command listed on this page.
+</Aside>
