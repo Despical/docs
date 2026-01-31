@@ -1,7 +1,7 @@
 <svg
-    viewBox="0 0 24 24"
+    viewBox="0 0 140 24"
     xmlns="http://www.w3.org/2000/svg"
-    width="24"
+    width="140"
     height="24"
 >
     <g transform="translate(0, 0.5)">
@@ -9,7 +9,6 @@
             d="M4 12c0-4.5 4-7 8-7s8 2.5 8 7v1H4v-1z"
             fill="#B91C1C"
         />
-
         <rect
             x="3"
             y="12"
@@ -18,7 +17,6 @@
             rx="1.5"
             fill="#E5E7EB"
         />
-
         <circle
             cx="18"
             cy="6"
@@ -26,4 +24,16 @@
             fill="#F3F4F6"
         />
     </g>
+
+    <text
+        x="30"
+        y="17"
+        fill="#FFFFFF"
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+        font-weight="800"
+        font-size="14"
+        letter-spacing="-0.5"
+    >
+        SANTA SAYS
+    </text>
 </svg>
