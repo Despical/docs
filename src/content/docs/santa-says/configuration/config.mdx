@@ -1,0 +1,51 @@
+---
+title: config.yml
+description: Detailed guide for the main configuration settings of Santa Says.
+---
+
+The `config.yml` file is the heart of Santa Says. It controls the game lifecycle, database management, and essential gameplay mechanics.
+
+---
+
+### General Settings
+
+* **`prefix` & `prefix-2`**: Sets the visual identity of the plugin in chat. Supports MiniMessage, gradients, and HEX colors.
+* **`database`**: Defines how player statistics and profiles are stored.
+  * `flat`: Local storage using YAML files (**standard for small servers**).
+  * `mysql`: External database storage (**recommended for large networks**).
+
+**Note:** Changing the database type requires a server restart and does not support automatic data migration.
+
+---
+
+### Time Settings
+
+These values (in seconds) control the pace of your game. Santa Says features a "Smart Timer" system that accelerates the start as more players join.
+
+| Option | Default | Description |
+| :--- | :--- | :--- |
+| `waiting-time` | 300 | The idle timer when the minimum player count hasn't been reached. |
+| `pre-game-waiting-time` | 120 | The countdown that starts once the arena has enough players. |
+| `game-starting-time` | 30 | If the arena hits **80% capacity**, the timer automatically drops to this value. |
+| `full-game-starting-time` | 15 | If the arena is **100% full**, the timer drops to this value for an instant start. |
+| `ending-time` | 10 | Duration players stay in the arena to celebrate after the match ends. |
+
+---
+
+### Gameplay Mechanics
+
+* **`level-bar-timer`**: When enabled, the XP bar of players will visually reflect the remaining time during the waiting and starting phases.
+* **`instant-leave`**:
+  * `true`: Players leave immediately upon right-clicking the leave item.
+  * `false`: Adds a 3-second delay to prevent accidental exits.
+* **`separate-chat`**: When active, it creates a "chat bubble" around the game. Players inside only hear each other, and global chat is hidden from them to prevent distractions.
+
+---
+
+### System & Performance
+
+* **`tick-period`**: Controls the internal update frequency of the arena logic. The default (5) is optimized for performance. Lowering it makes timers more precise but increases CPU usage.
+* **`debug`**: Set to `true` to access advanced administrative and troubleshooting commands.
+* **`event-profiling`**: An advanced diagnostic tool.
+  * `enabled`: Measures how long event listeners take to process.
+  * `verbose`: Logs every single execution to the console (use only for deep debugging).
