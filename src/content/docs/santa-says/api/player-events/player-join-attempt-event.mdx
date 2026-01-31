@@ -1,0 +1,62 @@
+---
+title: PlayerJoinAttemptEvent
+description: Documentation for the event fired when a player tries to join a Santa Says game.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerJoinAttemptEvent` is triggered **before** a player is officially added to a game session. This is a critical lifecycle event for developers who want to implement custom entry requirements or logging systems.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.player`
+- **Parent Class:** [`PlayerEvent`](/santa-says/api/player-events/player-event)
+- **Cancellable:** Yes
+
+<Aside type="caution">
+    If this event is cancelled, the player will **not** be added to the game and will remain in their current state/location.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `PlayerEvent`, you have access to `getPlayer()` and `getUser()` in addition to the following:
+
+| Method                  | Return Type | Description                                                      |
+|:------------------------|:------------|:-----------------------------------------------------------------|
+| `getGame()`             | `Game`      | Returns the game instance the player is attempting to join.      |
+| `isCancelled()`         | `boolean`   | Checks if the join process has been blocked by another listener. |
+| `setCancelled(boolean)` | `void`      | Set to `true` to prevent the player from joining the game.       |
+
+---
+
+## Common Use Cases
+* **Level/Permission Restrictions:** Block players from joining specific arenas if they don't meet custom criteria.
+* **Game State Checks:** Prevent joining if the game logic (external to the plugin) dictates the arena should be closed.
+* **Join Logging:** Track how many players attempt to join specific games for analytics.
+
+---
+
+## Example Usage
+
+The following example demonstrates how to restrict access to a game unless the player has a specific permission.
+
+```java
+import io.greenmc.santasays.api.event.player.PlayerJoinAttemptEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class JoinRestrictionListener implements Listener {
+
+    @EventHandler
+    public void onJoin(PlayerJoinAttemptEvent event) {
+        // Prevent joining if the player doesn't have the "santasays.vip" permission
+        if (!event.getPlayer().hasPermission("santasays.vip")) {
+            event.setCancelled(true);
+            event.getUser().sendRawMessage("<red><bold>This arena is reserved for VIP members!");
+        }
+    }
+}
+```

@@ -1,0 +1,53 @@
+---
+title: RoundEvent
+description: The foundation for all round-related events in the Santa Says API.
+---
+
+The `RoundEvent` class is an abstract base for all events occurring during a specific round of a game. It provides utility methods to track the game progress and identify if the game is reaching its conclusion.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.round`
+- **Parent Class:** `SantaSaysEvent`
+
+### Key Constants
+* **LAST_ROUND:** `15` — The game logic currently considers the 15th round as the final stage of a standard match.
+
+---
+
+## Methods
+
+| Method             | Return Type | Description                                                             |
+|:-------------------|:------------|:------------------------------------------------------------------------|
+| `getGame()`        | `Game`      | Returns the `Game` instance associated with this event.                 |
+| `getRoundNumber()` | `int`       | Fetches the current round number from the `RoundManager`.               |
+| `isLastRound()`    | `boolean`   | Returns `true` if the current round number is equal to the final round. |
+
+---
+
+## Known Subclasses
+Since `RoundEvent` is abstract, it is implemented by specific lifecycle events such as:
+* **RoundStartEvent**: Fired when a new round begins.
+* **RoundEndEvent**: Fired when a round concludes.
+
+---
+
+## Usage in Listeners
+
+When implementing listeners for specific round events (like `RoundStartEvent`), you can use the base methods to trigger special logic when the match is about to end.
+
+```java
+@EventHandler
+public void onRoundEvent(RoundStartEvent event) {
+    // Access the game instance
+    Game game = event.getGame();
+
+    // Check if we are at the climax of the game
+    if (event.isLastRound()) {
+        game.broadcastRawMessage("<red><bold>FINAL ROUND! <gray>Prepare yourselves...");
+    } else {
+        game.broadcastRawMessage("<yellow>Starting Round #" + event.getRoundNumber());
+    }
+}
+```
