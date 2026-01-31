@@ -1,0 +1,68 @@
+---
+title: stats-menu.yml
+description: Customize the look and feel of the player statistics and ranking interface.
+---
+
+The `stats-menu.yml` file controls the visual layout of the statistics GUI. This is where players can track their wins, losses, streaks, and overall performance in the workshop.
+
+---
+
+### Menu Basics
+
+* **`rows`**: Defines the height of the GUI (1-6). A value of `6` creates a full-sized chest menu.
+* **`title`**: The name displayed at the top of the menu. Supports **MiniMessage** for gradients and bold text.
+
+---
+
+### Item Configuration
+
+Each item in the statistics menu can be fully customized with materials, slots, and unique properties.
+
+| Property | Description |
+| :--- | :--- |
+| `slots` | A single number `slot: 13` or a list `slots: [0, 1, 2]` for bulk placement. |
+| `material` | The item to display (Supports **Oraxen** via `oraxen:id`). |
+| `decoration-only` | If `true`, the item is purely visual and cannot be interacted with. |
+| `skull` | Used for `PLAYER_HEAD` materials. Set to `%target%` to show the player's own skin. |
+| `glow` | If `true`, adds an enchantment glint to the item. |
+| `itemFlags` | Used to clean up the item's look (e.g., `HIDE_ATTRIBUTES`). |
+
+---
+
+### Statistics Placeholders
+
+These placeholders are used within the `name` or `lore` of items to display live data:
+
+* **`%target%`**: The name of the player whose profile is being viewed.
+* **`%wins%`**: Total number of games won.
+* **`%losses%`**: Total number of games lost.
+* **`%win_streak%`**: Current consecutive wins.
+* **`%win_streak_record%`**: The highest win streak ever achieved by the player.
+* **`%score_record%`**: The highest points collected in a single game.
+* **`%games_played%`**: Total number of matches joined.
+* **`%rounds_played%`**: Total number of individual tasks/rounds completed.
+
+---
+
+### Configuration Example
+
+```yaml
+items:
+  player_head:
+    slot: 13
+    name: "<bold><aqua>%target%'s Profile"
+    material: PLAYER_HEAD
+    skull: "%target%"
+    lore:
+      - "<gray>Viewing festive statistics!"
+
+  wins:
+    slot: 29
+    name: "<green>Total Wins"
+    material: EMERALD
+    glow: true
+    lore:
+      - "<gray>Wins: <white>%wins%"
+```
+
+---
