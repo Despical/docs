@@ -1,0 +1,91 @@
+---
+title: scoreboard.yml
+description: Detailed guide for configuring the dynamic, state-based scoreboard.
+---
+
+The `scoreboard.yml` file allows you to customize the information displayed on the right side of the screen. The scoreboard is **state-aware**, switching its logic and available placeholders automatically as the game progresses.
+
+---
+
+## Global Placeholders
+
+These placeholders are available in **every stage** of the game (Waiting, Starting, In-Game, and Ending).
+
+| Placeholder | Description |
+| :--- | :--- |
+| `%player%` | The name of the player viewing the scoreboard. |
+| `%date%` | The current date (formatted automatically). |
+| `%timer%` | Remaining time in seconds (e.g., `30`). |
+| `%formatted_timer%` | Remaining time in `MM:SS` format (e.g., `00:30`). |
+| `%players%` | Current number of players in the arena. |
+| `%min_players%` | The minimum players required to start. |
+| `%max_players%` | The maximum capacity of the arena. |
+
+---
+
+## State-Specific Placeholders
+---
+
+### 1. Waiting & Starting Phases
+These focus on the countdown and player requirements.
+
+* **`%players_needed%`**: How many more players must join to reach the `min_players` threshold.
+* **`%s%`**: Returns an "s" if `players_needed` is greater than 1, and an empty string if it's 1. Perfect for grammar: `Waiting for %players_needed% player%s%`.
+
+### 2. In-Game & Ending Phases
+These focus on the live leaderboard and player progress.
+
+* **`%round%`**: The current round number (out of 15).
+* **`%score%`**: The current player's personal score.
+* **`%player_1%`, `%player_2%`, `%player_3%`**: Names of the top 3 players. Defaults to "No Player" if the slot is empty.
+* **`%player_1_score%`, `%player_2_score%`, `%player_3_score%`**: Scores of the top 3 players. Defaults to "0" if empty.
+
+---
+
+## The Conditional Prefix
+
+This is a special functional placeholder used for clean UI design.
+
+If a line starts with `%if_not_in_top3%`, the plugin checks the player's current rank:
+1. **If the player IS in the Top 3:** The entire line is hidden.
+2. **If the player IS NOT in the Top 3:** The prefix is removed, and the rest of the line is displayed.
+
+### Example Usage
+```yaml
+- "%player_1%: %player_1_score%"
+- "%player_2%: %player_2_score%"
+- "%player_3%: %player_3_score%"
+- "%if_not_in_top3%<white>..."
+- "%if_not_in_top3%<gray>Your Score: %score%"
+```
+
+---
+
+## Configuration Example
+
+```yaml
+waiting:
+  title: "<yellow><bold>SANTA SAYS"
+  lines:
+    - "<gray>%date%"
+    - ""
+    - "<white>Players: <green>%players%/%max_players%"
+    - "<white>Need <green>%players_needed% <white>more player%s%"
+    - ""
+    - "<yellow>www.greenmc.io"
+
+in-game:
+  title: "<yellow><bold>SANTA SAYS"
+  lines:
+    - "<gray>1. %player_1%: <green>%player_1_score%"
+    - "<gray>2. %player_2%: <green>%player_2_score%"
+    - "<gray>3. %player_3%: <green>%player_3_score%"
+    - "%if_not_in_top3%<white>. . ."
+    - "%if_not_in_top3%<gray>%player%: <green>%score%"
+    - ""
+    - "<white>Round: <green>%round%/15"
+    - ""
+    - "<yellow>www.greenmc.io"
+  ```
+
+---
