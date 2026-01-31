@@ -1,0 +1,57 @@
+---
+title: PlayerEvent
+description: The foundation for all player-related events in the Santa Says API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerEvent` class is an abstract base for all events involving a specific player.
+It provides developers with a streamlined way to access both the standard Bukkit `Player` object and the internal Santa Says `User` instance.
+
+<Aside type="note">
+    Because this is an abstract class, you cannot listen to it directly. Instead, you should listen to its specific subclasses like
+    `PlayerJoinAttemptEvent`, `PlayerLeaveGameEvent` or `PlayerStatisticChangeEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.player`
+- **Parent Class:** `SantaSaysEvent`
+
+---
+
+## Methods
+
+| Method        | Return Type | Description                                                                |
+|:--------------|:------------|:---------------------------------------------------------------------------|
+| `getPlayer()` | `Player`    | Returns the standard Bukkit `Player` associated with the event.            |
+| `getUser()`   | `User`      | Returns the plugin-specific `User` object, containing stats and game data. |
+
+---
+
+## Known Subclasses
+These events inherit all methods from `PlayerEvent`:
+
+* **`PlayerJoinAttemptEvent`**: Fired when a player tries to join an arena.
+* **`PlayerLeaveGameEvent`**: Fired when a player exits an active game.
+* **`PlayerStatisticChangeEvent`**: Fired when a player's persistent stats (wins, streaks, etc.) are modified.
+
+---
+
+## Usage in Listeners
+When listening to any subclass of `PlayerEvent`, you can immediately access the `User` object to check for statistics or plugin-specific data without manual lookups.
+
+```java
+@EventHandler
+public void onAnyPlayerEvent(PlayerJoinAttemptEvent event) {
+    // Accessing Bukkit Player
+    Player bukkitPlayer = event.getPlayer();
+
+    // Accessing Santa Says User
+    User user = event.getUser();
+
+    // Example: Check a statistic from the base event
+    int totalWins = user.getStatistic(Statistic.WIN);
+}
+```

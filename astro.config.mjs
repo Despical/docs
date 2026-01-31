@@ -234,6 +234,7 @@ export default defineConfig({
 
                             {
                                 label: "Configuration",
+                                collapsed: true,
                                 items: [
                                     { label: "config.yml", link: "/santa-says/configuration/config" },
                                     { label: "messages.yml", link: "/santa-says/configuration/messages" },
@@ -249,7 +250,7 @@ export default defineConfig({
                                         ]
                                     },
                                     { label: "mysql.yml", link: "/santa-says/configuration/mysql" },
-                                    { label: "System Files", link: "/santa-says/system-files" },
+                                    { label: "Other Files", link: "/santa-says/configuration/other-files" },
                                 ],
                             },
                             {
@@ -261,11 +262,10 @@ export default defineConfig({
                                     },
                                     {
                                         label: "Leaderboard Placeholders",
-                                        link: "/santa-says/placeholders/leaderboards",
+                                        link: "/santa-says/placeholders/leaderboard",
                                     },
                                 ],
                             },
-
                             {
                                 label: "Music",
                                 items: [
@@ -275,14 +275,34 @@ export default defineConfig({
                                     },
                                 ],
                             },
-
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "Player Events",
+                                        collapsed: true,
+                                        items: [
+                                            { label: "PlayerEvent", link: "/santa-says/api/player-events/player-event" },
+                                            { label: "PlayerJoinAttemptEvent", link: "/santa-says/api/player-events/player-join-attempt-event" },
+                                            { label: "PlayerLeaveGameEvent", link: "/santa-says/api/player-events/player-leave-game-event" },
+                                            { label: "PlayerStatisticChangeEvent", link: "/santa-says/api/player-events/player-statistic-change-event" },
+                                        ],
+                                    },
+                                    {
+                                        label: "Round Events",
+                                        collapsed: true,
+                                        items: [
+                                            { label: "RoundEvent", link: "/santa-says/api/round-events/round-event" },
+                                            { label: "RoundStartEvent", link: "/santa-says/api/round-events/round-start-event" },
+                                            { label: "RoundEndEvent", link: "/santa-says/api/round-events/round-end-event" },
+                                        ],
+                                    },
+                                ],
+                            },
                             {
                                 label: "Miscellaneous",
                                 items: [
-                                    {
-                                        label: "Developer API",
-                                        link: "/santa-says/developer-api",
-                                    },
                                     {
                                         label: "FAQ",
                                         link: "/santa-says/faq",

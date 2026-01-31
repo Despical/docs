@@ -1,0 +1,73 @@
+---
+title: RoundEndEvent
+description: Documentation for the event fired when a round concludes in Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `RoundEndEvent` is triggered immediately after a round has finished. At this stage, the task objectives have been completed, scores have been distributed to players, and the round counter has already been incremented. It serves as the primary way to analyze the results of a specific round.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.round`
+- **Parent Class:** [`RoundEvent`](/santa-says/api/round-events/round-event)
+- **Cancellable:** No
+
+<Aside type="note">
+    Because the round counter is incremented *before* this event is called, `getRoundNumber()` will return the number of the round that just ended.
+</Aside>
+
+---
+
+## Methods
+
+This event provides access to the results of the task played during the round.
+
+| Method                  | Return Type          | Description                                                       |
+|:------------------------|:---------------------|:------------------------------------------------------------------|
+| `getPlayedTask()`       | `Task`               | Returns the specific task instance that was just completed.       |
+| `getCompletedPlayers()` | `Map<UUID, Integer>` | Returns a map of player UUIDs who won the round and their scores. |
+| `getFailedPlayers()`    | `Set<UUID>`          | Returns a set of player UUIDs who failed to complete the task.    |
+
+---
+
+## Performance Tracking
+By accessing the `playedTask`, you can dive deeper into how players performed during the round. This is useful for rewarding players with custom currency, logging performance metrics, or triggering external fireworks for winners.
+
+---
+
+## Example Usage
+
+This example demonstrates how to congratulate players who successfully completed a task and log those who failed.
+
+```java
+import io.greenmc.santasays.api.event.round.RoundEndEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import java.util.UUID;
+
+public class RoundResultListener implements Listener {
+
+    @EventHandler
+    public void onRoundEnd(RoundEndEvent event) {
+        String taskName = event.getPlayedTask().getName();
+
+        // Announce winners
+        event.getCompletedPlayers().forEach((uuid, score) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player != null) {
+                player.sendMessage("§aNice job! You earned " + score + " points in " + taskName);
+            }
+        });
+
+        // Track failures for analytics
+        int failureCount = event.getFailedPlayers().size();
+        if (failureCount > 0) {
+            System.out.println(failureCount + " players failed the " + taskName + " task.");
+        }
+    }
+}
+```

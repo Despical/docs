@@ -1,0 +1,77 @@
+---
+title: PlayerLeaveGameEvent
+description: Documentation for the event fired right before a player leaves a Santa Says game.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerLeaveGameEvent` is an informational event called exactly one step before a player is removed from an active game session. Since the event is triggered before the actual leave logic, the player’s game state, scores, and round data are still fully intact when this event is called.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.player`
+- **Parent Class:** [`PlayerEvent`](/santa-says/api/player-events/player-event)
+- **Cancellable:** No
+
+<Aside type="note">
+    This event is triggered regardless of how the player leaves: whether via command, using a leave item, or disconnecting from the server.
+</Aside>
+
+---
+
+## Methods
+
+This event inherits `getPlayer()` and `getUser()` from `PlayerEvent`.
+
+| Method        | Return Type   | Description                                      |
+|:--------------|:--------------|:-------------------------------------------------|
+| `getGame()`   | `Game`        | Returns the game instance the player is leaving. |
+| `getReason()` | `LeaveReason` | Returns the specific cause of the departure.     |
+
+---
+
+## Leave Reasons
+The `LeaveReason` enum provides context on why the player is exiting the game:
+
+| Reason          | Description                                                            |
+|:----------------|:-----------------------------------------------------------------------|
+| `LEAVE_COMMAND` | The player manually typed a command to leave.                          |
+| `LEAVE_ITEM`    | The player interacted with a specific "Leave" item in their inventory. |
+| `DISCONNECT`    | The player left the server entirely.                                   |
+
+---
+
+## Lifecycle Notes
+When this event is called:
+* The player is still registered in the game.
+* No inventory restoration or visibility cleanup has been performed yet.
+* You can still access the player's final scores or round progress for logging or rewards.
+
+---
+
+## Example Usage
+
+This example shows how to log players who leave during an active game for administrative tracking.
+
+```java
+import io.greenmc.santasays.api.event.player.PlayerLeaveGameEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class LeaveLogger implements Listener {
+
+    @EventHandler
+    public void onLeave(PlayerLeaveGameEvent event) {
+        String name = event.getPlayer().getName();
+        String reason = event.getReason().name();
+
+        System.out.println("Player " + name + " is leaving the game. Reason: " + reason);
+
+        // Example: Reward players if they didn't leave via disconnect
+        if (event.getReason() != PlayerLeaveGameEvent.LeaveReason.DISCONNECT) {
+            // custom logic here
+        }
+    }
+}
+```

@@ -1,0 +1,70 @@
+---
+title: RoundStartEvent
+description: Documentation for the event fired when a new round is about to begin in Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `RoundStartEvent` is triggered at the transition point between rounds. It is called after the plugin has selected the next task for the players but **before** that task is officially registered or started.
+
+<Aside type="note">
+    The round number returned by this event refers to the round that is currently starting. For example, if Round 4 just finished, this event will return `5`.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.round`
+- **Parent Class:** [`RoundEvent`](/santa-says/api/round-events/round-event)
+- **Cancellable:** No
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`RoundEvent`](/santa-says/api/round-events/round-event) class.
+
+| Method             | Return Type | Description                                             |
+|:-------------------|:------------|:--------------------------------------------------------|
+| `getGame()`        | `Game`      | Returns the game instance where the round is starting.  |
+| `getRoundNumber()` | `int`       | Returns the number of the round that is about to begin. |
+| `isLastRound()`    | `boolean`   | Checks if this starting round is the final round.       |
+
+---
+
+## Lifecycle Timing
+Understanding exactly when this event fires is crucial for synchronization:
+1. **Previous Round Ends:** The previous task is cleared.
+2. **Task Selection:** The plugin picks the next random task.
+3. **RoundStartEvent Fired:** This is where this event occurs.
+4. **Task Registration:** The selected task starts and objectives are sent to players.
+
+---
+
+## Example Usage
+
+This example shows how to broadcast a special message at the start of specific rounds or trigger external logic like custom sound effects.
+
+```java
+import io.greenmc.santasays.api.event.round.RoundStartEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class RoundTransitionListener implements Listener {
+
+    @EventHandler
+    public void onRoundStart(RoundStartEvent event) {
+        int roundNumber = event.getRoundNumber();
+
+        // Broadcast a milestone message every 5 rounds
+        if (roundNumber % 5 == 0) {
+            event.getGame().broadcastRawMessage("<orange><bold>MILESTONE! <yellow>You have reached Round " + roundNumber + "!");
+        }
+
+        // Logic for the very last round
+        if (event.isLastRound()) {
+            event.getGame().rawBroadcastMessage("<red><bold>THE FINAL CHALLENGE BEGINS NOW!");
+        }
+    }
+}
+```
