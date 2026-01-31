@@ -1,0 +1,81 @@
+---
+title: bossbar.yml
+description: Customize the appearance and behavior of the boss bar throughout different game stages.
+---
+
+The `bossbar.yml` file allows you to manage the visual top-bar that players see during the game. You can use it to display server branding, game status, or simply keep it clean and minimal.
+
+---
+
+## Global Toggle
+
+* **`enabled`**: Set this to `false` if you want to completely disable the BossBar system across all game stages.
+
+---
+
+## Game States & Appearance
+
+The boss bar is dynamic and changes based on the current state of the arena. You can customize the **title**, **overlay (style)**, and **color** for each state.
+
+| State | Description |
+| :--- | :--- |
+| `waiting` | When players are in the lobby waiting for the minimum requirement. |
+| `starting` | During the final countdown before the match begins. |
+| `in-game` | While the tasks are actively being performed. |
+| `ending` | After a winner is declared and before players are sent back to the lobby. |
+
+:::tip
+**The Invisible Trick:** If you set the `title` to an empty string (`""`) for any state, the BossBar will become **invisible** during that specific phase. This is perfect if you want a clean screen during active gameplay (`in-game`) but want branding in the lobby.
+:::
+
+---
+
+## Customization Options
+---
+
+### Title
+Supports the **MiniMessage** format. You can use gradients, HEX colors, and placeholders to make your branding pop.
+
+### Overlay (Style)
+Determines the segmenting of the bar. Available values:
+* `PROGRESS`: A solid, smooth bar.
+* `NOTCHED_6`: Divided into 6 segments.
+* `NOTCHED_10`: Divided into 10 segments.
+* `NOTCHED_12`: Divided into 12 segments.
+* `NOTCHED_20`: Divided into 20 segments.
+
+### Color
+You can choose from the following standard colors:
+`PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, `WHITE`.
+
+---
+
+## Configuration Example
+
+```yaml
+states:
+  waiting:
+    title: "<yellow><bold>Playing <gradient:#ff3b3b:#ff7a7a>SANTA</gradient> <gradient:#ff7a7a:#ff3b3b>SAYS</gradient> <yellow><bold>on <aqua><bold>UXPLIMA.COM"
+    overlay: PROGRESS
+    color: PINK
+
+  in-game:
+    title: "" # This makes the bar invisible during the game
+    overlay: PROGRESS
+    color: WHITE
+
+  ending:
+    title: "<yellow><bold>Playing <gradient:#ff3b3b:#ff7a7a>SANTA</gradient> <gradient:#ff7a7a:#ff3b3b>SAYS</gradient> <yellow><bold>on <aqua><bold>UXPLIMA.COM"
+    overlay: PROGRESS
+    color: PINK
+```
+
+---
+
+## Applying Changes
+
+One of the best features of the message system is that you don't need to restart your server to see changes. Simply modify the file and use the reload command to see your updates instantly:
+
+```bash
+/santasays reload
+```
