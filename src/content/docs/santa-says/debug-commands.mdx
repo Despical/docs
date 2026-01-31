@@ -7,6 +7,8 @@ import { Aside } from '@astrojs/starlight/components';
 
 Debug commands are powerful tools designed for testing and resolving issues. To prevent accidental use, these commands are hidden and disabled by default.
 
+---
+
 ### Enabling Debug Mode
 
 Before you can use these commands, you must enable debug mode in your `config.yml`. This toggle acts as a safety gate for advanced administrative operations.
@@ -34,6 +36,8 @@ If used without an arena name, the command targets the arena you are currently i
 /santasays debug timer [arena] <time>
 ```
 
+---
+
 ### State Command
 
 Administrators with the `santasays.debug.state` permission can force a match into a specific game state (e.g., `WAITING`, `STARTING`, `IN_GAME`, `ENDING`, `RESTARTING`). This allows you to manually progress the game lifecycle for debugging purposes.
@@ -43,6 +47,8 @@ Similar to the timer command, this targets your current arena unless a specific 
 ```bash
 /santasays debug state [arena] <state>
 ```
+
+---
 
 ### Tasks Command
 
@@ -59,6 +65,8 @@ You can also use the search flag to filter the list by task name.
 /santasays debug tasks [page] [--search=<keyword>]
 ```
 
+---
+
 ### Run Task Command
 
 While primarily functioning as a background utility for the `/santasays debug tasks` command, administrators with the `santasays.debug.tasks` permission can also trigger this command manually for specific testing scenarios.
@@ -72,6 +80,8 @@ If you are currently in an arena, it sets the specified task as the next one to 
 <Aside type="note">
     This is a helper command. For the best experience, it is recommended to use the clickable interface provided by `/santasays debug tasks`.
 </Aside>
+
+---
 
 ### Join Command
 
@@ -92,6 +102,8 @@ When executed, it forces the specified arena's state directly to `IN_GAME`. You 
 /santasays debug join winter-arena --players=mrdespi,mSquid_ --tasks=5,12,8
 ```
 
+---
+
 ### Next Command
 
 Administrators with the `santasays.debug.next` permission can manually queue the upcoming tasks for their current arena. This command is perfect for testing specific task transitions or chaining challenges together to see how they flow.
@@ -106,6 +118,8 @@ When you specify task IDs, the plugin will provide a confirmation message in cha
 ```bash
 /santasays debug next 5 12 3
 ```
+
+---
 
 ### Round Command
 
@@ -122,6 +136,8 @@ The command requires a valid integer. Once executed, the match's internal round 
 /santasays debug round 15
 ```
 
+---
+
 ### Component Command
 
 Administrators with the `santasays.debug.component` permission can use this command to preview chat formatting and component parsing in real-time. Instead of constantly reloading configuration files to see how a message looks, you can test colors, hex codes, and placeholders directly in-game.
@@ -136,6 +152,8 @@ The plugin will parse the input using its internal chat manager and send the res
 ```bash
 /santasays debug component <gradient:red:gold>Test Message!</gradient>
 ```
+
+---
 
 ### Dump Command
 
