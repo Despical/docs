@@ -1,0 +1,78 @@
+---
+title: GameStopEvent
+description: Documentation for the event fired when a game session has been completely stopped and cleaned up.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameStopEvent` is triggered after a Santa Says game has been fully terminated and all internal cleanup logic has been executed. Unlike `GameEndEvent`, which marks the end of the competition, this event marks the point where the game world and players are restored to their original state.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.game`
+- **Parent Class:** [`GameEvent`](/santa-says/api/game-events/game-event)
+- **Cancellable:** No
+
+---
+
+## Stop Reasons
+The event provides a `StopReason` to help you determine if the game ended normally or due to server maintenance.
+
+| Reason            | Description                                             |
+|:------------------|:--------------------------------------------------------|
+| `STOP_COMMAND`    | An administrator manually stopped the game via command. |
+| `SERVER_RELOAD`   | The plugin detected a server reload.                    |
+| `SERVER_SHUTDOWN` | The server is shutting down.                            |
+
+<Aside type="caution">
+    The game will normally transition into the `RESTARTING` state after this event **unless** the reason is a reload or shutdown.
+</Aside>
+
+---
+
+## Post-Event Cleanup State
+When this event is called, the following cleanup has already occurred:
+* **UI Removal:** Scoreboards, Boss Bars, and Action Bars are removed from players.
+* **Player Restoration:** Inventories are reset, health/hunger is restored, and potion effects are cleared.
+* **Teleportation:** Players have been moved to the designated "End Location."
+* **Visibility:** Any visibility hiding rules (e.g., hiding other players) have been disabled.
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`GameEvent`](/santa-says/api/game-events/game-event) class.
+
+| Method            | Return Type  | Description                                  |
+|:------------------|:-------------|:---------------------------------------------|
+| `getGame()`       | `Game`       | Returns the game instance that has stopped.  |
+| `getStopReason()` | `StopReason` | Returns the reason why the game was stopped. |
+
+---
+
+## Example Usage
+
+This example shows how to perform final logging or external cleanup once the game is officially closed.
+
+```java
+import io.greenmc.santasays.api.event.game.GameStopEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class FinalCleanupListener implements Listener {
+
+    @EventHandler
+    public void onGameStop(GameStopEvent event) {
+        String arenaName = event.getArena().getName();
+        GameStopEvent.StopReason reason = event.getStopReason();
+
+        System.out.println("Arena " + arenaName + " has been stopped. Reason: " + reason);
+
+        // Safely trigger external plugins or database syncs here
+        if (reason == GameStopEvent.StopReason.SERVER_SHUTDOWN) {
+            // Urgent cleanup logic
+        }
+    }
+}
+```

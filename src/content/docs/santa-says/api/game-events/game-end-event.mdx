@@ -1,0 +1,76 @@
+---
+title: GameEndEvent
+description: Documentation for the event fired when a game session has fully concluded and final scores are calculated.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameEndEvent` is triggered when a Santa Says game has finished all its rounds and entered its final summary phase. At this point, the competition is over, final placements have been calculated, and the winner has been determined.
+
+<Aside type="note">
+    By the time this event fires, players have already been teleported to the start location, and final placement messages have likely been broadcasted to the participants.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.game`
+- **Parent Class:** [`GameEvent`](/santa-says/api/game-events/game-event)
+- **Cancellable:** No
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`GameEvent`](/santa-says/api/game-events/game-event) class and adds methods to retrieve final match results.
+
+| Method        | Return Type          | Description                                                                             |
+|:--------------|:---------------------|:----------------------------------------------------------------------------------------|
+| `getWinner()` | `User`               | Returns the `User` who finished in 1st place. Can be `null` if the game had no players. |
+| `getTop3()`   | `Map<UUID, Integer>` | Returns an immutable map containing the UUIDs and final scores of the top 3 players.    |
+
+---
+
+## Game State at Conclusion
+When this event is called, the game instance is in its "Ending" state:
+* **Final Rankings:** The `ScoreRegistry` is finalized and locked.
+* **Winner Data:** The winner and podium finishers are officially recorded.
+* **Player Status:** Players are still considered "in-game" for a brief cooldown period before the arena resets to a "Waiting" or "Restarting" phase.
+
+---
+
+## Example Usage
+
+This example demonstrates how to use the `GameEndEvent` to give custom rewards (like economy balance or items) to the winner and the top 3 players.
+
+```java
+import io.greenmc.santasays.api.event.game.GameEndEvent;
+import io.greenmc.santasays.api.user.User;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import java.util.UUID;
+
+public class GameRewardListener implements Listener {
+
+    @EventHandler
+    public void onGameEnd(GameEndEvent event) {
+        User winner = event.getWinner();
+
+        // Reward the overall winner
+        if (winner != null) {
+            Player player = Bukkit.getPlayer(winner.getUUID());
+            if (player != null) {
+                player.sendMessage("§6§lVICTORY! §eYou won the game! Here is your reward.");
+                // Add your custom economy/reward logic here
+            }
+        }
+
+        // Log the Top 3 for external database tracking or Discord webhooks
+        event.getTop3().forEach((uuid, score) -> {
+            System.out.println("Podium Finish: " + uuid + " with " + score + " points.");
+        });
+    }
+}
+```
