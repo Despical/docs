@@ -328,7 +328,7 @@ export default defineConfig({
                                 items: [
                                     {
                                         label: "FAQ",
-                                        link: "/santa-says/faq",
+                                        link: "/santa-says/misc/faq",
                                     },
                                 ],
                             },
