@@ -1,0 +1,71 @@
+---
+title: Getting Started
+description: Everything you need to know to get Santa Says up and running on your Minecraft server.
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+Welcome to **Santa Says**! This plugin brings the classic "Simon Says" minigame to your Minecraft server with a festive twist, featuring automated tasks, competitive scoring, and full customization.
+
+---
+
+## Prerequisites
+
+Before installing the plugin, ensure your server environment meets the following requirements:
+
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Minecraft Version:** 1.20.6 or 1.21.11 (Latest versions recommended).
+* **Permissions Plugin** <Badge text="Optional" variant="note" /> : A plugin like LuckPerms to manage user access.
+
+---
+
+## Installation
+
+Setting up Santa Says is straightforward. Follow these steps to get started:
+
+<Steps>
+    1.  **Download the Plugin:** Get the latest version of Santa Says from the official distribution page.
+    2.  **Upload to Server:** Place the `santa-says-x.x.x.jar` file into your server's `plugins/` directory.
+    3.  **NoteBlockAPI (Optional):** If you want background music, also place [NoteBlockAPI](https://www.spigotmc.org/resources/noteblockapi.19287/) in the same folder.
+    4.  **Restart Server:** Restart your server to generate the default configuration files.
+    5.  **Verify Installation:** Type `/santasays` (or your configured alias) in-game to ensure the plugin is loaded correctly.
+</Steps>
+
+---
+
+## First-Run Configuration
+
+After the first restart, a new folder will be created at `/plugins/SantaSays/`. This folder contains everything you need to customize your game:
+
+* **`config.yml`**: Main plugin settings, database connection, and general game rules.
+* **`tasks/`**: A directory containing sub-folders for **Participation** and **Placement** tasks.
+* **`song/`**: Place your `.nbs` files here for the in-game radio.
+* **`messages.yml`**: Full control over every string and translation shown to players.
+
+<Aside type="tip">
+    Always check your console during the first boot. If there are any missing dependencies or version conflicts, the plugin will alert you there.
+</Aside>
+
+---
+
+## Basic Command Structure
+
+While you'll spend most of your time in the config files, here are the essential commands:
+
+| Command              | Permission               | Description                                                                        |
+|:---------------------|:-------------------------|:-----------------------------------------------------------------------------------|
+| `/ss create <arena>` | `santasays.arena.create` | Creates a new game arena with the specified name.                                  |
+| `/ss edit <arena>`   | `santasays.arena.create` | Opens the configuration menu to set up spawns, regions, and settings for an arena. |
+| `/ss help`           | `santasays.admin.help`   | Displays a comprehensive list of all available commands and their usage.           |
+| `/ss join <arena>`   | *None*                   | Allows a player to join the specified game arena's lobby.                          |
+| `/ss leave`          | *None*                   | Allows a player to exit their current game and return to the global spawn point.   |
+
+---
+
+## Next Steps
+
+Now that the plugin is installed, it's time to dive deeper:
+
+* **[Arena Setup Guide](/santa-says/arena-setup)**: Learn how to create your first game arena.
+* **[Placeholders](/santa-says/placeholders/general)**: Hook into PlaceholderAPI for your scoreboards.
+* **[Developer API](/santa-says/api/santa-says-api)**: Start building custom integrations.
