@@ -1,0 +1,53 @@
+---
+title: Participation Tasks
+description: A complete list of participation-based tasks in Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Participation tasks are challenges where every player who successfully completes the objective is rewarded equally. Unlike competitive tasks, these focus on individual execution rather than being the "first" or "only" one to succeed.
+
+<Aside type="tip">
+    **Scoring:** Every player who successfully completes a participation task receives **1 point**.
+</Aside>
+
+---
+
+## Configuration
+
+Each participation task has its own configuration file for fine-tuning settings, messages, and specific task requirements.
+
+<Aside type="note">
+    You can find the configuration files for these tasks at:
+    `plugins/SantaSays/tasks/participation/[task-name].yml`
+</Aside>
+
+---
+
+## Available Tasks
+
+| Action                  | Description                                                                     |
+|:------------------------|:--------------------------------------------------------------------------------|
+| **Enter the portal**    | Jump into the chosen portal, NOT the other portal.                              |
+| **Extinguish yourself** | Place water under yourself while on fire.                                       |
+| **Get into a minecart** | Find and get inside an available minecart.                                      |
+| **Jump into the air**   | Jump while standing still. Do not move your position.                           |
+| **Water Dive**          | Jump into the water blocks safely without hitting solid blocks (like diamonds). |
+| **Look at a [block]**   | Find and look directly at the specified block type.                             |
+| **Look at a player**    | Aim your cursor at another player's head.                                       |
+| **Look at the sky**     | Look directly upwards towards the clouds.                                       |
+| **Nodding**             | Repeatedly look all the way up and all the way down.                            |
+| **Play Noteblocks**     | Continuously interact with a noteblock (left or right click).                   |
+| **Press Button**        | Locate and press a button of the specified material (wood/stone).               |
+| **Cure Poison**         | Use a bucket of milk to remove the poison effect.                               |
+| **Slap a player**       | Hit another player while holding the specified item.                            |
+| **Spin Around**         | Turn your player head in a full 360-degree circle.                              |
+| **Stand Still**         | Do not move your character (sneaking and moving your head is allowed).          |
+| **Stand on Snow**       | Stand on the snow blocks, making sure **NOT** to touch the ice.                 |
+| **Throw a Diamond**     | Drop a diamond while facing another player.                                     |
+| **Snowball Fight**      | Throw snowballs while looking at other players.                                 |
+
+---
+
+## Customizing Tasks
+If you want to change the duration of a task or adjust its specific parameters (like which block to look at), navigate to the folder mentioned above and edit the corresponding `.yml` file. Most changes require a plugin reload or a server restart to take effect.
