@@ -215,19 +215,19 @@ export default defineConfig({
                                 items: [
                                     {
                                         label: "Player Commands",
-                                        link: "/santa-says/player-commands",
+                                        link: "/santa-says/commands/player",
                                     },
                                     {
                                         label: "Arena Commands",
-                                        link: "/santa-says/arena-commands",
+                                        link: "/santa-says/commands/arena",
                                     },
                                     {
                                         label: "Admin Commands",
-                                        link: "/santa-says/admin-commands",
+                                        link: "/santa-says/commands/admin",
                                     },
                                     {
                                         label: "Debug Commands",
-                                        link: "/santa-says/debug-commands",
+                                        link: "/santa-says/commands/debug",
                                     },
                                 ],
                             },
