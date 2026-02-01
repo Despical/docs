@@ -271,7 +271,7 @@ export default defineConfig({
                                 items: [
                                     {
                                         label: "NoteBlockAPI",
-                                        link: "/santa-says/music",
+                                        link: "/santa-says/music/note-block-api",
                                     },
                                 ],
                             },
