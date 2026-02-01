@@ -280,6 +280,9 @@ export default defineConfig({
                                 collapsed: true,
                                 items: [
                                     {
+                                        label: "Santa Says API", link: "/santa-says/api/santa-says-api",
+                                    },
+                                    {
                                         label: "Player Events",
                                         collapsed: true,
                                         items: [

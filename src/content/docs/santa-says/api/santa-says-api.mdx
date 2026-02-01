@@ -1,0 +1,86 @@
+---
+title: Developer API
+description: Learn how to integrate with Santa Says and use its custom event system.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+The Santa Says API allows developers to hook into game lifecycles, track player statistics, and modify task behavior. All custom events in the plugin inherit from the base `SantaSaysEvent` class.
+
+---
+
+## Dependency Setup
+
+To start using the API, you need to add the Santa Says JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `santa-says-x.x.x.jar` file inside it.
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        dependencies {
+            compileOnly files('libs/santa-says-x.x.x.jar')
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+            compileOnly(files("libs/santa-says-x.x.x.jar"))
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>io.greenmc</groupId>
+            <artifactId>santa-says</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/santa-says-x.x.x.jar</systemPath>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+<Aside type="caution">
+    Don't forget to add `SantaSays` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
+</Aside>
+
+```yaml
+# plugin.yml
+name: YourPlugin
+version: 1.0.0
+main: your.package.Main
+depend: [SantaSays]
+```
+
+---
+
+## Base Event Class
+
+Every event provided by the Santa Says API extends the `SantaSaysEvent` class. This ensures a consistent implementation of Bukkit's `HandlerList` and makes it easier to manage custom listeners.
+
+```java
+public abstract class SantaSaysEvent extends Event {
+
+    private static final HandlerList HANDLER_LIST = new HandlerList();
+
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
+    }
+}
+```
+
+### Next Steps
+Explore the different event categories to start building your integration:
+* [Player Events](/santa-says/api/player-events/player-event)
+* [Game Events](/santa-says/api/game-events/game-event)
+* [Round Events](/santa-says/api/round-events/round-event)
+* [Task Events](/santa-says/api/task-events/task-event)
