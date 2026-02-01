@@ -290,12 +290,32 @@ export default defineConfig({
                                         ],
                                     },
                                     {
+                                        label: "Game Events",
+                                        collapsed: true,
+                                        items: [
+                                            { label: "GameEvent", link: "/santa-says/api/game-events/game-event" },
+                                            { label: "GameStartEvent", link: "/santa-says/api/game-events/game-start-event" },
+                                            { label: "GameEndEvent", link: "/santa-says/api/game-events/game-end-event" },
+                                            { label: "GameStopEvent", link: "/santa-says/api/game-events/game-stop-event" },
+                                            { label: "GameStateChangeEvent", link: "/santa-says/api/game-events/game-state-change-event" },
+                                        ],
+                                    },
+                                    {
                                         label: "Round Events",
                                         collapsed: true,
                                         items: [
                                             { label: "RoundEvent", link: "/santa-says/api/round-events/round-event" },
                                             { label: "RoundStartEvent", link: "/santa-says/api/round-events/round-start-event" },
                                             { label: "RoundEndEvent", link: "/santa-says/api/round-events/round-end-event" },
+                                        ],
+                                    },
+                                    {
+                                        label: "Task Events",
+                                        collapsed: true,
+                                        items: [
+                                            { label: "TaskEvent", link: "/santa-says/api/task-events/task-event" },
+                                            { label: "TaskStartEvent", link: "/santa-says/api/task-events/task-start-event" },
+                                            { label: "TaskEndEvent", link: "/santa-says/api/task-events/task-end-event" },
                                         ],
                                     },
                                 ],
