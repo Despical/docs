@@ -1,0 +1,53 @@
+---
+title: NoteBlockAPI Integration
+description: Learn how to enable music in Santa Says using NoteBlockAPI.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Santa Says features a built-in radio system that plays background music during games. To hear the classic tunes while playing, you must install the **NoteBlockAPI** plugin on your server.
+
+---
+
+## Installation
+1. Download the latest version of [NoteBlockAPI](https://www.spigotmc.org/resources/noteblockapi.19287/).
+2. Drop the `.jar` file into your server's `plugins` folder.
+3. Restart your server.
+
+<Aside type="note">
+    If NoteBlockAPI is not detected, Santa Says will simply disable the radio system without crashing. You will see a warning in your console: *"NoteBlockAPI is not present, you can install it if you want to hear the classic song."*
+</Aside>
+
+---
+
+## Default Song
+By default, the plugin comes with a NoteBlock version of **Scott Joplin's "The Entertainer"**. This song plays for all participants in an active game session and is automatically handled by the plugin's internal `NBAPIRadio` system.
+
+---
+
+## Using Custom Music
+You are not limited to the default track! You can easily replace the background music with any `.nbs` file.
+
+### How to change the song:
+1. Navigate to your server folder: `/plugins/SantaSays/song/`.
+2. Delete the existing `song.nbs`.
+3. Upload your custom `.nbs` file and rename it exactly to `song.nbs`.
+4. Restart the server or reload the plugin.
+
+<Aside type="tip">
+    You can create your own `.nbs` files or download them from community repositories using tools like **Open Note Block Studio**.
+</Aside>
+
+---
+
+## Developer Note
+The plugin uses a `Radio` interface to manage music playback. When a game starts, the `NBAPIRadio` class creates a `RadioSongPlayer` for that specific game instance, ensuring that only players within that arena hear the music.
+
+```java
+// Internal logic for adding players to the radio
+@Override
+public void addGame(Game game) {
+    RadioSongPlayer radio = gameRadios.computeIfAbsent(game, (k) -> new RadioSongPlayer(song));
+    game.getPlayers().forEach(radio::addPlayer);
+}
+```
