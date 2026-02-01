@@ -1,0 +1,84 @@
+---
+title: FAQ
+description: Quick answers regarding licensing, requirements, and technical details for Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources for the **Santa Says** plugin.
+
+---
+
+## What is the license for the Santa Says plugin?
+
+The **Santa Says** plugin is **Closed Source** and proprietary. **All rights are reserved by Alican 'bilektugrul' Arslan and Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**:
+
+* All payments are final and non-refundable.
+* Redistribution, sharing, or resale of this plugin is strictly prohibited.
+* You are not permitted to modify, decompile, or reverse-engineer any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers through official channels.
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run Santa Says.
+
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
+
+---
+
+## Which Minecraft versions are supported?
+
+Santa Says supports a specific range of versions to ensure stability:
+
+* **Supported Versions:** Full and native support for **1.20 and all newer versions** (1.21+).
+
+<Aside type="caution">
+    Sub-versions like 1.20.4 or 1.21.8 are not officially supported. Please ensure you are on the final minor release of your chosen major version.
+</Aside>
+
+---
+
+## Does the plugin support PlaceholderAPI?
+
+**Yes.** Santa Says provides a comprehensive set of placeholders to display player statistics and real-time game data. You can use these in any compatible plugin like Tab, Scoreboard, or Holographic Displays.
+
+We have categorized our placeholders into two main sections:
+
+* **General & Game Placeholders:** For player stats (wins, points) and arena info.
+  * 👉 [View General Placeholders](/santa-says/placeholders/general)
+* **Leaderboard Placeholders:** For creating Top 10 lists and ranking displays.
+  * 👉 [View Leaderboard Placeholders](/santa-says/placeholders/leaderboard)
+
+---
+
+## How is the performance?
+
+Santa Says is designed with performance in mind. All heavy operations, such as database saving and configuration loading, are handled asynchronously. The game loop is highly optimized to ensure that even with 15+ rounds and complex tasks, your server's TPS remains stable.
+
+---
+
+## What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions. This means you should use the XSeries sound names in your configuration files.
+
+[**List of All Available XSound Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+---
+
+## What are the available particle effect names?
+
+The plugin utilizes **ParticleLib** to manage and display particle effects. You can find the list of supported particle names here:
+
+[**List of All Available Particle Effects**](https://github.com/Despical/ParticleLib/blob/master/src/main/java/dev/despical/particle/ParticleEffect.java#L51)
+
+---
+
+## Can I create my own tasks?
+
+While the core tasks are built into the plugin, you can fully customize every existing task via its specific configuration file. If you have a task idea, feel free to suggest it in our Discord server!
