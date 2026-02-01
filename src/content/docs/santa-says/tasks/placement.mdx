@@ -1,0 +1,78 @@
+---
+title: Placement Tasks
+description: A complete list of placement-based (competitive) tasks in Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Placement tasks are competitive challenges where speed or volume is key. Unlike participation tasks, only the top three players receive points, making these tasks the primary way to climb the leaderboard.
+
+<Aside type="note">
+    **Scoring Logic:**
+    * **1st Place:** 3 Points
+    * **2nd Place:** 2 Points
+    * **3rd Place:** 1 Point
+    * **Everyone else:** 0 Points
+</Aside>
+
+---
+
+## Configuration
+
+Each placement task has a dedicated configuration file to manage materials, amounts, and task-specific settings.
+
+<Aside type="note">
+    You can find the configuration files for these tasks at:
+    `plugins/SantaSays/tasks/placement/[task-name].yml`
+</Aside>
+
+---
+
+## Available Tasks
+
+| Action                   | Description                                                                                      |
+|:-------------------------|:-------------------------------------------------------------------------------------------------|
+| **Enchant Sword**        | Use an anvil to add the specified enchantment onto the required sword material.                  |
+| **Break a [block]**      | Use your tools to break the specified block as fast as possible.                                 |
+| **Break the most snow**  | Competitive speed-breaking: break as much snow as you can before the time runs out.              |
+| **Build an Iron Golem**  | Build a T-shape out of 4 iron blocks and place the pumpkin on top.                               |
+| **Cure Zombie Villager** | Use a potion of weakness and a golden apple to start the curing process.                         |
+| **Mushroom Stew**        | Click on a mooshroom with a bowl and eat the resulting stew.                                     |
+| **Hunger Race**          | Eat items to fill your hunger bar completely as fast as you can.                                 |
+| **Equip Armor**          | Fully equip the specified material armor set.                                                    |
+| **Health Race**          | Use the provided items to regenerate your health to full.                                        |
+| **Santa's Snack**        | Right-click Santa with milk and cookies (order doesn't matter).                                  |
+| **Grow a Tree**          | Place a sapling on dirt and use bonemeal until it fully grows.                                   |
+| **Jukebox Hero**         | Insert the correct music disc into the jukebox.                                                  |
+| **Chimney Jump**         | Climb the brick chimney using ladders and fall down the hole.                                    |
+| **Platform Jump**        | Leap off the platform as fast as possible.                                                       |
+| **Leaping Jump**         | Drink a Potion of Leaping and jump onto the diamond platform.                                    |
+| **Egg Puncher**          | Continuously find and click the dragon egg as it teleports.                                      |
+| **Hunter**               | Use your sword to kill the specified animal type.                                                |
+| **Inventory Fill**       | Use stacks of items to completely fill every slot in your inventory.                             |
+| **Pyramid Beacon**       | Place the beacon on top of the pre-built block pyramid.                                          |
+| **Grass Puncher**        | Break as much tall grass as possible within the time limit.                                      |
+| **Armor Stand Decor**    | Right-click an armor stand while holding the specified item.                                     |
+| **Coal Cleanup**         | Remove exactly 2 or 3 pieces of coal from your inventory.                                        |
+| **Pig Rider**            | Guide a pig off the platform using a carrot on a stick.                                          |
+| **Sheep Shearer**        | Use shears to shear as many sheep as possible before the timer ends.                             |
+| **Archery Trick**        | Shoot an arrow directly upwards and successfully hit yourself.                                   |
+| **Tame the Horse**       | Feed the horse until it is tamed. Different items provide different success chances (see below). |
+
+---
+
+## Horse Taming Probabilities
+The **Tame the Horse** task uses specific percentages for success per item fed:
+
+| Item                      | Points         |
+|:--------------------------|:---------------|
+| **Hay Bale**              | 20%            |
+| **Apple**                 | 15%            |
+| **Wheat & Golden Carrot** | 10%            |
+| **Sugar**                 | 5%             |
+| **Other items**           | 0%             |
+
+---
+
+## Customization
+For tasks like `Break a [block]` or `Kill a(n) [animal]`, you can change the required target in the task-specific `.yml` file. This allows you to create variety in your rounds without changing the core game logic.
