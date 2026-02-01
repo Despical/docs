@@ -1,0 +1,111 @@
+---
+title: Arena Setup Guide
+description: A step-by-step guide to creating and configuring your first Santa Says arena.
+---
+
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+
+Setting up an arena in Santa Says is done through an intuitive in-game GUI. This guide will walk you through the process from the initial command to the final registration.
+
+---
+
+## Step 1: Create the Arena
+To begin, you need to initialize a new arena instance. Each arena must have a **unique ID**.
+
+```bash
+/santasays create <arena_id>
+```
+
+<Aside type="caution">
+    If the ID is already in use, you will receive an error message. Choose a name that is easy to remember (e.g., `winter_01`).
+</Aside>
+
+---
+
+## Step 2: Open the Setup Menu
+Once the arena is created, enter the Edit Mode to access the configuration GUI.
+
+```bash
+/santasays edit <arena_id>
+```
+
+This command opens the main setup menu where all configurations are handled.
+
+---
+
+## Step 3: Configure Game Locations
+Click on the **Arena Locations** (`FILLED_MAP`) item in the main menu to set the teleportation points.
+
+* **Lobby** (`COMPASS`): The location where players are teleported when they join the arena and wait for the game to start.
+* **Start Location** (`CLOCK`): The specific point where players are teleported the moment the game loop begins.
+* **End Location** (`END_PORTAL_FRAME`): The location where players are sent after the game ends or if they leave.
+
+<Aside type="tip">
+    You can use the **Go Back** (`REDSTONE`) item to return to the main setup menu at any time.
+</Aside>
+
+---
+
+## Step 4: Set Player Amounts <Badge text="Optional" variant="tip" />
+From the main menu, click on **Player Amounts** (`GLOWSTONE_DUST`) to define the arena's capacity.
+
+* **Minimum Players**: How many players are needed to start the lobby countdown.
+  * `LEFT CLICK` to increase | `RIGHT CLICK` to decrease.
+* **Maximum Players**: The total capacity of the arena.
+  * `LEFT CLICK` to increase | `RIGHT CLICK` to decrease.
+
+---
+
+## Step 5: Select the Game Platform
+The **Platform Selector** (`BLAZE_ROD`) is used to define the area where the "Santa Says" tasks will take place. Clicking this will give you a **Selection Wand**.
+
+### **Wand Controls**
+
+The platform represents the playable area. **Important:** The platform must be **2D**, meaning it can only be **1 block high (Y-axis = 1)**. Use the Selection Wand to define this area:
+
+#### **1. Area Selection (Cuboid)**
+To add or remove large rectangular areas at once, you need to select two corners:
+* **Left Click:** Selects Pos1 and Pos2. All blocks within the selected rectangle will be **ADDED** to the platform.
+* **Right Click:** Selects Pos1 and Pos2. All blocks within the selected rectangle will be **REMOVED** from the platform (useful for carving out holes).
+
+#### **2. Precision Selection (Single Block)**
+If you need to fine-tune your platform block-by-block:
+* **Sneak + Left Click:** **ADDS** the specific block you are looking at to the platform.
+* **Sneak + Right Click:** **REMOVES** the specific block you are looking at from the platform.
+
+<Aside type="caution">
+    The platform is strictly a flat plane. Ensure all selected blocks are on the same height (Y-level) for the game to function correctly.
+</Aside>
+---
+
+## Step 6: Create an Arena Sign <Badge text="Optional" variant="tip" />
+Look directly at a sign and click the **Create Arena Sign** (`OAK_SIGN`) item. This will link the sign to your arena.
+
+The sign will automatically update its status (Waiting, Starting, In-Game, Ending) and display the current player count.
+
+---
+
+## Step 7: Register the Arena
+Once you have configured all locations, player amounts, and the platform, it’s time to finalize.
+
+Click the **Register the Arena** (`FIREWORK`) item. The plugin will validate your settings and, if everything is correct, the arena will be activated and ready for players!
+
+---
+
+## Joining the Game
+After successfully registering your arena, players can join the action in two ways:
+
+    1. By Command: Use `/santasays join <arena_id>` to enter the lobby.
+
+    2. By Sign: If you created an `Arena Sign in Step 6`, simply **Right-Click** the sign to join.
+
+---
+
+### **Summary Table**
+| Item             | Name              | Function                                  |
+|:-----------------|:------------------|:------------------------------------------|
+| `FILLED_MAP`     | Arena Locations   | Set Lobby, Start, and End points.         |
+| `GLOWSTONE_DUST` | Player Amounts    | Set Min and Max player limits.            |
+| `BLAZE_ROD`      | Platform Selector | Define the game area with a Wand.         |
+| `OAK_SIGN`       | Create Sign       | Link a physical sign to the arena status. |
+| `FIREWORK`       | Register          | Save and activate the arena.              |
