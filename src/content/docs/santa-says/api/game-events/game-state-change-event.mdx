@@ -1,0 +1,87 @@
+---
+title: GameStateChangeEvent
+description: Documentation for the event fired before a game transitions from one state to another.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameStateChangeEvent` is triggered immediately before a Santa Says game transitions between states (e.g., from `WAITING` to `STARTING`). This event allows developers to inspect the transition and, if necessary, cancel it to prevent the state from changing.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.game`
+- **Parent Class:** [`GameEvent`](/santa-says/api/game-events/game-event)
+- **Cancellable:** Yes
+
+<Aside type="caution">
+    This event is fired **before** the state is actually applied. If you cancel this event, the game will remain in its `oldState`.
+</Aside>
+
+---
+
+## Methods
+
+In addition to the methods inherited from [`GameEvent`](/santa-says/api/game-events/game-event), this event provides access to both the current and the proposed game states.
+
+| Method                  | Return Type | Description                                                  |
+|:------------------------|:------------|:-------------------------------------------------------------|
+| `getOldState()`         | `GameState` | Returns the current state of the game before the transition. |
+| `getNewState()`         | `GameState` | Returns the state the game is attempting to enter.           |
+| `isCancelled()`         | `boolean`   | Checks if the state transition has been blocked.             |
+| `setCancelled(boolean)` | `void`      | Set to `true` to stop the game from changing states.         |
+
+---
+
+## Available Game States
+The game typically cycles through the following states:
+* `WAITING`: Players are joining the lobby.
+* `STARTING`: The countdown to the first round has begun.
+* `IN_GAME`: The game loop is active and tasks are running.
+* `ENDING`: The game has finished, and winners are being displayed.
+* `RESTARTING`: The arena is cleaning up and resetting.
+
+---
+
+## Example Usage
+
+### Blocking a Game Start
+You can use this to prevent a game from starting if external conditions (like a server-wide event) are not met.
+
+```java
+import io.greenmc.santasays.api.event.game.GameStateChangeEvent;
+import io.greenmc.santasays.api.game.GameState;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class StateLockListener implements Listener {
+
+    @EventHandler
+    public void onStateChange(GameStateChangeEvent event) {
+        // Prevent the game from starting if a global lock is active
+        if (event.getNewState() == GameState.STARTING && isGlobalLockActive()) {
+            event.setCancelled(true);
+            event.getGame().broadcast("§cThe game cannot start right now!");
+        }
+    }
+}
+```
+
+### Updating UI Before Transition
+Trigger logic or update boss bars exactly when a game moves into the ending phase.
+
+```java
+@EventHandler
+public void onGameEnding(GameStateChangeEvent event) {
+    if (event.getNewState() == GameState.ENDING) {
+        // Logic to run right before the game officially enters the ending phase
+        System.out.println("Arena " + event.getArena().getName() + " is now finishing.");
+    }
+}
+```
+
+---
+
+<Aside type="danger">
+    Avoid performing heavy operations (like database queries or large file saves) within this listener, as it is fired synchronously during the state transition and could cause server lag.
+</Aside>

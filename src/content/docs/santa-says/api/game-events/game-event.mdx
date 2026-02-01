@@ -1,0 +1,73 @@
+---
+title: GameEvent
+description: The foundation for all game-related events in the Santa Says API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameEvent` class is an abstract base for all events associated with a specific, active game session. It provides developers with direct access to the `Game` instance and its various internal managers, making it the primary entry point for manipulating game logic.
+
+<Aside type="note">
+    As an abstract class, you cannot listen to `GameEvent` directly. You must listen to its subclasses, such as `GameStartEvent` or `GameStopEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.game`
+- **Parent Class:** `SantaSaysEvent`
+
+---
+
+## Methods
+
+| Method       | Return Type | Description                                              |
+|:-------------|:------------|:---------------------------------------------------------|
+| `getGame()`  | `Game`      | Returns the active `Game` instance.                      |
+| `getArena()` | `Arena`     | Shortcut to return the `Arena` associated with the game. |
+
+---
+
+## Accessible Game Managers
+Through the `Game` object provided by this event, you can access several core managers to customize the game experience:
+
+* **TaskManager:** Handles task selection and execution.
+* **RoundManager:** Manages the lifecycle and progression of rounds.
+* **VisibilityManager:** Controls player visibility rules (e.g., hiding players).
+* **ScoreboardManager:** Updates and manages player scoreboards.
+* **ScoreRegistry:** Stores and manages individual player scores.
+* **BossBarManager:** Controls the boss bar displays for players in the game.
+
+---
+
+---
+
+## Known Subclasses
+Since `GameEvent` is the root for game lifecycle notifications, it is implemented by:
+* **GameStartEvent**: Fired when a game officially begins.
+* **GameStopEvent**: Fired when a game is stopped or finishes.
+* **GameLoadEvent**: Fired when a game instance is initialized.
+
+## Usage in Listeners
+
+When listening to any game-related event, you can easily pull arena settings or check the current round progress.
+
+```java
+import io.greenmc.santasays.api.event.game.GameStartEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class GameStatusListener implements Listener {
+
+    @EventHandler
+    public void onGameEvent(GameStartEvent event) {
+        // Access the arena name via the base GameEvent methods
+        String arenaName = event.getArena().getName();
+
+        // Access game managers
+        int totalRounds = event.getGame().getRoundManager().getRound();
+
+        System.out.println("Game event triggered in arena: " + arenaName);
+    }
+}
+```
