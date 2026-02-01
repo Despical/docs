@@ -1,0 +1,59 @@
+---
+title: TaskEvent
+description: The foundation for all task-related events in the Santa Says API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `TaskEvent` class is an abstract base for all events occurring during the lifecycle of a **Task**. It provides developers with the necessary context to identify which game is active and exactly which task is being executed.
+
+<Aside type="note">
+    Since this is an abstract class, you cannot listen to it directly. You should listen to its implementations, such as `TaskStartEvent` or `TaskEndEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.task`
+- **Parent Class:** `SantaSaysEvent`
+
+---
+
+## Methods
+
+| Method      | Return Type | Description                                                      |
+|:------------|:------------|:-----------------------------------------------------------------|
+| `getGame()` | `Game`      | Returns the `Game` instance where the task is occurring.         |
+| `getTask()` | `Task`      | Returns the specific `Task` instance associated with this event. |
+
+---
+
+## Known Subclasses
+These events inherit all methods from `TaskEvent`:
+
+* **`TaskStartEvent`**: Fired when a task objective is displayed and the timer starts.
+* **`TaskEndEvent`**: Fired when the task timer expires or everyone completes the objective.
+
+---
+
+## Usage in Listeners
+
+When listening to task-related events, you can use the base methods to fetch the name of the task or modify the game environment based on the task type.
+
+```java
+import io.greenmc.santasays.api.event.task.TaskStartEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class TaskListener implements Listener {
+
+    @EventHandler
+    public void onTaskStart(TaskStartEvent event) {
+        // Access data from the base TaskEvent
+        String taskName = event.getTask().getName();
+        String arenaName = event.getGame().getArena().getName();
+
+        System.out.println("A new task '" + taskName + "' has started in arena: " + arenaName);
+    }
+}
+```

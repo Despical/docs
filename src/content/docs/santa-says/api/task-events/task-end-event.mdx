@@ -1,0 +1,66 @@
+---
+title: TaskEndEvent
+description: Documentation for the event fired when a specific task concludes in Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `TaskEndEvent` is fired immediately after a task has executed its `finish()` logic. This event focuses strictly on the lifecycle of the individual task that was just played, occurring before the broader round-level cleanup and scoring processes take place.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.task`
+- **Parent Class:** [`TaskEvent`](/santa-says/api/task-events/task-event)
+- **Cancellable:** No
+
+<Aside type="note">
+    This event is ideal for performing cleanup related specifically to a task's behavior or for gathering analytics before the game transitions into the general round-end phase.
+</Aside>
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`TaskEvent`](/santa-says/api/task-events/task-event) class.
+
+| Method      | Return Type | Description                                             |
+|:------------|:------------|:--------------------------------------------------------|
+| `getGame()` | `Game`      | Returns the game instance where the task just finished. |
+| `getTask()` | `Task`      | Returns the specific task instance that has concluded.  |
+
+---
+
+## Lifecycle Timing
+It is important to understand the order of execution at the end of a round:
+1. **Task Completion:** The task timer hits zero or all players finish.
+2. **Task Finish Logic:** Internal `Task#finish()` is executed.
+3. **TaskEndEvent (This event):** Fired for task-specific post-processing.
+4. **Round Cleanup:** Scoring is applied, and the round counter increments.
+5. **RoundEndEvent:** The broader round-level notification is fired.
+
+---
+
+## Example Usage
+
+This example demonstrates how to log the end of a task or perform custom cleanup for external integrations (like clearing custom particles).
+
+```java
+import io.greenmc.santasays.api.event.task.TaskEndEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class TaskCleanupListener implements Listener {
+
+    @EventHandler
+    public void onTaskEnd(TaskEndEvent event) {
+        String taskName = event.getTask().getName();
+        int arenaName = event.getGame().getArena().getName();
+
+        // Perform custom task-specific logging
+        System.out.println("The task '" + taskName + "' has finished in " + arenaName);
+
+        // Example: If you spawned custom entities for this task, clean them up here
+    }
+}
+```

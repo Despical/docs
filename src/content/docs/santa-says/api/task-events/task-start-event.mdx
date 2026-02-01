@@ -1,0 +1,67 @@
+---
+title: TaskStartEvent
+description: Documentation for the event fired when a specific task is about to start in Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `TaskStartEvent` is fired immediately before a task begins its execution logic. While `RoundStartEvent` signals the beginning of the round transition, this event is focused strictly on the lifecycle of an individual task.
+
+---
+
+## Technical Overview
+- **Package:** `io.greenmc.santasays.api.event.task`
+- **Parent Class:** [`TaskEvent`](/santa-says/api/task-events/task-event)
+- **Cancellable:** No
+
+<Aside type="note">
+    This event is called after a task has been selected and registered, but before the internal `Task#start()` method is executed.
+</Aside>
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`TaskEvent`](/santa-says/api/task-events/task-event) class.
+
+| Method      | Return Type | Description                                           |
+|:------------|:------------|:------------------------------------------------------|
+| `getGame()` | `Game`      | Returns the game instance where the task is starting. |
+| `getTask()` | `Task`      | Returns the specific task that is about to begin.     |
+
+---
+
+## Lifecycle Timing
+It is important to distinguish this from the round start:
+1. **RoundStartEvent:** The system prepares for a new round and selects a task.
+2. **Task Registration:** The selected task is initialized.
+3. **TaskStartEvent (This event):** The last chance to initialize task-specific state or UI before the timer starts.
+4. **Task Start:** The task begins, and players receive their instructions.
+
+---
+
+## Example Usage
+
+This example demonstrates how to play a specific sound or send a custom action bar message when a task starts.
+
+```java
+import io.greenmc.santasays.api.event.task.TaskStartEvent;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class TaskInitListener implements Listener {
+
+    @EventHandler
+    public void onTaskStart(TaskStartEvent event) {
+        String taskName = event.getTask().getName();
+
+        // Notify all players in the game that a task is starting
+        for (Player player : event.getGame().getPlayers()) {
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.0f);
+            player.sendActionBar("§fNew Task: §6§l" + taskName);
+        }
+    }
+}
+```
