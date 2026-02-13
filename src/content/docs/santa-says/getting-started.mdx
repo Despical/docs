@@ -26,9 +26,9 @@ Setting up Santa Says is straightforward. Follow these steps to get started:
 <Steps>
     1.  **Download the Plugin:** Get the latest version of Santa Says from the official distribution page.
     2.  **Upload to Server:** Place the `santa-says-x.x.x.jar` file into your server's `plugins/` directory.
-    3.  **NoteBlockAPI (Optional):** If you want background music, also place [NoteBlockAPI](https://www.spigotmc.org/resources/noteblockapi.19287/) in the same folder.
+    3.  **NoteBlockAPI <Badge text="Optional" variant="note" /> :** If you want background music, also place [NoteBlockAPI](https://www.spigotmc.org/resources/noteblockapi.19287/) in the same folder.
     4.  **Restart Server:** Restart your server to generate the default configuration files.
-    5.  **Verify Installation:** Type `/santasays` (or your configured alias) in-game to ensure the plugin is loaded correctly.
+    5.  **Verify Installation:** Type `/santasays` in-game to ensure the plugin is loaded correctly.
 </Steps>
 
 ---
@@ -37,10 +37,14 @@ Setting up Santa Says is straightforward. Follow these steps to get started:
 
 After the first restart, a new folder will be created at `/plugins/SantaSays/`. This folder contains everything you need to customize your game:
 
-* **`config.yml`**: Main plugin settings, database connection, and general game rules.
-* **`tasks/`**: A directory containing sub-folders for **Participation** and **Placement** tasks.
-* **`song/`**: Place your `.nbs` files here for the in-game radio.
-* **`messages.yml`**: Full control over every string and translation shown to players.
+* `config.yml`: Main plugin settings, storage type selection and general game rules.
+* `mysql.yml`: Configure your database credentials if you are using MySQL.
+* `items.yml`: Define and customize specific items used in the game.
+* `scoreboard.yml`: Fully customizable scoreboard layout and formatting.
+* `bossbar.yml`: Configure the style, color, and messages for the in-game boss bar.
+* `tasks/`: A directory containing sub-folders for **Participation** and **Placement** tasks.
+* `song/`: Place your `.nbs` files here for the in-game radio.
+* `messages.yml`: Full control over every string and translation shown to players.
 
 <Aside type="tip">
     Always check your console during the first boot. If there are any missing dependencies or version conflicts, the plugin will alert you there.
@@ -57,8 +61,8 @@ While you'll spend most of your time in the config files, here are the essential
 | `/ss create <arena>` | `santasays.arena.create` | Creates a new game arena with the specified name.                                  |
 | `/ss edit <arena>`   | `santasays.arena.create` | Opens the configuration menu to set up spawns, regions, and settings for an arena. |
 | `/ss help`           | `santasays.admin.help`   | Displays a comprehensive list of all available commands and their usage.           |
-| `/ss join <arena>`   | *None*                   | Allows a player to join the specified game arena's lobby.                          |
-| `/ss leave`          | *None*                   | Allows a player to exit their current game and return to the global spawn point.   |
+| `/ss join <arena>`   | *None*                   | Allows a player to join the specified arena.                                       |
+| `/ss leave`          | *None*                   | Allows a player to exit their current game and return to the hub.                  |
 
 ---
 
