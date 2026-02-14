@@ -254,6 +254,19 @@ export default defineConfig({
                                 ],
                             },
                             {
+                                label: "Features",
+                                items: [
+                                    {
+                                        label: "Sprites & Icons",
+                                        link: "/santa-says/features/sprites",
+                                    },
+                                    {
+                                        label: "Smart Recovery",
+                                        link: "/santa-says/features/crash-recovery",
+                                    },
+                                ],
+                            },
+                            {
                                 label: "Placeholders",
                                 items: [
                                     {
@@ -263,15 +276,6 @@ export default defineConfig({
                                     {
                                         label: "Leaderboard Placeholders",
                                         link: "/santa-says/placeholders/leaderboard",
-                                    },
-                                ],
-                            },
-                            {
-                                label: "Visuals",
-                                items: [
-                                    {
-                                        label: "Sprites & Icons",
-                                        link: "/santa-says/features/sprites",
                                     },
                                 ],
                             },
