@@ -267,6 +267,15 @@ export default defineConfig({
                                 ],
                             },
                             {
+                                label: "Visuals",
+                                items: [
+                                    {
+                                        label: "Sprites & Icons",
+                                        link: "/santa-says/features/sprites",
+                                    },
+                                ],
+                            },
+                            {
                                 label: "Music",
                                 items: [
                                     {
