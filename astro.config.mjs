@@ -343,6 +343,10 @@ export default defineConfig({
                                         label: "FAQ",
                                         link: "/santa-says/misc/faq",
                                     },
+                                    {
+                                        label: "Source Code",
+                                        link: "/santa-says/misc/source-code",
+                                    },
                                 ],
                             },
                         ],
