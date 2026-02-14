@@ -2,6 +2,7 @@
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightSidebarTopics from "starlight-sidebar-topics";
+import starlightImageZoom from 'starlight-image-zoom'
 
 const googleAnalyticsId = 'G-SGNN9QLBSE';
 
@@ -44,6 +45,7 @@ export default defineConfig({
                 Sidebar: "@astrojs/starlight/components/Sidebar.astro",
             },
             plugins: [
+                starlightImageZoom(),
                 starlightSidebarTopics([
                     {
                         id: "easter-eggs",
