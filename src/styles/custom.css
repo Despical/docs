@@ -17,25 +17,6 @@
     --sl-font-mono: "JetBrains Mono";
 }
 
-/* make images in markup wide and centered */
-.sl-markdown-content img:not(:where(.not-content *)) {
-    margin: 0 auto;
-}
-.sl-markdown-content img:not(:where(.not-content *)):not([alt="Diagram"]) {
-    width: 100%;
-}
-/* except when we want them inline */
-.sl-markdown-content :is(img.img-inline, .img-inline img) {
-    margin: 0;
-    width: auto;
-}
-.sl-markdown-content img.img-inline {
-    display: inline-block;
-}
-.sl-markdown-content :is(img.img-inline-center, .img-inline-center img) {
-    width: auto;
-}
-
 /* use custom font first instead of system */
 .sl-badge {
     font-family: var(--__sl-font-mono);
