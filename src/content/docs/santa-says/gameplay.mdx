@@ -1,0 +1,96 @@
+---
+title: Gameplay Overview
+description: Master the mechanics, scoring system, and flow of Santa Says.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+**Santa Says** is a fast-paced Minecraft minigame designed for high-energy competitive servers. It combines quick reflexes, attention to detail, and holiday cheer into an intense battle for the top score.
+
+Easy to learn but hard to master, the game keeps players engaged through rapid-fire rounds and dynamic scoring mechanics.
+
+---
+
+## The Game Loop
+
+A standard match consists of **15 intense rounds**. In every round, players are presented with a random task selected from a pool of **44 unique challenges**.
+
+The objective is simple: Read the instruction, react faster than your opponents, and survive until the timer runs out.
+
+<div class="yt-wrapper">
+    <iframe
+        src="https://www.youtube.com/embed/75KtWqhc3Zo"
+        title="Santa Says Gameplay Trailer"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+---
+
+### Key Features
+* **Fast-Paced Action:** No downtime. Rounds follow each other instantly to maintain player retention.
+* **High Replayability:** With 44 tasks and randomized ordering, no two matches feel exactly the same.
+* **Competitive Scoring:** A mix of participation and placement mechanics ensures that every second counts.
+
+---
+
+## Scoring System
+
+Understanding how to earn points is the key to victory. Not all tasks are created equal; the game dynamically switches between two scoring modes to keep players on their toes.
+
+### 1. Participation Tasks
+These tasks focus on survival and completion. They are designed to keep the lobby engaged.
+
+* **Objective:** Successfully complete the instruction within the time limit.
+* **Reward:** **+1 Point** for *everyone* who succeeds.
+* **Strategy:** Focus on accuracy. As long as you finish, you get the point.
+
+### 2. Placement Tasks
+These are high-stakes rounds where speed is everything. Only the fastest players are rewarded, creating intense "clutch" moments.
+
+* **Objective:** Be among the first 3 players to complete the objective (or perform the most actions, e.g., breaking the most snow).
+* **Reward:**
+  * 🥇 **1st Place:** +3 Points
+  * 🥈 **2nd Place:** +2 Points
+  * 🥉 **3rd Place:** +1 Point
+* **Strategy:** Risk it all for speed. Being 4th place gets you **0 points**.
+
+<Aside type="tip">
+    **Pro Tip:** Pay close attention to the task type in the chat or boss bar. Recognizing a "Placement" task early is often the difference between winning and losing the match.
+</Aside>
+
+---
+
+## Task Variety
+
+Santa Says features a massive library of **44 unique tasks**, categorized into different skill sets. You won't just be running around; you'll need to master various mechanics:
+
+* **Precision & Reflexes:** Tasks like *Nod by looking up and down*, *Spin around*, or *Stand completely still* require immediate reaction to chat commands.
+* **Crafting & Management:** Test your inventory skills by *Filling your inventory*, *Removing specific items*, or quickly crafting complex structures like an *Iron Golem* or *Beacon*.
+* **PvE & Survival:** Defend yourself by *Killing animals*, *Curing a Zombie Villager*, or efficiently *Extinguishing yourself* when set on fire.
+* **Parkour & Movement:** Navigate the arena to *Jump into a specific portal*, *Climb a chimney*, or *Ride a pig off a platform*.
+* **Social Interaction:** Fun, chaotic tasks that require interacting with opponents, such as *Slapping a player with an item* or *Throwing snowballs*.
+
+### Full Task Showcase
+Want to see every challenge the game has to offer? Watch our complete walkthrough of all 44 tasks below.
+
+<div class="yt-wrapper">
+    <iframe
+        src="https://www.youtube.com/embed/b4mtAT-NS_M"
+        title="All 44 Santa Says Tasks"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+---
+
+## Winning the Game
+
+After the 15th round concludes, the game calculates the final standings.
+The player with the highest total score is crowned the winner. In the event of a tie, the game logic handles the ranking based on internal tie-breaker rules (usually based on who reached the score first or total completion time).
+
+<Aside type="note">
+    Server administrators can customize the total number of rounds, task duration, and specific task pools in the `config.yml` to tailor the experience for their community.
+</Aside>
