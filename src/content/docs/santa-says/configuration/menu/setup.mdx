@@ -3,7 +3,7 @@ title: setup-menu.yml
 description: Configuration for the interactive arena setup GUI used by administrators.
 ---
 
-The `setup-menu.yml` file defines the appearance and feedback messages of the interactive GUI opened via `/santasays edit <arena>`. This menu guides administrators through the process of setting up locations, player limits, and game platforms.
+The `setup-menu.yml` file defines the appearance, feedback messages, and control schemes of the interactive GUI opened via `/santasays edit <arena>`. This configuration uses **MiniMessage** formatting (e.g., `<#FF5252>`), allowing for RGB colors, gradients, and hover events.
 
 ---
 
@@ -12,49 +12,178 @@ The `setup-menu.yml` file defines the appearance and feedback messages of the in
 
 ### 1. Location Settings
 These items allow you to define the critical teleport points for your arena.
+* **Navigation:** Click the **Manage Arena Locations** map icon to access these settings.
+* **Centering:** Holding **Shift** while clicking automatically centers the location on the block.
 
-| Item Key | Purpose |
-| :--- | :--- |
-| `lobby` | Sets the waiting area where players spawn before the game starts. |
-| `start` | Sets the location where players are teleported when the match begins. |
-| `end` | Sets the celebration/spectator area for the end of the game. |
+| Item Key | Purpose                                                               |
+|:---------|:----------------------------------------------------------------------|
+| `lobby`  | Sets the waiting area where players spawn before the game starts.     |
+| `start`  | Sets the location where players are teleported when the match begins. |
+| `end`    | Sets the celebration/spectator area for the end of the game.          |
 
 ### 2. Player Amounts
 Configures the capacity of the arena.
 * **`min-player-amount`**: The threshold to start the game countdown.
 * **`max-player-amount`**: The hard limit of players allowed in the arena.
-* **Click Logic:** Usually configured so that **Left Click** increases and **Right Click** decreases the value within the GUI.
+* **Controls:**
+  * **Left Click:** Increase count (+1).
+  * **Right Click:** Decrease count (-1).
 
 ### 3. The Platform Selector
-The `platform-selector` is the most advanced tool in the setup menu. It defines the physical area where tasks take place.
+The `platform-selector` (Blaze Rod) is the primary tool for defining the playable game area.
 
-**Administrator Controls (Blaze Rod Tool):**
-* **Left Click:** Select **Position 1** (or add to area).
-* **Right Click:** Select **Position 2** (or remove from area).
-* **Sneak + Left Click:** Remove a single specific block from the platform.
-* **Sneak + Right Click:** Add a single specific block to the platform.
+**Tool Controls:**
+* **Left Click:** Select **Position 1** (Add area).
+* **Right Click:** Select **Position 2** (Remove area).
+* **Sneak + Left Click:** Add a single specific block to the platform.
+* **Sneak + Right Click:** Remove a single specific block from the platform.
+* **Middle Click:** Toggle the **Visualizer** (glowing effect around selected blocks).
+* **Drop (Q):** Clear all selected tiles.
+
+### 4. Registration & Misc
+* **`arena-sign`**: Converts the sign you are currently looking at into a join sign for this arena.
+* **`register-arena`**: Finalizes the setup. This item runs an integrity check to ensure all locations and settings are valid before enabling the arena.
+* **`go-back`**: Returns to the main editor menu.
 
 ---
 
 ## Configuration Example
 
 ```yaml
-items:
-  lobby:
-    name: "&e&lSet Lobby Location"
-    material: COMPASS
-    message: "&aLobby location set successfully!"
+title: "<gradient:#FF5252:#D50000><bold>GAME SETUP</bold></gradient> <dark_gray><bold>»</bold></dark_gray> <gold><bold>%arena_id%</bold>"
 
-  min-player-amount:
-    name: "&e&lSet Minimum Players"
-    material: GLOWSTONE_DUST
+items:
+  game-locations:
+    name: "<#FFB74D><bold>Manage Arena Locations"
+    material: FILLED_MAP
     lore:
-      - "&8• &7LEFT click to increase"
-      - "&8• &7RIGHT click to decrease"
-      - "&7Current requirement for countdown."
+      - "<#2F2F2F>• <#2196F3>CLICK <#BDBDBD>to open location settings"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Configure spawn points for"
+      - "<#B0BEC5>  Lobby, Start, and End phases."
+
+  lobby:
+    name: "<#26C6DA><bold>Set Waiting Lobby"
+    material: COMPASS
+    lore:
+      - "<#2F2F2F>• <#2196F3>CLICK <#BDBDBD>to set at <#64B5F6>your pos"
+      - "<#2F2F2F>• <#00BCD4>SHIFT-CLICK <#BDBDBD>to <#80DEEA>center block"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Where players wait before"
+      - "<#B0BEC5>  the game countdown begins."
+    message: "<#26C6DA>Waiting Lobby <#BDBDBD>location has been set successfully."
+
+  start:
+    name: "<#00E676><bold>Set Start Location"
+    material: BEACON
+    lore:
+      - "<#2F2F2F>• <#43A047>CLICK <#BDBDBD>to set at <#66BB6A>your pos"
+      - "<#2F2F2F>• <#2E7D32>SHIFT-CLICK <#BDBDBD>to <#A5D6A7>center block"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Where players are teleported"
+      - "<#B0BEC5>  when the game starts."
+    message: "<#00E676>Start Location <#BDBDBD>has been set successfully."
+
+  end:
+    name: "<#E040FB><bold>Set End Location"
+    material: END_PORTAL_FRAME
+    lore:
+      - "<#2F2F2F>• <#D500F9>CLICK <#BDBDBD>to set at <#EA80FC>your pos"
+      - "<#2F2F2F>• <#B388FF>SHIFT-CLICK <#BDBDBD>to <#F8BBD0>center block"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Where players are sent after"
+      - "<#B0BEC5>  elimination or game over."
+    message: "<#E040FB>End Location <#BDBDBD>has been set successfully."
+
+  player-amounts:
+    name: "<#FFAB00><bold>Player Amounts"
+    material: GLOWSTONE_DUST
+  min-player-amount:
+    name: "<#B2FF59><bold>Set Minimum Players"
+    material: LIME_DYE
+    lore:
+      - "<#2F2F2F>• <#2196F3>LEFT  <#BDBDBD>click to <#64B5F6>increase <#BDBDBD>(+1)"
+      - "<#2F2F2F>• <#EF5350>RIGHT <#BDBDBD>click to <#E57373>decrease <#BDBDBD>(-1)"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Determines the required player"
+      - "<#B0BEC5>  count to start the countdown."
+
+  max-player-amount:
+    name: "<#FF5252><bold>Set Maximum Players"
+    material: RED_DYE
+    lore:
+      - "<#2F2F2F>• <#2196F3>LEFT  <#BDBDBD>click to <#64B5F6>increase <#BDBDBD>(+1)"
+      - "<#2F2F2F>• <#EF5350>RIGHT <#BDBDBD>click to <#E57373>decrease <#BDBDBD>(-1)"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Limits the total capacity"
+      - "<#B0BEC5>  of players for this arena."
+
+  arena-sign:
+    name: "<#FFAB00><bold>Create Arena Sign"
+    material: OAK_SIGN
+
+  platform-selector:
+    name: "<#FFAB00><bold>Select Game Platform"
+    material: BLAZE_ROD
+    lore:
+      - "<#2F2F2F>• <#2196F3>LEFT  <#BDBDBD>click to select <#64B5F6>Pos1 <#BDBDBD>(add area)"
+      - "<#2F2F2F>• <#4CAF50>RIGHT <#BDBDBD>click to select <#81C784>Pos2 <#BDBDBD>(remove area)"
+      - ""
+      - "<#2F2F2F>• <#FFD54F>SNEAK <#BDBDBD>+ LEFT  click <#9CCC65>→ add single block"
+      - "<#2F2F2F>• <#FFD54F>SNEAK <#BDBDBD>+ RIGHT click <#EF9A9A>→ remove single block"
+      - ""
+      - "<#2F2F2F>• <#AB47BC>MIDDLE <#BDBDBD>click to toggle <#4CAF50>visualizer"
+      - "  <#E1BEE7>Status: %visualizer_status%"
+      - ""
+      - "<#2F2F2F>• <#FF1744>DROP <#BDBDBD>click <#EF9A9A>→ clear all tiles"
+      - ""
+      - "<#2F2F2F>• <#B0BEC5>Select all blocks that should be part of the"
+      - "<#B0BEC5>  game platform."
+    tool-lore:
+      - "<#2F2F2F>• <#2196F3>LEFT  <#BDBDBD>click to select <#64B5F6>Pos2 <#BDBDBD>(add area)"
+      - "<#2F2F2F>• <#4CAF50>RIGHT <#BDBDBD>click to select <#81C784>Pos2 <#BDBDBD>(remove area)"
+      - ""
+      - "<#2F2F2F>• <#FFD54F>SNEAK <#BDBDBD>+ LEFT  click <#9CCC65>→ add single block"
+      - "<#2F2F2F>• <#FFD54F>SNEAK <#BDBDBD>+ RIGHT click <#EF9A9A>→ remove single block"
+      - ""
+      - "<#2F2F2F>• <#9E9E9E>Currently Editing:"
+      - " <#607D8B>➥ <white>%arena_id%"
+    visualizer:
+      active: "<#00E676>Active"
+      inactive: "<#FF5252>Inactive"
+      not-set: "<#FFC107>Platform Not Set"
+      enabled: "<#00E676>👁 <#BDBDBD>Visualizer: <#00E676><bold>ENABLED"
+      disabled: "<#FF5252>✖ <#BDBDBD>Visualizer: <#FF5252><bold>DISABLED"
+      can-not-enabled: "<#FF5252>✖ The platform is empty! <#BDBDBD>Please select some blocks before using the visualizer."
+    tool-received: "<#00E676>✔ <#BDBDBD>You have received the <#FFCA28><bold>Platform Selector</bold> <#BDBDBD>tool."
+    tiles-cleared: "<#FF5252>🗑 <#BDBDBD>All platform tiles have been <#F50540><bold>CLEARED<#BDBDBD>."
+    already-cleared: "<#FF5252>✖ <#BDBDBD>The platform is already <#F50540><bold>EMPTY<#BDBDBD>."
 
   register-arena:
-    name: "&e&lRegister the Arena"
+    name: "<#00E676><bold>Register the Arena"
     material: FIREWORK
-    hideTooltip: true
+    hide-tooltip: true
+    missing-option:
+      - "<#37474F><st>                                                                                 </st>"
+      - "<#FF5252><bold>REGISTRATION FAILED"
+      - ""
+      - "<gray>The arena configuration integrity check has failed."
+      - "<gray>A mandatory configuration value is missing."
+      - ""
+      - "<gray>Missing arena option: <#FFD54F>%option%"
+      - ""
+      - "<#37474F><st>                                                                                 </st>"
+    registered-successfully:
+      - "<#37474F><st>                                                                                 </st>"
+      - "<gradient:#00E676:#1DE9B6><bold>REGISTRATION COMPLETE</gradient>"
+      - ""
+      - "<#CFD8DC>The arena '<#00B0FF>%arena_id%<#CFD8DC>' has been successfully registered."
+      - ""
+      - "<click:run_command:%command%><hover:show_text:'<#69F0AE>Click to join instantly.'><#FFD740><bold><underlined>CLICK HERE TO JOIN & PLAY</underlined></bold></hover></click>"
+      - ""
+      - "<#37474F><st>                                                                                 </st>"
+
+  go-back:
+    name: "<#FF5252><bold>Return to Main Menu"
+    material: ARROW
 ```
