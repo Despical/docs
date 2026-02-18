@@ -14,13 +14,12 @@ Every item in the configuration follows a standard format. Here is an example of
 ```yaml
 lobby-items:
   leave-item:
+    name: "<#FF5252><bold>Return to Lobby"
     material: RED_BED
     slot: 8
-    name: "<red><bold>Return to Lobby <gray>(Right Click)"
     lore:
-      - "<gray>Right-click to leave to the lobby!"
-    glow: true
-    unbreakable: true
+      - "<#B0BEC5>Right-click to leave the game"
+      - "<#B0BEC5>and return to the hub."
 ```
 
 ---
@@ -29,19 +28,19 @@ lobby-items:
 
 You can use the following keys to further customize your items:
 
-| Key | Description | Example |
-| :--- | :--- | :--- |
-| `material` | The material name for the item. | `DIAMOND_SWORD` |
-| `amount` | The quantity of the item in the stack. | `1` |
-| `name` | The display name of the item. | `<gold>Santa's Blade` |
-| `lore` | A list of lines for the item's description. | `- "<gray>Line 1"` |
-| `glow` | If true, adds an enchantment glow without visible enchants. | `true` |
-| `enchants` | A list of enchantments and levels. | `SHARPNESS:5` |
-| `itemFlags` | Hides certain item attributes (e.g., attributes, enchants). | `HIDE_ENCHANTS` |
-| `unbreakable` | Prevents the item from losing durability. | `true` |
-| `durability` | Sets the remaining durability of the item. | `100` |
-| `hideTooltip` | Hides the default Minecraft tooltip for the item. | `true` |
-| `data` | Used for specific legacy data values. | `1` |
+| Key            | Description                                                 | Example               |
+|:---------------|:------------------------------------------------------------|:----------------------|
+| `material`     | The material name for the item.                             | `DIAMOND_SWORD`       |
+| `amount`       | The quantity of the item in the stack.                      | `1`                   |
+| `name`         | The display name of the item.                               | `<gold>Santa's Blade` |
+| `lore`         | A list of lines for the item's description.                 | `- "<gray>Line 1"`    |
+| `glow`         | If true, adds an enchantment glow without visible enchants. | `true`                |
+| `enchants`     | A list of enchantments and levels.                          | `SHARPNESS:5`         |
+| `item-flags`   | Hides certain item attributes (e.g., attributes, enchants). | `HIDE_ENCHANTS`       |
+| `unbreakable`  | Prevents the item from losing durability.                   | `true`                |
+| `durability`   | Sets the remaining durability of the item.                  | `100`                 |
+| `hide-tooltip` | Hides the default Minecraft tooltip for the item.           | `true`                |
+| `data`         | Used for specific legacy data values.                       | `1`                   |
 
 ---
 
@@ -58,5 +57,3 @@ custom-game-item:
   name: "<gradient:orange:red>Flame Sword</gradient>"
   glow: true
 ```
-
----
