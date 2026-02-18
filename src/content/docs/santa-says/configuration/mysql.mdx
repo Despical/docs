@@ -33,7 +33,7 @@ This is the **JDBC Connection URL**. It tells the plugin exactly where your data
 
 **Default Value:**
 ```yaml
-address: jdbc:mysql://localhost:3306/<database_name>?useSSL=false&autoReConnect=true&createDatabaseIfNotExist=true
+address: jdbc:mysql://localhost:3306/<database_name>?useSSL=false&autoReconnect=true&createDatabaseIfNotExist=true
 ```
 
 Since this line is complex, let's break it down part by part:
@@ -48,7 +48,7 @@ Since this line is complex, let's break it down part by part:
 **URL Parameters (Flags):**
 The text after the `?` symbol consists of settings for the connection driver:
 * `useSSL=false`: Disables SSL encryption. Keep this `false` unless your database is explicitly configured for SSL; otherwise, the connection will fail.
-* `autoReConnect=true`: Enables the plugin to automatically try to reconnect if the connection drops.
+* `autoReconnect=true`: Enables the plugin to automatically try to reconnect if the connection drops.
 * `createDatabaseIfNotExist=true`: If the database name you provided doesn't exist, the plugin will attempt to create it automatically.
 
 ---
