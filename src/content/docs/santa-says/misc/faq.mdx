@@ -11,7 +11,7 @@ Welcome to the Frequently Asked Questions section. Here you can find quick answe
 
 ## What is the license for the Santa Says plugin?
 
-The **Santa Says** plugin is **Closed Source** and proprietary. **All rights are reserved by Alican 'bilektugrul' Arslan and Berke 'Despical' Akçen.**
+The **Santa Says** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
 
 By using this plugin, you agree to the following mandatory **Terms of Service**:
 
@@ -82,3 +82,21 @@ The plugin utilizes **ParticleLib** to manage and display particle effects. You 
 ## Can I create my own tasks?
 
 While the core tasks are built into the plugin, you can fully customize every existing task via its specific configuration file. If you have a task idea, feel free to suggest it in our Discord server!
+
+---
+## Why are players able to break blocks in the arena?
+
+Santa Says is specifically designed to be played in **Adventure mode** to prevent any map griefing. If your players are able to break or place blocks during a game, it means another plugin on your server is overriding our gamemode changes.
+
+This is usually caused by world management plugins that force a specific gamemode on players when they join or teleport.
+
+**If the issue is caused by Multiverse-Core:**
+You need to prevent it from enforcing its own default gamemode. Open your Multiverse-Core `config.yml` file, find the `enforce-gamemode` setting, and set it to `false`:
+
+```yaml
+worlds:
+  enforce-gamemode: false
+```
+
+**If you are using a different plugin:**
+Check your other plugins for similar gamemode-enforcing features and disable them. If you cannot disable them globally, make sure to bypass or disable those features specifically for the worlds where your Santa Says arenas are located.
