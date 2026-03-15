@@ -1,0 +1,51 @@
+---
+title: messages.yml
+description: Customize all in-game messages, titles, subtitles, action bars, and text outputs.
+---
+
+The `messages.yml` file gives you full control over every string of text your players see. From simple chat notifications to action bar alerts, everything is fully customizable.
+
+---
+
+## Color Code Support
+
+Easter Eggs supports both modern HEX color codes and traditional legacy color formatting, allowing you to create visually appealing messages for your players.
+
+* **HEX Colors:** Use the `<#RRGGBB>` format for custom RGB colors (e.g., `<#FF5555>Your Text Here`).
+* **Legacy Color Codes:** Standard Minecraft color codes using the `&` symbol are fully supported (e.g., `&a` for green, `&l` for **bold**, `&n` for underlined).
+
+---
+
+## Common Placeholders
+
+Throughout the messages file, you can use various placeholders to inject dynamic data into your text.
+
+* `%prefix%`: Uses the primary plugin prefix.
+* `%player%`: Displays the name of the player interacting with the egg.
+* `%egg_id%`: Displays the specific ID of the Easter Egg.
+
+*Some specific messages, like progress indicators, also use numbered placeholders like `{0}` for your found eggs and `{1}` for total eggs.*
+
+---
+
+## Configuration Examples
+
+Here is how you can implement these color codes and placeholders in your file:
+
+```yaml
+# Example using legacy color codes and numbered placeholders
+new-egg-found: "&a&lYou found an Easter Egg! &e&l(&a&l{0}&e&l/&a&l{1}&a&l)"
+
+# Example using HEX colors and standard placeholders
+egg-already-found: "<#FF5555>You have already found the %egg_id% Easter Egg, %player%!"
+```
+
+---
+
+## Applying Changes
+
+One of the best features of the message system is that you don't need to restart your server to see changes. Simply modify the file, save it, and use the reload command in-game or from the console to see your updates instantly:
+
+```bash
+/eastereggs reload
+```

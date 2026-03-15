@@ -1,0 +1,40 @@
+---
+title: System Files
+description: Overview of internal data files managed automatically by Easter Eggs.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+While Easter Eggs provides several configuration files for customization, it also manages internal data files that act as the plugin's "memory." These files are structured specifically for machine reading and high-speed data access.
+
+<Aside type="danger">
+    **DO NOT MANUALLY EDIT:** Manual modification of these files is strictly prohibited. Editing them while the server is running can cause data corruption, loss of placed eggs, or plugin crashes. Use in-game commands or menus to modify your setups instead.
+</Aside>
+
+---
+
+## Managed Files Overview
+
+| File Path       | Primary Function                                                         | Management Method                            |
+|:----------------|:-------------------------------------------------------------------------|:---------------------------------------------|
+| `locations.yml` | Stores the precise **location** of every placed Easter Egg in the world. | Managed via `/eastereggs` commands and menu. |
+| `data.yml`      | Stores individual **player statistics** (collected eggs).                | Used only when `database: flat` is selected. |
+
+---
+
+## Detailed Breakdown
+---
+
+### locations.yml
+
+This is the most critical system file for your world setup. It contains the exact coordinate, world name, and assigned ID for every single Easter Egg you have placed on your server.
+
+* **Why you shouldn't touch it:** A single missing comma or an incorrectly formatted coordinate will prevent the eggs from loading properly, meaning players won't be able to find or interact with them.
+* **How to update:** Always place the eggs physically in-game, and use the `/eastereggs removeall` command or the `/eastereggs menu` interface to delete locations safely.
+
+### data.yml
+
+When your server is configured to use the `flat` database mode, all player statistics and their collection progress are recorded here.
+
+* **Why you shouldn't touch it:** The plugin keeps a live cache of player data in the server's memory to maintain high performance. If you modify this file while the server is running, the plugin will eventually overwrite your changes with its own cached data, causing your manual edits to be lost forever.
+* **How to update:** If you absolutely must edit this file manually, you **must shut down the server completely** first. After the server is offline, you can make your changes and then start it back up. Alternatively, use the `/eastereggs resetstats` command to manage player data safely while the server is running.

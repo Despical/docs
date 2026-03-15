@@ -1,0 +1,49 @@
+---
+title: General Placeholders
+description: List of available PlaceholderAPI placeholders for Easter Eggs.
+---
+
+To use these placeholders, you must have the **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** plugin installed on your server. These can be used in any plugin that supports PlaceholderAPI (Scoreboards, Chat, Menus, Holograms, etc.).
+
+---
+
+## Global Placeholders
+
+These placeholders display server-wide data regarding the Easter Eggs you have configured and placed in your world.
+
+| Placeholder               | Description                                                                              |
+|:--------------------------|:-----------------------------------------------------------------------------------------|
+| `%eastereggs_total%`      | Returns the total number of Easter Eggs physically placed in the world.                  |
+
+---
+
+## Player Statistics
+
+These placeholders are used to display the collection progress of the player who is viewing the placeholder.
+
+### General Progress
+
+| Placeholder                | Description                                                                               |
+|:---------------------------|:------------------------------------------------------------------------------------------|
+| `%eastereggs_total_found%` | Returns the total number of eggs the player has successfully found.                       |
+| `%eastereggs_total_left%`  | Returns the total number of eggs the player still needs to find across the entire server. |
+
+### Specific Egg Progress
+
+You can also fetch a player's progress for a specific type of Easter Egg by replacing `<id>` with the exact egg ID from your `config.yml` (e.g., `green_present`, `candy-basket`).
+
+| Placeholder               | Description                                                                   |
+|:--------------------------|:------------------------------------------------------------------------------|
+| `%eastereggs_found:<id>%` | Returns how many eggs of the specified `<id>` the player has found.           |
+| `%eastereggs_left:<id>%`  | Returns how many eggs of the specified `<id>` the player still needs to find. |
+| `%eastereggs_total:<id>%` | Returns the total number of placed eggs that match the specified `<id>`.      |
+
+---
+
+## Egg Configuration Properties
+
+These placeholders return specific properties defined in your configuration for a particular egg type. Replace `<id>` with the egg ID.
+
+| Placeholder                    | Description                                                                                                                  |
+|:-------------------------------|:-----------------------------------------------------------------------------------------------------------------------------|
+| `%eastereggs_<id>:persistent%` | Returns the translated message (from `messages.yml`) indicating whether the specified egg is persistent (saves data) or not. |

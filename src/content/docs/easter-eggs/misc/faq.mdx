@@ -1,0 +1,84 @@
+---
+title: FAQ
+description: Quick answers regarding licensing, requirements, and technical details for Easter Eggs.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources for the **Easter Eggs** plugin.
+
+---
+
+## What is the license for the Easter Eggs plugin?
+
+The **Easter Eggs** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**:
+
+* All payments are final and non-refundable.
+* Redistribution, sharing, or resale of this plugin is strictly prohibited.
+* You are not permitted to modify, decompile, or reverse-engineer any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers through official channels.
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run Easter Eggs.
+
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
+
+---
+
+## Which Minecraft versions are supported?
+
+Easter Eggs supports a wide range of versions to ensure maximum compatibility for your server:
+
+* **Supported Versions:** Full and native support for **1.8 and all newer versions** (1.21+).
+
+<Aside type="caution">
+    Sub-versions like 1.20.4 or 1.21.8 are not officially supported. Please ensure you are on the final minor release of your chosen major version.
+</Aside>
+
+---
+
+## Does the plugin support PlaceholderAPI?
+
+**Yes.** Easter Eggs provides a comprehensive set of placeholders to display player statistics and global egg data. You can use these in any compatible plugin like Tab, Scoreboard, or Holographic Displays.
+
+We have categorized our placeholders into two main sections:
+
+* **General Placeholders:** For individual player stats (found, left) and global egg info.
+  * 👉 [View General Placeholders](/easter-eggs/placeholders/general)
+* **Leaderboard Placeholders:** For creating Top 10 lists and ranking displays based on collected eggs.
+  * 👉 [View Leaderboard Placeholders](/easter-eggs/placeholders/leaderboard)
+
+---
+
+## How is the performance?
+
+Easter Eggs is designed with high performance in mind. All heavy operations, such as database saving, cross-server synchronization, and configuration loading, are handled asynchronously. The internal caching system is highly optimized to ensure that even with thousands of eggs placed across multiple worlds, your server's TPS remains completely stable.
+
+---
+
+## What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions (1.8 - 1.21+). This means you should use the XSeries sound names in your configuration files.
+
+[**List of All Available XSound Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+---
+
+## What are the available particle effect names?
+
+The plugin utilizes **ParticleLib** to manage and display particle effects. You can find the list of supported particle names here:
+
+[**List of All Available Particle Effects**](https://github.com/Despical/ParticleLib/blob/master/src/main/java/dev/despical/particle/ParticleEffect.java#L51)
+
+---
+
+## Can I create my own custom eggs?
+
+Absolutely! While the plugin comes with a few examples by default, you can fully create and customize an unlimited number of unique Easter Eggs via the `config.yml` file. If you have a unique idea for a mechanic or reward, feel free to share it in our Discord server!

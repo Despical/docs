@@ -3,48 +3,68 @@ title: Getting Started
 description: Learn how to install and set up Easter Eggs on your Minecraft server.
 ---
 
-import { Steps, Aside } from '@astrojs/starlight/components';
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-This guide provides a quick and easy walkthrough of the system requirements and step-by-step installation process needed
-to get the **Easter Eggs** plugin running on your Minecraft server.
+Welcome to **Easter Eggs**! This plugin allows you to hide interactive, collectible eggs around your world to keep your players entertained, featuring customizable rewards, cross-server syncing, and easy setup.
 
-## Requirements
+---
 
-Before installing, ensure your server meets the following requirements:
+## Prerequisites
 
-* **Server Software:** **Spigot**, **Paper**, or any compatible fork (e.g., **Purpur**).
-* **Minecraft Version:** 1.8 - 1.21+
-* **Java Version:** Java 21 or newer.
+Before installing the plugin, ensure your server environment meets the following requirements:
 
-<Aside type="tip">
-    For the best performance and experience, we recommend using [**Paper**](https://papermc.io/downloads/) or its forks.
-</Aside>
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Server Software:** Spigot, Paper, or any compatible fork (e.g., Purpur).
+* **Minecraft Version:** 1.8 - 1.21+ (Latest versions recommended).
+* **Permissions Plugin** <Badge text="Optional" variant="note" /> : A plugin like LuckPerms to manage user access.
+
+---
 
 ## Installation
 
-Follow these simple steps to install the plugin:
+Setting up Easter Eggs is straightforward. Follow these simple steps to get started:
 
 <Steps>
-
-1.  **Download the Plugin**
-
-    Visit our [Resource Page](https://www.spigotmc.org/resources/116086/) to download the latest version.
-
-2.  **Upload to Server**
-
-    Stop your server and upload the `.jar` file into your server's `/plugins` folder.
-
-3.  **Restart Server**
-
-    Start your server. The plugin will automatically generate the default configuration files.
-
-    ```bash
-    [INFO]: [EasterEggs] Loading EasterEggs vX.X.X
-    [INFO]: [EasterEggs] Enabling EasterEggs vX.X.X
-    [INFO]: [EasterEggs] Successfully loaded X Easter Eggs in XXXms.
-    [INFO]: [EasterEggs] Initialization finished. Took XXXms to load.
-    [INFO]: [EasterEggs] Join our Discord server: https://discord.gg/uXVU8jmtpU
-    ```
+1.  **Download the Plugin:** Get the latest version of Santa Says from the official distribution page.
+2.  **Upload to Server:** Place the `easter-eggs-x.x.x.jar` file into your server's `plugins/` directory.
+3.  **Restart Server:** Restart your server to generate the default configuration files.
+4.  **Verify Installation:** Type `/eastereggs` in-game to ensure the plugin is loaded correctly.
 </Steps>
 
-*Thank you for purchasing the **Easter Eggs**!* ❤️
+---
+
+## First-Run Configuration
+
+After the first restart, a new folder will be created at `/plugins/EasterEggs/`. This folder contains everything you need to customize your plugin:
+
+* `config.yml`: Main plugin settings, storage type selection, and general behaviors.
+* `messages.yml`: Full control over every string, title, and translation shown to players.
+* `mysql.yml`: Configure your database credentials if you are using MySQL for cross-server synchronization.
+
+<Aside type="tip">
+    Always check your console during the first boot. If there are any missing dependencies or version conflicts, the plugin will alert you there.
+</Aside>
+
+---
+
+## Basic Command Structure
+
+While you'll spend most of your time in the config files, here are the essential commands:
+
+| Command                          | Permission             | Description                                                                   |
+|:---------------------------------|:-----------------------|:------------------------------------------------------------------------------|
+| `/eastereggs <id>`               | `eastereggs.get`       | Gives you the specified Easter Egg item so you can place it in the world.     |
+| `/eastereggs removeall <egg id>` | `eastereggs.removeall` | Deletes every placed Easter Egg matching the specified ID from the server.    |
+| `/eastereggs list`               | `eastereggs.list`      | Shows a complete list of all currently configured Easter Eggs and their IDs.  |
+| `/eastereggs reload`             | `eastereggs.reload`    | Reloads all configurations, messages, and Easter Egg data without restarting. |
+| `/eastereggs help`               | `eastereggs.help`      | Displays a comprehensive list of all available commands and their usage.      |
+
+---
+
+## Next Steps
+
+Now that the plugin is installed and running, it's time to hide some eggs:
+
+* **[Creating New Eggs](/easter-eggs/creating-new-eggs)**: Learn how to define, place, and configure your first custom Easter Egg.
+* **[Placeholders](/easter-eggs/placeholders/general)**: Hook into PlaceholderAPI to display player progress and total eggs found.
+* **[Database Setup](/easter-eggs/configuration/database)**: Sync player data across your entire network.

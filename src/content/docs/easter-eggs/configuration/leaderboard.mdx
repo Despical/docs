@@ -1,0 +1,52 @@
+---
+title: Leaderboard Placeholders
+description: How to display player rankings and top statistics using Santa Says placeholders.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Leaderboard placeholders allow you to display your server's top-performing players on scoreboards, holograms, or custom in-game menus.
+
+<Aside type="caution">
+    To use these placeholders, the **PlaceholderAPI** plugin must be installed on your server.
+</Aside>
+
+---
+
+## Leaderboard Syntax
+
+To fetch leaderboard data, use the following format:
+`%santasays_leaderboard:<statistic>:<position>:<type>%`
+
+### Parameters
+
+| Argument      | Description                                                                  |
+|:--------------|:-----------------------------------------------------------------------------|
+| `<statistic>` | The stat to be ranked (e.g., win, lose, win_streak).                         |
+| `<position>`  | The rank position to display (1, 2, 3...).                                   |
+| `<type>`      | The type of data to return (`name` for the username, `value` for the score). |
+
+---
+
+## Available Statistics
+
+You can use the following statistics with the leaderboard system:
+
+* `win` — Total number of games won.
+* `lose` — Total number of games lost.
+* `win_streak` — Current winning streak.
+* `win_streak_record` — All-time highest winning streak.
+* `score_record` — The highest score ever achieved in a single game.
+* `games_played` — Total number of games the player has joined.
+* `rounds_played` — Total number of rounds the player has survived.
+
+---
+
+## Usage Examples
+
+| Goal                                            | Placeholder                                        |
+|:------------------------------------------------|:---------------------------------------------------|
+| Name of the 1st place winner                    | `%santasays_leaderboard:win:1:name%`               |
+| Score of the 1st place winner                   | `%santasays_leaderboard:win:1:value%`              |
+| Name of the player in 3rd place for win streaks | `%santasays_leaderboard:win_streak_record:3:name%` |
+| Name of the 5th most active player              | `%santasays_leaderboard:games_played:5:name%`      |
