@@ -1,0 +1,84 @@
+---
+title: Developer API
+description: Learn how to integrate with Easter Eggs and use its custom event system.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+The Easter Eggs API allows developers to hook into the plugin's lifecycles, track player statistics, and modify egg behaviors. All custom events in the plugin inherit from the base `EasterEggsEvent` class.
+
+---
+
+## Dependency Setup
+
+To start using the API, you need to add the Easter Eggs JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `easter-eggs-x.x.x.jar` file inside it.
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        dependencies {
+        compileOnly files('libs/easter-eggs-x.x.x.jar')
+    }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+        compileOnly(files("libs/easter-eggs-x.x.x.jar"))
+    }
+        ```
+    </TabItem>
+
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>dev.despical</groupId>
+            <artifactId>easter-eggs</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/easter-eggs-x.x.x.jar</systemPath>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+<Aside type="caution">
+    Don't forget to add `EasterEggs` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
+</Aside>
+
+```yaml
+# plugin.yml
+name: YourPlugin
+version: 1.0.0
+main: your.package.Main
+depend: [EasterEggs]
+```
+
+---
+
+## Base Event Class
+
+Every event provided by the Easter Eggs API extends the `EasterEggsEvent` class. This ensures consistent access to the user data across all interactions.
+
+```java
+public abstract class EasterEggsEvent extends Event {
+
+    protected final User user;
+
+    public EasterEggsEvent(User user) {
+        this.user = user;
+    }
+
+    @NotNull
+    public final User getUser() {
+        return user;
+    }
+}
+```
+
+### Next Steps
+
+Explore the different event categories to start building your integration:
+* [Player Events](/easter-eggs/api/player-events)
+* [Easter Egg Events](/easter-eggs/api/egg-events)

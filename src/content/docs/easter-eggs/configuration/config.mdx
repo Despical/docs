@@ -1,0 +1,63 @@
+---
+title: config.yml
+description: Detailed guide for the main configuration settings of Easter Eggs.
+---
+
+The `config.yml` file is the heart of Easter Eggs. It controls database management, global plugin behaviors, visual effects, and the definition of all your custom collectible eggs.
+
+---
+
+## General Settings
+
+* **`database`**: Defines how player statistics and found eggs are stored.
+* `flat`: Local storage using YAML files (**standard for small servers**).
+* `mysql`: External database storage (**recommended for large networks**).
+* **`auto-data-saving`**: The interval (in seconds) at which player data is automatically saved. Set to `0` to only save on server shutdown or plugin reload.
+* **`update-notifier`**: When enabled, the plugin will alert administrators if a new version is available upon joining the server.
+
+**Note:** Changing the database type requires a server restart and does not support automatic data migration.
+
+---
+
+## Easter Egg Definitions
+
+The `easter-eggs` section is where you define every collectible egg on your server. Each egg requires a unique ID (e.g., `green_present`) and a `texture` (Base64 head value). You can also override global settings for specific eggs:
+
+* **`texture`**: The Base64 string for the custom skull texture. You can find these on sites like [Minecraft Heads](https://minecraft-heads.com).
+* **`messages`**: Override default messages for events like `new-egg-found`, `all-eggs-found`, and permission denials.
+* **`particles`**: Set custom particle effects for this specific egg (`found` and `not-found`).
+* **`commands`**: Execute specific commands based on player interactions. Prefix commands with `p:` to execute them as the player instead of the console.
+* **`permissions`**: Use the `whitelist` or `blacklist` lists to control exactly who can collect this specific egg.
+* **`persistent`**: If set to `false`, data won't be saved for this egg, allowing players to collect it repeatedly.
+* **`cooldown`**: A specific wait time (in seconds) just for this egg type.
+* **`remove-on-collect`**: If enabled, the egg block will be replaced with a specified material (e.g., `AIR`) once a player collects it.
+
+---
+
+## Action Bar Radar
+
+The plugin features a built-in radar system that uses the action bar to notify players when they are near an Easter Egg.
+
+| Option           | Default | Description                                                               |
+|:-----------------|:--------|:--------------------------------------------------------------------------|
+| `enabled`        | `true`  | Toggles the action bar radar system on or off entirely.                   |
+| `radius`         | `9.5`   | The distance (in blocks) at which the radar detects nearby eggs.          |
+| `interval`       | `30`    | Ticks between message updates (20 ticks = 1 second).                      |
+| `sort`           | `true`  | Sorts nearby eggs so the closest one is targeted for the radar.           |
+| `only-not-found` | `true`  | If enabled, the radar ignores eggs the player has already collected.      |
+| `permission`     | `""`    | Require a specific permission to see the radar. Leave empty for everyone. |
+
+---
+
+## Global Mechanics
+
+* **`general-cooldown`**: The time (in seconds) players must wait before collecting *any* other Easter Egg. Set to `0` for no cooldown.
+* **`commands.found-all-the-eggs`**: A list of global commands executed by the console when a player successfully finds every registered Easter Egg on the server. Useful for giving grand prizes.
+
+---
+
+## Visuals & Audio
+
+* **`particles`**: Global settings for the particles displayed around placed eggs. You can adjust the `interval` (density), set a `distance-limit` for performance, or `disabled` them entirely.
+* **`sounds`**: Define the specific Minecraft sound effects played during various events (e.g., `ENTITY_PLAYER_LEVELUP` when finding a new egg). Set any value to `NONE` to mute that specific trigger.
+* **`fireworks`**: Controls the celebratory firework spawned when an egg is found. You can customize the `color` (RGB format like `255:0:0`), `type` (BALL, CREEPER, STAR, etc.), `power`, `flicker`, `trail`, and detonation delay.

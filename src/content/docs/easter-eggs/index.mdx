@@ -6,7 +6,11 @@ tableOfContents: false
 
 import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-The complete guide to the Easter Eggs plugin. Learn how to install, configure, and master every feature to keep your players entertained.
+## Easter Eggs 🥚
+
+The complete guide to the Easter Eggs plugin. Learn how to install, configure, and master every feature to keep your players entertained by adding cool, interactive Easter Eggs to your server.
+
+## Get Started
 
 <CardGrid>
     <LinkCard
@@ -14,44 +18,103 @@ The complete guide to the Easter Eggs plugin. Learn how to install, configure, a
         description="A step-by-step guide to installing the plugin and creating your first Easter Egg."
         href="/easter-eggs/getting-started"
     />
+
     <LinkCard
         title="Creating New Eggs"
         description="Learn how to define, configure, and place custom Easter Eggs in your world."
         href="/easter-eggs/creating-new-eggs"
     />
+</CardGrid>
+
+## Commands
+
+<CardGrid>
     <LinkCard
-        title="Configuration Files"
-        description="Learn how to customize the plugin settings, messages, and egg properties."
-        href="/easter-eggs/configuration"
+        title="Admin Commands"
+        description="Administrative commands for managing eggs, player data, and plugin settings."
+        href="/easter-eggs/commands/admin"
     />
+</CardGrid>
+
+## Configuration Files
+
+Easter Eggs offers extensive configuration, allowing you to customize messages, database storage, and plugin behavior.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Main configuration file controlling core gameplay behavior and plugin settings."
+        href="/easter-eggs/configuration/config"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="Customize all in-game messages, titles, subtitles, and text outputs used by Easter Eggs."
+        href="/easter-eggs/configuration/messages"
+    />
+
     <LinkCard
         title="MySQL Configuration"
         description="Guide on setting up MySQL for data storage and cross-server synchronization."
-        href="/easter-eggs/database"
+        href="/easter-eggs/configuration/database"
     />
+
     <LinkCard
-        title="Commands & Permissions"
-        description="View the full list of available commands and the permissions required to use them."
-        href="/easter-eggs/commands-and-permissions"
+        title="Other Files"
+        description="Automatically managed internal files used by the Easter Eggs plugin."
+        href="/easter-eggs/configuration/other-files"
     />
 </CardGrid>
+
+## Placeholders
+
+Easter Eggs provides built-in placeholders and full **PlaceholderAPI** support, allowing you to display egg hunt progress and player data across your server.
+
+<CardGrid>
+    <LinkCard
+        title="General Placeholders"
+        description="Placeholders for egg discovery states and player-related data."
+        href="/easter-eggs/placeholders/general"
+    />
+
+    <LinkCard
+        title="Leaderboard Placeholders"
+        description="Placeholders specifically designed to display leaderboard rankings and statistics."
+        href="/easter-eggs/placeholders/leaderboard"
+    />
+</CardGrid>
+
+## Developer API
+
+Integrate the plugin with your code, listen for custom events, and manage player data through our API.
+
+<CardGrid>
+    <LinkCard
+        title="Player Events"
+        description="Documentation for events related to player actions and statistics."
+        href="/easter-eggs/api/player-events"
+    />
+    <LinkCard
+        title="Easter Egg Events"
+        description="Events triggered by discovering, interacting with, and managing Easter Eggs."
+        href="/easter-eggs/api/egg-events"
+    />
+</CardGrid>
+
+---
 
 ## Miscellaneous
 
 <CardGrid>
     <LinkCard
-        title="Developer API"
-        description="Integrate the plugin with your code, listen for custom events, and manage player data through our API."
-        href="/easter-eggs/developer-api"
-    />
-    <LinkCard
-        title="Placeholders"
-        description="List of available internal placeholders and how to use PlaceholderAPI support."
-        href="/easter-eggs/placeholders"
-    />
-    <LinkCard
         title="FAQ"
         description="Answers to frequently asked questions and troubleshooting common issues."
-        href="/easter-eggs/faq"
+        href="/easter-eggs/misc/faq"
+    />
+
+    <LinkCard
+        title="Source Code"
+        description="Purchase access to the source code for private modifications and development."
+        href="/easter-eggs/misc/source-code"
     />
 </CardGrid>

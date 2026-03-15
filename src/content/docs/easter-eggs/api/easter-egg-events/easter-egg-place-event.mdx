@@ -1,0 +1,65 @@
+---
+title: EasterEggPlaceEvent
+description: Documentation for the event fired when a new Easter Egg is placed in the world.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `EasterEggPlaceEvent` is triggered whenever a server administrator or a player with the correct permissions successfully places an Easter Egg block into the world. This event is useful for tracking setups, logging administrative actions, or triggering custom world notifications.
+
+---
+
+## Technical Overview
+- **Parent Class:** [`EasterEggsEvent`](/easter-eggs/api/egg-events)
+- **Cancellable:** No
+
+<Aside type="note">
+    This event is not cancellable. It serves as a post-action notification, firing immediately after the plugin has validated the placement and successfully registered the new egg's location in the database.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `EasterEggsEvent`, you have access to `getUser()` in addition to the following specific method:
+
+| Method       | Return Type | Description                                                     |
+|:-------------|:------------|:----------------------------------------------------------------|
+| `getEggId()` | `String`    | Returns the specific ID of the Easter Egg that was just placed. |
+
+---
+
+## Common Use Cases
+* **Audit Logging:** Log exactly who placed which eggs to keep track of your server's setup process and prevent unauthorized placements.
+* **Staff Alerts:** Send a silent notification to other staff members or a Discord webhook when a new egg is hidden in the world.
+* **Dynamic World Events:** Broadcast a global chat message or play a server-wide sound hinting to players that a new egg has just been hidden.
+
+---
+
+## Example Usage
+
+The following example demonstrates how to listen for this event and send a formatted alert to all online administrators when a new egg is hidden.
+
+```java
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class EggPlacementListener implements Listener {
+
+    @EventHandler
+    public void onEggPlace(EasterEggPlaceEvent event) {
+        // Accessing the Bukkit Player who placed the egg
+        Player admin = event.getUser().getPlayer();
+        String eggId = event.getEggId();
+
+        // Send a notification to players with administrative permissions
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            if (online.hasPermission("eastereggs.admin")) {
+                online.sendMessage("§8[§6Admin Alert§8] §e" + admin.getName() + " §7has just hidden a new §6" + eggId + " §7egg!");
+            }
+        }
+    }
+}
+```

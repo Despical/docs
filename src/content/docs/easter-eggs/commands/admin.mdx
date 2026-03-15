@@ -1,0 +1,163 @@
+---
+title: Admin Commands
+description: Administrative commands used to manage Easter Eggs, player data, and plugin configuration.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Admin Commands are designed for **server administrators and staff members** to manage Easter Eggs, player data, and plugin behavior.
+
+All commands can be used via `/eastereggs` or its aliases `/eggs` and `/egg`. Unless otherwise stated, all commands can also be executed from the console.
+
+---
+
+## Get Command
+
+Administrators with the `eastereggs.get` permission can use this command to receive the specified Easter Egg item to place in the world.
+
+If you have created an egg with an ID that conflicts with a command name (e.g., an egg named "help" or "reload"), you **must** use the `get` subcommand to retrieve it instead of typing just the ID.
+
+```bash
+/eastereggs get <egg id>
+```
+
+---
+
+## Menu Command
+
+Administrators with the `eastereggs.menu` permission can use this command to open an interactive GUI for managing eggs.
+
+This interface allows you to visually browse eggs, teleport to them, remove them, get a copy, or remove all. You can also provide an optional filter string to show only eggs that contain that specific text in their ID.
+
+```bash
+/eastereggs menu [id to filter]
+```
+
+---
+
+## List Command
+
+Administrators with the `eastereggs.list` permission can use this command to display a text-based list of all registered Easter Egg IDs in the chat.
+
+This is useful for quickly checking available egg names without needing to open the interactive menu.
+
+```bash
+/eastereggs list
+```
+
+---
+
+## Copy Command
+
+Administrators with the `eastereggs.copy` permission can use this command to duplicate an existing egg.
+
+If you are looking at a placed egg in the world, executing this command gives you that exact egg item in your inventory, which you can then place elsewhere.
+
+```bash
+/eastereggs copy
+```
+
+---
+
+## Texture Command
+
+Administrators with the `eastereggs.texture` permission can use this command to update the texture of the Easter Egg item they are currently holding.
+
+The item in your hand must be a valid Easter Egg. The new item will retain all properties of an egg but will visually change to match the ID you specify.
+
+```bash
+/eastereggs texture <id of the new texture>
+```
+
+---
+
+## Reset Statistics Command
+
+Administrators with the `eastereggs.resetstats` permission can use this command to wipe collection progress.
+
+This command is flexible and works in three ways: use it without arguments to reset **your own** stats, provide a player name to reset **all** found eggs for that specific player, or provide both a player name and an egg ID to reset **only the specified egg** for that player.
+
+```bash
+/eastereggs resetstats [player] [egg id]
+```
+
+---
+
+## Save Statistics Command
+
+Administrators with the `eastereggs.savestats` permission can use this command to manually save all cached player data to the database.
+
+While the plugin saves data automatically, this is highly useful before scheduled server maintenance. You can append the `--silent` flag to run it without sending a broadcast message to the chat.
+
+```bash
+/eastereggs savestats [--silent]
+```
+
+---
+
+## Remove All Command
+
+Administrators with the `eastereggs.removeall` permission can use this command to permanently remove **every** placed instance of a specific Easter Egg ID from the world.
+
+<Aside type="caution">
+    This action cannot be undone. It will delete the physical blocks from the world and permanently remove their locations from your database.
+</Aside>
+
+```bash
+/eastereggs removeall <egg id>
+```
+
+---
+
+## Reload Command
+
+Essential for server administrators with the `eastereggs.reload` permission to apply changes made to configuration files without requiring a server restart.
+
+This command refreshes the `config.yml`, `messages.yml`, and internal Easter Egg data instantly.
+
+<Aside type="caution">
+    Changes made manually to the player statistics file (`data.yml`) will **not** be applied upon reload. This is because user data is cached internally for better performance and efficiency.
+</Aside>
+
+```bash
+/eastereggs reload
+```
+
+---
+
+## Info Command
+
+Administrators with the `eastereggs.info` permission can use this command to display comprehensive diagnostic information about the plugin.
+
+This includes the plugin version, server software, and Java environment. When submitting a support ticket, it is strongly recommended to include the output of this command.
+
+```bash
+/eastereggs info
+```
+
+---
+
+## Help Command
+
+Administrators with the `eastereggs.help` permission can use this command to display a comprehensive list of all available commands and their usage instructions.
+
+You can hover over the commands in the in-game chat to see more detailed descriptions.
+
+```bash
+/eastereggs help
+```
+
+---
+
+## Extra Permissions
+
+These specific permissions are not tied to a command but control how players interact with the eggs in the world.
+
+* **`eastereggs.break`**: Allows the player to physically break and remove Easter Egg blocks placed in the world. By default, regular players do not have this permission to prevent griefing.
+* **`eastereggs.tabcompleter`**: Grants permission to use the command tab-completion feature. When typing `/eastereggs`, the player will see an auto-completed list of valid sub-commands and egg IDs.
+
+---
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `eastereggs.*` will provide access to every command and feature listed on this page.
+</Aside>

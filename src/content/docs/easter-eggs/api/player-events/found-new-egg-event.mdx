@@ -1,0 +1,70 @@
+---
+title: FoundNewEggEvent
+description: Documentation for the event fired when a player interacts with an Easter Egg.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `FoundNewEggEvent` is triggered whenever a player clicks on or interacts with an Easter Egg in the world. This is a primary lifecycle event for developers who want to implement custom rewards, execute specific logic upon discovery, or track player progress.
+
+---
+
+## Technical Overview
+- **Parent Class:** [`EasterEggsEvent`](/easter-eggs/api/player-events)
+- **Cancellable:** No
+
+<Aside type="note">
+    Unlike some interaction events, this event is not cancellable. It serves as a notification that a player has successfully triggered an egg interaction.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `EasterEggsEvent`, you have access to `getUser()` in addition to the following:
+
+| Method             | Return Type | Description                                                                            |
+|:-------------------|:------------|:---------------------------------------------------------------------------------------|
+| `getEggId()`       | `String`    | Returns the specific ID of the Easter Egg the player interacted with.                  |
+| `isAlreadyFound()` | `boolean`   | Returns `true` if the player had already collected this egg prior to this interaction. |
+
+---
+
+## Common Use Cases
+* **Custom Rewards:** Distribute unique items, economy balance, or permissions when a player finds an egg for the very first time.
+* **Analytics & Logging:** Track which eggs are discovered most frequently or log player progress to an external database.
+* **Custom Visuals:** Trigger unique particle effects or sounds around the player when they find specific eggs.
+
+---
+
+## Example Usage
+
+The following example demonstrates how to execute custom logic and send messages using standard legacy color codes based on whether the egg is new to the player.
+
+```java
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class EggDiscoveryListener implements Listener {
+
+    @EventHandler
+    public void onEggFound(FoundNewEggEvent event) {
+        // Accessing the Bukkit Player from the User object
+        Player player = event.getUser().getPlayer(); 
+        String eggId = event.getEggId();
+
+        // Execute logic only if the player is finding this egg for the first time
+        if (!event.isAlreadyFound()) {
+            // Send a message using legacy color codes
+            player.sendMessage("§a§lAwesome! You discovered the §e§l" + eggId + " §a§legg!");
+            
+            // Example: Give the player a diamond
+            // player.getInventory().addItem(new ItemStack(Material.DIAMOND));
+        } else {
+            // Message for already found eggs
+            player.sendMessage("§cYou have already found this Easter Egg!");
+        }
+    }
+}
+```
