@@ -38,12 +38,12 @@ address: jdbc:mysql://localhost:3306/<database_name>?useSSL=false&autoReconnect=
 
 Since this line is complex, let's break it down part by part:
 
-| Part | Description |
-| :--- | :--- |
-| `jdbc:mysql://` | The standard protocol for MySQL connections. **Do not change this.** |
-| `localhost` | **Host/IP:** The IP address of your database server. If the database is on the same machine as your server, leave it as `localhost` or `127.0.0.1`. If using a remote host, enter that IP here. |
-| `3306` | **Port:** The network port MySQL is listening on. The default is `3306`. (Check your hosting panel if you are on a shared host, as this might differ). |
-| `<database_name>` | **Database Name:** The specific name of your database. You **must** replace this with your actual database name (e.g., `santa_says_db`). |
+| Part              | Description                                                                                                                                                                                     |
+|:------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `jdbc:mysql://`   | The standard protocol for MySQL connections. **Do not change this.**                                                                                                                            |
+| `localhost`       | **Host/IP:** The IP address of your database server. If the database is on the same machine as your server, leave it as `localhost` or `127.0.0.1`. If using a remote host, enter that IP here. |
+| `3306`            | **Port:** The network port MySQL is listening on. The default is `3306`. (Check your hosting panel if you are on a shared host, as this might differ).                                          |
+| `<database_name>` | **Database Name:** The specific name of your database. You **must** replace this with your actual database name (e.g., `santa_says_db`).                                                        |
 
 **URL Parameters (Flags):**
 The text after the `?` symbol consists of settings for the connection driver:
