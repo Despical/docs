@@ -140,7 +140,7 @@ export default defineConfig({
                                         items: [
                                             {
                                                 label: "EasterEggPlaceEvent",
-                                                link: "/easter-eggs/api/egg-events/easter-egg-place-event"
+                                                link: "/easter-eggs/api/easter-egg-events/easter-egg-place-event"
                                             },
                                         ],
                                     },
