@@ -1,0 +1,50 @@
+---
+title: messages.yml
+description: Customize all in-game messages and text outputs for Carousel.
+---
+
+The `messages.yml` file gives you full control over every string of text your players and admins see. From simple chat notifications to command errors, everything is fully customizable.
+
+---
+
+## Color Code Support
+
+Carousel supports both modern HEX color codes and traditional legacy color formatting, allowing you to create visually appealing messages for your server.
+
+* **HEX Colors:** Use the `<#RRGGBB>` format for custom RGB colors (e.g., `<#FF5555>Your Text Here`).
+* **Legacy Color Codes:** Standard Minecraft color codes using the `&` symbol are fully supported (e.g., `&a` for green, `&l` for **bold**, `&n` for underlined).
+
+---
+
+## Common Placeholders
+
+Throughout the messages file, you can use numbered placeholders to inject dynamic data into your text depending on the context of the action.
+
+* `{0}`, `{1}`: These represent dynamic variables such as the specific carousel ID, correct command usage, or a list of active carousels.
+
+---
+
+## Configuration Examples
+
+Here is how you can implement these color codes, placeholders, and empty strings in your file:
+
+```yaml
+# Example using legacy color codes and numbered placeholders
+created-carousel: "&aYou have successfully created a new carousel named {0}!"
+
+# Example using color codes for an error message
+already-started: "&cThis carousel is already started!"
+
+# Example leaving a message empty to completely disable it
+mount: ""
+```
+
+---
+
+## Applying Changes
+
+One of the best features of the message system is that you don't need to restart your server to see changes. Simply modify the file, save it, and use the reload command in-game or from the console to see your updates instantly:
+
+```bash
+/carousel reload
+```

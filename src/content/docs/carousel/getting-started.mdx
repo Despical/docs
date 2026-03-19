@@ -1,49 +1,76 @@
 ---
 title: Getting Started
-description: Learn how to install and set up Easter Eggs on your Minecraft server.
+description: Learn how to install and set up Carousel on your Minecraft server.
 ---
 
-import { Steps, Aside } from '@astrojs/starlight/components';
+import { Aside, Steps, Badge } from '@astrojs/starlight/components';
 
-This guide provides a quick and easy walkthrough of the system requirements and step-by-step installation process needed
-to get the **Carousel** plugin running on your Minecraft server.
+Welcome to **Carousel**! This guide provides a quick and easy walkthrough of the system requirements and step-by-step installation process needed to get the plugin running on your Minecraft server.
 
-## Requirements
+---
 
-Before installing, ensure your server meets the following requirements:
+## Prerequisites
 
-* **Server Software:** **Spigot**, **Paper**, or any compatible fork (e.g., **Purpur**).
-* **Minecraft Version:** 1.8 - 1.21+
-* **Java Version:** Java 21 or newer.
+Before installing the plugin, ensure your server environment meets the following requirements:
 
-<Aside type="tip">
-    For the best performance and experience, we recommend using [**Paper**](https://papermc.io/downloads/) or its forks.
-</Aside>
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Server Software:** Spigot, Paper, or any compatible fork (e.g., Purpur).
+* **Minecraft Version:** 1.8 - 1.21+ (Latest versions recommended).
+* **Permissions Plugin** <Badge text="Optional" variant="note" /> : A plugin like LuckPerms to manage user access.
+
+---
 
 ## Installation
 
-Follow these simple steps to install the plugin:
+Setting up Carousel is straightforward. Follow these simple steps to get started:
 
 <Steps>
-
-1.  **Download the Plugin**
-
-    Visit our [Resource Page](https://www.spigotmc.org/resources/116224/) to download the latest version.
-
-2.  **Upload to Server**
-
-    Stop your server and upload the `.jar` file into your server's `/plugins` folder.
-
-3.  **Restart Server**
-
-    Start your server. The plugin will automatically generate the default configuration files.
-
-    ```bash
-    [INFO]: [Carousel] Loading Carousel vX.X.X
-    [INFO]: [Carousel] Enabling Carousel vX.X.X.
-    [INFO]: [Carousel] Initialization finished in XXXms.
-    [INFO]: [Carousel] Join our Discord server: https://discord.gg/uXVU8jmtpU
-    ```
+    1.  **Download the Plugin:** Visit our [Resource Page](https://www.spigotmc.org/resources/116224/) to download the latest version.
+    2.  **Upload to Server:** Stop your server and place the `carousel-x.x.x.jar` file into your server's `plugins/` directory.
+    3.  **Restart Server:** Start your server. The plugin will automatically generate the default configuration files.
+    4.  **Verify Installation:** Check your console to ensure the plugin is loaded correctly:
 </Steps>
 
-*Thank you for purchasing **Carousel**!* ❤️
+```bash
+[INFO]: [Carousel] Loading Carousel vX.X.X
+[INFO]: [Carousel] Enabling Carousel vX.X.X.
+[INFO]: [Carousel] Initialization finished in XXXms.
+[INFO]: [Carousel] Join our Discord server: [https://discord.gg/uXVU8jmtpU](https://discord.gg/uXVU8jmtpU)
+```
+
+---
+
+## First-Run Configuration
+
+After the first restart, a new folder will be created at `/plugins/Carousel/`. This folder contains everything you need to customize your plugin:
+
+* `config.yml`: Main plugin settings and general behaviors.
+* `messages.yml`: Full control over every string and translation shown to players.
+
+<Aside type="tip">
+    For the best performance and experience, we recommend using [**Paper**](https://papermc.io/downloads/) or its forks. Always check your console during the first boot to ensure everything loads smoothly.
+</Aside>
+
+---
+
+## Basic Command Structure
+
+While you'll spend most of your time using the interactive GUI, here are the essential commands to get you started:
+
+| Command                 | Permission        | Description                                                                 |
+|:------------------------|:------------------|:----------------------------------------------------------------------------|
+| `/carousel create <id>` | `carousel.create` | Creates a new carousel instance with the specified ID.                      |
+| `/carousel edit <id>`   | `carousel.edit`   | Opens the interactive GUI editor to visually customize your carousel.       |
+| `/carousel list`        | `carousel.list`   | Displays a list of all created carousel instances currently on the server.  |
+| `/carousel help`        | `carousel.help`   | Displays a comprehensive list of all available commands and their usage.    |
+
+---
+
+## Next Steps
+
+Now that the plugin is installed and running, it's time to dive deeper:
+
+* **[Creating Carousels](/carousel/creating-carousels)**: Learn how to spawn, configure, and manage your carousels.
+* **[Carousel Behavior](/carousel/carousel-behavior)**: Fine-tune the physics, rotation speed, and vertical motion.
+* **[Commands](/carousel/commands/admin)**: Review the complete list of administrative commands and permissions.
+* **[Developer API](/carousel/api/carousel-api)**: Hook into custom events to build your own integrations.

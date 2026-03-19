@@ -162,71 +162,92 @@ export default defineConfig({
                         ]
                     },
                     {
-                        id: "carousel",
-                        label: 'Carousel',
-                        link: '/carousel/',
-                        icon: 'carousel',
+                        label: "Carousel",
+                        link: "/carousel/",
+                        icon: "carousel",
                         items: [
                             {
-                                label: 'Carousel',
+                                label: "Basics",
                                 items: [
                                     {
-                                        label: 'Getting Started',
-                                        items: [
-                                            {label: 'Installation', slug: 'carousel/getting-started'},
-                                            {label: 'Creating Carousels', slug: 'carousel/creating-carousels'},
-                                        ],
+                                        label: "Getting Started",
+                                        link: "/carousel/getting-started",
                                     },
                                     {
-                                        label: 'Configuration',
-                                        items: [
-                                            {label: 'Config Files', slug: 'carousel/configuration'}
-                                        ],
+                                        label: "Creating Carousels",
+                                        link: "/carousel/creating-carousels",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Mechanics",
+                                items: [
+                                    {
+                                        label: "Carousel Behavior",
+                                        link: "/carousel/mechanics/carousel-behavior",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Admin Commands",
+                                        link: "/carousel/commands/admin"
+                                    }
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {
+                                        label: "config.yml",
+                                        link: "/carousel/configuration/config"
                                     },
                                     {
-                                        label: 'Movement Mechanics',
-                                        items: [
-                                            {label: 'Carousel Behavior', slug: 'carousel/carousel-behavior'}
-                                        ],
+                                        label: "messages.yml",
+                                        link: "/carousel/configuration/messages"
                                     },
                                     {
-                                        label: 'Commands',
-                                        items: [
-                                            {
-                                                label: 'Commands & Permissions',
-                                                slug: 'carousel/commands-and-permissions'
-                                            }
-                                        ],
+                                        label: "Other Files",
+                                        link: "/carousel/configuration/other-files"
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "Carousel API",
+                                        link: "/carousel/api/carousel-api",
                                     },
                                     {
-                                        label: 'API',
-                                        items: [
-                                            {label: 'Developer API', slug: 'carousel/developer-api'}
-                                        ],
-                                    },
-                                    {
-                                        label: "Support",
+                                        label: "Carousel Events",
                                         collapsed: true,
                                         items: [
                                             {
-                                                label: "Discord Server",
-                                                link: "https://discord.gg/uXVU8jmtpU",
-                                                attrs: {target: "_blank"}
+                                                label: "CarouselMountEvent",
+                                                link: "/carousel/api/carousel-events/carousel-mount-event"
                                             },
                                             {
-                                                label: "Spigot Discussion",
-                                                link: "https://www.spigotmc.org/threads/644299/page-100",
-                                                attrs: {target: "_blank"}
+                                                label: "CarouselDismountEvent",
+                                                link: "/carousel/api/carousel-events/carousel-dismount-event"
                                             },
-                                        ]
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "FAQ",
+                                        link: "/carousel/misc/faq",
                                     },
                                     {
-                                        label: 'FAQ',
-                                        items: [
-                                            {
-                                                label: 'Frequently Asked Questions', slug: 'carousel/faq'
-                                            }
-                                        ],
+                                        label: "Source Code",
+                                        link: "/carousel/misc/source-code",
                                     },
                                 ],
                             },

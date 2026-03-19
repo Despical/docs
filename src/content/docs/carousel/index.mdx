@@ -6,47 +6,109 @@ tableOfContents: false
 
 import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-The complete guide to the Carousel plugin. Learn how to install, configure, and master every feature to bring fun, interactive carousels to your server and keep your players entertained.
+## Carousel 🎠
+
+**Carousel** is a unique Minecraft plugin that lets you create fully rideable, interactive carousels to bring the fairground experience to your server.
+Whether you want a giant, slow-moving ferris wheel or a small, fast-spinning top, Carousel gives you the tools to build and customize it all in real-time.
+
+Designed for performance and ease of use, it's the perfect addition to server hubs, theme parks, and survival spawns.
+
+## Get Started
 
 <CardGrid>
     <LinkCard
         title="Getting Started"
-        description="A step-by-step guide to installing the plugin and creating your first carousel."
+        description="Install Carousel and get your server ready for interactive rides in minutes."
         href="/carousel/getting-started"
     />
+
     <LinkCard
         title="Creating Carousels"
-        description="Learn how to create, configure, and manage carousels in your world."
+        description="Learn how to spawn, configure, and manage carousels in your world."
         href="/carousel/creating-carousels"
     />
-    <LinkCard
-        title="Configuration Files"
-        description="Learn how to customize the plugin settings, messages, and global options."
-        href="/carousel/configuration"
-    />
+</CardGrid>
+
+## Mechanics
+
+Carousel's movement isn't just static; it can be entirely customized to fit the exact vibe of your server.
+
+<CardGrid>
     <LinkCard
         title="Behavior & Physics"
-        description="Deep dive into movement mechanics, speed settings, and physics of a carousel."
-        href="/carousel/carousel-behavior"
-    />
-    <LinkCard
-        title="Commands & Permissions"
-        description="View the full list of available commands and the permissions required to use them."
-        href="/carousel/commands-and-permissions"
+        description="Deep dive into movement mechanics, speed settings, and the physics of a carousel."
+        href="/carousel/mechanics/carousel-behavior"
     />
 </CardGrid>
+
+## Commands
+
+All Carousel commands are designed to make server management, setup, and configuration straightforward.
+
+<CardGrid>
+    <LinkCard
+        title="Admin Commands"
+        description="Administrative commands for creating, managing, and fine-tuning your carousels."
+        href="/carousel/commands/admin"
+    />
+</CardGrid>
+
+## Configuration Files
+
+Carousel offers extensive configuration through multiple files, allowing full control over visuals, messages, and mechanical behavior.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Main configuration file controlling core plugin behavior and global settings."
+        href="/carousel/configuration/config"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="Customize all in-game messages, text outputs, and command responses used by Carousel."
+        href="/carousel/configuration/messages"
+    />
+
+    <LinkCard
+        title="Other Files"
+        description="Automatically managed internal files used by the Carousel plugin for storing data."
+        href="/carousel/configuration/other-files"
+    />
+</CardGrid>
+
+## Developer API
+
+Explore the various events and integration points to extend Carousel's functionality and tie it into your own systems.
+
+<CardGrid>
+    <LinkCard
+        title="Carousel API"
+        description="Learn how to hook into the plugin and access carousel instances programmatically."
+        href="/carousel/api/carousel-api"
+    />
+
+    <LinkCard
+        title="Carousel Events"
+        description="Documentation for custom events triggered during player interactions, such as mounting and dismounting."
+        href="/carousel/api/carousel-events/carousel-mount-event"
+    />
+</CardGrid>
+
+---
 
 ## Miscellaneous
 
 <CardGrid>
     <LinkCard
-        title="Developer API"
-        description="Integrate the plugin with your code, listen for custom events, and manage carousel data through our API."
-        href="/carousel/developer-api"
-    />
-    <LinkCard
         title="FAQ"
-        description="Answers to frequently asked questions and troubleshooting common issues."
-        href="/carousel/faq"
+        description="Common questions, known issues, and troubleshooting information."
+        href="/carousel/misc/faq"
+    />
+
+    <LinkCard
+        title="Source Code"
+        description="Purchase access to the source code for private modifications and development."
+        href="/carousel/misc/source-code"
     />
 </CardGrid>

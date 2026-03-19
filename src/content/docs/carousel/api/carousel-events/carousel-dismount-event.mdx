@@ -1,0 +1,69 @@
+---
+title: CarouselDismountEvent
+description: Documentation for the event fired when a player dismounts a Carousel horse.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `CarouselDismountEvent` is triggered right before a player's attempt to dismount a horse that is part of a Carousel is fully processed. This event is highly useful for intercepting the interaction to keep players on the ride, trigger post-ride effects, or manage custom gameplay mechanics.
+
+---
+
+## Technical Overview
+- **Parent Class:** [`CarouselEvent`](/carousel/api/carousel-events)
+- **Cancellable:** Yes
+
+<Aside type="note">
+    If this event is cancelled, the underlying dismount is prevented. This means the player will remain mounted on the Carousel horse, and no dismount sounds or default messages will be sent.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `CarouselEvent`, you have access to `getCarousel()` in addition to the following specific methods:
+
+| Method                  | Return Type | Description                                                               |
+|:------------------------|:------------|:--------------------------------------------------------------------------|
+| `getPlayer()`           | `Player`    | Gets the Bukkit Player who is attempting to dismount the Carousel horse.  |
+| `isCancelled()`         | `boolean`   | Returns whether the dismount attempt has been cancelled by a plugin.      |
+| `setCancelled(boolean)` | `void`      | Sets the cancellation state of this event.                                |
+
+---
+
+## Common Use Cases
+* **Forced Rides:** Prevent players from leaving the carousel until the ride has fully finished or a specific timer has elapsed.
+* **Post-Ride Rewards:** Give the player a special item, buff, or message immediately after they successfully dismount.
+* **Area Management:** Teleport players to a specific exit point upon dismounting to prevent them from glitching into surrounding blocks.
+
+---
+
+## Example Usage
+
+The following example demonstrates how to listen for this event and give the player a temporary speed boost when they finish riding the carousel.
+
+```java
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+public class CarouselInteractionListener implements Listener {
+
+    @EventHandler
+    public void onCarouselDismount(CarouselDismountEvent event) {
+        Player player = event.getPlayer();
+        String carouselId = event.getCarousel().getId();
+
+        // Check if the event was cancelled by another plugin
+        if (event.isCancelled()) return;
+
+        // Send a thank you message
+        player.sendMessage("§aThanks for riding the " + carouselId + " carousel!");
+
+        // Give the player a short speed boost after the ride (10 seconds, amplifier 1)
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1));
+    }
+}
+```
