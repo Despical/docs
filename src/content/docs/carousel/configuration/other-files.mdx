@@ -1,0 +1,33 @@
+---
+title: Other Files
+description: Overview of internal data files managed automatically by Carousel.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+While Carousel provides configuration files for general customization, it also manages an internal data file that acts as the plugin's "memory." This file is structured specifically for machine reading and live data access.
+
+<Aside type="danger">
+    **DO NOT MANUALLY EDIT:** Manual modification of this file is strictly prohibited. Editing it while the server is running can cause data corruption, broken carousels, or plugin crashes. Use in-game commands or menus to modify your setups instead.
+</Aside>
+
+---
+
+## Managed Files Overview
+
+| File Path  | Primary Function                                                                     | Management Method                           |
+|:-----------|:-------------------------------------------------------------------------------------|:--------------------------------------------|
+| `data.yml` | Stores the precise **location and settings** of every created carousel in the world. | Managed via `/carousel` commands and menus. |
+
+---
+
+## Detailed Breakdown
+---
+
+### data.yml
+
+This is the critical system file for your active carousels. It contains the exact coordinates, assigned ID, and customized settings for every single carousel instance you have created on your server.
+
+* **What it stores:** It holds the exact state of each carousel, including mechanical properties (like `amount` of horses, `radius`, `ticks`, `degreeIncrease`, `stepHeight`) and visual properties (like `rainbowGlow`, `leash` offsets, `saddlesEnabled`, and `allowRiding`).
+* **Why you shouldn't touch it:** The plugin keeps a live cache of carousel data in the server's memory to maintain high performance and smooth animations. If you modify this file while the server is running, the plugin will overwrite your changes with its own cached data upon saving, causing your manual edits to be lost forever.
+* **How to update:** Always use the `/carousel edit <id>` interactive GUI or the `/carousel setting` commands to manage your carousels safely while the server is running. If you absolutely must edit this file manually, you **must shut down the server completely** first. After the server is offline, you can make your changes and then start it back up.

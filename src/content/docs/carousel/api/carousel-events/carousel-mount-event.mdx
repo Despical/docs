@@ -1,0 +1,71 @@
+---
+title: CarouselMountEvent
+description: Documentation for the event fired when a player attempts to mount a Carousel horse.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `CarouselMountEvent` is triggered right before a player's attempt to mount a horse that is part of a Carousel is fully processed. This event is highly useful for intercepting the interaction to apply custom restrictions, charge in-game currency, or trigger external custom effects.
+
+---
+
+## Technical Overview
+- **Parent Class:** [`CarouselEvent`](/carousel/api/carousel-events)
+- **Cancellable:** Yes
+
+<Aside type="note">
+    Even if this event is not cancelled by a third-party plugin, the mount action may still be prevented later in the execution if the player lacks the required permissions or if riding is disabled in the Carousel plugin settings. If cancelled here, no default mount sounds or messages will be sent.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `CarouselEvent`, you have access to `getCarousel()` in addition to the following specific methods:
+
+| Method                  | Return Type | Description                                                            |
+|:------------------------|:------------|:-----------------------------------------------------------------------|
+| `getPlayer()`           | `Player`    | Gets the Bukkit Player who is attempting to mount the Carousel horse.  |
+| `isCancelled()`         | `boolean`   | Returns whether the mount attempt has been cancelled by a plugin.      |
+| `setCancelled(boolean)` | `void`      | Sets the cancellation state of this event.                             |
+
+---
+
+## Common Use Cases
+* **Economy Integration:** Cancel the event if the player doesn't have enough balance to pay for a "ticket" to ride, and deduct funds if they do.
+* **Custom Access Control:** Restrict certain carousels based on custom progression systems, ranks, or specialized items held in the player's hand.
+* **Analytics and Logging:** Track how often specific carousels are ridden by players to measure server activity or hub engagement.
+
+---
+
+## Example Usage
+
+The following example demonstrates how to listen for this event and prevent players from riding a carousel unless they hold a "Ticket" (a piece of paper) in their main hand.
+
+```java
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+
+public class CarouselInteractionListener implements Listener {
+
+    @EventHandler
+    public void onCarouselMount(CarouselMountEvent event) {
+        Player player = event.getPlayer();
+        ItemStack handItem = player.getInventory().getItemInMainHand();
+
+        // Check if the player is holding a paper ticket
+        if (handItem.getType() != Material.PAPER) {
+            // Cancel the event to prevent them from mounting
+            event.setCancelled(true);
+            player.sendMessage("§cYou need a Paper Ticket to ride the " + event.getCarousel().getId() + " carousel!");
+        } else {
+            // Optional: Consume the ticket
+            handItem.setAmount(handItem.getAmount() - 1);
+            player.sendMessage("§aEnjoy your ride!");
+        }
+    }
+}
+```

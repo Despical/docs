@@ -1,0 +1,95 @@
+---
+title: Developer API
+description: Learn how to integrate with Carousel and use its custom event system.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+The Carousel API allows developers to hook into the plugin's lifecycles and modify player interactions. All custom events in the plugin inherit from the base `CarouselEvent` class.
+
+---
+
+## Dependency Setup
+
+To start using the API, you need to add the Carousel JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `carousel-x.x.x.jar` file inside it.
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        dependencies {
+        compileOnly files('libs/carousel-x.x.x.jar')
+    }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+        compileOnly(files("libs/carousel-x.x.x.jar"))
+    }
+        ```
+    </TabItem>
+
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>dev.despical</groupId>
+            <artifactId>carousel</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/carousel-x.x.x.jar</systemPath>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+<Aside type="caution">
+    Don't forget to add `Carousel` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
+</Aside>
+
+```yaml
+# plugin.yml
+name: YourPlugin
+version: 1.0.0
+main: your.package.Main
+depend: [Carousel]
+```
+
+---
+
+## Base Event Class
+
+Every event provided by the Carousel API extends the `CarouselEvent` class. This ensures consistent access to the carousel instance data across all interactions.
+
+```java
+public abstract class CarouselEvent extends Event {
+
+    private static final HandlerList HANDLER_LIST = new HandlerList();
+
+    protected final Carousel carousel;
+
+    public CarouselEvent(Carousel carousel) {
+        this.carousel = carousel;
+    }
+
+    public Carousel getCarousel() {
+        return carousel;
+    }
+
+    @NotNull
+    @Override
+    public HandlerList getHandlers() {
+        return HANDLER_LIST;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLER_LIST;
+    }
+}
+```
+
+### Next Steps
+
+Explore the specific events triggered during player interactions:
+* **[CarouselMountEvent](/carousel/api/carousel-events/carousel-mount-event)**: Called when a player attempts to mount a horse that is part of a Carousel.
+* **[CarouselDismountEvent](/carousel/api/carousel-events)**: Called when a player dismounts a horse that is part of a Carousel.

@@ -1,0 +1,90 @@
+---
+title: FAQ
+description: Quick answers regarding licensing, requirements, and access to the Carousel plugin.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources for the **Carousel** plugin.
+
+---
+
+## What is the license for the Carousel plugin?
+
+The **Carousel** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**:
+
+* All payments are final and non-refundable.
+* Redistribution, sharing, or resale of this plugin is strictly prohibited.
+* You are not permitted to modify, decompile, or reverse-engineer any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers through official channels.
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run Carousel.
+
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
+
+---
+
+## Which Minecraft versions are supported?
+
+Carousel supports a wide range of versions to ensure maximum compatibility for your server:
+
+* **Supported Versions:** Full and native support for **1.8 and all newer versions** (1.21+).
+
+<Aside type="caution">
+    Sub-versions like 1.20.4 or 1.21.8 are not officially supported. Please ensure you are on the final minor release of your chosen major version.
+</Aside>
+
+---
+
+## What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions. This means you should use the XSeries sound names in your configuration files.
+
+[**List of All Available XSound Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+---
+
+## What are the available particle effect names?
+
+The plugin utilizes **ParticleLib** to manage and display particle effects. You can find the list of supported particle names here:
+
+[**List of All Available Particle Effects**](https://github.com/Despical/ParticleLib/blob/master/src/main/java/dev/despical/particle/ParticleEffect.java#L51)
+
+---
+
+## Why do my entities disappear randomly?
+
+The plugin uses a unique, invisible identifier (tag) stored in the entity's custom name to track which horses belong to a carousel. This allows the plugin to clean up "ghost" entities that might get stuck after a restart.
+
+**The internal tag used is:** `§8§8§0§c§d`
+
+<Aside type="caution" title="Avoid using this tag">
+    If you manually give any entity a custom name containing this exact color code sequence (`§8§8§0§c§d`), the plugin will mistake it for a stuck carousel entity.
+
+    As a result, that entity will be **deleted automatically** when the server restarts or when you run the `/carousel purge` command.
+</Aside>
+
+---
+
+## Entities stuck after a reload or crash?
+
+If your server crashes, shuts down unexpectedly, or if you reload while a carousel is spinning, you might notice "ghost" horses remaining in the world.
+
+<Aside type="tip" title="Resolved in v1.8.9+">
+    This issue has been automatically resolved starting from version **1.8.9**. The plugin now intelligently detects and cleans up these stuck entities when the server starts up.
+</Aside>
+
+However, if you still encounter stuck entities or want to manually clean them up without restarting, we have added a specific command for this:
+
+```bash
+/carousel purge
+```
+Running this command will instantly scan the worlds and remove any stuck carousel entities.
