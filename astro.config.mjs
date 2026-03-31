@@ -589,10 +589,6 @@ export default defineConfig({
                                         link: "/advanced-parkour/configuration/mysql",
                                     },
                                     {
-                                        label: "music.yml",
-                                        link: "/advanced-parkour/configuration/music",
-                                    },
-                                    {
                                         label: "Other Files",
                                         link: "/advanced-parkour/configuration/other-files",
                                     },
