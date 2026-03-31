@@ -1,0 +1,53 @@
+---
+title: Placeholders
+description: List of available PlaceholderAPI placeholders for Advanced Parkour.
+---
+
+To use these placeholders, you must have **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** installed on your server. These placeholders can be used in any compatible plugin such as scoreboards, chat formatters, menus, and holograms.
+
+---
+
+Advanced Parkour registers the PlaceholderAPI identifier:
+
+```text
+advancedparkour
+```
+
+---
+
+## Player Placeholders
+
+These placeholders are used to display the statistics of the player viewing the placeholder.
+
+| Placeholder | Description |
+|:--|:--|
+| `%advancedparkour_name%` | Player name |
+| `%advancedparkour_uuid%` | Player UUID |
+| `%advancedparkour_games_played%` | Total runs started |
+| `%advancedparkour_completions%` | Total successful completions |
+| `%advancedparkour_uncompleted_runs%` | Total unfinished runs |
+| `%advancedparkour_perfect_runs%` | Total flawless runs |
+| `%advancedparkour_checkpoint_teleports%` | Total teleports back to checkpoints |
+| `%advancedparkour_checkpoints_reached%` | Total checkpoints reached |
+
+---
+
+## Arena Placeholders
+
+These placeholders allow you to fetch real-time data from specific arenas.
+
+---
+
+### Live Arena Data
+
+```text
+%advancedparkour_arena:<arena_id>:players%
+```
+
+Example:
+
+```text
+%advancedparkour_arena:easy:players%
+```
+
+This returns the number of players currently inside that arena's active game.

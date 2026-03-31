@@ -1,0 +1,50 @@
+---
+title: scoreboard.yml
+description: Configure the active run scoreboard shown to players inside Advanced Parkour arenas.
+---
+
+The `scoreboard.yml` file controls the sidebar shown during active runs. By default, it displays arena context, checkpoint progress, and personal best information.
+
+---
+
+## Supported Scoreboard Placeholders
+
+The default file supports placeholders specifically designed for parkour progress:
+
+| Placeholder         | Meaning                                             |
+|:--------------------|:----------------------------------------------------|
+| `%player%`          | Player name                                         |
+| `%date%`            | Current date                                        |
+| `%players%`         | Current player count in the arena                   |
+| `%run_time%`        | Current run time                                    |
+| `%checkpoint%`      | Current checkpoint label                            |
+| `%next_checkpoint%` | Next target checkpoint                              |
+| `%arena_best%`      | Player personal best for this arena                 |
+| `%checkpoint_best%` | Player best time for the current checkpoint segment |
+
+---
+
+## Configuration Example
+
+```yaml
+title: "<#FFC800><bold>ADVANCED PARKOUR"
+lines:
+	- "<#B0C4DE>%date%"
+	- ""
+	- "<#EEF2F7>Arena: <#00FF95>%arena%"
+	- "<#EEF2F7>Players: <#00FF95>%players%"
+	- "<#EEF2F7>Time: <#FFCA28>%run_time%"
+	- ""
+	- "<#CFE8FF>Checkpoint: <#29B6F6>%checkpoint%"
+	- "<#F3DDFF>Next: <#E040FB>%next_checkpoint%"
+```
+
+---
+
+## Applying Changes
+
+Scoreboard changes can usually be applied with:
+
+```bash
+/ap reload
+```

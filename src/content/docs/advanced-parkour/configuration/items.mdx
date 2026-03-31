@@ -1,0 +1,93 @@
+---
+title: items.yml
+description: Comprehensive guide for customizing in-game items used during parkour runs.
+---
+
+The `items.yml` file allows you to define the visual and functional properties of items used within Advanced Parkour, such as the checkpoint return item, reset item, or leave item.
+
+---
+
+## Basic Item Structure
+
+Every item in the configuration follows a standard format. Here is an example of the default checkpoint return item:
+
+```yaml
+game-items:
+	teleport-to-last-checkpoint-item:
+		name: "<#3bff6a><bold>Teleport to Last Checkpoint"
+		material: HEAVY_WEIGHTED_PRESSURE_PLATE
+		slot: 3
+		lore:
+			- "<#C0C0C0>Right-click to instantly return"
+			- "<#C0C0C0>to your last reached checkpoint."
+```
+
+---
+
+## Supported Properties
+
+You can use the following keys to further customize your items:
+
+| Key                 | Description                                                 | Example                  |
+| :------------------ | :---------------------------------------------------------- | :----------------------- |
+| `material`          | The material name for the item.                             | `DIAMOND_SWORD`          |
+| `amount`            | The quantity of the item in the stack.                      | `1`                      |
+| `name`              | The display name of the item.                               | `<gold>Reset`            |
+| `lore`              | A list of lines for the item's description.                 | `- "<gray>Line 1"`      |
+| `custom-model-data` | Sets the CustomModelData integer for resource pack models.  | `12345`                  |
+| `glow`              | If true, adds an enchantment glow without visible enchants. | `true`                   |
+| `enchants`          | A list of enchantments and levels.                          | `SHARPNESS:5`            |
+| `item-flags`        | Hides certain item attributes (e.g., attributes, enchants). | `HIDE_ENCHANTS`          |
+| `unbreakable`       | Prevents the item from losing durability.                   | `true`                   |
+| `durability`        | Sets the remaining durability of the item.                  | `100`                    |
+| `hide-tooltip`      | Hides the default Minecraft tooltip for the item.           | `true`                   |
+| `data`              | Used for specific legacy data values.                       | `1`                      |
+| `Custom Keys`       | Represents any other arbitrary keys not listed above.       | `my-custom-tag: "value"` |
+
+---
+
+## Oraxen Support
+
+Santa Says documents native **Oraxen** usage on this page, but Advanced Parkour's current sources and bundled configs do not show a native Oraxen integration for `items.yml`.
+
+Unless you have added your own item parser support elsewhere, use standard Bukkit `material` values in this file.
+
+---
+
+## Configuration Example
+
+```yaml
+game-items:
+	teleport-to-last-checkpoint-item:
+		name: "<#3bff6a><bold>Teleport to Last Checkpoint"
+		material: HEAVY_WEIGHTED_PRESSURE_PLATE
+		slot: 3
+		lore:
+			- "<#C0C0C0>Right-click to instantly return"
+			- "<#C0C0C0>to your last reached checkpoint."
+
+	reset-item:
+		name: "<#ffd93b><bold>Reset"
+		material: OAK_DOOR
+		slot: 4
+		lore:
+			- "<#C0C0C0>Right-click to restart the"
+			- "<#C0C0C0>parkour from the very beginning."
+
+	leave-item:
+		name: "<#ff3b3b><bold>Leave"
+		material: RED_BED
+		slot: 5
+		lore:
+			- "<#C0C0C0>Right-click to leave the arena."
+```
+
+---
+
+## Applying Changes
+
+One of the best features of the item system is that you don't need to restart your server to see changes. Simply modify the file and use the reload command to see your updates instantly:
+
+```bash
+/ap reload
+```

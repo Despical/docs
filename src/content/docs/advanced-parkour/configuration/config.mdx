@@ -1,0 +1,46 @@
+---
+title: config.yml
+description: Detailed explanation of the main configuration file used by Advanced Parkour.
+---
+
+The `config.yml` file contains the main global options for Advanced Parkour. This file controls storage mode, player cleanup behavior, chat handling, and debugging-related settings.
+
+---
+
+## General Settings
+
+* **`prefix` & `prefix-2`**: Sets the visual identity of the plugin in chat. Supports MiniMessage, gradients, and HEX colors.
+* **`database`**: Defines how player statistics and profiles are stored.
+    * `flat`: Local storage using YAML files (**standard for small servers**).
+    * `mysql`: External database storage (**recommended for large networks**).
+
+**Note:** Changing the database type requires a server restart and does not support automatic data migration.
+
+---
+
+## Join and Gameplay Settings
+
+* **`player-settings.clear-inventory-on-join`**: Clears player inventories when they join an arena.
+* **`player-settings.clear-effects-on-join`**: Removes active potion effects when players join an arena.
+* **`scoreboard-enabled`**: Enables the scoreboard when a player starts a parkour challenge.
+
+---
+
+## Chat Settings
+
+The `chat-settings` section controls formatting and chat isolation for players inside arenas.
+
+* **`enable-formatting`**: Uses the plugin's custom chat format. If disabled, the server default format or another chat plugin format is used instead.
+* **`separate-chat`**: Separates arena chat from the rest of the server so arena players only see game chat and outside players do not see arena chat.
+* **`disable-chat-in-game`**: Prevents players actively in a game from sending chat messages.
+* **`block-outside-chat`**: Hides outside chat from players inside arenas. The config comment describes this as useful when you do not want full `separate-chat` but still want to block outside spam.
+
+---
+
+## System & Performance
+
+* **`debug`**: Set to `true` to access advanced administrative and troubleshooting commands.
+* **`event-profiling`**: An advanced diagnostic tool.
+    * `enabled`: Measures how long event listeners take to process.
+    * `verbose`: Logs every single execution to the console (use only for deep debugging).
+---

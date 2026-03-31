@@ -1,0 +1,63 @@
+---
+title: Advanced Parkour API
+description: Overview of the event-driven API exposed by Advanced Parkour for plugin integrations.
+---
+
+Explore the events and integration points currently exposed by Advanced Parkour.
+
+---
+
+## Event Model
+
+All custom events inherit from:
+
+* `AdvancedParkourEvent`
+
+Player-specific events then inherit from:
+
+* `PlayerEvent`
+
+The current event types registered by the plugin are:
+
+* `PLAYER_JOIN`
+* `PLAYER_LEAVE`
+* `PLAYER_CHECKPOINT_REACH`
+* `PLAYER_STAT_CHANGE`
+
+---
+
+## Available Event Classes
+
+* `PlayerJoinParkourEvent`
+* `PlayerLeaveParkourEvent`
+* `PlayerCheckpointReachEvent`
+* `PlayerStatisticChangeEvent`
+
+---
+
+## Typical Uses
+
+You can use the API to:
+
+* Block players from joining certain courses dynamically
+* Reward players when they reach specific checkpoints
+* Sync parkour progression to quests or achievements
+* Apply boosters or caps to statistics before they are stored
+* Log run behavior to an external analytics system
+
+---
+
+## Example Listener
+
+```java
+@EventHandler
+public void onCheckpoint(PlayerCheckpointReachEvent event) {
+    if (event.isEnd()) {
+        event.getPlayer().sendMessage("Nice finish on " + event.getArena().getId());
+    }
+}
+```
+
+---
+
+For field-by-field details and usage notes, continue to the player event pages.

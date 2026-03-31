@@ -1,0 +1,57 @@
+---
+title: mysql.yml
+description: Configure MySQL storage for Advanced Parkour player statistics and records.
+---
+
+The `mysql.yml` file is used when `database: mysql` is enabled in `config.yml`. It controls how Advanced Parkour connects to your external MySQL database.
+
+---
+
+## Main Options
+
+* **`address`**: The full JDBC connection string.
+
+Expected format:
+
+```text
+jdbc:mysql://<host>:<port>/<database_name>?useSSL=false&autoReconnect=true&createDatabaseIfNotExist=true
+```
+
+* **`user`**: The MySQL username.
+* **`password`**: The password for the selected MySQL user.
+* **`stats-table`**: The table used to store Advanced Parkour statistics.
+* **`test-on-startup`**: If enabled, the plugin tests the connection during startup and logs detailed failures immediately.
+
+---
+
+## Configuration Example
+
+```yaml
+address: jdbc:mysql://localhost:3306/<database_name>?useSSL=false&autoReconnect=true&createDatabaseIfNotExist=true
+user: root
+password: <your_password>
+stats-table: advanced_parkour_stats
+test-on-startup: true
+```
+
+---
+
+## Setup Checklist
+
+1. Set `database: mysql` in `config.yml`.
+2. Replace `<database_name>` in the JDBC URL.
+3. Enter the correct MySQL username and password.
+4. Restart the server.
+5. Check the console for connection success or failure logs.
+
+---
+
+## Recommendation
+
+Use MySQL when:
+
+* You run multiple servers that should share the same player records
+* You want centralized backups
+* You prefer external database administration over flat-file storage
+
+For small single-server setups, flat-file storage is usually simpler and completely sufficient.

@@ -1,0 +1,54 @@
+---
+title: Other Files
+description: Reference for the remaining data files and folders created by Advanced Parkour.
+---
+
+Advanced Parkour creates a few additional files and folders that are useful to understand even if you do not edit them directly.
+
+---
+
+## `arenas.yml`
+
+Stores the serialized arena data created through the setup system.
+
+This includes values such as:
+
+* Ready state
+* Start location
+* End location
+* Max players
+* Checkpoint material
+* Checkpoint list
+* Arena song
+* Arena gamemode
+* Per-arena scoreboard and boss bar toggles
+* Arena potion effects
+
+This file is normally managed by the setup GUI. Manual editing is possible, but easy to get wrong.
+
+---
+
+## `menu/`
+
+Contains GUI configuration files used by admins and players.
+
+Current files include:
+
+* `setup-menu.yml`
+* `stats-menu.yml`
+
+---
+
+## `musics/`
+
+Stores `.nbs` files for NoteBlockAPI playback.
+
+The plugin also seeds bundled default songs once and stores a marker file so that process is not repeated unnecessarily.
+
+---
+
+## `data/`
+
+Reserved for internally managed runtime or storage-related plugin data depending on the configured storage mode and plugin lifecycle.
+
+Treat it as plugin-owned internal data unless a future release documents specific manual workflows.

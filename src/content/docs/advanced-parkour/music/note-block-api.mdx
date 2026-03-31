@@ -1,0 +1,45 @@
+---
+title: NoteBlockAPI Integration
+description: How to enable music playback and per-arena song selection in Advanced Parkour.
+---
+
+Advanced Parkour supports in-game music playback through **NoteBlockAPI**, allowing custom songs to be assigned to arenas.
+
+When NoteBlockAPI is available, the plugin can:
+
+* Load `.nbs` songs from the `musics/` folder
+* Let you preview songs inside the setup menu
+* Assign a song to a specific arena
+* Add players to arena music when they join
+
+---
+
+## Installation
+
+1. Install **NoteBlockAPI** on your server.
+2. Restart the server.
+3. Put your `.nbs` files inside `plugins/AdvancedParkour/musics/`.
+4. Re-open the setup menu for your arena.
+
+---
+
+## Arena Song Selection
+
+Inside `/ap edit <arena>`:
+
+* Open the **Select Arena Music** item
+* Left-click a song to assign it
+* Right-click a song to preview it
+* Choose **No Song** if you want silence
+
+---
+
+## What Happens Without NoteBlockAPI
+
+If NoteBlockAPI is not installed, Advanced Parkour falls back to an empty radio implementation.
+
+That means:
+
+* The plugin still works normally
+* Music playback is skipped
+* The song selector page explains what dependency is missing

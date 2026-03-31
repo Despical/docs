@@ -1,0 +1,46 @@
+---
+title: PlayerStatisticChangeEvent
+description: Fired before a player's Advanced Parkour statistic is updated, allowing you to cancel or modify the final value.
+---
+
+`PlayerStatisticChangeEvent` is the most flexible integration point in the current API.
+
+It fires before the new value is applied, so listeners can:
+
+* Cancel the change completely
+* Replace the final value
+* Apply multipliers, caps, or special rules
+
+---
+
+## Technical Overview
+
+* **Cancellable:** Yes
+* **Extends:** `PlayerEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getStat()` | `StatisticType<T>` | The statistic being changed. |
+| `getOldValue()` | `T` | Previous stored value. |
+| `getNewValue()` | `T` | New value about to be stored. |
+| `setNewValue(T)` | `void` | Overrides the final value. |
+| `isCancelled()` | `boolean` | Whether the update is blocked. |
+| `setCancelled(boolean)` | `void` | Cancels or allows the update. |
+
+---
+
+## Usage Example
+
+```java
+@EventHandler
+public void onStatChange(PlayerStatisticChangeEvent<Integer> event) {
+    if (event.getStat().getKey().equals("completions")
+        && event.getPlayer().hasPermission("parkour.double-completions")) {
+        event.setNewValue(event.getNewValue() + 1);
+    }
+}
+```

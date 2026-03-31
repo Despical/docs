@@ -1,0 +1,210 @@
+---
+title: Advanced Parkour Documentation
+description: The official documentation for Advanced Parkour, the arena-based checkpoint parkour plugin for Minecraft servers.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## Advanced Parkour
+
+**Advanced Parkour** is a competitive, arena-based Minecraft parkour plugin built around checkpoints, split timing, personal bests, and leaderboard progression.
+Players join a course, start from the first checkpoint, race through the route in order, and try to beat their best time with as few mistakes as possible.
+
+Designed for replayability, polished presentation, and efficient arena setup, Advanced Parkour gives server owners a full parkour system instead of a basic command pack.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="Install the plugin, understand the generated files, and prepare your server for the first arena."
+        href="/advanced-parkour/getting-started"
+    />
+
+    <LinkCard
+        title="Arena Setup"
+        description="Create a new arena, configure locations, checkpoints, signs, music, and register it properly."
+        href="/advanced-parkour/arena-setup"
+    />
+
+    <LinkCard
+        title="Gameplay Overview"
+        description="Understand how runs start, how checkpoints work, what counts as a fail, and how records are tracked."
+        href="/advanced-parkour/gameplay"
+    />
+</CardGrid>
+
+## Commands
+
+All Advanced Parkour commands are grouped by purpose to keep parkour management clean and intuitive.
+
+<CardGrid>
+    <LinkCard
+        title="Player Commands"
+        description="Commands for joining arenas, leaving runs, and checking statistics."
+        href="/advanced-parkour/commands/player"
+    />
+
+    <LinkCard
+        title="Arena Commands"
+        description="Commands used to create, delete, list, and edit Advanced Parkour arenas."
+        href="/advanced-parkour/commands/arena"
+    />
+
+    <LinkCard
+        title="Admin Commands"
+        description="Administrative tools for reloading the plugin, kicking players, and force-stopping games."
+        href="/advanced-parkour/commands/admin"
+    />
+
+    <LinkCard
+        title="Debug Commands"
+        description="Hidden troubleshooting commands for testing joins, timing reports, and MiniMessage output."
+        href="/advanced-parkour/commands/debug"
+    />
+</CardGrid>
+
+## Configuration Files
+
+Advanced Parkour exposes nearly every player-facing system through YAML configuration files.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Core plugin settings such as storage, timers, chat behavior, scoreboard toggles, and debug mode."
+        href="/advanced-parkour/configuration/config"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="All gameplay messages, setup feedback, sign lines, hologram text, and help menus."
+        href="/advanced-parkour/configuration/messages"
+    />
+
+    <LinkCard
+        title="scoreboard.yml"
+        description="Configure the active run scoreboard, its title, lines, and supported runtime placeholders."
+        href="/advanced-parkour/configuration/scoreboard"
+    />
+
+    <LinkCard
+        title="bossbar.yml"
+        description="Customize the boss bar text, overlay, color, and global enable state."
+        href="/advanced-parkour/configuration/bossbar"
+    />
+
+    <LinkCard
+        title="items.yml"
+        description="Change the in-game parkour items players use for reset, checkpoint teleport, and leaving."
+        href="/advanced-parkour/configuration/items"
+    />
+
+    <LinkCard
+        title="mysql.yml"
+        description="Connect the plugin to MySQL for network-wide or persistent stat storage."
+        href="/advanced-parkour/configuration/mysql"
+    />
+
+    <LinkCard
+        title="music.yml"
+        description="Control default music behavior and per-arena song assignments when NoteBlockAPI is available."
+        href="/advanced-parkour/configuration/music"
+    />
+
+    <LinkCard
+        title="Setup Menu"
+        description="Customize the admin arena setup GUI, including locations, checkpoint tools, music, and settings pages."
+        href="/advanced-parkour/configuration/menu/setup"
+    />
+
+    <LinkCard
+        title="Stats Menu"
+        description="Modify the player statistics menu, arena record browser, and checkpoint comparison interface."
+        href="/advanced-parkour/configuration/menu/stats"
+    />
+
+    <LinkCard
+        title="Other Files"
+        description="Reference for data files such as arenas.yml, the menu directory, and generated musics folders."
+        href="/advanced-parkour/configuration/other-files"
+    />
+</CardGrid>
+
+## Placeholders
+
+Advanced Parkour supports **PlaceholderAPI** with player, arena, and leaderboard placeholders.
+
+<CardGrid>
+    <LinkCard
+        title="General Placeholders"
+        description="Player statistic placeholders and arena-specific placeholders for live parkour data."
+        href="/advanced-parkour/placeholders/general"
+    />
+
+    <LinkCard
+        title="Leaderboard Placeholders"
+        description="Top-position placeholders for records and statistic leaderboards."
+        href="/advanced-parkour/placeholders/leaderboard"
+    />
+</CardGrid>
+
+## Features
+
+Discover the systems that make Advanced Parkour flexible, competitive, and easy to maintain.
+
+<CardGrid>
+    <LinkCard
+        title="Checkpoint System"
+        description="Learn how checkpoint materials, selector tools, split times, holograms, and resets work together."
+        href="/advanced-parkour/features/checkpoints"
+    />
+</CardGrid>
+
+## Music Support
+
+Advanced Parkour supports in-game music playback through **NoteBlockAPI**, allowing custom songs to be assigned to specific arenas.
+
+<CardGrid>
+    <LinkCard
+        title="NoteBlockAPI Integration"
+        description="How to install NoteBlockAPI, add songs, preview them in setup, and assign music per arena."
+        href="/advanced-parkour/music/note-block-api"
+    />
+</CardGrid>
+
+## Developer API
+
+Explore the custom events and integration points available for extending Advanced Parkour.
+
+<CardGrid>
+    <LinkCard
+        title="Advanced Parkour API"
+        description="Overview of the event-driven API and the lifecycle hooks exposed by the plugin."
+        href="/advanced-parkour/api/advanced-parkour-api"
+    />
+
+    <LinkCard
+        title="Player Events"
+        description="Reference for player join, leave, checkpoint, and statistic change events."
+        href="/advanced-parkour/api/player-events/player-event"
+    />
+</CardGrid>
+
+---
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard
+        title="FAQ"
+        description="Quick answers covering versions, integrations, performance, and common setup mistakes."
+        href="/advanced-parkour/misc/faq"
+    />
+
+    <LinkCard
+        title="Source Code"
+        description="Information about source access, private customization, and licensing boundaries."
+        href="/advanced-parkour/misc/source-code"
+    />
+</CardGrid>

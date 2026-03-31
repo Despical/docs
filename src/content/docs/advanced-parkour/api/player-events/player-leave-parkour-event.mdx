@@ -1,0 +1,52 @@
+---
+title: PlayerLeaveParkourEvent
+description: Fired when a player leaves an Advanced Parkour run for any reason.
+---
+
+`PlayerLeaveParkourEvent` is useful when you need to distinguish between natural finishes, manual exits, kicks, or server-side interruptions.
+
+---
+
+## Technical Overview
+
+* **Cancellable:** No
+* **Extends:** `PlayerEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Returns the game being left. |
+| `getArena()` | `Arena` | Returns the arena being left. |
+| `getReason()` | `Reason` | Returns why the player left. |
+
+---
+
+## Leave Reasons
+
+The current reason enum contains:
+
+* `FINISH`
+* `LEAVE_COMMAND`
+* `LEAVE_ITEM`
+* `KICK`
+* `QUIT`
+* `RELOAD`
+* `SHUTDOWN`
+* `STOP_COMMAND`
+* `ARENA_DELETED`
+
+---
+
+## Usage Example
+
+```java
+@EventHandler
+public void onLeave(PlayerLeaveParkourEvent event) {
+    if (event.getReason() == PlayerLeaveParkourEvent.Reason.FINISH) {
+        event.getPlayer().sendMessage("Run saved successfully.");
+    }
+}
+```

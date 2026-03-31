@@ -1,0 +1,46 @@
+---
+title: music.yml
+description: Configure default and per-arena music behavior for Advanced Parkour.
+---
+
+The `music.yml` file controls how Advanced Parkour chooses songs when **NoteBlockAPI** is installed. It lets you define a fallback track and optionally override music on a per-arena basis.
+
+---
+
+## Main Options
+
+* **`enabled`**: Globally enables or disables the music system.
+* **`default-music`**: The fallback song name used when an arena does not define its own specific music.
+* **`arenas`**: A map of arena IDs to song names.
+
+Example:
+
+```yaml
+arenas:
+  easy: "intro_theme"
+  hard: "tense_loop"
+```
+
+---
+
+## Important Notes
+
+* Song files must exist as `.nbs` files inside the `musics/` directory.
+* Arena music can also be selected through the setup menu when NoteBlockAPI is installed.
+* If an arena has no explicit song and music is enabled, the plugin can fall back to `default-music`.
+
+---
+
+## Applying Changes
+
+Because music depends on available `.nbs` files and runtime playback registration, a full restart is the safest way to apply music changes.
+
+---
+
+## Recommended Workflow
+
+1. Install NoteBlockAPI.
+2. Add your `.nbs` files to `plugins/AdvancedParkour/musics/`.
+3. Restart the server.
+4. Open `/ap edit <arena>`.
+5. Select a song or preview it from the setup GUI.

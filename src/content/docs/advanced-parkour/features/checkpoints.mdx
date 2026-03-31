@@ -1,0 +1,75 @@
+---
+title: Checkpoint System
+description: Deep dive into how Advanced Parkour checkpoints, split times, selector tools, and checkpoint resets work.
+---
+
+The checkpoint system is the core of Advanced Parkour. It controls route progression, split timing, recovery, and most of the plugin's competitive tracking.
+
+---
+
+## Ordered Route
+
+Each checkpoint receives an index when created.
+
+This order matters because the plugin uses it to determine:
+
+* Whether the player reached the correct next checkpoint
+* Whether the player skipped ahead
+* Which split time should be recorded
+* Whether the run has reached the final checkpoint
+
+---
+
+## Start and End Semantics
+
+The first checkpoint acts as the **start checkpoint**.
+The last checkpoint in the chain acts as the effective **finish checkpoint**.
+
+In practice, a typical course layout looks like this:
+
+1. Start pressure plate
+2. Intermediate checkpoints
+3. Final pressure plate at the finish area
+
+---
+
+## Selector Tool
+
+The checkpoint selector is given through the setup menu and stores the arena ID in the item's persistent data.
+
+That lets the plugin safely know which arena the tool belongs to when you place checkpoints in the world.
+
+---
+
+## Split Timing and Personal Bests
+
+When a player reaches a checkpoint in the correct order, the plugin calculates:
+
+* Current run split time
+* Personal best for that checkpoint segment in the current arena
+
+This is why checkpoint placement matters. Well-spaced checkpoints create more useful segment comparisons and better training feedback.
+
+---
+
+## Teleporting Back
+
+The teleport-to-checkpoint item returns players to their last valid checkpoint.
+
+Consequences:
+
+* The session fail counter increases
+* Perfect-run eligibility is lost
+* The global statistic `checkpoint_teleports` increases
+
+---
+
+## Holograms
+
+Advanced Parkour also creates hologram text for:
+
+* Start point
+* Intermediate checkpoints
+* End point
+
+These are driven by the `holograms` section in `messages.yml` and are recreated based on checkpoint data.

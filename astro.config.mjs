@@ -504,6 +504,183 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "Advanced Parkour",
+                        link: "/advanced-parkour/",
+                        icon: "advanced-parkour",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        link: "/advanced-parkour/getting-started",
+                                    },
+                                    {
+                                        label: "Gameplay Overview",
+                                        link: "/advanced-parkour/gameplay",
+                                    },
+                                    {
+                                        label: "Arena Setup",
+                                        link: "/advanced-parkour/arena-setup",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Player Commands",
+                                        link: "/advanced-parkour/commands/player",
+                                    },
+                                    {
+                                        label: "Arena Commands",
+                                        link: "/advanced-parkour/commands/arena",
+                                    },
+                                    {
+                                        label: "Admin Commands",
+                                        link: "/advanced-parkour/commands/admin",
+                                    },
+                                    {
+                                        label: "Debug Commands",
+                                        link: "/advanced-parkour/commands/debug",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "config.yml",
+                                        link: "/advanced-parkour/configuration/config",
+                                    },
+                                    {
+                                        label: "messages.yml",
+                                        link: "/advanced-parkour/configuration/messages",
+                                    },
+                                    {
+                                        label: "scoreboard.yml",
+                                        link: "/advanced-parkour/configuration/scoreboard",
+                                    },
+                                    {
+                                        label: "bossbar.yml",
+                                        link: "/advanced-parkour/configuration/bossbar",
+                                    },
+                                    {
+                                        label: "items.yml",
+                                        link: "/advanced-parkour/configuration/items",
+                                    },
+                                    {
+                                        label: "GUI Menus",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "setup-menu.yml",
+                                                link: "/advanced-parkour/configuration/menu/setup",
+                                            },
+                                            {
+                                                label: "stats-menu.yml",
+                                                link: "/advanced-parkour/configuration/menu/stats",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        label: "mysql.yml",
+                                        link: "/advanced-parkour/configuration/mysql",
+                                    },
+                                    {
+                                        label: "music.yml",
+                                        link: "/advanced-parkour/configuration/music",
+                                    },
+                                    {
+                                        label: "Other Files",
+                                        link: "/advanced-parkour/configuration/other-files",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {
+                                        label: "Checkpoint System",
+                                        link: "/advanced-parkour/features/checkpoints",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {
+                                        label: "General Placeholders",
+                                        link: "/advanced-parkour/placeholders/general",
+                                    },
+                                    {
+                                        label: "Leaderboard Placeholders",
+                                        link: "/advanced-parkour/placeholders/leaderboard",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Music",
+                                items: [
+                                    {
+                                        label: "NoteBlockAPI",
+                                        link: "/advanced-parkour/music/note-block-api",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "Advanced Parkour API",
+                                        link: "/advanced-parkour/api/advanced-parkour-api",
+                                    },
+                                    {
+                                        label: "Player Events",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "PlayerEvent",
+                                                link: "/advanced-parkour/api/player-events/player-event",
+                                            },
+                                            {
+                                                label: "PlayerJoinParkourEvent",
+                                                link: "/advanced-parkour/api/player-events/player-join-parkour-event",
+                                            },
+                                            {
+                                                label: "PlayerLeaveParkourEvent",
+                                                link: "/advanced-parkour/api/player-events/player-leave-parkour-event",
+                                            },
+                                            {
+                                                label: "PlayerCheckpointReachEvent",
+                                                link: "/advanced-parkour/api/player-events/player-checkpoint-reach-event",
+                                            },
+                                            {
+                                                label: "PlayerStatisticChangeEvent",
+                                                link: "/advanced-parkour/api/player-events/player-statistic-change-event",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "FAQ",
+                                        link: "/advanced-parkour/misc/faq",
+                                    },
+                                    {
+                                        label: "Source Code",
+                                        link: "/advanced-parkour/misc/source-code",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Command Framework",
                         link: '/command-framework/',
                         icon: 'command-framework',

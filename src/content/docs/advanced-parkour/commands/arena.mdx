@@ -1,0 +1,66 @@
+---
+title: Arena Commands
+description: Commands for creating, deleting, listing, and editing Advanced Parkour arenas.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Arena management commands allow administrators to build and maintain Advanced Parkour arenas. These commands are essential for initial setup and ongoing map management.
+
+---
+
+## Create Command
+
+Administrators with the `advancedparkour.arena.create` permission can register a new arena instance. This command initializes a unique ID for the arena, which will be used for all subsequent configuration.
+
+```bash
+/ap create <arena_id>
+```
+
+If the ID already exists, the plugin blocks the action and shows an error.
+
+---
+
+## Delete Command
+
+Administrators with the `advancedparkour.arena.delete` permission can permanently remove an arena instance. To prevent accidental deletion, this command uses an explicit confirmation flow.
+
+```bash
+/ap delete <arena_id> [--confirm] [--cancel]
+```
+
+### Behavior
+
+* Without flags: shows a clickable confirmation message
+* `--confirm`: stops the arena if active, then deletes it
+* `--cancel`: aborts the deletion flow
+
+<Aside type="caution">
+    Deleting an arena unregisters it completely. Active players are removed immediately and the arena data is lost.
+</Aside>
+
+---
+
+## List Command
+
+Administrators with the `advancedparkour.arena.list` permission can display a complete list of all registered arena IDs. This is useful for checking active arenas and verifying their names for other commands.
+
+```bash
+/ap list
+```
+
+Ready arenas are shown with a clickable join action. Incomplete arenas are shown with a clickable edit action.
+
+---
+
+## Edit Command
+
+Administrators with the `advancedparkour.arena.edit` permission can open the interactive **Setup Menu** for a specific arena. This command is only accessible to players because it opens a GUI to visually configure locations, checkpoints, and supporting settings.
+
+```bash
+/ap edit <arena_id>
+```
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `advancedparkour.arena.*` will provide access to every command listed on this page.
+</Aside>

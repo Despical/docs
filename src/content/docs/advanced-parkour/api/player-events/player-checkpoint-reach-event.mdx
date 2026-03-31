@@ -1,0 +1,38 @@
+---
+title: PlayerCheckpointReachEvent
+description: Fired whenever a player reaches a valid checkpoint during a run.
+---
+
+`PlayerCheckpointReachEvent` is the best hook for course-based rewards, custom effects, or analytics tied to run progression.
+
+---
+
+## Technical Overview
+
+* **Cancellable:** No
+* **Extends:** `PlayerEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Returns the current game instance. |
+| `getArena()` | `Arena` | Returns the checkpoint's arena. |
+| `getCheckpoint()` | `ParkourCheckpoint` | Returns the checkpoint that was reached. |
+| `isStart()` | `boolean` | True if this is the first checkpoint. |
+| `isEnd()` | `boolean` | True if this is the final checkpoint in the route. |
+
+---
+
+## Usage Example
+
+```java
+@EventHandler
+public void onCheckpoint(PlayerCheckpointReachEvent event) {
+    if (event.isEnd()) {
+        event.getPlayer().sendMessage("You cleared the course.");
+    }
+}
+```
