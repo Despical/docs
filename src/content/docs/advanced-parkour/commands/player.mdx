@@ -1,0 +1,58 @@
+---
+title: Player Commands
+description: Commands available to regular players for joining arenas, leaving runs, and viewing statistics.
+---
+
+Player Commands are available to **regular players** and cover the normal Advanced Parkour gameplay flow. These commands are used to join arenas, leave active runs, and view player statistics.
+
+All commands can be used with `/advancedparkour` or the short alias `/ap`.
+
+---
+
+## Join Command
+
+Allows a player to join an Advanced Parkour arena. The plugin automatically checks arena availability, readiness state, and whether the player is already in another run before allowing the join.
+
+```bash
+/ap join <arena>
+```
+
+---
+
+## Start Command
+
+Allows a player with elevated permissions to use the explicit start flow.
+
+```bash
+/ap start <arena>
+```
+
+Permission: `advancedparkour.command.start`
+
+This command is useful if you want to reserve a more controlled join path for staff, testers, or specific permission groups.
+
+---
+
+## Leave Command
+
+Safely removes the player from the current Advanced Parkour run. This command can be used at any time during gameplay and returns the player to the arena's configured end location.
+
+```bash
+/ap leave
+```
+
+This also teleports the player to the arena's configured end location.
+
+---
+
+## Stats Command
+
+Displays detailed Advanced Parkour statistics through an in-game menu.
+
+```bash
+/ap stats [player]
+```
+
+By default, the command opens your own statistics, including completions, perfect runs, checkpoint teleports, and arena records.
+When a player name is provided, the same statistics are shown for the specified player.
+Statistics can be viewed for both online and cached offline players.

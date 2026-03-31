@@ -1,0 +1,78 @@
+---
+title: Leaderboard Placeholders
+description: PlaceholderAPI syntax for Advanced Parkour leaderboard values and names.
+---
+
+Advanced Parkour exposes leaderboard placeholders using the following format:
+
+```text
+%advancedparkour_leaderboard:<stat>:<position>:<name|value>%
+```
+
+---
+
+## Format Breakdown
+
+These placeholders are made up of three main parts:
+
+* `<stat>`: The leaderboard ID.
+* `<position>`: The ranking position, such as `1`, `2`, or `3`.
+* `<name|value>`: Whether to return the player name or the stored value.
+
+---
+
+## Supported Statistic Leaderboards
+
+These map directly to the stored statistic keys used by the plugin:
+
+* `games_played`
+* `completions`
+* `uncompleted_runs`
+* `perfect_runs`
+* `checkpoint_teleports`
+* `checkpoints_reached`
+
+Example:
+
+```text
+%advancedparkour_leaderboard:completions:1:name%
+%advancedparkour_leaderboard:completions:1:value%
+```
+
+---
+
+## Arena Time Leaderboards
+
+Each ready arena gets its own best-time leaderboard with this pattern:
+
+```text
+arena_time_<arena_id>
+```
+
+Example:
+
+```text
+%advancedparkour_leaderboard:arena_time_easy:1:name%
+%advancedparkour_leaderboard:arena_time_easy:1:value%
+```
+
+For arena time leaderboards, `value` is formatted as a readable time instead of a raw numeric value.
+
+---
+
+## Checkpoint Time Leaderboards
+
+Each checkpoint in a ready arena also gets a leaderboard ID:
+
+```text
+checkpoint_time_<arena_id>_<checkpoint_index>
+```
+
+Example:
+
+```text
+%advancedparkour_leaderboard:checkpoint_time_easy_3:1:name%
+%advancedparkour_leaderboard:checkpoint_time_easy_3:1:value%
+```
+
+These placeholders are useful for advanced HUDs, training lobbies, or holograms placed near specific sections of a course.

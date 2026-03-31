@@ -1,0 +1,68 @@
+---
+title: bossbar.yml
+description: Customize the appearance and behavior of the boss bar shown during parkour activity.
+---
+
+The `bossbar.yml` file allows you to manage the visual top-bar that players see while using Advanced Parkour. You can use it to display server branding or keep the layout clean and minimal.
+
+---
+
+## Global Toggle
+
+* **`enabled`**: Set this to `false` if you want to completely disable the BossBar system.
+
+---
+
+## Appearance
+
+Advanced Parkour uses a single BossBar layout for all stages. You can customize the **text**, **overlay (style)**, and **color** of that bar.
+
+---
+
+## Customization Options
+
+---
+
+### Text
+Supports the **MiniMessage** format. You can use gradients, HEX colors, and formatting tags to style the displayed text.
+
+### Overlay (Style)
+Determines the segmenting of the bar. Available values:
+
+* `PROGRESS`
+* `NOTCHED_6`
+* `NOTCHED_10`
+* `NOTCHED_12`
+* `NOTCHED_20`
+
+### Color
+You can choose from the following standard colors:
+
+* `PINK`
+* `BLUE`
+* `RED`
+* `GREEN`
+* `YELLOW`
+* `PURPLE`
+* `WHITE`
+
+---
+
+## Configuration Example
+
+```yaml
+enabled: true
+text: "<yellow><bold>Playing <gradient:#ff3b3b:#ff7a7a>ADVANCED</gradient> <gradient:#ff7a7a:#ff3b3b>PARKOUR</gradient> <yellow><bold>by <aqua><bold>DESPICAL"
+overlay: PROGRESS
+color: PINK
+```
+
+---
+
+## Applying Changes
+
+One of the best parts of this file is that you do not need to restart your server to see changes. Simply modify the file and use the reload command to apply your updates instantly:
+
+```bash
+/ap reload
+```

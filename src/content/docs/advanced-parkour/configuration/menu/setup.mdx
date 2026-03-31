@@ -1,0 +1,62 @@
+---
+title: setup-menu.yml
+description: Customize the admin setup GUI used to create and configure Advanced Parkour arenas.
+---
+
+The `setup-menu.yml` file defines the appearance, feedback messages, and control hints of the interactive GUI opened via `/ap edit <arena>`. This configuration uses **MiniMessage** formatting, so RGB colors, gradients, and styled admin feedback are all supported.
+
+---
+
+## Setup Categories
+
+### 1. Location Settings
+These items define the critical teleport points for the arena.
+* **Navigation:** Click **Manage Arena Locations** to open the location page.
+* **Centering:** Holding **Shift** while selecting a location centers it on the block.
+
+| Item Key | Purpose                                                                    |
+|:---------|:---------------------------------------------------------------------------|
+| `start`  | Sets the location where players begin the parkour.                         |
+| `end`    | Sets the fallback and exit location used after a run ends or is cancelled. |
+
+### 2. Arena Capacity
+Configures how many players can enter the arena.
+* **`max-player-amount`**: Sets the maximum number of runners allowed.
+* **Controls:**
+	* **Left Click:** Increase count (+1).
+	* **Right Click:** Decrease count (-1).
+	* **Drop:** Set the arena to unlimited players.
+
+### 3. Checkpoint Tools & Arena Flow
+These items control the core setup workflow of the parkour.
+* **`checkpoint-tool`**: Gives the selector used to place checkpoints.
+* **Shift-Left Click:** Opens checkpoint material settings.
+* **Drop:** Clears all registered checkpoints.
+* **`register-arena`**: Finalizes the setup after validating required options.
+
+### 4. Music, Signs & Player Settings
+These items manage supporting systems around the parkour itself.
+* **`arena-sign`**: Converts the sign you are currently looking at into a join sign for this arena.
+* **`song-selector`**: Opens the NoteBlockAPI song selection page.
+* **`player-settings`**: Opens gamemode, potion effect, scoreboard, and boss bar settings.
+
+---
+
+## Configuration Example
+
+```yaml
+title: "<gradient:#FF5252:#D50000><bold>GAME SETUP</bold></gradient> <dark_gray><bold>»</bold></dark_gray> <gold><bold>%arena_id%</bold>"
+
+items:
+	game-locations:
+		name: "<#FFB74D><bold>Manage Arena Locations"
+		material: FILLED_MAP
+
+	checkpoint-tool:
+		name: "<#FFD700><bold>Manage Checkpoints"
+		material: OAK_PRESSURE_PLATE
+
+	register-arena:
+		name: "<#00E676><bold>Register the Arena"
+		material: FIREWORK
+```

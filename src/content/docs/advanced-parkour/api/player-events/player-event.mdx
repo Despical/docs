@@ -1,0 +1,55 @@
+---
+title: PlayerEvent
+description: Base class for all player-related events in the Advanced Parkour API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`PlayerEvent` is the abstract base class for every player-focused event exposed by Advanced Parkour.
+
+It provides a streamlined way to access both the standard Bukkit `Player` object and the internal Advanced Parkour `User` instance.
+
+<Aside type="note">
+    Because `PlayerEvent` is abstract, you do not listen to it directly. Listen to one of its concrete subclasses instead.
+</Aside>
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.advancedparkour.api.event.player`
+* **Parent Class:** `AdvancedParkourEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Returns the Bukkit player for the event. |
+| `getUser()` | `User` | Returns the plugin-specific user wrapper. |
+
+---
+
+## Known Subclasses
+
+These events inherit all methods from `PlayerEvent`:
+
+* **`PlayerJoinParkourEvent`**: Fired when a player attempts to join an arena.
+* **`PlayerLeaveParkourEvent`**: Fired when a player leaves an active run.
+* **`PlayerCheckpointReachEvent`**: Fired when a player reaches a checkpoint.
+* **`PlayerStatisticChangeEvent`**: Fired when a player's persistent parkour statistics are modified.
+
+---
+
+## Usage In Listeners
+
+When listening to any subclass of `PlayerEvent`, you can immediately access the `User` object without doing a manual lookup.
+
+```java
+@EventHandler
+public void onAnyPlayerEvent(PlayerJoinParkourEvent event) {
+    Player bukkitPlayer = event.getPlayer();
+    User user = event.getUser();
+}
+```

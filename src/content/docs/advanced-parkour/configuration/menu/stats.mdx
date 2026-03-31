@@ -1,0 +1,56 @@
+---
+title: stats-menu.yml
+description: Configure the statistics GUI used to inspect player performance, arena records, and checkpoint bests.
+---
+
+The `stats-menu.yml` file controls the player statistics interface. It defines the GUI used to inspect performance, arena records, and checkpoint bests in a much more visual way than plain chat output.
+
+---
+
+## Main Sections
+
+The bundled menu includes items for:
+
+* Games played
+* Completions
+* Uncompleted runs
+* Perfect runs
+* Checkpoint teleports
+* Checkpoints reached
+* Arena record browsing
+* Previous and next page navigation
+
+---
+
+## Key Templates
+
+* **`player_head`**: Displays the target player's profile head.
+* **`arena_template`**: Used for arena record entries, including personal best and top leaderboard lines.
+* **`start_template`**: Represents the start checkpoint in record views.
+* **`checkpoint_template`**: Used for checkpoint comparisons, including personal best, server best, and difference text.
+
+---
+
+## Configuration Example
+
+```yaml
+title: "<dark_gray>➜ <gradient:#00E676:#2979FF><bold>Statistics</bold></gradient>"
+
+items:
+	player_head:
+		slot: 13
+		material: PLAYER_HEAD
+
+	view_arenas:
+		slot: 22
+		action: "open_arenas"
+		material: COMPASS
+```
+
+---
+
+## Why This File Matters
+
+The stats menu is where players feel progression. If you want parkour to be replayable, this file is worth polishing.
+
+Good menu wording makes records, personal bests, and leaderboard positions feel significantly more rewarding.

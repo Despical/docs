@@ -1,0 +1,90 @@
+---
+title: Admin Commands
+description: Administrative commands for reloading the plugin, stopping games, kicking players, and accessing help.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Admin Commands are designed for **server administrators and staff members** to manage Advanced Parkour arenas, player sessions, and plugin behavior.
+
+All commands can be used through `/advancedparkour` or `/ap`. Unless otherwise stated, commands can also be executed from the console.
+
+---
+
+## Main Command
+
+Displays basic plugin information and provides access to the help menu.
+
+When executed without arguments, the command shows the current Advanced Parkour version and author.
+If the sender has administrative permissions, it also points to the help command.
+
+```bash
+/ap
+```
+
+---
+
+## Help Command
+
+Administrators with the `advancedparkour.command.help` permission can display a comprehensive list of available commands and their usage instructions.
+
+```bash
+/ap help
+```
+
+The help menu is dynamic. Depending on the sender's permissions and whether debug mode is enabled in the configuration, it can automatically expand to include administrative and debugging commands.
+
+---
+
+## Reload Command
+
+Essential for server administrators with the `advancedparkour.admin.reload` permission to apply configuration changes without restarting the server.
+
+```bash
+/ap reload
+```
+
+This reload updates:
+
+* Chat and messages
+* Config options
+* Registered items
+* Event profiler configuration
+* Arena sign handling
+* Game-related caches dependent on configuration
+
+---
+
+## Stop Command
+
+Administrators with the `advancedparkour.admin.stop` permission can immediately terminate an ongoing parkour session without waiting for its natural conclusion.
+
+```bash
+/ap stop [arena]
+```
+
+### Behavior
+
+* If used by a player without an arena argument, it targets the arena they are currently in.
+* If used with an arena argument, it targets that arena directly.
+* If used from console, you should provide the arena name.
+
+This command allows you to stop the run you are currently participating in by using it without arguments, or to stop a specific arena remotely by providing its name. Importantly, runs terminated via this command are considered cancelled, meaning they do not behave like normal completions.
+
+---
+
+## Kick Command
+
+Administrators with the `advancedparkour.admin.kick` permission can remove a player from an active parkour run.
+
+```bash
+/ap kick <player>
+```
+
+The target player is removed from the run and teleported to the arena's configured end location if one exists.
+
+---
+
+<Aside type="tip">
+	For server administrators, granting the wildcard permission `advancedparkour.admin` will provide access to every command listed on this page.
+</Aside>

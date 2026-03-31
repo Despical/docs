@@ -1,0 +1,23 @@
+<svg
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+>
+  <g transform="translate(0, 0.5)">
+    <rect x="2" y="15" width="5" height="4.5" rx="1" fill="#F59E0B" />
+    <rect x="8.5" y="11" width="5" height="8.5" rx="1" fill="#F97316" />
+    <rect x="15" y="7" width="5" height="12.5" rx="1" fill="#22C55E" />
+
+    <path
+      d="M17.5 3.5V8"
+      stroke="#0F172A"
+      stroke-width="1.6"
+      stroke-linecap="round"
+    />
+    <path
+      d="M17.5 3.5H21L19 5.6L21 7.7H17.5"
+      fill="#38BDF8"
+    />
+  </g>
+</svg>

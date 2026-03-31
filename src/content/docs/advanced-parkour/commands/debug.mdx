@@ -1,0 +1,76 @@
+---
+title: Debug Commands
+description: Advanced troubleshooting commands for testing joins, chat components, and event timing reports.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Debug commands are hidden tools intended for testing and troubleshooting. They should not be granted to normal staff unless you want them to manipulate test runs.
+
+---
+
+## Enabling Debug Mode
+
+Before you can use these commands, you must enable debug mode in your `config.yml`. This acts as a safety gate for advanced administrative operations.
+
+```yaml
+debug: true
+
+event-profiling:
+  enabled: true
+  verbose: false
+```
+
+`event-profiling.enabled` is especially useful for the timings dump command.
+
+---
+
+## Debug Join Command
+
+Administrators with the `advancedparkour.debug.join` permission can instantly set up a test run. This command can force you into a specific arena and optionally pull other players into the same run.
+
+```bash
+/ap debug join <arena> [--players=p1,p2,...]
+```
+
+### Option
+
+* `--players=name1,name2`: Also joins those online players to the same arena.
+
+This is useful for quickly reproducing multi-player visibility or join-state issues.
+
+---
+
+## Debug Component Command
+
+Administrators with the `advancedparkour.debug.component` permission can preview MiniMessage formatting and component parsing in real time.
+
+```bash
+/ap debug component <message>
+```
+
+### Example
+
+```bash
+/ap debug component <gradient:#ff3b3b:#3bff6a>Advanced Parkour</gradient>
+```
+
+This is the safest way to test colors and formatting before editing your message files.
+
+---
+
+## Debug Dump Command
+
+Administrators with the `advancedparkour.debug.dump` permission can generate a comprehensive performance report of the plugin's internal events. This command is directly tied to the **Event Profiling** system in the `config.yml`.
+
+When executed, the plugin will send a timings report to the sender, detailing how long various event listeners took to process. This is the primary tool for diagnosing "server lag" or identifying conflicts with slow external plugins.
+
+```bash
+/ap debug dump
+```
+
+---
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `advancedparkour.debug.*` will provide access to every command listed on this page.
+</Aside>

@@ -1,0 +1,141 @@
+---
+title: Gameplay Overview
+description: How Advanced Parkour runs work, from joining the arena to checkpoint progression and leaderboard records.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+**Advanced Parkour** is built around clean, repeatable timed runs. Players join an arena, begin from the start checkpoint, progress through the route in order, and try to finish with the best possible time.
+
+Easy to understand but highly replayable, the plugin keeps players engaged through personal best chasing, checkpoint progression, and leaderboard competition.
+
+---
+
+## The Parkour Loop
+
+Players can enter an arena using:
+
+* `/ap join <arena>`
+* An arena sign linked through the setup menu
+
+When a player joins:
+
+* Their inventory is saved
+* Run items are given
+* Arena-specific gamemode and potion effects can be applied
+* Scoreboard and boss bar can be enabled
+* The player is teleported to the configured start location
+
+---
+
+## Starting a Run
+
+Joining an arena does not automatically mean the timer is already running.
+
+The normal run flow is:
+
+1. Player joins the arena
+2. Player stands on the configured **start checkpoint**
+3. The timer begins
+4. The run proceeds checkpoint by checkpoint
+
+This prevents accidental starts and makes retries cleaner.
+
+<Aside type="tip">
+    The plugin also has an internal direct-start join path for certain flows, but the standard player-facing experience is the start-checkpoint model.
+</Aside>
+
+---
+
+## Checkpoint Progression
+
+Checkpoints are strictly ordered.
+
+When a player reaches the correct next checkpoint, the plugin:
+
+* Advances their progress
+* Saves the split time since the last checkpoint
+* Updates checkpoint bests if a new personal best segment was achieved
+* Sends a progress message
+* Fires the `PlayerCheckpointReachEvent`
+
+If a player skips forward and touches the wrong checkpoint, they receive a **missed checkpoint** warning and must go back.
+
+---
+
+## Recovery and Mistakes
+
+Advanced Parkour does not use a traditional life system. Instead, mistakes are handled through resets and checkpoint recovery.
+
+### Teleport to Last Checkpoint
+
+The player item **Teleport to Last Checkpoint** returns the runner to the last valid checkpoint.
+
+Using it:
+
+* Counts as a fail in the current session
+* Increments the `checkpoint_teleports` statistic
+* Breaks the possibility of a flawless run
+
+If the player has not progressed past the start, they are sent back to the start area.
+
+### Reset Item
+
+The **Reset** item prepares a full retry and teleports the player back to the start.
+
+### Void Handling
+
+If a player falls into the void while inside an arena, the plugin cancels the damage and teleports them back to the configured start location.
+
+---
+
+## Completion and Records
+
+When the final checkpoint is reached, the plugin completes the run and evaluates the result.
+
+It can announce:
+
+* A normal completion
+* A new personal best
+* A global arena record
+* A global arena record that is also a new personal best
+
+Tracked data includes:
+
+* Final time
+* Fail count
+* Arena personal best
+* Checkpoint personal bests
+
+---
+
+## Player Statistics
+
+Advanced Parkour tracks both general and record-oriented statistics.
+
+Core stats include:
+
+* Games played
+* Completions
+* Uncompleted runs
+* Perfect runs
+* Checkpoint teleports
+* Checkpoints reached
+* Per-arena best times
+* Per-checkpoint best segment times
+
+The stats menu uses these values to build profile summaries, arena record pages, and checkpoint comparisons.
+
+---
+
+## Arena Isolation
+
+The plugin also handles arena isolation while players are in a run:
+
+* Inventory interaction is blocked
+* Item dropping is blocked
+* Item pickup is blocked
+* Fall damage is prevented
+* Separate chat rules can be enforced depending on config
+
+This keeps runs focused and prevents players from breaking the course loop.

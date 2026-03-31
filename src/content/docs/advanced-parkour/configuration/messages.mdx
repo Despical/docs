@@ -1,0 +1,58 @@
+---
+title: messages.yml
+description: Customize all in-game messages, titles, subtitles, actionbars and text outputs using MiniMessage.
+---
+
+The `messages.yml` file gives you full control over every string of text your players see. From simple parkour notifications to holograms, help messages, setup feedback, and sign text, everything is fully customizable.
+
+---
+
+## MiniMessage Support
+
+Advanced Parkour utilizes the **MiniMessage** library, allowing you to create much richer visuals than traditional legacy color codes. You can use HEX colors, gradients, and even hover or click events where the message format supports them.
+
+* **Gradients:** `<gradient:#00E676:#2979FF>Your Text Here</gradient>`
+* **HEX Colors:** `<#29B6F6>Solid Color Text</#29B6F6>`
+* **Legacy Tags:** Simple tags like `<red>`, `<b>` (bold), or `<underlined>` are also supported.
+
+---
+
+## Global Placeholders
+
+You can use your defined prefixes in any message to maintain a consistent look across the plugin.
+
+* `%prefix%`: Uses the primary prefix defined in `config.yml`.
+* `%prefix-2%`: Uses the secondary prefix defined in `config.yml`.
+
+---
+
+## Configuration Examples
+
+```yaml
+game:
+	joined-parkour: "<#29B6F6>✦ <#BDBDBD>You joined the parkour. <#E0E0E0>Step on the <#FFCA28>Start Block <#E0E0E0>to begin."
+	teleported-checkpoint: "<#29B6F6>✈ <#BDBDBD>Teleported to the last checkpoint."
+
+# Example of a multiline completion message
+finished:
+	- "%no_center%<green><bold>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"
+	- "<gradient:#00E676:#2979FF><bold>COURSE COMPLETED!</bold></gradient>"
+	- "<gray>Final Time: <white>%time%"
+
+# Example of setup feedback
+setup:
+	checkpoint-tool-received: "<#00E676>✔ <#BDBDBD>You have received the <#FFCA28><bold>Checkpoint Selector</bold> <#BDBDBD>tool."
+
+sign:
+	created: "<#00E676>✔ <#BDBDBD>Arena sign created. <dark_gray>[ <#81D4FA>X: %x%, Y: %y%, Z: %z% <dark_gray>] <#BDBDBD>facing <#29B6F6><bold>%direction%<#BDBDBD>."
+```
+
+---
+
+## Applying Changes
+
+One of the best parts of the message system is that you do not need to restart your server to see changes. Simply modify the file and reload the plugin to apply your updates:
+
+```bash
+/ap reload
+```

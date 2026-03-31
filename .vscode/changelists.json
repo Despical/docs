@@ -1,0 +1,50 @@
+{
+  "changelists": [
+    {
+      "name": "Default",
+      "files": [
+        "src/components/IconCustom.astro",
+        "src/content/docs/index.mdx",
+        "AdvancedParkour/",
+        "src/assets/advanced-parkour/icon.svg",
+        "src/content/docs/advanced-parkour/arena-setup.mdx",
+        "src/content/docs/advanced-parkour/gameplay.mdx",
+        "src/content/docs/advanced-parkour/getting-started.mdx",
+        "src/content/docs/advanced-parkour/index.mdx",
+        ".vscode/changelists.json",
+        "src/content/docs/advanced-parkour/commands/arena.mdx",
+        "src/content/docs/advanced-parkour/commands/player.mdx",
+        "src/content/docs/advanced-parkour/commands/admin.mdx",
+        "src/content/docs/advanced-parkour/commands/debug.mdx",
+        "src/content/docs/advanced-parkour/configuration/config.mdx",
+        "src/content/docs/advanced-parkour/configuration/messages.mdx",
+        "src/content/docs/advanced-parkour/configuration/scoreboard.mdx",
+        "src/content/docs/advanced-parkour/configuration/bossbar.mdx",
+        "src/content/docs/advanced-parkour/configuration/items.mdx",
+        "src/content/docs/advanced-parkour/configuration/music.mdx",
+        "src/content/docs/advanced-parkour/configuration/mysql.mdx",
+        "src/content/docs/advanced-parkour/configuration/menu/setup.mdx",
+        "src/content/docs/advanced-parkour/configuration/menu/stats.mdx",
+        "src/content/docs/advanced-parkour/configuration/other-files.mdx",
+        "src/content/docs/advanced-parkour/features/checkpoints.mdx",
+        "src/content/docs/advanced-parkour/music/note-block-api.mdx",
+        "src/content/docs/advanced-parkour/placeholders/general.mdx",
+        "src/content/docs/advanced-parkour/placeholders/leaderboard.mdx",
+        "src/content/docs/advanced-parkour/api/advanced-parkour-api.mdx",
+        "src/content/docs/advanced-parkour/api/player-events/player-checkpoint-reach-event.mdx",
+        "src/content/docs/advanced-parkour/api/player-events/player-event.mdx",
+        "src/content/docs/advanced-parkour/api/player-events/player-join-parkour-event.mdx",
+        "src/content/docs/advanced-parkour/api/player-events/player-leave-parkour-event.mdx",
+        "src/content/docs/advanced-parkour/api/player-events/player-statistic-change-event.mdx",
+        "src/content/docs/advanced-parkour/misc/faq.mdx",
+        "src/content/docs/advanced-parkour/misc/source-code.mdx",
+        "astro.config.mjs",
+        "src/content/docs/santa-says/configuration/config.mdx",
+        "src/components/overrides/SiteTitle.astro",
+        "src/assets/advanced-parkour/icon-dark.svg",
+        "src/assets/advanced-parkour/icon-light.svg"
+      ]
+    }
+  ],
+  "active": "Default"
+}

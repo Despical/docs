@@ -1,0 +1,38 @@
+---
+title: PlayerJoinParkourEvent
+description: Fired when a player attempts to join an Advanced Parkour arena.
+---
+
+`PlayerJoinParkourEvent` is triggered before the player is actually placed into the game, which makes it the correct hook for conditional access checks.
+
+---
+
+## Technical Overview
+
+* **Cancellable:** Yes
+* **Extends:** `PlayerEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Returns the target game instance. |
+| `getArena()` | `Arena` | Returns the arena tied to that game. |
+| `isCancelled()` | `boolean` | Whether the join should be blocked. |
+| `setCancelled(boolean)` | `void` | Cancels or allows the join attempt. |
+
+---
+
+## Usage Example
+
+```java
+@EventHandler
+public void onJoin(PlayerJoinParkourEvent event) {
+    if (event.getArena().getId().equalsIgnoreCase("vip")
+        && !event.getPlayer().hasPermission("parkour.vip")) {
+        event.setCancelled(true);
+    }
+}
+```

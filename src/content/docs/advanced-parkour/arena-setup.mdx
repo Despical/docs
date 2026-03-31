@@ -1,0 +1,194 @@
+---
+title: Arena Setup Guide
+description: A complete step-by-step guide for creating and registering an Advanced Parkour arena.
+---
+
+import { Aside, Badge } from '@astrojs/starlight/components';
+
+Setting up an arena in Advanced Parkour is done through an intuitive in-game GUI. This guide walks through the full flow from arena creation to final registration.
+
+---
+
+## Step 1: Create the Arena
+
+```bash
+/ap create <arena_id>
+```
+
+To begin, create a new arena instance. Each arena must have a **unique ID**.
+
+<Aside type="tip">
+    Use stable IDs like `desert_parkour`, `hub_easy`, or `season1_map1`. The ID is reused in joins, placeholders, and saved arena data.
+</Aside>
+
+---
+
+## Step 2: Open the Setup Menu
+
+```bash
+/ap edit <arena_id>
+```
+
+This command opens the main setup menu where all arena configuration is handled.
+
+From here you can manage:
+
+* Start and end locations
+* Maximum player count
+* Arena signs
+* Checkpoint tools and checkpoint material
+* Arena music
+* Player join settings such as gamemode and potion effects
+
+---
+
+## Step 3: Set the Required Locations
+
+Open **Manage Arena Locations** and configure the two mandatory teleport points:
+
+* **Start Location**: Where players are teleported when they join a run or reset.
+* **End Location**: Where players are sent after finishing, leaving, being kicked, or when a run is cancelled.
+
+### Click Behavior
+
+* **Click**: Saves your exact current location.
+* **Shift-Click**: Saves the centered position of the block you are standing on.
+
+<Aside type="caution">
+    The end location is not optional. It is also used as the fallback teleport on quit recovery, reload cancellations, and forced removals.
+</Aside>
+
+---
+
+## Step 4: Configure Player Capacity <Badge text="Optional" variant="tip" />
+
+Use **Set Maximum Players** if you want to limit how many runners can join the arena at the same time.
+
+### Controls
+
+* **Left Click**: Increase by 1
+* **Right Click**: Decrease by 1
+* **Drop**: Switch to unlimited players
+
+Unlimited mode changes the item state and removes the hard player cap.
+
+---
+
+## Step 5: Create the Checkpoint Route
+
+This is the most important part of the arena.
+
+From the home page, use **Manage Checkpoints** to receive the checkpoint selector tool.
+The tool material matches the currently selected checkpoint plate.
+
+### Required Rule
+
+An arena needs **at least 2 checkpoints** to register:
+
+1. The **start checkpoint**
+2. At least one additional checkpoint or the end checkpoint path
+
+### How It Works
+
+* Place the checkpoint selector on a block to create the next checkpoint in the route.
+* The **first placed checkpoint** becomes the run start.
+* Each next checkpoint increments its internal index.
+* Reaching checkpoints out of order triggers the missed checkpoint warning.
+
+<Aside type="tip">
+    Build checkpoints in the exact order players should reach them. The plugin tracks split times and progression based on that order.
+</Aside>
+
+---
+
+## Step 6: Change Checkpoint Material <Badge text="Optional" variant="tip" />
+
+Shift-left-click the checkpoint item in the setup menu to open the material selector.
+
+Advanced Parkour supports multiple pressure plate types, including:
+
+* `STONE_PRESSURE_PLATE`
+* `OAK_PRESSURE_PLATE`
+* `LIGHT_WEIGHTED_PRESSURE_PLATE`
+* `HEAVY_WEIGHTED_PRESSURE_PLATE`
+* `POLISHED_BLACKSTONE_PRESSURE_PLATE`
+
+Selecting a new material also gives you a fresh tool immediately.
+
+---
+
+## Step 7: Create an Arena Sign <Badge text="Optional" variant="tip" />
+
+Look directly at a sign block and click **Create Arena Sign**.
+
+The sign updates automatically and displays:
+
+* Arena state
+* Current players
+* Max players
+
+Players can use the sign to join the arena instead of typing commands.
+
+---
+
+## Step 8: Assign Arena Music <Badge text="Optional" variant="note" />
+
+If **NoteBlockAPI** is installed, the setup menu lets you choose a song for the arena.
+
+* **Left Click** on a song to select it.
+* **Right Click** on a song to preview it.
+* Choose **No Song** if you want the arena silent.
+
+If NoteBlockAPI is not installed, the menu explains exactly what is missing.
+
+---
+
+## Step 9: Configure Player Settings <Badge text="Optional" variant="tip" />
+
+Inside **Configure Player Settings**, you can adjust arena-specific behavior:
+
+* Join gamemode
+* Potion effects applied on join
+* Per-arena scoreboard toggle
+* Per-arena boss bar toggle
+
+This is useful when different courses need different presentation or movement rules.
+
+---
+
+## Step 10: Register the Arena
+
+When everything is ready, click **Register the Arena**.
+
+The plugin validates the arena before activation. Registration fails if any required value is missing, especially:
+
+* Start location
+* End location
+* At least two checkpoints
+
+Once registration succeeds, the arena becomes active and the setup menu provides a clickable join action.
+
+<Aside type="caution">
+    Registering marks the arena as ready. If you later remove critical data like checkpoints, test the arena again before putting it back into production use.
+</Aside>
+
+---
+
+## Joining the Parkour
+
+After successfully registering your arena, players can join in two ways:
+
+1. **By Command:** Use `/ap join <arena_id>` to enter the course.
+2. **By Sign:** If you created an arena sign in Step 7, simply **Right-Click** the sign to join.
+
+---
+
+## Summary Table
+
+| Item                 | Name               | Function                                 |
+|:---------------------|:-------------------|:-----------------------------------------|
+| `FILLED_MAP`         | Arena Locations    | Set Start and End points.                |
+| `RED_DYE`            | Maximum Players    | Set or remove the arena capacity limit.  |
+| `OAK_PRESSURE_PLATE` | Manage Checkpoints | Place, configure, and clear checkpoints. |
+| `OAK_SIGN`           | Create Arena Sign  | Link a physical sign to the arena.       |
+| `FIREWORK`           | Register Arena     | Save and activate the arena.             |

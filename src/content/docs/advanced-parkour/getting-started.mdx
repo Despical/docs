@@ -1,0 +1,93 @@
+---
+title: Getting Started
+description: Everything you need to install Advanced Parkour, generate its files, and prepare your first arena.
+---
+
+import { Aside, Badge, Steps } from '@astrojs/starlight/components';
+
+Welcome to **Advanced Parkour**. This plugin brings structured, checkpoint-based parkour gameplay to your Minecraft server, complete with personal bests, leaderboard tracking, setup menus, optional music support, and full customization.
+
+---
+
+## Prerequisites
+
+Before installing the plugin, ensure your server environment meets the following requirements:
+
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Minecraft Version:** 1.20.6 or 1.21.11 (Latest versions recommended).
+* **Permissions Plugin** <Badge text="Optional" variant="note" /> : A plugin like LuckPerms to manage user access.
+
+---
+
+## Installation
+
+Setting up Advanced Parkour is straightforward. Follow these steps to get started:
+
+<Steps>
+    1. Download the latest build of Advanced Parkour from the official distribution page.
+    2. Place the `advanced-parkour-x.x.x.jar` file into your server's `plugins/` directory.
+    3. **NoteBlockAPI** <Badge text="Optional" variant="note" /> : If you want arena music and song preview support, install NoteBlockAPI as well.
+    4. Restart the server to generate the default configuration files.
+    5. Verify the installation by running `/advancedparkour` or `/ap` in-game.
+</Steps>
+
+---
+
+## First-Run Configuration
+
+After the first startup, Advanced Parkour creates a dedicated data folder containing the core files you will work with:
+
+* `config.yml`: Main plugin behavior, timer settings, storage mode, chat rules, debug toggles.
+* `messages.yml`: Join, finish, setup, sign, hologram, help, and system messages.
+* `scoreboard.yml`: Active run scoreboard title and lines.
+* `bossbar.yml`: Global boss bar appearance and enable state.
+* `items.yml`: Run items for reset, checkpoint teleport, and leave.
+* `mysql.yml`: Connection information if you switch storage from `flat` to `mysql`.
+* `music.yml`: Default music settings and per-arena song mapping.
+* `arenas.yml`: Arena data saved by the setup system.
+* `menu/`: Admin setup GUI and player statistics GUI definitions.
+* `musics/`: Folder where `.nbs` files live for NoteBlockAPI playback.
+
+<Aside type="tip">
+    Always check your console during the first boot. If there are missing dependencies or invalid configuration values, the plugin will usually report them there first.
+</Aside>
+
+---
+
+## Basic Command Structure
+
+While most setup is handled through the in-game GUI, these are the main commands you will use first:
+
+| Command | Permission | Description |
+|:--|:--|:--|
+| `/ap create <arena>` | `advancedparkour.arena.create` | Creates a new arena entry. |
+| `/ap edit <arena>` | `advancedparkour.arena.edit` | Opens the setup menu for that arena. |
+| `/ap list` | `advancedparkour.arena.list` | Lists all arenas and shows whether they are ready. |
+| `/ap join <arena>` | None | Joins the arena and waits for the start checkpoint. |
+| `/ap leave` | None | Leaves the current run and returns to the arena end location. |
+| `/ap stats [player]` | None | Opens the statistics menu for yourself or another player. |
+
+---
+
+## Suggested First Setup Flow
+
+For a fresh installation, this is the recommended order:
+
+* Leave `database: flat` enabled unless you specifically need MySQL.
+* Create an arena with `/ap create <arena>`.
+* Open `/ap edit <arena>` and set the **Start Location** and **End Location**.
+* Use the checkpoint tool to create at least **2 checkpoints**.
+* Register the arena.
+* Test the course with `/ap join <arena>`.
+
+<Aside type="caution">
+    An arena cannot be registered until it has a start location, an end location, and at least two checkpoints.
+</Aside>
+
+---
+
+## Next Steps
+
+* **[Arena Setup Guide](/advanced-parkour/arena-setup)**: Learn how to create and register your first course.
+* **[Placeholders](/advanced-parkour/placeholders/general)**: Hook into PlaceholderAPI for scoreboards and external displays.
+* **[Developer API](/advanced-parkour/api/advanced-parkour-api)**: Start building custom integrations.
