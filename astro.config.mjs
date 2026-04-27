@@ -677,6 +677,74 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "Eat Everything",
+                        link: "/eat-everything/",
+                        icon: "eat-everything",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        link: "/eat-everything/getting-started",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Commands & Permissions",
+                                        link: "/eat-everything/commands/admin",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {
+                                        label: "config.yml",
+                                        link: "/eat-everything/configuration/config",
+                                    },
+                                    {
+                                        label: "messages.yml",
+                                        link: "/eat-everything/configuration/messages",
+                                    },
+                                    {
+                                        label: "food-components.yml",
+                                        link: "/eat-everything/configuration/food-components",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {
+                                        label: "Live Item Editing",
+                                        link: "/eat-everything/features/live-item-editing",
+                                    },
+                                    {
+                                        label: "Custom Food Components",
+                                        link: "/eat-everything/features/custom-food-components",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "FAQ",
+                                        link: "/eat-everything/misc/faq",
+                                    },
+                                    {
+                                        label: "Source Code",
+                                        link: "/eat-everything/misc/source-code",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Command Framework",
                         link: '/command-framework/',
                         icon: 'command-framework',

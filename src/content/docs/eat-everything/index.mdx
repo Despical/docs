@@ -1,0 +1,103 @@
+---
+title: Eat Everything Documentation
+description: The official documentation for Eat Everything, the Paper plugin that turns ordinary items into configurable food.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## Eat Everything 🍖
+
+**Eat Everything** is a Paper plugin focused on Minecraft's modern food data components.
+It lets you make any item edible, tune its nutrition and saturation, change consume time, attach potion effects, define reusable custom food presets, convert consumed items into leftovers, and run commands when players consume them.
+
+Whether you want edible tools for a minigame, magical food items for an RPG server, quest consumables for an adventure map, or admin-only debugging items for testing Paper data components, Eat Everything gives you both a direct command workflow and a reusable YAML-based component system.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="A step-by-step guide to installing the plugin and creating your first edible item."
+        href="/eat-everything/getting-started"
+    />
+
+    <LinkCard
+        title="Live Item Editing"
+        description="Learn how the commands modify the held item, when to use them, and how to inspect the final component string."
+        href="/eat-everything/features/live-item-editing"
+    />
+</CardGrid>
+
+## Commands
+
+Eat Everything is designed around a fast in-game workflow through `/eateverything` and `/ee`.
+You can prototype food values directly on the held item, generate clean test items from saved component IDs, and inspect the exact Paper component data before moving your final setup into YAML.
+
+<CardGrid>
+    <LinkCard
+        title="Item Editing Commands"
+        description="Tune nutrition, saturation, consume time, always-edible state, and potion effects directly on the item in your hand while you prototype new consumables."
+        href="/eat-everything/commands/admin#item-editing-commands"
+    />
+</CardGrid>
+
+## Configuration Files
+
+Eat Everything keeps its global settings intentionally small and pushes most of its power into the custom component file.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Global plugin options such as the update checker and startup behavior."
+        href="/eat-everything/configuration/config"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="All command responses, usage hints, reload output, PlaceholderAPI-enabled player messages, and item editing feedback."
+        href="/eat-everything/configuration/messages"
+    />
+
+    <LinkCard
+        title="food-components.yml"
+        description="Detailed schema for reusable consumable definitions, matching conditions, effects, cooldowns, conversion items, and command execution."
+        href="/eat-everything/configuration/food-components"
+    />
+</CardGrid>
+
+## Features
+
+The plugin combines direct item editing with an automatic matching system that upgrades configured items when they are interacted with, clicked in inventories, picked up, spawned, or consumed.
+
+<CardGrid>
+    <LinkCard
+        title="Live Item Editing"
+        description="Directly modify nutrition, saturation, consume time, always-edible state, and status effects on the held item."
+        href="/eat-everything/features/live-item-editing"
+    />
+
+    <LinkCard
+        title="Custom Food Components"
+        description="Understand matching rules, update markers, reload caveats, world application hooks, permissions, command placeholders, and advanced consumable behaviors."
+        href="/eat-everything/features/custom-food-components"
+    />
+</CardGrid>
+
+---
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard
+        title="FAQ"
+        description="Answers to frequently asked questions and troubleshooting common issues."
+        href="/eat-everything/misc/faq"
+    />
+
+    <LinkCard
+        title="Source Code Access"
+        description="Purchase access to the source code for private modifications and development."
+        href="/eat-everything/misc/source-code"
+    />
+</CardGrid>

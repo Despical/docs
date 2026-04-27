@@ -1,0 +1,334 @@
+---
+title: food-components.yml
+description: Full schema guide for reusable consumable definitions in Eat Everything.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+The `food-components.yml` file is the heart of Eat Everything.
+It lets you define reusable consumables that match specific items and automatically apply food and consumable data when those items are interacted with, picked up, spawned, clicked in inventories, or consumed.
+
+---
+
+## Mental Model
+
+Each entry under `food:` is a reusable recipe for one edible behavior.
+
+That recipe answers four questions:
+
+1. **Which items should match?**
+2. **What food and consume data should be written onto them?**
+3. **What should happen when the player consumes them?**
+
+Once you think of the file that way, the rest of the schema becomes much easier to reason about.
+
+---
+
+## Top-Level Structure
+
+Every custom component is defined under the `food:` section with its own unique ID.
+
+```yaml
+food:
+  default:
+    item: STICK
+    components:
+      nutrition: 3
+      saturation: 1
+      can-always-eat: true
+```
+
+The `default` entry included by the generated file is only an example and is not registered by the plugin.
+
+That means you must create your own real IDs such as `mystery_stick`, `battle_ration`, or `teleport_cookie`.
+
+---
+
+## Required Base Fields
+
+---
+
+### `item`
+
+The Bukkit material name that this custom component targets.
+
+```yaml
+item: STICK
+```
+
+If the material name is invalid, the component is skipped and a console error is logged.
+
+### `components`
+
+Contains all edible behavior for the matched item.
+
+---
+
+## Core Food Properties
+
+| Path | Description |
+|:--|:--|
+| `nutrition` | Hunger points restored when consumed. |
+| `saturation` | Saturation restored when consumed. |
+| `can-always-eat` | Allows consumption even when the player is full. |
+| `eat-seconds` | Consume time in seconds. |
+| `sound` | Optional sound key played by the Paper consumable component. |
+| `animation` | Consume animation such as `eat`, `drink`, or `bow`. |
+| `consume-particles` | Enables or disables consume particles. |
+| `cooldown` | Cooldown in seconds applied to the material after use. |
+| `random-teleport-diameter` | Adds a random teleport consume effect if greater than `0`. |
+| `clear-all-effects` | Clears all active status effects from the player after consumption. |
+| `permission` | Permission required to consume the item. Empty means unrestricted. |
+
+---
+
+## Potion Effects
+
+The `effects` section adds status effects to the consumable item.
+
+```yaml
+effects:
+  "1":
+    name: REGENERATION
+    amplifier: 0
+    duration: 100
+    ambient: false
+    show-particles: true
+    show-icon: true
+    probability: 1
+```
+
+Notes:
+
+* `name` can be a vanilla key such as `REGENERATION` or a namespaced key.
+* `duration` is read in ticks.
+* `probability` must be between `0` and `1`.
+* Invalid potion effect names are skipped with a warning in the console.
+
+Potion effects are appended to the consumable definition built for that component. This is separate from the manual `/ee effect add` workflow used on held items.
+
+---
+
+## Matching Conditions
+
+Conditions decide whether a real in-game item should receive the custom component.
+All configured conditions must pass.
+
+Because matching stops once a valid component is found for that material, place your most specific definitions before broader catch-all definitions.
+
+### Name Matching
+
+```yaml
+conditions:
+  name: "&6Mystery Apple"
+```
+
+Rules:
+
+* An empty string means the item must have an empty display name.
+* `skip-check` disables name matching entirely.
+* The plugin formats configured text before comparing it to the item's serialized legacy display name.
+
+### Lore Matching
+
+```yaml
+conditions:
+  lore:
+    - "&7Prototype ration"
+    - "&8Use with care"
+```
+
+Lore must match exactly after formatting.
+
+### Amount Matching
+
+```yaml
+conditions:
+  amount: 1
+```
+
+Use `-1` to allow any stack size.
+
+### Enchantment Matching
+
+```yaml
+conditions:
+  enchantments:
+    - "UNBREAKING:1"
+```
+
+The plugin checks the item's enchantment keys. Configure only the enchantments you require for a match.
+
+---
+
+## Matching Strategy Tips
+
+Use these patterns to avoid accidental matches:
+
+* Use only `item` when you truly want **all** items of that material to become edible.
+* Add a custom `name` when you want a branded or quest-specific version of a common material.
+* Add `lore` when the display name alone is not unique enough.
+* Use `amount` sparingly, because stack-size requirements can be easy to break in real gameplay.
+* Use enchantments only when those enchantments are part of the actual item identity.
+
+---
+
+## Conversion Items
+
+You can convert the consumed item into another item after use.
+
+```yaml
+converts-to:
+  material: BOWL
+  name: "&fEmpty Bowl"
+  lore: []
+  amount: 1
+  item-flags: []
+  enchantments: []
+  unbreakable: false
+```
+
+This is useful for bottles, bowls, wrappers, or custom leftovers.
+
+---
+
+## Command Execution on Consume
+
+The `commands` list runs commands when a player consumes the matched item.
+
+```yaml
+commands:
+  - "say %player% consumed %material%"
+  - "p:msg %player% You feel energized!"
+```
+
+Rules:
+
+* Normal entries run as the console.
+* Entries prefixed with `p:` run as the consuming player.
+
+Supported placeholders:
+
+* `%player%`
+* `%sender%`
+* `%consumption_time%`
+* `%saturation%`
+* `%nutrition%`
+* `%material%`
+
+---
+
+## Automatic Application Hooks
+
+A configured component can be applied when the plugin sees the item in one of several places:
+
+* Player interaction
+* Inventory clicks
+* Item pickup
+* Item spawn
+
+This is what makes the component system practical for normal gameplay rather than only admin-created test items.
+
+---
+
+## Updated Item Marker And Reload Caveat
+
+Once a component has been applied, the plugin stores an internal persistent marker on the item so it does not repeatedly rewrite the same data on every event.
+
+That marker is important for performance, but it also creates a practical admin caveat:
+
+<Aside type="caution">
+  After changing a component and running `/ee reload`, items that were already updated earlier may keep their previously written data. Always test config changes with newly generated items, ideally through `/ee item <id>`.
+</Aside>
+
+If you are balancing a live server, think of `food-components.yml` changes as forward-looking definitions rather than guaranteed retroactive rewrites of every already-tagged item.
+
+---
+
+## Example Component
+
+```yaml
+food:
+  mystery_stick:
+    item: STICK
+    components:
+      nutrition: 4
+      saturation: 2.5
+      can-always-eat: true
+      eat-seconds: 0.8
+      sound: minecraft:entity.generic.eat
+      animation: eat
+      consume-particles: true
+      cooldown: 5
+      random-teleport-diameter: 0
+      clear-all-effects: false
+      permission: ""
+      effects:
+        "1":
+          name: SPEED
+          amplifier: 1
+          duration: 120
+          ambient: false
+          show-particles: true
+          show-icon: true
+          probability: 1
+      conditions:
+        name: "&6Mystery Stick"
+        lore:
+          - "&7An experimental ration"
+        amount: -1
+        enchantments: []
+      converts-to:
+        material: BOWL
+        name: "&7Spent Container"
+        lore: []
+        amount: 1
+        item-flags: []
+        enchantments: []
+        unbreakable: false
+      commands:
+        - "p:msg %player% &aYou consumed a custom ration."
+```
+
+---
+
+## Practical Design Patterns
+
+---
+
+### Global Material Override
+
+Use only `item` and no restrictive conditions when you truly want every item of that material to become edible.
+
+### Named Quest Consumable
+
+Use `item`, `name`, and `lore` together so only the quest version of the item becomes edible.
+
+### Cooldown-Based Combat Food
+
+Use short `eat-seconds`, a meaningful `cooldown`, and optionally a strong buff effect.
+
+### Leftover Item Loop
+
+Use `converts-to` for bowls, wrappers, bottles, shells, or drained containers.
+
+### Scripted Reward Or Penalty
+
+Use `commands` to run server-side logic after consumption, such as granting currency, logging actions, or triggering quest progress.
+
+---
+
+## Troubleshooting Checklist
+
+If a component does not behave the way you expect, check these in order:
+
+1. The configured material is valid.
+2. The component ID is not just the example `default` section.
+3. Name and lore formatting are exactly correct.
+4. Enchantment requirements are actually present.
+5. The player has the required consume permission, if one is configured.
+6. You are testing with a fresh item after reload.
+
+<Aside type="tip">
+    Exact matching is the most common source of failed component application. Start broad, confirm the concept works, and only then add stricter conditions.
+</Aside>

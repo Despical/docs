@@ -1,0 +1,99 @@
+---
+title: Live Item Editing
+description: Learn how Eat Everything edits the held item directly and how to use that workflow for balancing and debugging.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+One of Eat Everything's best features is how quickly you can experiment.
+Instead of editing YAML for every test, you can hold an item and directly change its food properties with `/ee` commands.
+
+This is the fastest workflow for balancing values, checking component behavior, and generating a final item state that you later move into `food-components.yml`.
+
+---
+
+## What Live Editing Changes
+
+The live editing workflow operates on the **item in your main hand**.
+
+Available controls include:
+
+* Nutrition
+* Saturation
+* Consume time
+* Always-edible state
+* Status-effect consume entries
+
+You can then inspect the result with `/ee info`, which shows the current component values and provides a clickable `/give` command copy output.
+
+---
+
+## Best Use Cases
+
+Live editing is ideal when you want to:
+
+* Find the right hunger and saturation values quickly
+* Compare fast-consume and slow-consume timing
+* Test potion effect combinations on real items
+* Prototype a gimmick item before making it reusable
+* Debug whether an item is actually carrying the expected Paper component data
+
+---
+
+## Recommended Workflow
+
+<Steps>
+    1. Hold the target item in your main hand.
+    2. Use `/ee nutrition`, `/ee saturation`, `/ee eatseconds`, `/ee edible`, and `/ee effect` to shape the behavior.
+    3. Use `/ee info` to inspect the exact result.
+    4. Once the item feels correct, move the same values into a named component in `food-components.yml`.
+    5. Reload and redistribute a fresh item with `/ee item <id>` for production use.
+</Steps>
+
+This workflow keeps your balancing loop fast without turning your production config into guesswork.
+
+---
+
+## Command Roles
+
+| Command | What it changes |
+|:--|:--|
+| `/ee nutrition <value>` | Hunger restoration value |
+| `/ee saturation <value>` | Saturation restoration value |
+| `/ee eatseconds <value>` | Consume duration |
+| `/ee edible <true\|false>` | Always-edible flag |
+| `/ee effect add ...` | Adds status-effect consume behavior |
+| `/ee effect clear` | Removes status-effect consume entries |
+| `/ee info` | Displays the final food and consumable state |
+
+---
+
+## Why `/ee info` Matters
+
+`/ee info` is more than a pretty summary. It is your main debugging tool.
+
+It shows:
+
+* Nutrition
+* Saturation
+* Always-edible state
+* Consume time
+* Optional consume sound
+* All status-effect consume entries
+
+It also gives you a clickable component-string-based `/give` command, which is useful when you want to preserve or inspect the exact current item state.
+
+---
+
+## When Live Editing Is Not Enough
+
+Switch to custom food components when you need any of the following:
+
+* Automatic matching by name, lore, amount, or enchantments
+* Reusable component IDs
+* `/ee item <id>` distribution
+* Conversion items after consumption
+* Permission-gated consumables
+* Post-consume console or player commands
+
+That is the point where `food-components.yml` becomes the proper source of truth.
