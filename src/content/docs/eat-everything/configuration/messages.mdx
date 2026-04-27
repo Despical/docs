@@ -1,0 +1,77 @@
+---
+title: messages.yml
+description: Reference for command feedback, validation messages, and PlaceholderAPI usage in Eat Everything.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `messages.yml` file contains all user-facing command feedback used by Eat Everything.
+This includes permission failures, usage hints, invalid input messages, reload confirmation, item-give feedback, and editing success output.
+
+---
+
+## What This File Controls
+
+Message paths are grouped under `commands`, with nested sections for individual subcommands such as:
+
+* `commands.saturation.*`
+* `commands.nutrition.*`
+* `commands.eat-seconds.*`
+* `commands.edible.*`
+* `commands.effect.*`
+* `commands.item.*`
+
+This structure makes it easy to localize or restyle command output without touching the Java code.
+
+---
+
+## Supported Formatting
+
+The plugin formats messages through the shared string utility used across your projects, so standard legacy color codes such as `&a`, `&c`, and `&7` are supported.
+
+Example:
+
+```yaml
+commands:
+  no-permission: "&cYou must be admin or higher to use this command!"
+```
+
+---
+
+## Placeholders in Messages
+
+Eat Everything supports two separate placeholder systems inside messages:
+
+### Positional Command Parameters
+
+Many messages use indexed replacements inserted by the command implementation:
+
+* `{0}`
+* `{1}`
+* `{2}`
+
+For example, the item receive message uses the requested amount and component ID.
+
+### PlaceholderAPI Integration
+
+If PlaceholderAPI is installed and the command sender is a player, the plugin passes the raw message through PlaceholderAPI before sending it.
+
+That means you can use supported PlaceholderAPI placeholders inside player-facing command messages.
+
+<Aside type="note">
+    Eat Everything does not register its own PlaceholderAPI expansion. The integration here is message parsing only.
+</Aside>
+
+---
+
+## Example Snippet
+
+```yaml
+commands:
+  correct-usage: "&cCorrect usage: {0}"
+  no-permission: "&cYou must be admin or higher to use this command!"
+  system-reloaded: "&aSystem files reloaded successfully."
+
+  item:
+    received: "&aYou received &7{0}x &acustom food component item with ID &7{1}&a."
+```

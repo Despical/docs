@@ -6,12 +6,13 @@ interface Props {
     title: string;
     href: string;
     destructive?: boolean;
+    tone?: "green" | "blue" | "orange" | "red";
 }
 
-const { icon, title, href, destructive } = Astro.props;
+const { icon, title, href, destructive, tone } = Astro.props;
 ---
 
-<a href={href} class:list={["not-content", "card", destructive && "card-destructive"]}>
+<a href={href} class:list={["not-content", "card", destructive && "card-destructive", tone && `card-tone-${tone}`]}>
     <article class="sl-flex">
         <div class="title sl-flex">
             {icon && <IconCustom name={icon} class="icon" size="2em" />}
@@ -62,9 +63,21 @@ const { icon, title, href, destructive } = Astro.props;
         --sl-card-border: var(--sl-color-red);
         --sl-card-bg: var(--sl-color-red-low);
     }
-    .card:nth-child(4n + 5) {
+    .card-tone-green {
+        --sl-card-border: var(--sl-color-green);
+        --sl-card-bg: var(--sl-color-green-low);
+    }
+    .card-tone-blue {
         --sl-card-border: var(--sl-color-blue);
         --sl-card-bg: var(--sl-color-blue-low);
+    }
+    .card-tone-orange {
+        --sl-card-border: var(--sl-color-orange);
+        --sl-card-bg: var(--sl-color-orange-low);
+    }
+    .card-tone-red {
+        --sl-card-border: var(--sl-color-red);
+        --sl-card-bg: var(--sl-color-red-low);
     }
     .title {
         font-weight: 600;

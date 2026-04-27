@@ -1,0 +1,160 @@
+---
+title: FAQ
+description: Common questions about compatibility, reload behavior, matching rules, and source access for Eat Everything.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about compatibility, command behavior, component matching, source access expectations, and common troubleshooting steps for **Eat Everything**.
+
+---
+
+## What is the license for the Eat Everything plugin?
+
+The **Eat Everything** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**:
+
+* All payments are final and non-refundable.
+* Redistribution, sharing, or resale of this plugin is strictly prohibited.
+* You are not permitted to modify, decompile, or reverse-engineer any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers through official channels.
+
+---
+
+## Does Eat Everything work on Spigot?
+
+No. The plugin uses Paper-specific data component APIs, so you should run it on Paper or a compatible fork.
+
+<Aside type="caution">
+	If you are on plain Spigot, the plugin is not just "unsupported" in a soft sense. The required classes do not exist there.
+</Aside>
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run Eat Everything.
+
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
+
+---
+
+## Which Minecraft versions are recommended?
+
+Use Minecraft 1.20.5 or newer on a modern Paper build. The project is compiled against modern Paper 1.21.x APIs and depends on the post-data-component item system.
+
+---
+
+## Does the plugin make every item edible automatically?
+
+Yes but not by default.
+
+You either edit an item directly with commands such as `/ee nutrition` and `/ee edible`, or define reusable matches in `food-components.yml`.
+
+---
+
+## Why do most commands only work in-game?
+
+Because the plugin reads the item from the sender's **main hand** for most editing operations.
+
+That is why commands such as `/ee nutrition`, `/ee saturation`, `/ee edible`, `/ee effect`, and `/ee info` are player-only.
+
+---
+
+## Why is my custom component not applying?
+
+The most common causes are:
+
+* Invalid material name
+* Name mismatch
+* Lore mismatch
+* Amount condition mismatch
+* Required enchantments missing
+* Re-testing an item that was already updated before your latest reload
+
+Start with the simplest possible component, confirm it works, then reintroduce extra conditions one by one.
+
+---
+
+## Does `/ee reload` update every existing item instantly?
+
+Not reliably.
+
+Reload updates the component definitions held in memory, but items that were already tagged and updated earlier may keep the data that was previously written onto them.
+
+The safest testing flow after changing `food-components.yml` is:
+
+1. Run `/ee reload`.
+2. Generate a **fresh** item with `/ee item <id>`.
+3. Test that new item instead of reusing an older one.
+
+---
+
+## Can I have multiple components for the same material?
+
+Yes, but only one matching component is applied to a given item.
+
+In practice, you should place more specific definitions before broader ones for the same material so the intended match wins first.
+
+---
+
+## What is the `default` section in `food-components.yml`?
+
+It is an example only.
+
+The plugin explicitly skips registering the `default` component, so you must create your own real IDs under `food:`.
+
+---
+
+## Does PlaceholderAPI add Eat Everything placeholders?
+
+No built-in expansion is included.
+
+PlaceholderAPI support is used only when sending messages to players, so PlaceholderAPI placeholders can be parsed inside `messages.yml` if the dependency is installed.
+
+---
+
+## Do consume commands run as the console or the player?
+
+By default, configured consume commands run as the **console**.
+
+If you prefix a command with `p:`, the plugin dispatches it as the consuming player instead.
+
+Example:
+
+```yaml
+commands:
+	- "say %player% consumed %material%"
+	- "p:msg %player% You feel strange..."
+```
+
+---
+
+## Can I clear existing potion effects when an item is consumed?
+
+Yes. Set `components.clear-all-effects: true` in a custom component.
+
+---
+
+## What does `/ee effect clear` actually remove?
+
+It removes status-effect consume entries from the held item's consumable data.
+
+It does **not** promise to strip every possible non-status consume behavior that might exist on the item.
+
+---
+
+## Can a consumed item leave something behind?
+
+Yes. Use the `converts-to` section in `food-components.yml` to define a remainder item such as a bowl, wrapper, or bottle.
+
+---
+
+## What does `/ee info` do that other commands do not?
+
+It gives you a full debug-style view of the held item's current food component state and also provides a clickable `/give` command copy output based on the item's component string.
+
+That makes it the best command for confirming the final state of an item after multiple edits.

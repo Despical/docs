@@ -1,0 +1,28 @@
+---
+title: config.yml
+description: Detailed explanation of the global configuration file used by Eat Everything.
+---
+
+The `config.yml` file in Eat Everything is intentionally small. It controls startup behavior rather than gameplay logic, because the real item behavior lives in command-edited data components and `food-components.yml`.
+
+---
+
+## Global Settings
+
+* **`update-checker-enabled`**: When set to `true`, the plugin checks Spigot for a newer public version during startup and logs a console message if an update is available.
+
+---
+
+## Operational Notes
+
+* Disabling the update checker has no effect on item editing, custom components, or command registration.
+* This file is read during startup and after `/ee reload`.
+* If you prefer fully offline production environments, setting the value to `false` disables the external version check.
+
+---
+
+## Example Configuration
+
+```yaml
+update-checker-enabled: true
+```

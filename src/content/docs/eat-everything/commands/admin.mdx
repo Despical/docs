@@ -1,0 +1,175 @@
+---
+title: Admin Commands
+description: Administrative commands used to edit items, inspect consumable data, and manage Eat Everything configuration.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Admin Commands are designed for **server administrators and staff members** who want to prototype edible items, inspect Paper food data, distribute configured consumables, and manage Eat Everything without restarting the server.
+
+All commands can be used through `/eateverything` or its alias `/ee`. Unless otherwise stated, the editing commands are intended for in-game use because they operate on the item held in the sender's main hand.
+
+---
+
+## Main Command
+
+Displays basic plugin information and confirms that Eat Everything is loaded correctly.
+
+Administrators with the `eateverything.main` permission can use this command as a quick health check after installation or reload.
+
+When used without arguments, this command shows the running plugin version and acts as a quick sanity check that the plugin is active.
+
+```bash
+/eateverything
+```
+
+---
+
+## Nutrition Command
+
+Administrators with the `eateverything.nutrition` permission can use this command to read or change how many hunger points the held item restores.
+
+When used without a value, the command displays the current nutrition of the item in your main hand. When a numeric value is provided, the plugin writes the new food value directly onto the held item.
+
+```bash
+/ee nutrition [value]
+```
+
+This command is commonly used while balancing custom consumables before moving the final values into `food-components.yml`.
+
+---
+
+## Saturation Command
+
+Administrators with the `eateverything.saturation` permission can use this command to read or change how much saturation the held item restores.
+
+Without a value, the command displays the current saturation amount. With a decimal value, it updates the held item's food data directly.
+
+```bash
+/ee saturation [value]
+```
+
+This command is especially useful when fine-tuning whether an item should feel like a light snack or a stronger recovery consumable.
+
+---
+
+## Eat Seconds Command
+
+Administrators with the `eateverything.eatseconds` permission can use this command to read or change how long the item takes to consume.
+
+This edits the consumable timing directly, which makes it useful for fast-use combat items, slower roleplay consumables, or anything in between.
+
+```bash
+/ee eatseconds [value]
+```
+
+---
+
+## Edible Command
+
+Administrators with the `eateverything.edible` permission can use this command to control whether the held item can always be consumed, even when the player is not hungry.
+
+This is useful when you want an item to behave like a true utility consumable instead of a hunger-gated food item.
+
+```bash
+/ee edible [true|false]
+```
+
+---
+
+## Effect Command
+
+Administrators with the `eateverything.effect` permission can use this command to add status effects to the held item or clear existing status-effect consume entries from it.
+
+This is the command you use when a consumable should do more than restore hunger, such as granting regeneration, speed, or another potion-style effect after use.
+
+```bash
+/ee effect <clear|add> <effect> <duration> <amplifier> [probability]
+```
+
+In practice, this command is mostly used while prototyping special consumables before the final behavior is moved into `food-components.yml`.
+
+---
+
+## Info Command
+
+Administrators with the `eateverything.info` permission can use this command to inspect the held item's current food properties and consumable effects.
+
+This is one of the most important commands for debugging because it shows the final state of the item after multiple edits and also provides a clickable component-string-based `/give` command for copying the exact result.
+
+```bash
+/ee info
+```
+
+---
+
+## Item Command
+
+Administrators with the `eateverything.item` permission can use this command to generate a fresh item from a custom component ID defined in `food-components.yml`.
+
+This makes it the cleanest way to test a component after `/ee reload`, especially when you want to avoid reusing an older item that may already contain previously applied data.
+
+```bash
+/ee item <id> [amount]
+```
+
+---
+
+## Testing & Distribution
+
+Once a component is defined in YAML, these commands help you move from one-off experiments to clean test items and live configuration updates.
+
+---
+
+### Version Command
+
+Administrators with the `eateverything.version` permission can use this command to display environment diagnostics.
+
+The output includes plugin, server, Java, JVM, and operating-system information, which makes it useful when reporting bugs or comparing different test environments.
+
+```bash
+/ee version
+```
+
+---
+
+### Help Command
+
+Administrators with the `eateverything.help` permission can use the help command to display an organized overview of the Eat Everything command set.
+
+For players, the help output is interactive: commands can be hovered for descriptions and clicked to insert their usage text into chat. The optional `--general` flag also explains terminology such as nutrition, saturation, consume time, and effect probability.
+
+```bash
+/ee help
+/ee help --general
+```
+
+---
+
+## Help & Diagnostics
+
+Use this part of the command set when you want to confirm the plugin is running correctly, inspect the final component payload on an item, or collect environment details before troubleshooting.
+
+---
+
+### Reload Command
+
+Essential for server administrators with the `eateverything.reload` permission to apply changes made to Eat Everything's configuration files without requiring a full server restart.
+
+This command reloads the main config, messages, and custom food component definitions. In practice, it refreshes the in-memory rules used for **future** component matching and future item generation.
+
+```bash
+/ee reload
+```
+
+<Aside type="note">
+    Reload should not be treated as a guaranteed retroactive rewrite of items that were already updated earlier. After changing a component, the cleanest test is usually to generate a fresh item with `/ee item <id>`.
+</Aside>
+
+---
+
+## If You Want To Use All Commands
+
+<Aside type="tip">
+    If you want a staff member to have access to the full Eat Everything command set, grant the wildcard permission `eateverything.*`. This covers the editing workflow, diagnostics, reload tools, and tab completion support.
+</Aside>

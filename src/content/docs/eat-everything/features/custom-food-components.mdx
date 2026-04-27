@@ -1,0 +1,154 @@
+---
+title: Custom Food Components
+description: How Eat Everything matches items, applies reusable consumables, and handles advanced behaviors at runtime.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Custom food components are what turn Eat Everything from a simple admin utility into a reusable gameplay system.
+Instead of manually editing one item at a time, you can define a component once and let the plugin automatically attach the same edible behavior whenever a matching item appears.
+
+---
+
+## Why This System Exists
+
+Manual editing is perfect for testing, but it does not scale well when you want:
+
+* A reward command to hand out the same item every time
+* A loot table to produce a custom edible item consistently
+* A quest item to keep its special behavior after restarts
+* A permission-locked or command-triggered consumable
+
+Custom food components solve that by moving the final behavior into a named, reusable server-side definition.
+
+---
+
+## End-To-End Flow
+
+<Steps>
+    1. Define a component ID in `food-components.yml`.
+    2. Choose the material and optional identity conditions.
+    3. Configure food stats, consume behavior, effects, conversion item, and commands.
+    4. Reload the plugin (/ee reload).
+    5. Let the plugin automatically apply the component whenever a matching item appears.
+    6. Consume the item and let the post-consume logic run.
+</Steps>
+
+---
+
+## Where Components Are Applied
+
+Eat Everything actively watches common item interaction paths so that matching items are updated without needing manual intervention.
+
+The plugin applies components during:
+
+* `PlayerInteractEvent`
+* `InventoryClickEvent`
+* `EntityPickupItemEvent`
+* `ItemSpawnEvent`
+
+This gives you broad coverage for adventure maps, minigames, RPG loot, and admin-distributed items.
+
+It also means a custom component can be applied without a command ever touching the item, as long as the item passes through one of those observed event paths.
+
+---
+
+## Update Marker
+
+After a component is applied, the plugin stores an internal persistent data flag on the item to avoid repeating the same update logic unnecessarily.
+
+This keeps repeated interaction checks cheap while still letting newly created or newly discovered items be upgraded the first time they are seen.
+
+The tradeoff is that reloads are not a magic retroactive rewrite tool for already-tagged items.
+
+<Aside type="caution">
+    If you rebalance a component and run `/ee reload`, create or distribute **fresh items** for testing. Previously updated items may continue carrying the data that was written before the reload.
+</Aside>
+
+---
+
+## Advanced Consume Behaviors
+
+Custom components support more than just hunger restoration.
+
+Possible behaviors include:
+
+* Instant or slow consume times
+* Always-edible items
+* Potion effects with probability
+* Random teleport effect
+* Clearing all current status effects
+* Converting the item into another item after consumption
+* Triggering commands that depend on the consumed item values
+
+This makes the system suitable for magical potions, cursed food, lootbox-style consumables, class items, and event rewards.
+
+Because these behaviors live in the component definition instead of scattered external commands, they stay easier to audit and maintain.
+
+---
+
+## Component IDs and Distribution
+
+Every configured component ID becomes available to `/ee item <id> [amount]`.
+
+That means administrators can:
+
+* Test components quickly
+* Hand out event items manually
+* Create command-based reward flows with external plugins
+
+IDs are normalized to lowercase internally, so it is best to treat them as lowercase in your configs and admin procedures.
+
+The item returned by `/ee item` is created directly from the stored component definition, which is why it is the best test method after a reload.
+
+---
+
+## Common Design Patterns
+
+---
+
+### Cosmetic Match on a Vanilla Material
+
+Use a normal material such as `STICK`, then require a custom name and lore so only your custom version becomes edible.
+
+### Leftover Container
+
+Use `converts-to` to simulate wrappers, bowls, bottles, or empty canisters.
+
+### Permission-Locked Premium Food
+
+Set `components.permission` to restrict who can actually consume the item.
+
+### Scripted Reward Item
+
+Use `commands` to run console or player commands after consumption and feed placeholder values into your wider server logic.
+
+### Broad Prototype, Then Narrow Production Rule
+
+Start with a broad material-only rule while balancing the food values, then later lock the component behind precise name and lore checks once the item design is finalized.
+
+---
+
+## Troubleshooting Failed Matches
+
+If a custom component item does not behave as expected, check these in order:
+
+1. The configured `item` material matches the real item exactly.
+2. The display name is formatted exactly the same.
+3. Lore lines are identical and in the same order.
+4. The amount condition is not too strict.
+5. Required enchantments are actually present.
+6. The item has been seen through one of the plugin's application hooks.
+7. You are not reusing an already-updated item after changing the config.
+
+<Aside type="caution">
+    A matching component can still fail at consume time if `components.permission` is set and the player does not have that permission.
+</Aside>
+
+---
+
+## When To Use Components vs Commands
+
+Use **live commands** when you are experimenting with values on a single test item.
+
+Use **custom food components** when you need the behavior to be named, repeatable, distributable, and stable across future restarts.
