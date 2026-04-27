@@ -28,3 +28,5 @@ pnpm-debug.log*
 tmp/
 coverage/
 out/
+# VS Code settings
+.vscode/
