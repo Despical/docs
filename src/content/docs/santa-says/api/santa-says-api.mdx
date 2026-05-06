@@ -5,13 +5,13 @@ description: Learn how to integrate with Santa Says and use its custom event sys
 
 import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-The Santa Says API allows developers to hook into game lifecycles, track player statistics, and modify task behavior. All custom events in the plugin inherit from the base `SantaSaysEvent` class.
+The **Santa Says** API allows developers to hook into game lifecycles, track player statistics, and modify task behavior. All custom events in the plugin inherit from the base `SantaSaysEvent` class.
 
 ---
 
 ## Dependency Setup
 
-To start using the API, you need to add the Santa Says JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `santa-says-x.x.x.jar` file inside it.
+To start using the API, you need to add the **Santa Says** JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `santa-says-x.x.x.jar` file inside it.
 
 <Tabs>
     <TabItem label="Gradle (Groovy)">
@@ -59,7 +59,7 @@ depend: [SantaSays]
 
 ## Base Event Class
 
-Every event provided by the Santa Says API extends the `SantaSaysEvent` class. This ensures a consistent implementation of Bukkit's `HandlerList` and makes it easier to manage custom listeners.
+Every event provided by the **Santa Says** API extends the `SantaSaysEvent` class. This ensures a consistent implementation of Bukkit's `HandlerList` and makes it easier to manage custom listeners.
 
 ```java
 public abstract class SantaSaysEvent extends Event {

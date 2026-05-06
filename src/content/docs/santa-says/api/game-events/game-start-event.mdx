@@ -5,7 +5,7 @@ description: Documentation for the event fired when a game session has initializ
 
 import { Aside } from '@astrojs/starlight/components';
 
-The `GameStartEvent` is triggered when a Santa Says game has finished all its internal setup and is about to begin. At this point, players have been teleported, their scores have been reset, and the tasks have been prepared.
+The `GameStartEvent` is triggered when a **Santa Says** game has finished all its internal setup and is about to begin. At this point, players have been teleported, their scores have been reset, and the tasks have been prepared.
 
 <Aside type="note">
     The actual game loop (timers, task logic, and round processing) becomes active on the **next server tick** after this event is fired.

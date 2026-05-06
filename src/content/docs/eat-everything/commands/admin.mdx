@@ -5,7 +5,7 @@ description: Administrative commands used to edit items, inspect consumable data
 
 import { Aside } from '@astrojs/starlight/components';
 
-Admin Commands are designed for **server administrators and staff members** who want to prototype edible items, inspect Paper food data, distribute configured consumables, and manage Eat Everything without restarting the server.
+Admin Commands are designed for **server administrators and staff members** who want to prototype edible items, inspect Paper food data, distribute configured consumables, and manage **Eat Everything** without restarting the server.
 
 All commands can be used through `/eateverything` or its alias `/ee`. Unless otherwise stated, the editing commands are intended for in-game use because they operate on the item held in the sender's main hand.
 
@@ -13,7 +13,7 @@ All commands can be used through `/eateverything` or its alias `/ee`. Unless oth
 
 ## Main Command
 
-Displays basic plugin information and confirms that Eat Everything is loaded correctly.
+Displays basic plugin information and confirms that **Eat Everything** is loaded correctly.
 
 Administrators with the `eateverything.main` permission can use this command as a quick health check after installation or reload.
 
@@ -135,7 +135,7 @@ The output includes plugin, server, Java, JVM, and operating-system information,
 
 ### Help Command
 
-Administrators with the `eateverything.help` permission can use the help command to display an organized overview of the Eat Everything command set.
+Administrators with the `eateverything.help` permission can use the help command to display an organized overview of the **Eat Everything** command set.
 
 For players, the help output is interactive: commands can be hovered for descriptions and clicked to insert their usage text into chat. The optional `--general` flag also explains terminology such as nutrition, saturation, consume time, and effect probability.
 
@@ -154,7 +154,7 @@ Use this part of the command set when you want to confirm the plugin is running 
 
 ### Reload Command
 
-Essential for server administrators with the `eateverything.reload` permission to apply changes made to Eat Everything's configuration files without requiring a full server restart.
+Essential for server administrators with the `eateverything.reload` permission to apply changes made to **Eat Everything**'s configuration files without requiring a full server restart.
 
 This command reloads the main config, messages, and custom food component definitions. In practice, it refreshes the in-memory rules used for **future** component matching and future item generation.
 
@@ -171,5 +171,5 @@ This command reloads the main config, messages, and custom food component defini
 ## If You Want To Use All Commands
 
 <Aside type="tip">
-    If you want a staff member to have access to the full Eat Everything command set, grant the wildcard permission `eateverything.*`. This covers the editing workflow, diagnostics, reload tools, and tab completion support.
+    If you want a staff member to have access to the full **Eat Everything** command set, grant the wildcard permission `eateverything.*`. This covers the editing workflow, diagnostics, reload tools, and tab completion support.
 </Aside>

@@ -5,13 +5,13 @@ description: Learn how to integrate with Easter Eggs and use its custom event sy
 
 import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-The Easter Eggs API allows developers to hook into the plugin's lifecycles, track player statistics, and modify egg behaviors. All custom events in the plugin inherit from the base `EasterEggsEvent` class.
+The **Easter Eggs** API allows developers to hook into the plugin's lifecycles, track player statistics, and modify egg behaviors. All custom events in the plugin inherit from the base `EasterEggsEvent` class.
 
 ---
 
 ## Dependency Setup
 
-To start using the API, you need to add the Easter Eggs JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `easter-eggs-x.x.x.jar` file inside it.
+To start using the API, you need to add the **Easter Eggs** JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `easter-eggs-x.x.x.jar` file inside it.
 
 <Tabs>
     <TabItem label="Gradle (Groovy)">
@@ -59,7 +59,7 @@ depend: [EasterEggs]
 
 ## Base Event Class
 
-Every event provided by the Easter Eggs API extends the `EasterEggsEvent` class. This ensures consistent access to the user data across all interactions.
+Every event provided by the **Easter Eggs** API extends the `EasterEggsEvent` class. This ensures consistent access to the user data across all interactions.
 
 ```java
 public abstract class EasterEggsEvent extends Event {
