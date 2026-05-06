@@ -1,0 +1,57 @@
+---
+title: Rewards & Commands
+description: Use command execution hooks to automate rewards and event logic in Warden Party.
+---
+
+**Warden Party** can run console commands at different points during an encounter. This system is flexible enough for loot rewards, economy payouts, broadcasts, quest progress, or chained event logic.
+
+---
+
+## Available Trigger Groups
+
+The `commands` section in `config.yml` supports these trigger groups:
+
+* `spawn`
+* `hit`
+* `die`
+* `vulnerable-again`
+* `phantom-got-killed`
+* `top-players.most-damage`
+* `top-players.most-hits`
+
+---
+
+## Chance-Based Entries
+
+Each trigger can define numbered entries, and each entry can contain:
+
+* `chance`
+* `commands`
+
+This allows weighted reward behavior without writing your own event handlers.
+
+---
+
+## Placeholder Context
+
+Depending on the trigger, you can use placeholders such as:
+
+* `%player%`
+* `%health%`
+* `%total_health%`
+* `%damage%`
+* `%hits%`
+
+Make sure you only use placeholders that make sense for the event you are configuring.
+
+---
+
+## Common Use Cases
+
+Examples of what this system can handle:
+
+* Give all participants a reward when the boss dies
+* Reward the top damage player more heavily than everyone else
+* Trigger broadcasts or titles when the boss becomes vulnerable again
+* Grant small loot drops on successful hits
+* Chain the encounter into another plugin or script system

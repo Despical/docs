@@ -1,0 +1,43 @@
+---
+title: Phantom Phase
+description: Configure the Warden's summoned Phantom phase and temporary immortality behavior.
+---
+
+The Phantom phase is the main mechanic that turns **Warden Party** from a simple boss summon plugin into a multi-step encounter system.
+
+---
+
+## When Phantoms Spawn
+
+Phantoms are controlled under `wardens.<id>.phantom`.
+
+The key trigger is `health-left`, which determines when the phase begins. Once the boss reaches that threshold, the configured number of Phantoms is spawned around it.
+
+---
+
+## Temporary Immortality
+
+The nested `be-immortal-until-phantoms-killed` section can make the boss invulnerable until all summoned Phantoms die.
+
+This is useful when you want the fight to force target switching instead of allowing players to ignore the support mobs.
+
+---
+
+## Permission and Feedback
+
+The phase can use separate rules from the main boss:
+
+* Optional Phantom hit permission
+* Separate hit sound
+* Separate death sound
+* Dedicated warning message when the Warden is still protected
+
+This lets you build a more structured public event where players clearly understand why damage is not going through.
+
+---
+
+## Cleanup Behavior
+
+If `remove-on-warden-death` is enabled, Phantoms are removed automatically when the boss dies.
+
+If disabled, you should test carefully to make sure the post-fight experience still matches what you want on a live server.

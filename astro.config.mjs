@@ -677,6 +677,87 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "Warden Party",
+                        link: "/warden-party/",
+                        icon: "warden-party",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        link: "/warden-party/getting-started",
+                                    },
+                                    {
+                                        label: "Gameplay Overview",
+                                        link: "/warden-party/gameplay",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Admin Commands",
+                                        link: "/warden-party/commands/admin",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {
+                                        label: "config.yml",
+                                        link: "/warden-party/configuration/config",
+                                    },
+                                    {
+                                        label: "messages.yml",
+                                        link: "/warden-party/configuration/messages",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {
+                                        label: "Schedulers",
+                                        link: "/warden-party/features/schedulers",
+                                    },
+                                    {
+                                        label: "Natural Spawning",
+                                        link: "/warden-party/features/natural-spawning",
+                                    },
+                                    {
+                                        label: "Phantom Phase",
+                                        link: "/warden-party/features/phantom-phase",
+                                    },
+                                    {
+                                        label: "Rewards & Commands",
+                                        link: "/warden-party/features/rewards-and-commands",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {
+                                        label: "General Placeholders",
+                                        link: "/warden-party/placeholders/general",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "FAQ",
+                                        link: "/warden-party/misc/faq",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Eat Everything",
                         link: "/eat-everything/",
                         icon: "eat-everything",

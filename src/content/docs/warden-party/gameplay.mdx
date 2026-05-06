@@ -1,0 +1,58 @@
+---
+title: Gameplay Overview
+description: Learn how a Warden Party boss encounter flows from spawn to rewards.
+---
+
+**Warden Party** is built around **custom Warden boss encounters** rather than ordinary mob combat. Each configured boss entry can change health logic, movement rules, damage restrictions, Phantom behavior, sounds, and reward execution.
+
+---
+
+## Boss Lifecycle
+
+A **Warden Party** encounter usually follows this flow:
+
+1. A Warden is spawned manually, through a scheduler, or by replacing a naturally spawned Warden.
+2. Players damage the boss under the rules defined for that specific Warden ID.
+3. Damage and hit counts are tracked per player while optional reward commands can run during the fight.
+4. If the configured threshold is reached, the boss can spawn supporting Phantoms.
+5. Once the boss dies, death rewards and top-player rewards are executed.
+
+---
+
+## Damage Rules
+
+Each Warden can define how it should be damaged:
+
+* **Hit-based or damage-based health** controls whether the boss dies after a number of hits or after a total damage value.
+* **Material whitelist** can restrict the boss to specific allowed items only.
+* **Material blacklist** can block certain items even if everything else is allowed.
+* **Per-Warden cooldowns** can force players to wait before landing another counted hit.
+* **Permission checks** can require a node before players are allowed to damage the boss or its Phantoms.
+
+---
+
+## Phantom Phase
+
+**Warden Party** can spawn Phantoms as a mid-fight phase. This is one of the plugin's defining mechanics.
+
+Depending on your configuration:
+
+* Phantoms can appear once the Warden reaches a specified amount of health left.
+* The Warden can become temporarily immortal until all spawned Phantoms are killed.
+* Killing the last Phantom can broadcast a message and trigger commands.
+* Phantom hits and deaths can have separate sounds and permissions from the main boss.
+
+---
+
+## Rewards and Rankings
+
+Commands can be executed at multiple points in the fight:
+
+* When the boss spawns
+* Whenever a player hits the boss
+* When the boss dies
+* When the boss becomes vulnerable again
+* When a Phantom is killed
+* For top players by damage or by hit count
+
+This makes **Warden Party** useful for public boss events, survival progression, seasonal events, or scheduled server-wide challenges.

@@ -1,0 +1,133 @@
+---
+title: config.yml
+description: Reference for the main Warden Party configuration file.
+---
+
+The `config.yml` file controls nearly all of **Warden Party**'s gameplay, timing, and automation. Most server owners will spend the majority of their setup time here.
+
+---
+
+## Warden Profiles
+
+The `wardens` section defines one or more boss profiles by ID.
+
+Each profile can control:
+
+* Display name and hologram text
+* Name and hologram offsets
+* Health mode and total health value
+* Warden scale and glow color
+* Hit and death sounds
+* Movement, AI, speed, and attack damage
+* Chance to retarget the attacking player
+* Material whitelist and blacklist
+* Firework behavior on death
+* Knockback and potion-effect cleanup
+
+The default entry is a template. Add your own IDs alongside it when you want multiple Warden variants.
+
+---
+
+## Health Settings
+
+Each Warden profile uses the `health` section to define how the boss should die:
+
+* **`value`**: Total health amount.
+* **`hits-left`**: If `true`, the boss dies after a fixed number of successful hits. If `false`, the plugin treats `value` as real damage instead.
+
+This gives you two distinct encounter styles: simple event hits or more traditional damage-based boss fights.
+
+---
+
+## Hit Rules
+
+The `hit-settings` section controls who can hit the boss and how often:
+
+* **`permission`**: Optional permission required to damage this Warden.
+* **`cooldown`**: Delay before the same player can land another valid hit.
+* **`have-cooldown`**: The cooldown message.
+
+Material restrictions live one level above this section:
+
+* **`material-whitelist`**: Allow only listed items.
+* **`material-blacklist`**: Block listed items.
+
+---
+
+## Radius and Position Control
+
+The `radius` section defines how far the Warden can drift away from its spawn point.
+
+* **`value`**: Maximum allowed distance before correction starts.
+* **`speed`**: Pull strength back toward the spawn point.
+* **`interval`**: How often the radius check runs.
+* **`async`**: Whether the radius task should run asynchronously.
+
+If you want a stationary or tightly controlled world boss, this section matters.
+
+---
+
+## Phantom Settings
+
+The `phantom` section controls the fight's support phase:
+
+* **`enabled`**: Turns Phantom spawning on or off.
+* **`amount`**: Number of Phantoms to summon.
+* **`health-left`**: Threshold that triggers the phase.
+* **`scale`**: Size adjustment for spawned Phantoms on supported versions.
+* **`remove-on-warden-death`**: Whether spawned Phantoms are removed when the Warden dies.
+* **`hit-permission`**: Optional permission required to damage those Phantoms.
+* **`hit-sound` / `death-sound`**: Audio feedback for the phase.
+
+The nested `be-immortal-until-phantoms-killed` section lets the boss become invulnerable until all summoned Phantoms die.
+
+---
+
+## Scheduler Entries
+
+The `schedulers` section automates boss spawns.
+
+Each scheduler entry can use one of these timing systems:
+
+* **`date`**: One exact timestamp in `dd/MM/yyyy HH:mm:ss` format.
+* **`weekly`**: Weekly schedule in `day:hour:minute:second` format.
+* **`daily`**: Daily schedule in `hour:minute:second` format.
+* **`hourly`**: Hourly schedule in `minute:second` format.
+* **`run-after` + `interval` + `loop`**: Tick-based delayed or repeating spawns.
+
+Each scheduler also needs:
+
+* **`id`**: The Warden profile ID to spawn.
+* **`uuid`**: Optional fixed UUID for recurring spawns.
+* **`location`**: Spawn position in `world, x, y, z, yaw, pitch` format.
+
+---
+
+## Naturally Spawning Wardens
+
+The `naturally-spawning-wardens` section lets the plugin intercept naturally spawned Wardens and replace them with configured boss profiles.
+
+Important options:
+
+* **`list`**: Weighted profile definitions such as `default:20`.
+* **`only-one`**: If enabled, only one lucky entry wins when multiple profiles match.
+* **`remove-default-one`**: Cancels the original vanilla Warden after replacement.
+* **`disable-creature-spawn`**: Stops other natural creature spawning entirely.
+
+---
+
+## Reward Commands
+
+The top-level `commands` section is where **Warden Party** becomes event-driven.
+
+You can execute commands on:
+
+* `spawn`
+* `hit`
+* `die`
+* `vulnerable-again`
+* `phantom-got-killed`
+* `top-players.most-damage`
+* `top-players.most-hits`
+
+Each entry can define a `chance` value and a list of commands. Supported placeholders include `%player%`, `%health%`, `%total_health%`, `%damage%`, and `%hits%` depending on the context.

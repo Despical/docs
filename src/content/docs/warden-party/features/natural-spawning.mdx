@@ -1,0 +1,49 @@
+---
+title: Natural Spawning
+description: Replace naturally spawned Wardens with configured Warden Party boss profiles.
+---
+
+**Warden Party** can intercept naturally spawned Wardens and replace them with one of your configured boss profiles. This makes the plugin useful even outside scheduled events.
+
+---
+
+## Weighted Profile List
+
+The `naturally-spawning-wardens.list` section accepts entries in the form:
+
+```text
+profile-id:chance
+```
+
+Example:
+
+```text
+default:20
+ancient:5
+```
+
+This means the `default` boss has a 20% chance to replace a naturally spawned Warden, while `ancient` has a 5% chance.
+
+---
+
+## only-one
+
+If `only-one` is enabled, the plugin will pick just one qualifying boss entry even if multiple entries pass their chance checks.
+
+If disabled, multiple lucky entries can all succeed, which can create more than one boss replacement behavior during the same spawn event.
+
+---
+
+## remove-default-one
+
+If `remove-default-one` is enabled, the vanilla Warden is cancelled or removed so only your configured boss remains.
+
+This is the setting most servers will want when using natural replacement mode.
+
+---
+
+## disable-creature-spawn
+
+This option is powerful and should be used carefully.
+
+If enabled, the plugin cancels other natural creature spawns entirely during the event check. Only use it if you intentionally want to reshape natural mob spawning in that world or environment.

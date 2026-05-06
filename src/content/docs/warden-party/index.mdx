@@ -1,0 +1,113 @@
+---
+title: Warden Party Documentation
+description: The official documentation for Warden Party, the configurable Warden boss plugin for scheduled events, natural spawns, and multi-phase fights.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## Warden Party
+
+**Warden Party** is a configurable Minecraft boss plugin built around custom Warden encounters, scheduled spawns, natural Warden replacement, reward commands, and a Phantom-based vulnerability phase.
+
+It is designed for servers that want a repeatable world boss experience without hard-coding each event by hand. You define boss variants, configure when and where they appear, control how players can damage them, and automate rewards for participation and top performers.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="Install the plugin, understand the generated files, and summon your first Warden boss."
+        href="/warden-party/getting-started"
+    />
+
+    <LinkCard
+        title="Gameplay Overview"
+        description="Understand the boss flow, hit rules, Phantom phase, vulnerability logic, and reward handling."
+        href="/warden-party/gameplay"
+    />
+</CardGrid>
+
+## Commands
+
+**Warden Party** includes a compact command set for managing Warden bosses, plugin behavior, and live event control.
+
+<CardGrid>
+    <LinkCard
+        title="Admin Commands"
+        description="Administrative commands for managing active bosses, plugin behavior, and settings."
+        href="/warden-party/commands/admin"
+    />
+</CardGrid>
+
+## Configuration Files
+
+**Warden Party** exposes its core systems through a focused set of configuration files for combat behavior, automation, and messaging.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Boss definitions, scheduler entries, natural spawn settings, reward commands, and combat rules."
+        href="/warden-party/configuration/config"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="Customize command feedback, cooldown warnings, placeholder fallbacks, and system messages."
+        href="/warden-party/configuration/messages"
+    />
+</CardGrid>
+
+## Features
+
+These guides cover the systems that make **Warden Party** more than a simple summon command.
+
+<CardGrid>
+    <LinkCard
+        title="Schedulers"
+        description="Set up one-time, daily, weekly, hourly, or repeating automatic Warden spawns."
+        href="/warden-party/features/schedulers"
+    />
+
+    <LinkCard
+        title="Natural Spawning"
+        description="Replace naturally spawned Wardens with configured boss variants using weighted chances."
+        href="/warden-party/features/natural-spawning"
+    />
+
+    <LinkCard
+        title="Phantom Phase"
+        description="Configure the Warden's summoned Phantom phase and its temporary immortality rules."
+        href="/warden-party/features/phantom-phase"
+    />
+
+    <LinkCard
+        title="Rewards & Commands"
+        description="Run server commands on spawn, hit, death, vulnerability changes, and top-player rankings."
+        href="/warden-party/features/rewards-and-commands"
+    />
+</CardGrid>
+
+## Placeholders
+
+**Warden Party** supports **PlaceholderAPI** for active boss data, scheduler countdowns, and live damage or hit rankings.
+
+<CardGrid>
+    <LinkCard
+        title="General Placeholders"
+        description="Reference for alive boss count, scheduler countdowns, boss stats, and ranking placeholders."
+        href="/warden-party/placeholders/general"
+    />
+</CardGrid>
+
+---
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard
+        title="FAQ"
+        description="Answers to frequently asked questions and troubleshooting common issues."
+        href="/warden-party/misc/faq"
+    />
+</CardGrid>

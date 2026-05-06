@@ -1,0 +1,58 @@
+---
+title: General Placeholders
+description: PlaceholderAPI reference for Warden Party.
+---
+
+**Warden Party** registers the `%wp_...%` PlaceholderAPI namespace when PlaceholderAPI is installed on the server.
+
+---
+
+## Global Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%wp_alive_amount%` | Returns the number of currently active Wardens. |
+
+---
+
+## Scheduler Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%wp_remaining_time:<schedulerId>%` | Returns the formatted remaining time for a scheduler entry. |
+
+If the scheduler time has already passed, the plugin returns the configured `already-spawned` text.
+
+---
+
+## Per-Warden Placeholders
+
+Replace `<uuid>` with an active boss UUID.
+
+| Placeholder | Description |
+|:--|:--|
+| `%wp_<uuid>:health%` | Current formatted health value. |
+| `%wp_<uuid>:max_health%` | Maximum health value. |
+| `%wp_<uuid>:created_entities_left%` | Number of remaining spawned support entities. |
+| `%wp_<uuid>:id%` | Configured Warden profile ID. |
+| `%wp_<uuid>:players_hit%` | Number of players who have hit the boss. |
+| `%wp_<uuid>:hit_status%` | Whether the viewing player has hit the boss. |
+| `%wp_<uuid>:hits%` | Number of counted hits by the viewing player. |
+| `%wp_<uuid>:damage%` | Total damage dealt by the viewing player. |
+| `%wp_<uuid>:total_damage%` | Combined damage dealt by all tracked players. |
+| `%wp_<uuid>:total_hits%` | Combined hit count dealt by all tracked players. |
+
+---
+
+## Ranking Placeholders
+
+**Warden Party** supports top-10 style ranking placeholders for both damage and hit counts.
+
+Examples:
+
+* `%wp_<uuid>:damages_name_1%`
+* `%wp_<uuid>:damages_value_1%`
+* `%wp_<uuid>:hits_name_1%`
+* `%wp_<uuid>:hits_value_1%`
+
+If there are not enough ranked players, the plugin uses the configured fallback text from `messages.yml`.
