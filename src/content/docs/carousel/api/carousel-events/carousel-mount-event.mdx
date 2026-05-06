@@ -5,7 +5,7 @@ description: Documentation for the event fired when a player attempts to mount a
 
 import { Aside } from '@astrojs/starlight/components';
 
-The `CarouselMountEvent` is triggered right before a player's attempt to mount a horse that is part of a Carousel is fully processed. This event is highly useful for intercepting the interaction to apply custom restrictions, charge in-game currency, or trigger external custom effects.
+The `CarouselMountEvent` is triggered right before a player's attempt to mount a horse that is part of a **Carousel** is fully processed. This event is highly useful for intercepting the interaction to apply custom restrictions, charge in-game currency, or trigger external custom effects.
 
 ---
 
@@ -14,7 +14,7 @@ The `CarouselMountEvent` is triggered right before a player's attempt to mount a
 - **Cancellable:** Yes
 
 <Aside type="note">
-    Even if this event is not cancelled by a third-party plugin, the mount action may still be prevented later in the execution if the player lacks the required permissions or if riding is disabled in the Carousel plugin settings. If cancelled here, no default mount sounds or messages will be sent.
+    Even if this event is not cancelled by a third-party plugin, the mount action may still be prevented later in the execution if the player lacks the required permissions or if riding is disabled in the **Carousel** plugin settings. If cancelled here, no default mount sounds or messages will be sent.
 </Aside>
 
 ---
@@ -25,7 +25,7 @@ Since this event extends `CarouselEvent`, you have access to `getCarousel()` in 
 
 | Method                  | Return Type | Description                                                            |
 |:------------------------|:------------|:-----------------------------------------------------------------------|
-| `getPlayer()`           | `Player`    | Gets the Bukkit Player who is attempting to mount the Carousel horse.  |
+| `getPlayer()`           | `Player`    | Gets the Bukkit Player who is attempting to mount the **Carousel** horse.  |
 | `isCancelled()`         | `boolean`   | Returns whether the mount attempt has been cancelled by a plugin.      |
 | `setCancelled(boolean)` | `void`      | Sets the cancellation state of this event.                             |
 

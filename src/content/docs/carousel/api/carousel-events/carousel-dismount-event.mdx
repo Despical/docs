@@ -5,7 +5,7 @@ description: Documentation for the event fired when a player dismounts a Carouse
 
 import { Aside } from '@astrojs/starlight/components';
 
-The `CarouselDismountEvent` is triggered right before a player's attempt to dismount a horse that is part of a Carousel is fully processed. This event is highly useful for intercepting the interaction to keep players on the ride, trigger post-ride effects, or manage custom gameplay mechanics.
+The `CarouselDismountEvent` is triggered right before a player's attempt to dismount a horse that is part of a **Carousel** is fully processed. This event is highly useful for intercepting the interaction to keep players on the ride, trigger post-ride effects, or manage custom gameplay mechanics.
 
 ---
 
@@ -14,7 +14,7 @@ The `CarouselDismountEvent` is triggered right before a player's attempt to dism
 - **Cancellable:** Yes
 
 <Aside type="note">
-    If this event is cancelled, the underlying dismount is prevented. This means the player will remain mounted on the Carousel horse, and no dismount sounds or default messages will be sent.
+    If this event is cancelled, the underlying dismount is prevented. This means the player will remain mounted on the **Carousel** horse, and no dismount sounds or default messages will be sent.
 </Aside>
 
 ---
@@ -25,7 +25,7 @@ Since this event extends `CarouselEvent`, you have access to `getCarousel()` in 
 
 | Method                  | Return Type | Description                                                               |
 |:------------------------|:------------|:--------------------------------------------------------------------------|
-| `getPlayer()`           | `Player`    | Gets the Bukkit Player who is attempting to dismount the Carousel horse.  |
+| `getPlayer()`           | `Player`    | Gets the Bukkit Player who is attempting to dismount the **Carousel** horse.  |
 | `isCancelled()`         | `boolean`   | Returns whether the dismount attempt has been cancelled by a plugin.      |
 | `setCancelled(boolean)` | `void`      | Sets the cancellation state of this event.                                |
 
