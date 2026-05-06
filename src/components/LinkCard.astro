@@ -6,7 +6,7 @@ interface Props {
     title: string;
     href: string;
     destructive?: boolean;
-    tone?: "green" | "blue" | "orange" | "red";
+    tone?: "green" | "blue" | "orange" | "red" | "amber" | "teal" | "copper";
 }
 
 const { icon, title, href, destructive, tone } = Astro.props;
@@ -63,21 +63,33 @@ const { icon, title, href, destructive, tone } = Astro.props;
         --sl-card-border: var(--sl-color-red);
         --sl-card-bg: var(--sl-color-red-low);
     }
-    .card-tone-green {
+    .card.card-tone-green {
         --sl-card-border: var(--sl-color-green);
         --sl-card-bg: var(--sl-color-green-low);
     }
-    .card-tone-blue {
+    .card.card-tone-blue {
         --sl-card-border: var(--sl-color-blue);
         --sl-card-bg: var(--sl-color-blue-low);
     }
-    .card-tone-orange {
+    .card.card-tone-orange {
         --sl-card-border: var(--sl-color-orange);
         --sl-card-bg: var(--sl-color-orange-low);
     }
-    .card-tone-red {
+    .card.card-tone-red {
         --sl-card-border: var(--sl-color-red);
         --sl-card-bg: var(--sl-color-red-low);
+    }
+    .card.card-tone-amber {
+        --sl-card-border: #EAB308;
+        --sl-card-bg: #332701;
+    }
+    .card.card-tone-teal {
+        --sl-card-border: #14B8A6;
+        --sl-card-bg: #102A2A;
+    }
+    .card.card-tone-copper {
+        --sl-card-border: #C1694F;
+        --sl-card-bg: #2F201B;
     }
     .title {
         font-weight: 600;
