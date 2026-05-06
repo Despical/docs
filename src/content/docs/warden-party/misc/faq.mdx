@@ -1,0 +1,80 @@
+---
+title: FAQ
+description: Common questions and troubleshooting notes for Warden Party.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about installation, versions, integrations, and technical behavior for **Warden Party**.
+
+---
+
+## What is the license for the Warden Party plugin?
+
+The **Warden Party** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+
+By using this plugin, you agree to the following mandatory **Terms of Service**:
+
+* All payments are final and non-refundable.
+* Redistribution, sharing, or resale of this plugin is strictly prohibited.
+* You are not permitted to modify, decompile, or reverse-engineer any part of the plugin's source code.
+* Support is provided exclusively to legitimate customers through official channels.
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run **Warden Party**.
+
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
+
+---
+
+## Which Minecraft versions are supported?
+
+**Warden Party** supports modern server versions built around the Warden feature set:
+
+* **Supported Versions:** Full and native support for **1.21 and all newer versions**.
+
+<Aside type="caution">
+    Use a current 1.21+ Paper build. Older 1.20.x servers are not compatible with the Warden-focused mechanics this plugin relies on.
+</Aside>
+
+---
+
+## Why does `/wp summon` not work?
+
+Check the world difficulty first. **Warden Party** does not allow boss spawning in peaceful worlds.
+
+---
+
+## Why is the boss not taking damage?
+
+Review these possibilities:
+
+* The item is not allowed by the material whitelist.
+* The item is blocked by the blacklist.
+* The player lacks the required hit permission.
+* The player is still on cooldown.
+* The boss is currently immortal because the Phantom phase is active.
+
+---
+
+## Why are placeholders not working?
+
+Make sure PlaceholderAPI is installed and loaded before **Warden Party** finishes startup.
+
+Also confirm that the UUID or scheduler ID used in the placeholder actually exists.
+
+---
+
+## Why is a scheduler not spawning anything?
+
+Double-check:
+
+* Date or time format
+* World name inside the location string
+* Warden profile ID
+* Whether the scheduled time is already in the past

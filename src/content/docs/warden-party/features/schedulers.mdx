@@ -1,0 +1,65 @@
+---
+title: Schedulers
+description: Automatically spawn Warden Party bosses on fixed dates or recurring schedules.
+---
+
+Schedulers are one of **Warden Party**'s most important systems. They let you turn a boss profile into a recurring event without relying on manual staff commands.
+
+---
+
+## Supported Schedule Types
+
+Each scheduler entry supports one primary timing mode, checked in this order:
+
+1. `date`
+2. `weekly`
+3. `daily`
+4. `hourly`
+5. tick-based `run-after` and `interval`
+
+This means a defined `date` overrides the other time fields for that scheduler entry.
+
+---
+
+## Recommended Usage
+
+Use schedulers when you want:
+
+* A boss to appear every day at a set hour
+* A weekly public event
+* A single future world-boss announcement time
+* A repeated local test spawn during development
+
+---
+
+## Fixed UUIDs
+
+Each scheduler can use a fixed `uuid` instead of generating a random one. This is useful when:
+
+* You want placeholders to target a predictable UUID
+* You want a recurring event to always reuse the same boss identity
+* You want the plugin to kill an older active instance before the next scheduled respawn
+
+---
+
+## Location Format
+
+Scheduler locations use this format:
+
+```text
+world, x, y, z, yaw, pitch
+```
+
+Make sure the target chunk is valid and the world name is correct before enabling the entry on a live server.
+
+---
+
+## Placeholder Support
+
+If PlaceholderAPI is installed, you can display scheduler countdowns with placeholders such as:
+
+```text
+%wp_remaining_time:boss_event%
+```
+
+When the time has passed, the placeholder returns the configured `already-spawned` message instead.

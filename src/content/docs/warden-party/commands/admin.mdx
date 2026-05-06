@@ -1,0 +1,141 @@
+---
+title: Admin Commands
+description: Administrative commands and permissions for Warden Party.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Admin Commands are designed for server administrators and staff members to manage **Warden Party** bosses and plugin behavior.
+
+All commands can be used through `/wardenparty` or `/wp`. Commands marked as player-only can not be executed from the console.
+
+---
+
+## Main Command
+
+Displays basic plugin information and provides access to the help menu.
+
+When executed without arguments, the command shows the current **Warden Party** version and author. If the sender has administrative permissions, it also points to the help command.
+
+```bash
+/wp
+```
+
+---
+
+## Help Command
+
+Administrators with the `wardenparty.help` permission can display a comprehensive list of available commands and their usage instructions.
+
+```bash
+/wp help
+```
+
+---
+
+## Version Command
+
+Administrators with the `wardenparty.version` permission can display detailed information about the plugin and server environment.
+
+This command is useful when checking version mismatches, confirming the active server platform, or gathering environment details before troubleshooting.
+
+```bash
+/wp version
+```
+
+---
+
+## Summon Command
+
+Administrators with the `wardenparty.summon` permission can summon a Warden directly at their current location.
+
+This command is mainly intended for quick manual testing or for spawning a configured boss without setting up coordinates first.
+
+```bash
+/wp summon [id] [uuid]
+```
+
+If no ID is provided, **Warden Party** falls back to the default boss profile.
+
+---
+
+## Spawn Command
+
+Administrators with the `wardenparty.spawn` permission can spawn a new Warden at a target player's location or at explicit world coordinates.
+
+This is the most flexible manual spawn command when you need full control over the boss ID, UUID, and spawn position.
+
+```bash
+/wp spawn <id> <uuid> <player>
+/wp spawn <id> <uuid> <world> <x> <y> <z>
+```
+
+---
+
+## Reload Command
+
+Administrators with the `wardenparty.reload` permission can reload the plugin configuration files without restarting the server.
+
+This command is useful after changing boss settings, messages, or scheduler definitions during setup and testing.
+
+```bash
+/wp reload
+/wp reload --killWardens
+```
+
+Using `--killWardens` also removes active bosses before reloading the Warden definitions again.
+
+---
+
+## Kill Command
+
+Administrators with the `wardenparty.kill` permission can kill the Warden with the specified UUID.
+
+Use this command when you want to remove one active boss without clearing every spawned Warden on the server.
+
+```bash
+/wp kill <uuid>
+```
+
+---
+
+## Killall Command
+
+Administrators with the `wardenparty.killall` permission can kill all summoned Wardens and Phantoms, or limit the action to a specific Warden ID.
+
+This command is useful for resetting an event quickly or cleaning up multiple active bosses after testing.
+
+```bash
+/wp killall [id]
+```
+
+---
+
+## Teleport Command
+
+Administrators with the `wardenparty.teleport` permission can teleport themselves to the Warden with the specified UUID.
+
+This command helps staff quickly locate an active boss without needing to track its world position manually.
+
+```bash
+/wp teleport <uuid>
+```
+
+---
+
+## Tphere Command
+
+Administrators with the `wardenparty.tphere` permission can teleport the Warden with the specified UUID to themselves or to a target player.
+
+This command is especially useful for repositioning an active boss during testing, event setup, or recovery after a bad spawn.
+
+```bash
+/wp tphere <uuid>
+/wp tphere --player=<name>
+```
+
+---
+
+<Aside type="tip">
+	For server administrators, granting the wildcard permission `wardenparty.*` will provide access to every command listed on this page.
+</Aside>

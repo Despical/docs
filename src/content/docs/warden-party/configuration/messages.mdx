@@ -1,0 +1,65 @@
+---
+title: messages.yml
+description: Customize Warden Party messages and placeholder fallback text.
+---
+
+The `messages.yml` file contains the text shown to players and administrators during command usage, damage handling, and placeholder formatting.
+
+---
+
+## Command and System Messages
+
+The main `messages` section covers operational feedback such as:
+
+* No-permission warnings
+* Correct usage messages
+* Invalid Warden ID or UUID errors
+* Missing player or world messages
+* Reload confirmation
+* Kill confirmations
+* Cooldown warnings
+
+These are the messages you will usually localize first if your server uses a language other than English.
+
+---
+
+## Combat Feedback
+
+Several messages are directly tied to boss interactions:
+
+* `you-cant-hit-with-that`
+* `cant-hit-with-a-blacklisted-item`
+* `no-perm-to-hit-warden`
+* `no-perm-to-hit-phantom`
+* `hit-cooldown`
+
+Some Warden profiles can also override the cooldown message in `config.yml` under `hit-settings.have-cooldown`.
+
+---
+
+## Placeholder Text
+
+The `placeholders` section controls fallback and formatting values used by PlaceholderAPI integration.
+
+Important entries include:
+
+* `null-name`
+* `null-value`
+* `hit`
+* `not-hit`
+* `remaining-time`
+* `already-spawned`
+
+The `remaining-time` value is especially useful if you want scheduler placeholders to match your server's formatting style.
+
+---
+
+## Formatting Notes
+
+**Warden Party** messages use color code formatting and can be customized freely. Keep placeholders intact when editing them so the plugin can still inject live values correctly.
+
+Examples:
+
+* `%usage%`
+* `{0}` for formatted cooldown values
+* `%hour%`, `%minute%`, `%second%` in scheduler time strings

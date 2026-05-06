@@ -1,0 +1,67 @@
+---
+title: Getting Started
+description: Install Warden Party, generate its files, and prepare your first boss encounter.
+---
+
+import { Aside, Badge, Steps } from '@astrojs/starlight/components';
+
+Welcome to **Warden Party**. This plugin lets you run configurable Warden boss encounters with custom health logic, scheduled spawns, reward commands, Phantom support, and [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) integration.
+
+---
+
+## Prerequisites
+
+Before installing **Warden Party**, make sure your server meets these requirements:
+
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Server Software:** [**Paper**](https://papermc.io/) or a Paper-compatible fork is required.
+* **Minecraft Version:** 1.21+ is recommended.
+* [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) <Badge text="Optional" variant="tip" /> : Required only if you plan to use the built-in placeholders.
+* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin such as [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) helps manage admin access cleanly.
+
+---
+
+## Installation
+
+Setting up **Warden Party** is straightforward. Follow these steps to get started:
+
+<Steps>
+    1. Download the latest **Warden Party** build from your distribution page.
+    2. Place the `warden-party-x.x.x.jar` file into your server's `plugins/` directory.
+    3. Restart the server to generate the default configuration files.
+    4. Join the server and run `/wp` to verify that the plugin loaded correctly.
+</Steps>
+
+---
+
+## First-Run Configuration
+
+On first startup, the plugin generates a dedicated folder containing two main files:
+
+* `config.yml`: Boss definitions, schedulers, natural spawn rules, reward commands, and combat settings.
+* `messages.yml`: Command feedback, permission warnings, cooldown messages, and placeholder fallback text.
+
+---
+
+## First Test Flow
+
+For a clean first test, use this order:
+
+* Leave the default Warden definition in place.
+* Join a non-peaceful world.
+* Run `/wp summon` to spawn the default Warden at your location.
+* Hit the boss a few times to confirm cooldowns, sounds, and health tracking behave as expected.
+* If Phantom mode is enabled, continue until the configured threshold is reached and verify the fight phase changes correctly.
+
+<Aside type="caution">
+    **Warden Party** will not spawn a boss in worlds running on `peaceful` difficulty.
+</Aside>
+
+---
+
+## Next Steps
+
+* **[Gameplay Overview](/warden-party/gameplay)**: Understand how boss fights, vulnerability, and damage tracking work.
+* **[Admin Commands](/warden-party/commands/admin)**: Review the full command and permission surface.
+* **[config.yml](/warden-party/configuration/config)**: Start customizing boss variants, spawn logic, and reward commands.
+* **[Schedulers](/warden-party/features/schedulers)**: Automate recurring Warden events.
