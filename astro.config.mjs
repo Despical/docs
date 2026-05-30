@@ -1,6 +1,7 @@
 // @ts-check
 import {defineConfig} from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
 import starlightSidebarTopics from "starlight-sidebar-topics";
 import starlightImageZoom from 'starlight-image-zoom'
 
@@ -14,8 +15,10 @@ export default defineConfig({
         inlineStylesheets: "always",
     },
     integrations: [
+        sitemap(),
         starlight({
-            title: 'Plugin Docs',
+            title: 'Despical Docs',
+            description: "Official documentation for Despical's Minecraft plugins — Santa Says, Easter Eggs, Carousel, Advanced Parkour, Warden Party, Eat Everything, and Command Framework.",
             social: [
                 {icon: 'github', label: 'home:GitHub', href: 'https://github.com/Despical'},
                 {
@@ -900,6 +903,14 @@ export default defineConfig({
                 ])
             ],
             head: [
+                {
+                    tag: 'meta',
+                    attrs: { name: 'twitter:card', content: 'summary' },
+                },
+                {
+                    tag: 'meta',
+                    attrs: { property: 'og:type', content: 'website' },
+                },
                 {
                     tag: 'script',
                     attrs: {
