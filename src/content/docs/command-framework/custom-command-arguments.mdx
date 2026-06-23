@@ -1,0 +1,176 @@
+---
+title: Custom Command Arguments
+description: Learn how to replace the default CommandArguments class with your own argument wrapper.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+`CommandArguments` is the object passed to command and completer methods. By default, the framework creates the built-in class for every execution, but you can now provide your own subclass and make every command receive richer helper methods.
+
+This is useful when you repeatedly write the same validation, formatting, player lookup, or plugin-specific utility code inside commands.
+
+<Aside type="caution">
+    Configure the default arguments class before registering your commands. Commands and completers created after that point will use the configured type.
+</Aside>
+
+## Creating a Custom Arguments Class
+
+The simplest approach is to extend `CommandArguments` and expose a copy constructor.
+
+```java title="PluginArguments.java"
+public class PluginArguments extends CommandArguments {
+
+    public PluginArguments(CommandArguments arguments) {
+        super(arguments);
+    }
+
+    public Player requirePlayer() {
+        if (!isSenderPlayer()) {
+            sendMessage("<red>This command can only be used by players.");
+            throw new IllegalStateException("Sender is not a player.");
+        }
+
+        return getSender();
+    }
+
+    public void success(String message) {
+        sendMessage("<green>" + message);
+    }
+
+    public void error(String message) {
+        sendMessage("<red>" + message);
+    }
+}
+```
+
+The copy constructor receives the framework-created `CommandArguments` instance and passes its internal sender, command, label, and argument array to the parent constructor.
+
+## Registering the Default Arguments Class
+
+Use `setDefaultArguments(Class)` when your custom class has either a copy constructor or the full constructor signature.
+
+```java title="Main.java"
+public class Main extends JavaPlugin {
+
+    private CommandFramework commandFramework;
+
+    @Override
+    public void onEnable() {
+        commandFramework = new CommandFramework(this);
+
+        // Must be configured before command registration.
+        commandFramework.setDefaultArguments(PluginArguments.class);
+
+        commandFramework.registerCommands(this);
+    }
+
+    @Command(name = "profile", senderType = Command.SenderType.PLAYER)
+    public void profileCommand(PluginArguments arguments) {
+        Player player = arguments.requirePlayer();
+        arguments.success("Opening profile for " + player.getName() + ".");
+    }
+}
+```
+
+After this setup, command methods can request `PluginArguments` directly. You do not need to cast the base `CommandArguments` object manually.
+
+## Using a Factory
+
+If your custom arguments object needs dependencies, use the factory overload instead of reflection.
+
+```java title="Main.java"
+public class Main extends JavaPlugin {
+
+    private Economy economy;
+
+    @Override
+    public void onEnable() {
+        CommandFramework commandFramework = new CommandFramework(this);
+
+        commandFramework.setDefaultArguments(arguments ->
+            new EconomyArguments(arguments, economy)
+        );
+
+        commandFramework.registerCommands(this);
+    }
+}
+```
+
+```java title="EconomyArguments.java"
+public class EconomyArguments extends CommandArguments {
+
+    private final Economy economy;
+
+    public EconomyArguments(CommandArguments arguments, Economy economy) {
+        super(arguments);
+        this.economy = economy;
+    }
+
+    public double getBalance() {
+        return economy.getBalance(getSender().getName());
+    }
+}
+```
+
+The factory receives the base `CommandArguments` for the current command execution and must return a non-null subclass instance.
+
+## Constructor Options
+
+The class-based overload supports two constructor styles.
+
+<Tabs>
+    <TabItem label="Copy Constructor">
+        ```java
+        public PluginArguments(CommandArguments arguments) {
+            super(arguments);
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Full Constructor">
+        ```java
+        public PluginArguments(
+            CommandSender sender,
+            org.bukkit.command.Command bukkitCommand,
+            dev.despical.commandframework.annotations.Command command,
+            String label,
+            String[] arguments
+        ) {
+            super(sender, bukkitCommand, command, label, arguments);
+        }
+        ```
+    </TabItem>
+</Tabs>
+
+If neither constructor exists, the framework throws an `IllegalArgumentException` while configuring the default arguments class.
+
+## Using Custom Arguments in Completers
+
+The same default arguments configuration is also used for tab completers.
+
+```java
+@Completer(name = "warp")
+public List<String> warpCompletion(PluginArguments arguments) {
+    if (!arguments.hasPermission("example.warp")) {
+        return List.of();
+    }
+
+    return List.of("spawn", "market", "arena");
+}
+```
+
+This lets you share the same permission helpers, lookup methods, and formatting shortcuts across command execution and completion code.
+
+## Best Practices
+
+Keep custom arguments focused on command-context utilities.
+
+Good examples include:
+
+* sender helpers
+* common permission checks
+* message formatting shortcuts
+* player or plugin service lookups
+* argument validation helpers
+
+Avoid placing long command workflows inside the arguments class. Command behavior is usually easier to maintain inside the command method or a dedicated service.

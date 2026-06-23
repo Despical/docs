@@ -849,6 +849,9 @@ export default defineConfig({
                                             {label: "Command Arguments", slug: 'command-framework/command-arguments'},
                                             {label: "Custom Parameters", slug: 'command-framework/custom-parameters'},
                                             {label: "Command Cooldowns", slug: 'command-framework/command-cooldowns'},
+                                            {label: "Custom Command Arguments", slug: 'command-framework/custom-command-arguments'},
+                                            {label: "Message Formatting", slug: 'command-framework/message-formatting'},
+                                            {label: "Runtime Command Attributes", slug: 'command-framework/runtime-command-attributes'},
                                         ]
                                     },
                                     {

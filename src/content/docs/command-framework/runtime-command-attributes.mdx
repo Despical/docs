@@ -1,0 +1,164 @@
+---
+title: Runtime Command Attributes
+description: Learn how to update registered command metadata such as name, aliases, permission, usage, and sender type at runtime.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Command attributes are usually declared with `@Command`. Runtime command attributes let you update that metadata after registration without rewriting the command method.
+
+This is useful when your plugin loads command names, aliases, permissions, or usage text from a config file and needs to apply changes during startup or after a reload.
+
+<Aside type="caution">
+    Attribute updates only affect commands registered by this Command Framework instance. Commands registered directly through Bukkit or another command system are not mutated.
+</Aside>
+
+## Updating Attributes with a Builder
+
+Use `updateCommandAttributes` when you want to modify the existing attributes in place.
+
+```java title="Main.java"
+public class Main extends JavaPlugin {
+
+    private CommandFramework commandFramework;
+
+    @Override
+    public void onEnable() {
+        commandFramework = new CommandFramework(this);
+        commandFramework.registerCommands(this);
+
+        boolean updated = commandFramework.updateCommandAttributes("warp", attributes -> attributes
+            .aliases("w", "teleport")
+            .permission("example.command.warp")
+            .usage("/warp <name>")
+            .desc("Teleport to a configured warp")
+        );
+
+        if (!updated) {
+            getLogger().warning("Could not update the warp command attributes.");
+        }
+    }
+
+    @Command(name = "warp")
+    public void warpCommand(CommandArguments arguments) {
+        arguments.sendMessage("<green>Warp command executed.");
+    }
+}
+```
+
+The method returns `true` when a framework command with that name was found and updated.
+
+## Loading Attributes from Config
+
+Runtime updates are especially helpful for configurable command metadata.
+
+```yaml title="config.yml"
+commands:
+  warp:
+    name: "warp"
+    aliases: ["w", "go"]
+    permission: "example.warp"
+    usage: "/warp <name>"
+```
+
+```java title="Main.java"
+private void applyCommandConfig() {
+    FileConfiguration config = getConfig();
+
+    commandFramework.updateCommandAttributes("warp", attributes -> attributes
+        .name(config.getString("commands.warp.name", "warp"))
+        .aliases(config.getStringList("commands.warp.aliases").toArray(String[]::new))
+        .permission(config.getString("commands.warp.permission", ""))
+        .usage(config.getString("commands.warp.usage", "/warp <name>"))
+    );
+}
+```
+
+If `name(...)` changes the command, the framework moves the command to the new path and refreshes Bukkit registration for the root command when needed.
+
+## Replacing Attributes Completely
+
+Use `setCommandAttributes` when you already have a full `CommandAttributes` object.
+
+```java
+Command command =
+    commandFramework.getAllCommands()
+        .stream()
+        .filter(registered -> registered.name().equals("spawn"))
+        .findFirst()
+        .orElseThrow();
+
+CommandAttributes attributes = CommandAttributes.builder(command)
+    .name("hub")
+    .aliases("spawn", "lobby")
+    .permission("example.command.hub")
+    .usage("/hub")
+    .senderType(Command.SenderType.BOTH)
+    .build();
+
+commandFramework.setCommandAttributes("spawn", attributes);
+```
+
+`CommandAttributes.builder(command)` copies every value from the existing `@Command` annotation, so you can change only the fields you need.
+
+## Supported Attributes
+
+| Builder Method | Description |
+| :--- | :--- |
+| `name(String)` | Changes the command name or sub-command path. |
+| `fallbackPrefix(String)` | Changes the Bukkit fallback prefix used for root command registration. |
+| `permission(String)` | Changes the permission checked before execution. |
+| `aliases(String...)` | Replaces aliases for the command. |
+| `desc(String)` | Changes the command description. |
+| `usage(String)` | Changes the usage message sent for invalid argument counts. |
+| `min(int)` | Changes the minimum required argument count. |
+| `max(int)` | Changes the maximum allowed argument count. Use `-1` for unlimited. |
+| `onlyOp(boolean)` | Requires the sender to be operator. |
+| `async(boolean)` | Runs the command method asynchronously. |
+| `senderType(Command.SenderType)` | Restricts execution to players, console, or both. |
+
+## Updating Sub-Commands
+
+Use the full dot-path for sub-commands.
+
+```java
+commandFramework.updateCommandAttributes("arena.create", attributes -> attributes
+    .name("arena.setup")
+    .permission("example.arena.setup")
+    .usage("/arena setup <name>")
+);
+```
+
+The command path maps to the same dot notation used in `@Command(name = "arena.create")`.
+
+## Validation Rules
+
+The builder validates command metadata before applying it.
+
+* command names and aliases cannot be empty
+* names cannot start or end with `.`
+* names cannot contain empty path segments such as `arena..create`
+* aliases cannot be equal to the command name
+* `min` cannot be negative
+* `max` must be `-1` or greater
+* `max` cannot be lower than `min`, unless it is `-1`
+
+Invalid values throw an `IllegalArgumentException` before the registry is updated.
+
+## Reload Pattern
+
+On plugin reload, update command metadata after reloading your config.
+
+```java
+@Command(name = "myplugin.reload", permission = "example.reload")
+public void reloadCommand(CommandArguments arguments) {
+    reloadConfig();
+    applyCommandConfig();
+
+    arguments.sendMessage("<green>Configuration and command metadata reloaded.");
+}
+```
+
+<Aside type="tip">
+    Keep the command method stable and update only the metadata that needs to be configurable. That keeps command logic easy to test while still letting server owners customize command names and permissions.
+</Aside>
