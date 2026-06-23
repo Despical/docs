@@ -1,0 +1,137 @@
+---
+title: Message Formatting
+description: Learn how Command Framework formats messages with MiniMessage and how to customize the formatter.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Command Framework now sends string messages through a component formatter. The default formatter is [MiniMessage](https://docs.advntr.dev/minimessage/format.html), so framework messages and `CommandArguments#sendMessage(String)` can use tags such as `<red>`, `<bold>`, gradients, hover text, and other Adventure components.
+
+## Default MiniMessage Formatting
+
+You can write MiniMessage directly in framework messages and command responses.
+
+```java
+@Command(name = "hello")
+public void helloCommand(CommandArguments arguments) {
+    arguments.sendMessage("<green>Hello, <yellow>" + arguments.getSender().getName() + "</yellow>!");
+}
+```
+
+The framework converts the string into a `Component` and sends it to the command sender.
+
+```java
+arguments.sendMessage("<gradient:#00ff88:#00aaff><bold>Command executed!</bold></gradient>");
+arguments.sendMessage("<red>You do not have permission for this action.");
+```
+
+<Aside type="note">
+    `CommandArguments#sendMessage(Component)` is still available if you already build Adventure components manually.
+</Aside>
+
+## Formatting Parameterized Messages
+
+The `sendMessage(String, Object...)` overload still formats parameters first, then passes the final string through the active component formatter.
+
+```java
+@Command(name = "coins")
+public void coinsCommand(CommandArguments arguments) {
+    int coins = 250;
+
+    arguments.sendMessage(
+        "<gray>You currently have <gold>{0}</gold> coins.",
+        coins
+    );
+}
+```
+
+## Built-in Framework Messages
+
+Default error messages also use MiniMessage tags.
+
+| Message | Default Output |
+| :--- | :--- |
+| `Message.SHORT_ARG_SIZE` | `<red>Required argument length is less than needed!` |
+| `Message.LONG_ARG_SIZE` | `<red>Required argument length greater than needed!` |
+| `Message.NO_PERMISSION` | `<red>You don't have enough permission to execute this command!` |
+| `Message.WAIT_BEFORE_USING_AGAIN` | `<red>You have to wait before using this command again!` |
+
+You can replace an individual framework message with your own logic.
+
+```java title="Main.java"
+@Override
+public void onEnable() {
+    Message.NO_PERMISSION.setMessage((command, arguments) -> {
+        arguments.sendMessage("<red>You need <yellow>{0}</yellow> to use this command.", command.permission());
+        return true;
+    });
+}
+```
+
+## Using Legacy Color Codes
+
+If your plugin still stores messages with `&` color codes, set a color formatter. The formatter converts your raw string first, then the framework serializes it into an Adventure component.
+
+```java title="Main.java"
+@Override
+public void onEnable() {
+    Message.setColorFormatter(text ->
+        ChatColor.translateAlternateColorCodes('&', text)
+    );
+}
+```
+
+```java
+@Command(name = "legacy")
+public void legacyCommand(CommandArguments arguments) {
+    arguments.sendMessage("&aThis message uses legacy color codes.");
+}
+```
+
+<Aside type="caution">
+    Setting a color formatter replaces the default MiniMessage string parser. Use it when your plugin messages are primarily legacy strings.
+</Aside>
+
+## Custom Component Formatter
+
+For full control, provide a function that converts every raw message string into a `Component`.
+
+```java title="Main.java"
+@Override
+public void onEnable() {
+    MiniMessage miniMessage = MiniMessage.miniMessage();
+
+    Message.setMessageFormatter(text -> miniMessage.deserialize(
+        "<gray>[MyPlugin]</gray> " + text
+    ));
+}
+```
+
+This formatter is used by:
+
+* `CommandArguments#sendMessage(String)`
+* `CommandArguments#sendMessage(String, Object...)`
+* the default `Message` enum handlers
+* custom `Message#setMessage(...)` implementations that call `arguments.sendMessage(...)`
+
+## MiniMessage vs Legacy Formatter
+
+<Tabs>
+    <TabItem label="MiniMessage">
+        ```java
+        arguments.sendMessage("<green><bold>Success!</bold> <gray>Your settings were saved.");
+        ```
+    </TabItem>
+
+    <TabItem label="Legacy">
+        ```java
+        Message.setColorFormatter(text ->
+            ChatColor.translateAlternateColorCodes('&', text)
+        );
+
+        arguments.sendMessage("&a&lSuccess! &7Your settings were saved.");
+        ```
+    </TabItem>
+</Tabs>
+
+Choose one formatting style for your plugin messages when possible. Mixing legacy and MiniMessage in the same project can make translations and config files harder to maintain.
