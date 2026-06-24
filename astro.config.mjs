@@ -844,11 +844,17 @@ export default defineConfig({
                                         ]
                                     },
                                     {
-                                        label: "Core Features",
+                                        label: "Command Core",
                                         items: [
                                             {label: "Command Arguments", slug: 'command-framework/command-arguments'},
-                                            {label: "Custom Parameters", slug: 'command-framework/custom-parameters'},
+                                            {label: "Subcommands & Error Messages", slug: 'command-framework/subcommands-and-error-messages'},
                                             {label: "Command Cooldowns", slug: 'command-framework/command-cooldowns'},
+                                        ]
+                                    },
+                                    {
+                                        label: "Customization",
+                                        items: [
+                                            {label: "Custom Parameters", slug: 'command-framework/custom-parameters'},
                                             {label: "Custom Command Arguments", slug: 'command-framework/custom-command-arguments'},
                                             {label: "Message Formatting", slug: 'command-framework/message-formatting'},
                                             {label: "Runtime Command Attributes", slug: 'command-framework/runtime-command-attributes'},

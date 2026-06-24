@@ -81,7 +81,7 @@ If `name(...)` changes the command, the framework moves the command to the new p
 Use `setCommandAttributes` when you already have a full `CommandAttributes` object.
 
 ```java
-Command command =
+dev.despical.commandframework.annotations.Command command =
     commandFramework.getAllCommands()
         .stream()
         .filter(registered -> registered.name().equals("spawn"))
@@ -93,7 +93,7 @@ CommandAttributes attributes = CommandAttributes.builder(command)
     .aliases("spawn", "lobby")
     .permission("example.command.hub")
     .usage("/hub")
-    .senderType(Command.SenderType.BOTH)
+    .senderType(dev.despical.commandframework.annotations.Command.SenderType.BOTH)
     .build();
 
 commandFramework.setCommandAttributes("spawn", attributes);
@@ -138,6 +138,7 @@ The builder validates command metadata before applying it.
 * command names and aliases cannot be empty
 * names cannot start or end with `.`
 * names cannot contain empty path segments such as `arena..create`
+* names can only contain letters, numbers, underscores, and dots
 * aliases cannot be equal to the command name
 * `min` cannot be negative
 * `max` must be `-1` or greater
