@@ -1,0 +1,162 @@
+---
+title: Subcommands and Error Messages
+description: Learn how nested command paths behave and how to customize built-in CommandErrorMessage handlers.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Sub-commands are created with dot notation in `@Command(name = "...")`. Each dot represents one command path segment.
+
+```java
+@Command(name = "arena.create")
+public void createArena(CommandArguments arguments) {
+    arguments.sendMessage("<green>Arena created.");
+}
+
+@Command(name = "arena.delete")
+public void deleteArena(CommandArguments arguments) {
+    arguments.sendMessage("<red>Arena deleted.");
+}
+```
+
+This creates:
+
+* `/arena create`
+* `/arena delete`
+
+The framework handles argument shifting automatically. If a player runs `/arena create test`, the command method receives only `test` as the first command argument.
+
+## Parent Commands
+
+You do not have to define every parent command manually. If only nested commands exist, the framework creates internal parent nodes so Bukkit can route the command.
+
+```java
+@Command(name = "debug.component")
+public void componentDebug(CommandArguments arguments) {
+    arguments.sendMessage("<green>Component debug command.");
+}
+
+@Command(name = "debug.test")
+public void testDebug(CommandArguments arguments) {
+    arguments.sendMessage("<green>Test debug command.");
+}
+```
+
+With these two commands registered, `/debug component` and `/debug test` work normally. If the sender runs only `/debug`, there is no concrete method to execute, so the framework sends `CommandErrorMessage.UNKNOWN_SUBCOMMAND`.
+
+## Unknown Subcommand Message
+
+`CommandErrorMessage.UNKNOWN_SUBCOMMAND` is used when a parent command exists only as a route for child commands.
+
+If the direct child commands have `usage` values, the default message lists them.
+
+```java
+@Command(
+    name = "debug.component",
+    usage = "/debug component <name>"
+)
+public void componentDebug(CommandArguments arguments) {
+}
+
+@Command(
+    name = "debug.test",
+    usage = "/debug test"
+)
+public void testDebug(CommandArguments arguments) {
+}
+```
+
+Running `/debug` sends:
+
+```text
+This command cannot be used directly. Try /debug <component | test>
+```
+
+Child commands without a `usage` value are hidden from the default suggestion list.
+
+<Aside type="tip">
+    Set `usage` on public sub-commands if you want them to appear in the default unknown-subcommand hint. Leave it empty for internal or hidden commands.
+</Aside>
+
+## Customizing Error Messages
+
+Built-in framework errors are available through `CommandErrorMessage`.
+
+```java
+CommandErrorMessage.NO_PERMISSION.setHandler((command, arguments) -> {
+    arguments.sendMessage("<red>You need <yellow>{0}</yellow>.", command.permission());
+    return true;
+});
+```
+
+Each handler receives:
+
+* the matched `@Command` metadata
+* the current `CommandArguments`
+
+Return `true` when the error was handled.
+
+## Custom Unknown Subcommand Handler
+
+You can replace the unknown-subcommand handler globally.
+
+```java title="Main.java"
+@Override
+public void onEnable() {
+    CommandErrorMessage.UNKNOWN_SUBCOMMAND.setHandler((command, arguments) -> {
+        arguments.sendMessage(
+            "<red>Unknown or incomplete command. Use <yellow>/{0} help</yellow>.",
+            arguments.getLabel()
+        );
+        return true;
+    });
+}
+```
+
+For a richer help message, you can inspect the command metadata and build your own list.
+
+```java
+CommandErrorMessage.UNKNOWN_SUBCOMMAND.setHandler((command, arguments) -> {
+    List<String> subcommands = commandFramework.getAllCommands()
+        .stream()
+        .map(dev.despical.commandframework.annotations.Command::name)
+        .filter(name -> name.startsWith(command.name() + "."))
+        .map(name -> name.substring(command.name().length() + 1))
+        .filter(name -> !name.contains("."))
+        .sorted()
+        .toList();
+
+    arguments.sendMessage(
+        "<red>This command cannot be used directly. Try: <yellow>{0}",
+        String.join(", ", subcommands)
+    );
+    return true;
+});
+```
+
+## Resetting a Custom Handler
+
+If you temporarily replace a handler, you can restore the default behavior.
+
+```java
+CommandErrorMessage.UNKNOWN_SUBCOMMAND.resetHandler();
+CommandErrorMessage.NO_PERMISSION.resetHandler();
+```
+
+This is especially useful in tests or when your plugin reloads message providers.
+
+## Sending Framework Errors Manually
+
+You can also send a framework error from your own command logic.
+
+```java
+@Command(name = "admin.reload")
+public void reloadCommand(CommandArguments arguments) {
+    if (!arguments.hasPermission("example.admin.reload")) {
+        arguments.sendMessage(CommandErrorMessage.NO_PERMISSION);
+        return;
+    }
+
+    arguments.sendMessage("<green>Reloaded.");
+}
+```

@@ -80,13 +80,13 @@ public void exampleCommandMethod(CommandArguments arguments) {
 
     // --- Permissions & Messaging ---
 
-    // Send a message directly to the sender
-    // Supports color codes, HEX colors are not supported by default
-    // See Message.setFormatter() method to apply your own color converter
-    arguments.sendMessage("&cHey there!");
+    // Send a message directly to the sender.
+    // Strings are formatted using the active component formatter.
+    // MiniMessage is used by default.
+    arguments.sendMessage("<red>Hey there!");
 
     // Sends a parameterized message directly to the sender
-    arguments.sendMessage("&aHey there, {0}!", arguments.getSender().getName());
+    arguments.sendMessage("<green>Hey there, {0}!", arguments.getSender().getName());
 
     // Check permissions without manually retrieving the sender object
     if (arguments.hasPermission("command.framework")) {
@@ -142,7 +142,7 @@ public void exampleCommandMethod(CommandArguments arguments) {
     // Check if the sender is currently on cooldown for this command
     boolean hasCooldown = arguments.checkCooldown();
 
-    // Send a pre-defined error message from the Message enum
-    boolean success = arguments.sendMessage(Message.SHORT_ARG_SIZE);
+    // Send a pre-defined framework error message
+    boolean success = arguments.sendMessage(CommandErrorMessage.SHORT_ARG_SIZE);
 }
 ```

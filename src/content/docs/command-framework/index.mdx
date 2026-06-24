@@ -8,6 +8,8 @@ import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 The complete guide to the Command Framework. Learn how to create commands, handle custom parameters, manage arguments, and use every feature effectively in your plugins.
 
+## Getting Started
+
 <CardGrid>
     <LinkCard
         title="Getting Started"
@@ -16,23 +18,43 @@ The complete guide to the Command Framework. Learn how to create commands, handl
     />
     <LinkCard
         title="Basics"
-        description="Learn the core concepts, annotations, and how commands are registered."
+        description="Learn the core concepts, dependency setup, annotations, and command name rules."
         href="/command-framework/command-basics"
     />
     <LinkCard
+        title="Examples"
+        description="Common command examples and real-world use cases."
+        href="/command-framework/examples"
+    />
+</CardGrid>
+
+## Command Core
+
+<CardGrid>
+    <LinkCard
         title="Command Arguments"
-        description="Understand how arguments, options, and flags are parsed and used."
+        description="Understand how arguments, options, flags, sender helpers, and utilities are parsed and used."
         href="/command-framework/command-arguments"
     />
     <LinkCard
-        title="Creating Custom Parameters"
-        description="Learn how to create and register your own custom parameter types."
-        href="/command-framework/custom-parameters"
+        title="Subcommands and Error Messages"
+        description="Learn nested command routing, unknown subcommand handling, and CommandErrorMessage customization."
+        href="/command-framework/subcommands-and-error-messages"
     />
     <LinkCard
         title="Cooldowns"
         description="Advanced cooldown handling and common usage scenarios."
         href="/command-framework/command-cooldowns"
+    />
+</CardGrid>
+
+## Customization
+
+<CardGrid>
+    <LinkCard
+        title="Creating Custom Parameters"
+        description="Learn how to create and register your own custom parameter types."
+        href="/command-framework/custom-parameters"
     />
     <LinkCard
         title="Custom Command Arguments"
@@ -41,24 +63,13 @@ The complete guide to the Command Framework. Learn how to create commands, handl
     />
     <LinkCard
         title="Message Formatting"
-        description="Use MiniMessage by default, customize framework messages, or plug in your own formatter."
+        description="Use MiniMessage by default, customize framework error messages, or plug in your own formatter."
         href="/command-framework/message-formatting"
     />
     <LinkCard
         title="Runtime Command Attributes"
         description="Update command names, aliases, permissions, usage, and sender rules after registration."
         href="/command-framework/runtime-command-attributes"
-    />
-    <LinkCard
-        title="Examples"
-        description="Common command examples and real-world use cases."
-        href="/command-framework/examples"
-    />
-    <LinkCard
-        title="Resource Page"
-        description="The official resource page on SpigotMC."
-        href="https://spigotmc.org/resources/89933/"
-        target="_blank"
     />
 </CardGrid>
 
@@ -77,6 +88,12 @@ If you encounter any issues or have questions, use the resources below to get su
         title="Issue Tracker"
         description="Report bugs, request features, and track development progress."
         href="https://github.com/Despical/CommandFramework/issues/new/choose"
+        target="_blank"
+    />
+    <LinkCard
+        title="Resource Page"
+        description="The official resource page on SpigotMC."
+        href="https://spigotmc.org/resources/89933/"
         target="_blank"
     />
 </CardGrid>
@@ -110,4 +127,3 @@ Browse frequently asked questions and common solutions.
         href="/command-framework/register-commands-in-a-package"
     />
 </CardGrid>
-

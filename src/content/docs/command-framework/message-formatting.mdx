@@ -45,23 +45,24 @@ public void coinsCommand(CommandArguments arguments) {
 }
 ```
 
-## Built-in Framework Messages
+## Built-in Framework Error Messages
 
 Default error messages also use MiniMessage tags.
 
-| Message | Default Output |
+| Error Message | Default Output |
 | :--- | :--- |
-| `Message.SHORT_ARG_SIZE` | `<red>Required argument length is less than needed!` |
-| `Message.LONG_ARG_SIZE` | `<red>Required argument length greater than needed!` |
-| `Message.NO_PERMISSION` | `<red>You don't have enough permission to execute this command!` |
-| `Message.WAIT_BEFORE_USING_AGAIN` | `<red>You have to wait before using this command again!` |
+| `CommandErrorMessage.SHORT_ARG_SIZE` | `<red>Required argument length is less than needed!` |
+| `CommandErrorMessage.LONG_ARG_SIZE` | `<red>Required argument length greater than needed!` |
+| `CommandErrorMessage.NO_PERMISSION` | `<red>You don't have enough permission to execute this command!` |
+| `CommandErrorMessage.UNKNOWN_SUBCOMMAND` | `<red>This command cannot be used directly.` |
+| `CommandErrorMessage.WAIT_BEFORE_USING_AGAIN` | `<red>You have to wait before using this command again!` |
 
 You can replace an individual framework message with your own logic.
 
 ```java title="Main.java"
 @Override
 public void onEnable() {
-    Message.NO_PERMISSION.setMessage((command, arguments) -> {
+    CommandErrorMessage.NO_PERMISSION.setHandler((command, arguments) -> {
         arguments.sendMessage("<red>You need <yellow>{0}</yellow> to use this command.", command.permission());
         return true;
     });
@@ -70,13 +71,15 @@ public void onEnable() {
 
 ## Using Legacy Color Codes
 
-If your plugin still stores messages with `&` color codes, set a color formatter. The formatter converts your raw string first, then the framework serializes it into an Adventure component.
+If your plugin still stores messages with `&` color codes, provide a custom component formatter. The formatter receives the raw message string and must return an Adventure `Component`.
 
 ```java title="Main.java"
 @Override
 public void onEnable() {
-    Message.setColorFormatter(text ->
-        ChatColor.translateAlternateColorCodes('&', text)
+    LegacyComponentSerializer legacy = LegacyComponentSerializer.legacyAmpersand();
+
+    CommandErrorMessage.setMessageFormatter(text ->
+        legacy.deserialize(text)
     );
 }
 ```
@@ -89,7 +92,7 @@ public void legacyCommand(CommandArguments arguments) {
 ```
 
 <Aside type="caution">
-    Setting a color formatter replaces the default MiniMessage string parser. Use it when your plugin messages are primarily legacy strings.
+    Setting a custom message formatter replaces the default MiniMessage string parser. Use it when your plugin messages are primarily legacy strings.
 </Aside>
 
 ## Custom Component Formatter
@@ -101,7 +104,7 @@ For full control, provide a function that converts every raw message string into
 public void onEnable() {
     MiniMessage miniMessage = MiniMessage.miniMessage();
 
-    Message.setMessageFormatter(text -> miniMessage.deserialize(
+    CommandErrorMessage.setMessageFormatter(text -> miniMessage.deserialize(
         "<gray>[MyPlugin]</gray> " + text
     ));
 }
@@ -111,8 +114,8 @@ This formatter is used by:
 
 * `CommandArguments#sendMessage(String)`
 * `CommandArguments#sendMessage(String, Object...)`
-* the default `Message` enum handlers
-* custom `Message#setMessage(...)` implementations that call `arguments.sendMessage(...)`
+* the default `CommandErrorMessage` handlers
+* custom `CommandErrorMessage#setHandler(...)` implementations that call `arguments.sendMessage(...)`
 
 ## MiniMessage vs Legacy Formatter
 
@@ -125,9 +128,9 @@ This formatter is used by:
 
     <TabItem label="Legacy">
         ```java
-        Message.setColorFormatter(text ->
-            ChatColor.translateAlternateColorCodes('&', text)
-        );
+        LegacyComponentSerializer legacy = LegacyComponentSerializer.legacyAmpersand();
+
+        CommandErrorMessage.setMessageFormatter(legacy::deserialize);
 
         arguments.sendMessage("&a&lSuccess! &7Your settings were saved.");
         ```
