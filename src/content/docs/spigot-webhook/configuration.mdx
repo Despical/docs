@@ -1,0 +1,102 @@
+---
+title: Configuration
+description: Full config.yml reference for Discord webhooks, SpigotMC buyer pages, scan intervals, first-run behavior, and persistent state.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`config.yml` controls Discord delivery, SpigotMC scraping, plugin targets, scan timing, and state storage.
+
+When the worker starts, it first looks for `config.yml` in the current working directory. If it is not found there, it falls back to a bundled `config.yml` resource.
+
+<Aside type="tip">
+    Docker Compose mounts `src/main/resources/config.yml` into the container as `/opt/spigot-sales-webhook/config.yml`, which matches the worker's external config lookup.
+</Aside>
+
+## Full Example
+
+```yaml title="config.yml"
+discord:
+  webhook-url: "https://discord.com/api/webhooks/your-webhook-id/your-webhook-token"
+  username: "Spigot Sales"
+
+spigot:
+  cookie: "xf_session=...; xf_user=...; xf_tfa_trust=..."
+  request-delay-ms: 800
+  plugins:
+    - name: "Plugin Name"
+      buyer-list-url: "https://www.spigotmc.org/resources/resource-name.resource-id/buyers"
+
+scan:
+  interval-minutes: 60
+  notify-existing-on-first-run: false
+  state-file: "data/seen-sales.json"
+```
+
+## Discord Settings
+
+| Key | Type | Description |
+| :--- | :---: | :--- |
+| `discord.webhook-url` | `String` | Discord webhook URL used to send sale embeds. |
+| `discord.username` | `String` | Webhook display name shown in Discord. |
+
+The worker sends Discord embeds in chunks of up to 10 embeds per webhook message. Mentions are disabled with `allowed_mentions`, so buyer names or plugin names cannot trigger role/user pings.
+
+## Spigot Settings
+
+| Key | Type | Description |
+| :--- | :---: | :--- |
+| `spigot.cookie` | `String` | SpigotMC authentication cookie. Must have access to the configured premium buyer pages. |
+| `spigot.request-delay-ms` | `Long` | Delay between paginated buyer-list requests. |
+| `spigot.plugins` | `List` | Resource targets to monitor. At least one valid target is required. |
+
+Each plugin target has:
+
+| Key | Type | Description |
+| :--- | :---: | :--- |
+| `name` | `String` | Friendly plugin name shown in Discord and used as the state key. |
+| `buyer-list-url` | `String` | SpigotMC buyers page URL for that premium resource. |
+
+```yaml
+spigot:
+  plugins:
+    - name: "Advanced Parkour"
+      buyer-list-url: "https://www.spigotmc.org/resources/advanced-parkour.00000/buyers"
+    - name: "Santa Says"
+      buyer-list-url: "https://www.spigotmc.org/resources/santa-says.00000/buyers"
+```
+
+<Aside type="caution">
+    Changing a plugin's `name` changes the state key. If you rename a target, the worker may treat previously seen buyers as unseen for that new name.
+</Aside>
+
+## Scan Settings
+
+| Key | Type | Description |
+| :--- | :---: | :--- |
+| `scan.interval-minutes` | `Long` | Delay between continuous scans. |
+| `scan.notify-existing-on-first-run` | `Boolean` | Whether the first scan should send notifications for already-existing buyers. |
+| `scan.state-file` | `String` | Path to the JSON file that stores seen buyers. Relative paths are resolved from the working directory. |
+
+## First-Run Behavior
+
+By default:
+
+```yaml
+scan:
+  notify-existing-on-first-run: false
+```
+
+The first scan records all currently visible buyers and sends no Discord messages. Later scans notify only when new buyers appear.
+
+Set it to `true` if you intentionally want the first run to notify every visible buyer.
+
+## Private Values
+
+Keep these values private:
+
+* `discord.webhook-url`
+* `spigot.cookie`
+* the generated state file if it contains buyer history you consider private
+
+Do not put real values in examples, screenshots, issue reports, or committed files.

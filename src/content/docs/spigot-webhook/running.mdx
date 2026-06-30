@@ -1,0 +1,98 @@
+---
+title: Running the Worker
+description: Run Spigot Sales Webhook continuously, execute one-off scans, notify existing buyers, and understand retry behavior.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Spigot Sales Webhook can run continuously as a background worker or execute a single scan and exit.
+
+## Build
+
+<Tabs>
+    <TabItem label="Windows">
+        ```bat
+        gradlew.bat clean jar
+        ```
+    </TabItem>
+
+    <TabItem label="Linux / macOS">
+        ```bash
+        ./gradlew clean jar
+        ```
+    </TabItem>
+</Tabs>
+
+The jar includes runtime dependencies and is written to `build/libs/spigot-sales-webhook-1.0.0.jar`.
+
+## Continuous Mode
+
+Run without arguments:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.0.jar
+```
+
+The worker:
+
+1. Loads `config.yml`.
+2. Runs a scan immediately.
+3. Waits `scan.interval-minutes`.
+4. Repeats until the process is stopped.
+
+Use this mode for a VPS, home server, Docker container, or systemd service.
+
+## One-Off Mode
+
+Run one scan and exit:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+```
+
+This is useful for:
+
+* testing a new config
+* checking whether the cookie can access buyer pages
+* manually triggering a scan from a scheduled task
+* verifying Discord delivery
+
+## Notify Existing Buyers
+
+The first scan normally creates a baseline without sending messages. To notify existing buyers too, enable it in `config.yml`:
+
+```yaml
+scan:
+  notify-existing-on-first-run: true
+```
+
+Then run a one-off scan:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+```
+
+This is most useful when you are intentionally backfilling Discord with current buyer history.
+
+<Aside type="caution">
+    Use `notify-existing-on-first-run` carefully on resources with many buyers. Discord receives one embed per sale, sent in chunks of up to 10 embeds per message.
+</Aside>
+
+## Retry Behavior
+
+State is saved after successful processing.
+
+If Discord delivery fails while new sales are being sent, the worker logs the error and does not save those new sales as seen. They will be retried on the next scan.
+
+If one plugin target fails to fetch, the worker logs that failure and continues scanning the remaining configured targets.
+
+## Working Directory
+
+Relative paths are resolved from the process working directory.
+
+This affects:
+
+* `config.yml` lookup
+* `scan.state-file`
+
+For direct jar runs, either run the command from the project/root folder that contains `config.yml`, or bundle `src/main/resources/config.yml` before building.

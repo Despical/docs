@@ -1,0 +1,64 @@
+---
+title: State File
+description: Understand how Spigot Sales Webhook stores seen buyers, initializes state, and rebuilds the baseline safely.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Spigot Sales Webhook uses a JSON state file to remember which buyer names have already been seen for each configured plugin.
+
+## State File Format
+
+Default path:
+
+```yaml
+scan:
+  state-file: "data/seen-sales.json"
+```
+
+Example state:
+
+```json
+{
+  "initialized": true,
+  "seenSalesByPlugin": {
+    "Plugin Name": [
+      "examplebuyer"
+    ]
+  }
+}
+```
+
+Buyer keys are stored in lowercase form, so `ExampleBuyer` and `examplebuyer` are treated as the same buyer.
+
+## First Run
+
+If the state file does not exist, the worker starts with empty state.
+
+When `notify-existing-on-first-run` is `false`, the first successful scan:
+
+1. Scrapes all configured buyer pages.
+2. Stores all visible buyers.
+3. Marks the state as initialized.
+4. Sends no Discord messages.
+
+This prevents old purchases from flooding Discord during setup.
+
+## Resetting State
+
+Delete the configured state file if you want the worker to rebuild its baseline.
+
+```bash
+rm data/seen-sales.json
+```
+
+On Windows PowerShell:
+
+```powershell
+Remove-Item data/seen-sales.json
+```
+
+<Aside type="caution">
+    If `notify-existing-on-first-run` is `true`, resetting state can cause every currently visible buyer to be sent to Discord again.
+</Aside>
+

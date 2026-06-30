@@ -1,0 +1,85 @@
+---
+title: Spigot Sales Webhook Documentation
+description: Spigot Sales Webhook monitors SpigotMC premium resource buyer lists and sends Discord webhook notifications for new sales.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+**Spigot Sales Webhook** is a lightweight Java worker for premium SpigotMC resource authors. It checks configured buyer-list pages, remembers buyers it has already seen, and sends Discord webhook embeds only when new buyers appear.
+
+The worker is designed for self-hosting. You provide a Discord webhook URL, a valid SpigotMC cookie, and one or more premium resource buyer-list URLs. The first scan builds a baseline by default, so old purchases are not spammed into Discord.
+
+## Start Here
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="Install requirements, create your config file, add your first resource, and run the first scan."
+        href="/spigot-webhook/getting-started"
+    />
+    <LinkCard
+        title="Configuration"
+        description="Understand every key in config.yml, including Discord, Spigot, scan, and state settings."
+        href="/spigot-webhook/configuration"
+    />
+    <LinkCard
+        title="Running the Worker"
+        description="Run continuously, execute one-off scans, and understand first-run notification behavior."
+        href="/spigot-webhook/running"
+    />
+</CardGrid>
+
+## Hosting
+
+<CardGrid>
+    <LinkCard
+        title="Docker"
+        description="Use Docker Compose to run the worker as a restartable service with persistent state."
+        href="/spigot-webhook/docker"
+    />
+    <LinkCard
+        title="State File"
+        description="Learn how seen buyers are stored, when to reset state, and how first-run baselines work."
+        href="/spigot-webhook/state-file"
+    />
+</CardGrid>
+
+## Troubleshooting
+
+<CardGrid>
+    <LinkCard
+        title="Troubleshooting"
+        description="Diagnose missing config files, Discord delivery failures, SpigotMC access issues, and rate limits."
+        href="/spigot-webhook/troubleshooting"
+    />
+    <LinkCard
+        title="Create an Issue"
+        description="Open a bug report, request, or support issue from the repository issue templates."
+        href="https://github.com/Despical/SpigotSalesWebhook/issues/new/choose"
+        target="_blank"
+    />
+</CardGrid>
+
+## Project
+
+<CardGrid>
+    <LinkCard
+        title="Source Code"
+        description="View the public GitHub repository, report issues, or follow development."
+        href="https://github.com/Despical/SpigotSalesWebhook"
+        target="_blank"
+    />
+    <LinkCard
+        title="Contributing"
+        description="Read the contribution guidelines before sending changes or opening larger proposals."
+        href="https://github.com/Despical/SpigotSalesWebhook/blob/main/CONTRIBUTING.md"
+        target="_blank"
+    />
+    <LinkCard
+        title="Security"
+        description="Read responsible disclosure guidance for webhook URLs, cookies, and other private credentials."
+        href="https://github.com/Despical/SpigotSalesWebhook/blob/main/SECURITY.md"
+        target="_blank"
+    />
+</CardGrid>

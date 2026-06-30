@@ -1,0 +1,88 @@
+---
+title: Docker
+description: Run Spigot Sales Webhook with Docker Compose, mount config.yml safely, persist state, and manage logs.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Docker is the recommended way to keep Spigot Sales Webhook running on a server.
+
+## Compose File
+
+The bundled `docker-compose.yml` builds the image and mounts the important files:
+
+```yaml title="docker-compose.yml"
+services:
+  spigot-sales-webhook:
+    build: .
+    container_name: spigot-sales-webhook
+    restart: unless-stopped
+    volumes:
+      - ./src/main/resources/config.yml:/opt/spigot-sales-webhook/config.yml:ro
+      - ./data:/opt/spigot-sales-webhook/data
+```
+
+The config is mounted read-only, while `data` is writable so the state file survives rebuilds and restarts.
+
+## Start the Worker
+
+Create and fill `src/main/resources/config.yml`, then run:
+
+```bash
+docker compose up -d --build
+```
+
+Docker builds the Java distribution in a JDK image, copies it into a smaller JRE image, and runs it as the `spigotsales` user.
+
+## View Logs
+
+```bash
+docker compose logs -f spigot-sales-webhook
+```
+
+Watch for:
+
+* config loading errors
+* failed SpigotMC buyer page requests
+* Discord webhook HTTP errors
+* "No new sales found" scan results
+* "Sent X new sales to Discord" success messages
+
+## Stop the Worker
+
+```bash
+docker compose down
+```
+
+This stops the container but keeps `./data`.
+
+## Persistent State
+
+With the default config:
+
+```yaml
+scan:
+  state-file: "data/seen-sales.json"
+```
+
+Inside Docker, that resolves to:
+
+```text
+/opt/spigot-sales-webhook/data/seen-sales.json
+```
+
+Because `./data` is mounted into `/opt/spigot-sales-webhook/data`, the state file remains on the host machine.
+
+<Aside type="tip">
+    Back up the `data` folder if you want to preserve the buyer baseline across server migrations.
+</Aside>
+
+## Updating
+
+To rebuild after pulling new source changes:
+
+```bash
+docker compose up -d --build
+```
+
+The image does not copy your real config into the final image. Private values stay in your local mounted `config.yml`.

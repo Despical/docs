@@ -1,0 +1,120 @@
+---
+title: Getting Started
+description: Set up Spigot Sales Webhook with Java 25, a Discord webhook, a SpigotMC cookie, and your first buyer-list URL.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+This guide walks through the first working setup for **Spigot Sales Webhook**.
+
+## Requirements
+
+You need:
+
+* **Java 25** if you run the worker directly
+* a **Discord webhook URL**
+* a valid **SpigotMC cookie** with access to your premium resource buyer pages
+* at least one SpigotMC premium resource buyer-list URL
+
+<Aside type="caution">
+    Treat the Discord webhook URL and SpigotMC cookie like passwords. Do not commit them, paste them in public chats, or include them in screenshots.
+</Aside>
+
+## Create the Config File
+
+Copy the example config and fill in your private values.
+
+<Tabs>
+    <TabItem label="Windows">
+        ```powershell
+        Copy-Item src/main/resources/config.example.yml src/main/resources/config.yml
+        ```
+    </TabItem>
+
+    <TabItem label="Linux / macOS">
+        ```bash
+        cp src/main/resources/config.example.yml src/main/resources/config.yml
+        ```
+    </TabItem>
+</Tabs>
+
+`src/main/resources/config.yml` is ignored by git.
+
+## Add Your First Resource
+
+Open `src/main/resources/config.yml` and configure one resource under `spigot.plugins`.
+
+```yaml title="config.yml"
+discord:
+  webhook-url: "https://discord.com/api/webhooks/your-webhook-id/your-webhook-token"
+  username: "Spigot Sales"
+
+spigot:
+  cookie: "xf_session=...; xf_user=...; xf_tfa_trust=..."
+  request-delay-ms: 800
+  plugins:
+    - name: "My Premium Plugin"
+      buyer-list-url: "https://www.spigotmc.org/resources/my-premium-plugin.12345/buyers"
+
+scan:
+  interval-minutes: 60
+  notify-existing-on-first-run: false
+  state-file: "data/seen-sales.json"
+```
+
+The `buyer-list-url` should point to the resource's buyers page. The cookie must belong to an account that can see that page.
+
+## Build the Worker
+
+<Tabs>
+    <TabItem label="Windows">
+        ```bat
+        gradlew.bat clean jar
+        ```
+    </TabItem>
+
+    <TabItem label="Linux / macOS">
+        ```bash
+        ./gradlew clean jar
+        ```
+    </TabItem>
+</Tabs>
+
+The built jar is created under `build/libs/`.
+
+## Run a Test Scan
+
+Run one scan and exit:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+```
+
+By default, the first scan records existing buyers without notifying Discord. This prevents a noisy first setup when a resource already has buyers.
+
+To send notifications for existing buyers during a one-off run, set `scan.notify-existing-on-first-run` to `true` first:
+
+```yaml
+scan:
+  notify-existing-on-first-run: true
+```
+
+Then run the one-off scan:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+```
+
+<Aside type="note">
+    If the state file already exists and is initialized, only buyers that are not stored in state are considered new.
+</Aside>
+
+## Run Continuously
+
+Start the worker without `--once`:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.0.jar
+```
+
+It immediately runs a scan, then waits `scan.interval-minutes` before the next scan.
