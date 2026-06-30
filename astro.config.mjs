@@ -18,7 +18,7 @@ export default defineConfig({
         sitemap(),
         starlight({
             title: 'Despical Docs',
-            description: "Official documentation for Despical's Minecraft plugins — Santa Says, Easter Eggs, Carousel, Advanced Parkour, Warden Party, Eat Everything, and Command Framework.",
+            description: "Official documentation for Despical's Minecraft plugins, developer tools, frameworks, setup guides, API references, and operational notes.",
             social: [
                 {icon: 'github', label: 'home:GitHub', href: 'https://github.com/Despical'},
                 {
@@ -30,6 +30,11 @@ export default defineConfig({
                     icon: "seti:java",
                     label: "command-framework:Javadoc",
                     href: "https://despical.github.io/CommandFramework/"
+                },
+                {
+                    icon: "github",
+                    label: "spigot-webhook:GitHub",
+                    href: "https://github.com/Despical/SpigotSalesWebhook",
                 },
                 {icon: 'discord', label: 'Discord', href: 'https://discord.gg/uXVU8jmtpU'},
                 {icon: 'patreon', label: 'Patreon', href: 'https://patreon.com/despical'},
@@ -823,6 +828,65 @@ export default defineConfig({
                                     {
                                         label: "Source Code",
                                         link: "/eat-everything/misc/source-code",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "Spigot Sales Webhook",
+                        link: "/spigot-webhook/",
+                        icon: "spigot-webhook",
+                        items: [
+                            {
+                                label: "Spigot Sales Webhook",
+                                items: [
+                                    {
+                                        label: "Basics",
+                                        items: [
+                                            {label: "Overview", slug: "spigot-webhook"},
+                                            {label: "Getting Started", slug: "spigot-webhook/getting-started"},
+                                            {label: "Configuration", slug: "spigot-webhook/configuration"},
+                                        ],
+                                    },
+                                    {
+                                        label: "Operation",
+                                        items: [
+                                            {label: "Running the Worker", slug: "spigot-webhook/running"},
+                                            {label: "Docker", slug: "spigot-webhook/docker"},
+                                            {label: "State File", slug: "spigot-webhook/state-file"},
+                                        ],
+                                    },
+                                    {
+                                        label: "Troubleshooting",
+                                        items: [
+                                            {label: "Troubleshooting", slug: "spigot-webhook/troubleshooting"},
+                                            {
+                                                label: "Create an Issue",
+                                                link: "https://github.com/Despical/SpigotSalesWebhook/issues/new/choose",
+                                                attrs: {target: "_blank"},
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        label: "Project",
+                                        items: [
+                                            {
+                                                label: "GitHub Repository",
+                                                link: "https://github.com/Despical/SpigotSalesWebhook",
+                                                attrs: {target: "_blank"},
+                                            },
+                                            {
+                                                label: "Contributing",
+                                                link: "https://github.com/Despical/SpigotSalesWebhook/blob/main/CONTRIBUTING.md",
+                                                attrs: {target: "_blank"},
+                                            },
+                                            {
+                                                label: "Security Policy",
+                                                link: "https://github.com/Despical/SpigotSalesWebhook/blob/main/SECURITY.md",
+                                                attrs: {target: "_blank"},
+                                            },
+                                        ],
                                     },
                                 ],
                             },
