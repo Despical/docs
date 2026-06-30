@@ -1,0 +1,84 @@
+---
+title: Troubleshooting
+description: Diagnose common Spigot Sales Webhook setup, Discord delivery, SpigotMC access, and rate-limit issues.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Use this page when the worker starts but does not behave as expected.
+
+## Missing Config File
+
+If the worker cannot find a config, ensure one of these is true:
+
+* `config.yml` exists in the process working directory
+* `src/main/resources/config.yml` existed before building the jar
+* Docker Compose is mounting `src/main/resources/config.yml` to `/opt/spigot-sales-webhook/config.yml`
+
+## No Plugins Configured
+
+`spigot.plugins` must contain at least one target with both `name` and `buyer-list-url`.
+
+```yaml
+spigot:
+  plugins:
+    - name: "My Plugin"
+      buyer-list-url: "https://www.spigotmc.org/resources/my-plugin.12345/buyers"
+```
+
+## No Discord Messages On First Run
+
+This is expected when:
+
+```yaml
+scan:
+  notify-existing-on-first-run: false
+```
+
+The first run creates a baseline. Later runs notify only for buyers that were not already stored.
+
+## Discord Webhook Fails
+
+Check that:
+
+* the webhook URL is complete
+* the channel still exists
+* the webhook was not deleted
+* the server can reach Discord
+
+When Discord delivery fails, new sales are not saved as seen, so they can be retried later.
+
+## Spigot Buyer Page Fails
+
+Check that:
+
+* the cookie is current
+* the cookie belongs to an account with access to that premium resource's buyer list
+* the buyer-list URL ends with `/buyers`
+* the resource ID in the URL is correct
+
+## Too Many Requests
+
+Increase:
+
+```yaml
+spigot:
+  request-delay-ms: 1500
+```
+
+This delay is applied between paginated buyer-list requests.
+
+## Security Checklist
+
+Before sharing logs or config snippets, remove:
+
+* Discord webhook URLs
+* `xf_session`, `xf_user`, `xf_tfa_trust`, and other cookie values
+* buyer data if you consider it private
+
+Regenerate the Discord webhook and refresh the SpigotMC session if either value was exposed.
+
+<Aside type="tip">
+    If you confirmed the config and credentials are correct but the issue still happens, open a GitHub issue with the relevant logs after removing private values.
+</Aside>
+
