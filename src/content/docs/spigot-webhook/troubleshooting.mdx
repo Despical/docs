@@ -45,8 +45,21 @@ Check that:
 * the channel still exists
 * the webhook was not deleted
 * the server can reach Discord
+* `discord.avatar-url` is blank or points to a publicly reachable image
 
 When Discord delivery fails, new sales are not saved as seen, so they can be retried later.
+
+Use test webhook mode to isolate Discord delivery from SpigotMC scraping:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --test-webhook
+```
+
+With Docker:
+
+```bash
+docker compose run --rm spigot-sales-webhook --test-webhook
+```
 
 ## Spigot Buyer Page Fails
 
@@ -81,4 +94,3 @@ Regenerate the Discord webhook and refresh the SpigotMC session if either value 
 <Aside type="tip">
     If you confirmed the config and credentials are correct but the issue still happens, open a GitHub issue with the relevant logs after removing private values.
 </Aside>
-

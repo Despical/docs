@@ -47,7 +47,8 @@ Open `src/main/resources/config.yml` and configure one resource under `spigot.pl
 ```yaml title="config.yml"
 discord:
   webhook-url: "https://discord.com/api/webhooks/your-webhook-id/your-webhook-token"
-  username: "Spigot Sales"
+  username: "Spigot Sales Notifier"
+  avatar-url: "https://i.imgur.com/nigdPoy.png"
 
 spigot:
   cookie: "xf_session=...; xf_user=...; xf_tfa_trust=..."
@@ -82,12 +83,22 @@ The `buyer-list-url` should point to the resource's buyers page. The cookie must
 
 The built jar is created under `build/libs/`.
 
+## Send a Test Webhook
+
+Before scraping SpigotMC, send a test Discord notification:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --test-webhook
+```
+
+This confirms that `discord.webhook-url`, `discord.username`, and `discord.avatar-url` are accepted by Discord. It sends an example sale and exits.
+
 ## Run a Test Scan
 
 Run one scan and exit:
 
 ```bash
-java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --once
 ```
 
 By default, the first scan records existing buyers without notifying Discord. This prevents a noisy first setup when a resource already has buyers.
@@ -102,7 +113,7 @@ scan:
 Then run the one-off scan:
 
 ```bash
-java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --once
 ```
 
 <Aside type="note">
@@ -114,7 +125,7 @@ java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
 Start the worker without `--once`:
 
 ```bash
-java -jar build/libs/spigot-sales-webhook-1.0.0.jar
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar
 ```
 
 It immediately runs a scan, then waits `scan.interval-minutes` before the next scan.
