@@ -18,7 +18,8 @@ When the worker starts, it first looks for `config.yml` in the current working d
 ```yaml title="config.yml"
 discord:
   webhook-url: "https://discord.com/api/webhooks/your-webhook-id/your-webhook-token"
-  username: "Spigot Sales"
+  username: "Spigot Sales Notifier"
+  avatar-url: "https://i.imgur.com/nigdPoy.png"
 
 spigot:
   cookie: "xf_session=...; xf_user=...; xf_tfa_trust=..."
@@ -39,8 +40,15 @@ scan:
 | :--- | :---: | :--- |
 | `discord.webhook-url` | `String` | Discord webhook URL used to send sale embeds. |
 | `discord.username` | `String` | Webhook display name shown in Discord. |
+| `discord.avatar-url` | `String` | Optional webhook avatar URL. Leave it blank if you want Discord to use the webhook's default avatar. |
 
 The worker sends Discord embeds in chunks of up to 10 embeds per webhook message. Mentions are disabled with `allowed_mentions`, so buyer names or plugin names cannot trigger role/user pings.
+
+Sale notifications are rendered as Discord embeds. Each embed links the buyer profile when SpigotMC exposes one, links the configured plugin buyer page, displays the sale price and currency, and places the purchase time in the footer using the server's local timezone.
+
+<Aside type="tip">
+    Run `--test-webhook` after changing Discord settings. It sends a single example sale without scraping SpigotMC.
+</Aside>
 
 ## Spigot Settings
 
@@ -96,6 +104,7 @@ Set it to `true` if you intentionally want the first run to notify every visible
 Keep these values private:
 
 * `discord.webhook-url`
+* `discord.avatar-url` if it points to a private or temporary asset
 * `spigot.cookie`
 * the generated state file if it contains buyer history you consider private
 

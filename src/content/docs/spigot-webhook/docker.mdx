@@ -15,8 +15,11 @@ The bundled `docker-compose.yml` builds the image and mounts the important files
 services:
   spigot-sales-webhook:
     build: .
-    container_name: spigot-sales-webhook
+    image: spigot-sales-webhook:local
     restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
     volumes:
       - ./src/main/resources/config.yml:/opt/spigot-sales-webhook/config.yml:ro
       - ./data:/opt/spigot-sales-webhook/data
@@ -33,6 +36,16 @@ docker compose up -d --build
 ```
 
 Docker builds the Java distribution in a JDK image, copies it into a smaller JRE image, and runs it as the `spigotsales` user.
+
+## Send a Test Webhook
+
+You can pass worker arguments through Docker Compose:
+
+```bash
+docker compose run --rm spigot-sales-webhook --test-webhook
+```
+
+The container entrypoint creates the data directory, switches to the `spigotsales` user, sends the example Discord notification, and exits.
 
 ## View Logs
 

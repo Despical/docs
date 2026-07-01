@@ -23,14 +23,14 @@ Spigot Sales Webhook can run continuously as a background worker or execute a si
     </TabItem>
 </Tabs>
 
-The jar includes runtime dependencies and is written to `build/libs/spigot-sales-webhook-1.0.0.jar`.
+The jar includes runtime dependencies and is written to `build/libs/spigot-sales-webhook-1.0.2.jar`.
 
 ## Continuous Mode
 
 Run without arguments:
 
 ```bash
-java -jar build/libs/spigot-sales-webhook-1.0.0.jar
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar
 ```
 
 The worker:
@@ -47,7 +47,7 @@ Use this mode for a VPS, home server, Docker container, or systemd service.
 Run one scan and exit:
 
 ```bash
-java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --once
 ```
 
 This is useful for:
@@ -56,6 +56,16 @@ This is useful for:
 * checking whether the cookie can access buyer pages
 * manually triggering a scan from a scheduled task
 * verifying Discord delivery
+
+## Test Webhook Mode
+
+Send one example Discord notification and exit:
+
+```bash
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --test-webhook
+```
+
+This mode loads `config.yml` and uses the configured Discord webhook settings, but it does not scrape SpigotMC or update the state file.
 
 ## Notify Existing Buyers
 
@@ -69,7 +79,7 @@ scan:
 Then run a one-off scan:
 
 ```bash
-java -jar build/libs/spigot-sales-webhook-1.0.0.jar --once
+java -jar build/libs/spigot-sales-webhook-1.0.2.jar --once
 ```
 
 This is most useful when you are intentionally backfilling Discord with current buyer history.
