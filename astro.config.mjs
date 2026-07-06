@@ -951,7 +951,7 @@ export default defineConfig({
                                         items: [
                                             {
                                                 label: "Javadocs",
-                                                link: "https://despical.github.io/CommandFramework/",
+                                                link: "https://javadoc.despical.dev/command-framework/",
                                                 attrs: {target: "_blank"}
                                             },
                                         ]
