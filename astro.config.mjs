@@ -29,7 +29,7 @@ export default defineConfig({
                 {
                     icon: "seti:java",
                     label: "command-framework:Javadoc",
-                    href: "https://despical.github.io/CommandFramework/"
+                    href: "https://javadoc.despical.dev/command-framework/"
                 },
                 {
                     icon: "github",
