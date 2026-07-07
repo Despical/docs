@@ -1,6 +1,7 @@
 name: deployment
 
 on:
+  pull_request:
   push:
     branches: [ main ]
   workflow_dispatch:
@@ -23,6 +24,7 @@ jobs:
           package-manager: 'pnpm@10'
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
