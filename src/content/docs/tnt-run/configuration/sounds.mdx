@@ -1,0 +1,56 @@
+---
+title: sounds.yml
+description: Configure TNT Run gameplay sounds such as double jump feedback.
+---
+
+The `sounds.yml` file controls named gameplay sounds. The current sound system includes double jump feedback, and the same sound manager is reloaded through `/tntrun reload`.
+
+---
+
+## Sound Structure
+
+Every sound entry follows a simple structure:
+
+```yaml
+sounds:
+  double-jump:
+    enabled: true
+    sound: ENTITY_FIREWORK_ROCKET_LAUNCH
+    volume: 0.8
+    pitch: 1.35
+```
+
+---
+
+## Supported Properties
+
+| Option | Description |
+|:-------|:------------|
+| `enabled` | Turns the sound on or off. |
+| `sound` | Bukkit sound enum name. |
+| `volume` | Playback volume. Higher values can be heard from farther away. |
+| `pitch` | Playback pitch. Lower is deeper, higher is sharper. |
+
+---
+
+## Finding Sound Names
+
+Use Bukkit/Paper sound enum names such as:
+
+```text
+ENTITY_FIREWORK_ROCKET_LAUNCH
+BLOCK_NOTE_BLOCK_PLING
+ENTITY_PLAYER_LEVELUP
+```
+
+If a sound name is invalid, the plugin logs a warning and skips that sound registration.
+
+---
+
+## Applying Changes
+
+After editing sounds, reload the plugin to apply your changes:
+
+```bash
+/tntrun reload
+```

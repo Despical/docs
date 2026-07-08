@@ -1,0 +1,82 @@
+---
+title: bossbar.yml
+description: Customize the appearance and behavior of the boss bar throughout different TNT Run game stages.
+---
+
+The `bossbar.yml` file allows you to manage the visual top-bar that players see during the game. You can use it to display server branding, arena status, player count, or simply keep the screen clean and minimal.
+
+---
+
+## Global Toggle
+
+* **`enabled`**: Set this to `false` if you want to completely disable the BossBar system across all game stages.
+
+Each arena can also disable boss bars from the setup menu.
+
+---
+
+## Game States & Appearance
+
+The boss bar is dynamic and changes based on the current state of the arena. You can customize the **title**, **overlay (style)**, and **color** for each state.
+
+| State | Description |
+|:------|:------------|
+| `waiting` | When players are in the lobby waiting for the minimum requirement. |
+| `starting` | During the final countdown before the match begins. |
+| `in-game` | While blocks are being removed and players are surviving. |
+| `ending` | After the winner is declared and before the arena restarts. |
+
+:::tip
+**The Invisible Trick:** If you set the `title` to an empty string (`""`) for any state, the BossBar will become invisible during that specific phase. This is perfect if you want a clean screen during active gameplay (`in-game`) but want branding in the lobby.
+:::
+
+---
+
+## Customization Options
+
+### Title
+Supports the **MiniMessage** format. You can use gradients, HEX colors, and placeholders to make the bar match your server style.
+
+### Overlay (Style)
+Determines the segmenting of the bar. Available values:
+* `PROGRESS`: A solid, smooth bar.
+* `NOTCHED_6`: Divided into 6 segments.
+* `NOTCHED_10`: Divided into 10 segments.
+* `NOTCHED_12`: Divided into 12 segments.
+* `NOTCHED_20`: Divided into 20 segments.
+
+### Color
+You can choose from the following standard colors:
+`PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, `WHITE`.
+
+---
+
+## Configuration Example
+
+```yaml
+states:
+  waiting:
+    title: "<yellow><bold>Playing <white><bold>TNT RUN <yellow><bold>on <aqua><bold>DESPICAL.DEV"
+    overlay: PROGRESS
+    color: BLUE
+
+  in-game:
+    title: "<#FF5252><bold>%players_left%</bold> <#B0BEC5>players left"
+    overlay: PROGRESS
+    color: RED
+
+  ending:
+    title: "<yellow><bold>Playing <white><bold>TNT RUN <yellow><bold>on <aqua><bold>DESPICAL.DEV"
+    overlay: PROGRESS
+    color: BLUE
+```
+
+---
+
+## Applying Changes
+
+You don't need to restart your server to see most boss bar changes. Simply modify the file and use the reload command:
+
+```bash
+/tntrun reload
+```

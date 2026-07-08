@@ -1,0 +1,60 @@
+---
+title: Source Code
+description: TNT Run repository, Javadocs, build information, dependencies, and contribution references.
+---
+
+## Repository
+
+The TNT Run source code is hosted on GitHub:
+
+[Despical/TNTRun](https://github.com/Despical/TNTRun)
+
+---
+
+## Javadocs
+
+Developer API documentation is available here:
+
+[TNT Run Javadocs](https://javadoc.despical.dev/tnt-run/)
+
+---
+
+## Build Notes
+
+The project uses Gradle and builds a shaded plugin JAR.
+
+```bash
+./gradlew shadowJar
+```
+
+The output JAR is named like:
+
+```text
+tnt-run-<version>.jar
+```
+
+---
+
+## Main Dependencies
+
+The plugin uses:
+
+* Paper API
+* PlaceholderAPI
+* Despical Commons
+* Command Framework
+* Inventory Framework
+* File Items
+* bStats
+
+Core library packages are relocated in the shaded output to avoid dependency conflicts on production servers.
+
+---
+
+## Contributing
+
+Before opening a pull request, check the repository's contribution files:
+
+* [CONTRIBUTING.md](https://github.com/Despical/TNTRun/blob/main/CONTRIBUTING.md)
+* [CODE_OF_CONDUCT.md](https://github.com/Despical/TNTRun/blob/main/CODE_OF_CONDUCT.md)
+* [SECURITY.md](https://github.com/Despical/TNTRun/blob/main/SECURITY.md)

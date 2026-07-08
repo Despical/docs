@@ -1,0 +1,93 @@
+---
+title: PlayerStatisticChangeEvent
+description: Documentation for the event fired when a player's statistic is about to change.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerStatisticChangeEvent` is triggered whenever a player's persistent statistic is about to be updated. This event is fired before the new value is stored, allowing developers to intercept, modify, or cancel the change.
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.player`
+- **Parent Class:** [`PlayerEvent`](/tnt-run/api/player-events/player-event)
+- **Cancellable:** Yes
+
+<Aside type="tip">
+    The `newValue` field is mutable. You can use this to implement custom multipliers, stat caps, or external validation across your server.
+</Aside>
+
+---
+
+## Methods
+
+In addition to `getPlayer()` and `getUser()` from the base class, this event provides:
+
+| Method                  | Return Type        | Description                                                   |
+|:------------------------|:-------------------|:--------------------------------------------------------------|
+| `getStat()`             | `StatisticType<T>` | Returns the type of statistic being modified.                 |
+| `getOldValue()`         | `T`                | Returns the value of the statistic before this change.        |
+| `getNewValue()`         | `T`                | Returns the proposed new value.                               |
+| `setNewValue(T)`        | `void`             | Overrides the final value to be saved.                        |
+| `isCancelled()`         | `boolean`          | Checks if the statistic update has been blocked.              |
+| `setCancelled(boolean)` | `void`             | If set to `true`, the statistic update is completely ignored. |
+
+---
+
+## Example Use Cases
+
+### Apply a 2x Win Booster
+You can check for specific permissions to reward certain players with double progress.
+
+```java
+import dev.despical.tntrun.api.event.player.PlayerStatisticChangeEvent;
+import dev.despical.tntrun.stats.Statistics;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class StatisticBoosterListener implements Listener {
+
+    @EventHandler
+    public void onStatChange(PlayerStatisticChangeEvent<Integer> event) {
+        if (event.getStat() == Statistics.WIN && event.getPlayer().hasPermission("vip.booster")) {
+            int currentGain = event.getNewValue() - event.getOldValue();
+            event.setNewValue(event.getOldValue() + (currentGain * 2));
+        }
+    }
+}
+```
+
+### Capping a Statistic
+Prevent a statistic from exceeding a certain limit.
+
+```java
+@EventHandler
+public void onStatCap(PlayerStatisticChangeEvent<Integer> event) {
+    int maxCap = 5000;
+
+    if (event.getNewValue() > maxCap) {
+        event.setNewValue(maxCap);
+    }
+}
+```
+
+### Basic Anti-Abuse Check
+Block suspicious spikes in statistics.
+
+```java
+@EventHandler
+public void onSuspiciousStatChange(PlayerStatisticChangeEvent<Integer> event) {
+    int difference = event.getNewValue() - event.getOldValue();
+
+    if (difference > 100) {
+        event.setCancelled(true);
+    }
+}
+```
+
+---
+
+<Aside type="danger">
+    If the event is cancelled via `setCancelled(true)`, the plugin will skip the update logic entirely, and the player's statistic will remain at the `oldValue`.
+</Aside>

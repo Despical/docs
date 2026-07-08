@@ -1,0 +1,62 @@
+---
+title: Block Removal & Recovery
+description: Understand TNT Run floor removal, block snapshots, restore-on-startup behavior, and safe arena building practices.
+---
+
+TNT Run removes configured floor materials during a match.
+Because this changes the world, the plugin includes snapshot recovery so arenas can be restored after restarts or crashes.
+
+---
+
+## Removal Flow
+
+1. The in-game phase begins.
+2. The plugin waits for `start-after-seconds`.
+3. Players are scanned every `scan-interval-ticks`.
+4. Removable blocks below players are queued.
+5. Queued blocks are removed after `remove-delay-ticks`.
+6. Snapshots are stored so blocks can be restored later.
+
+---
+
+## Safe Materials
+
+Only materials listed in `block-removal.yml` are removed.
+This means you can use other blocks for walls, supports, spectator glass, or decorations.
+
+```yaml
+removable-blocks:
+  - TNT
+  - SAND
+  - SANDSTONE
+  - GRAVEL
+  - TERRACOTTA
+  - RED_SANDSTONE
+  - RED_SAND
+```
+
+---
+
+## Crash Recovery
+
+Keep these enabled for production:
+
+```yaml
+safety:
+  persist-snapshots: true
+  restore-snapshots-on-startup: true
+```
+
+If the server shuts down during a match, TNT Run can restore stored snapshots when the server starts again.
+
+`restore-only-air` is also useful because it prevents the plugin from overwriting blocks that were manually placed after the snapshot was created.
+
+---
+
+## Arena Building Advice
+
+* Build multiple floor layers for more exciting matches.
+* Use removable materials only where the floor should disappear.
+* Put non-removable barriers around the map.
+* Keep the lobby and end location outside the removable play area.
+* Test a full match and restart recovery before opening the arena publicly.

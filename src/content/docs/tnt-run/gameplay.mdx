@@ -1,0 +1,91 @@
+---
+title: Gameplay Overview
+description: Understand TNT Run game states, player rules, double jumps, spectators, records, and arena restart behavior.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+**TNT Run** is a fast-paced Minecraft minigame built around survival and quick thinking. Players race across a floor of disappearing blocks, using double jumps and careful movement to avoid falling as more of the arena crumbles away beneath them.
+
+Easy to learn but hard to master, the game keeps players on their toes as the floor disappears faster with every passing second.
+
+---
+
+## The Game Loop
+
+A standard match begins the moment players are teleported to the arena floor. From there, the blocks beneath every player's feet are scheduled for removal, and the arena keeps shrinking until only one player remains.
+
+The objective is simple: stay on solid ground, use your double jumps wisely, and outlast everyone else.
+
+---
+
+### Key Features
+* **Fast-Paced Survival:** No breaks, no downtime. The floor keeps disappearing until a winner is crowned.
+* **Skill-Based Movement:** Double jumps reward quick reflexes and smart positioning over luck.
+* **Spectator-Friendly:** Eliminated players don't just disappear — they can fly around and watch the action unfold.
+* **Full Statistics:** Every match is tracked, from win streaks to longest survival times.
+
+---
+
+## Game States
+
+| State | What Happens |
+|:--|:--|
+| Waiting | Players join the arena lobby. The plugin waits for the minimum player count. |
+| Starting | A countdown runs. If players leave and the count drops below minimum, the game returns to waiting. |
+| In Game | Players are teleported to the start location, inventories are prepared, double jumps become available, and block removal begins. |
+| Ending | The winner and summary are announced, statistics are saved, and players are cleaned up. |
+| Restarting | The arena returns to a clean waiting state for the next game. |
+
+---
+
+## Countdown Behavior
+
+The main timer values are configured in `config.yml`:
+
+| Setting | Default | What It Controls |
+|:--|:--|:--|
+| `waiting-time` | `300` | The normal lobby countdown while the arena waits for players. |
+| `pre-game-waiting-time` | `120` | The shortened countdown used after the minimum player count is reached. |
+| `game-starting-time` | `30` | The final countdown before players are moved into active gameplay. |
+| `full-game-starting-time` | `15` | The faster countdown used when the arena is mostly full or completely full. |
+| `ending-time` | `10` | How long the ending state lasts before the arena restarts. |
+
+When the arena reaches the minimum player count, the countdown is shortened to `pre-game-waiting-time` if needed.
+If the arena is mostly full or completely full, the countdown can be shortened again for faster starts.
+
+---
+
+## Joining Late
+
+If a player joins while the game is already in progress, the plugin can place them into spectator mode instead of the active player list. This lets players watch the match without affecting the winner.
+
+---
+
+## Elimination
+
+A player is eliminated when they <u>**fall into the void**</u> or <u>**leave the server**</u>.
+
+The player is moved to spectator mode, their survival time can be recorded, and the game checks whether only one active player remains.
+
+When one survivor is left, that player wins and the game moves to the ending state.
+
+---
+
+## Double Jumps
+
+During the in-game phase, players receive a double jump item. They can use it to launch forward and upward, but each jump has a cooldown and limited uses.
+
+The exact count can come from the default value or from permission-based overrides.
+
+<Aside type="tip">
+    Want the full breakdown? See **[Double Jumps](/tnt-run/features/double-jumps)** for the complete configuration.
+</Aside>
+
+---
+
+## Spectators
+
+Eliminated players become spectators. Spectators can fly, use spectator items, open a teleporter menu, and change settings such as night vision, speed, and spectator visibility.
+
+See **[Spectator Mode](/tnt-run/features/spectator-mode)** for the detailed guide.

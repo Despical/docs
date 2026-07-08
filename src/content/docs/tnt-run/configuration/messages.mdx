@@ -1,0 +1,77 @@
+---
+title: messages.yml
+description: Customize all TNT Run chat messages, titles, subtitles, actionbars, help menus, and text outputs using MiniMessage.
+---
+
+The `messages.yml` file gives you full control over every string of text your players see. From simple join notifications to elimination messages, game summaries, ticker actions, and setup feedback, everything is fully customizable.
+
+---
+
+## MiniMessage Support
+
+**TNT Run** utilizes the **MiniMessage** library, allowing you to create clean visuals without the limitations of traditional legacy color codes. You can use HEX colors, gradients, bold text, hover events, and click events.
+
+* **Gradients:** `<gradient:#ff3b3b:#ffd93b>Your Text Here</gradient>`
+* **HEX Colors:** `<color:#55ff55>Solid Color Text</color>`
+* **Legacy Tags:** Simple tags like `<red>`, `<b>` (bold), or `<underlined>` are also supported.
+
+---
+
+## Common Placeholders
+
+Many messages support runtime placeholders. The available values depend on where the message is used.
+
+| Placeholder          | Description                                      |
+|:---------------------|:-------------------------------------------------|
+| `%player%`           | The player involved in the message.              |
+| `%arena_id%`         | The internal arena ID.                           |
+| `%map_name%`         | The display name of the arena map.               |
+| `%players%`          | Current number of players in the arena.          |
+| `%min_players%`      | Minimum players required to start.               |
+| `%max_players%`      | Maximum player capacity.                         |
+| `%timer%`            | Remaining time in seconds.                       |
+| `%formatted_timer%`  | Remaining time in `MM:SS` format.                |
+| `%winner%`           | The winner name when a match ends.               |
+| `%survive_time%`     | A player's recorded survival time when relevant. |
+
+---
+
+## Configuration Examples
+
+Here is how you can implement these features in your file:
+
+```yaml
+# Example of using placeholders and simple color tags
+player-joined: '<gray>%player% <yellow>has joined (<aqua>%players%<yellow>/<aqua>%max_players%<yellow>)!'
+
+# Example of a multi-line elimination message
+you-eliminated:
+  - "<gray>%player% <#FF5252>died!"
+  - "<yellow>%players_left% players remaining."
+```
+
+---
+
+## Ticker Actions
+
+Ticker entries can send timed chat messages, titles, subtitles, action bars, and sounds during game states. They are useful for countdowns, dramatic start moments, and ending announcements.
+
+```yaml
+ticker:
+  starting:
+    10:
+      - "<#FFCA28>The game starts in 10 seconds."
+      - "title:<#FF5252><bold>10"
+      - "subtitle:<#B0BEC5>Get ready"
+      - "sound:BLOCK_NOTE_BLOCK_PLING,1,1"
+```
+
+---
+
+## Applying Changes
+
+You don't need to restart your server to see most message changes. Simply modify the file and use the reload command to apply your updates:
+
+```bash
+/tntrun reload
+```

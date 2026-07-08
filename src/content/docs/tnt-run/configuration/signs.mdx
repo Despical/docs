@@ -1,0 +1,80 @@
+---
+title: signs.yml
+description: Configure TNT Run arena signs, state labels, click behavior messages, and sign display lines.
+---
+
+The `signs.yml` file controls arena join signs. Signs can show the arena state, player count, maximum player count, and any branding text you want players to see before joining.
+
+---
+
+## Sign Lines
+
+The `lines` section defines the four lines shown on registered arena signs.
+
+```yaml
+lines:
+  - "<gradient:#FF1744:#D50000><bold>TNT Run</gradient>"
+  - "%state%"
+  - ""
+  - "<#455A64>[ <#CFD8DC>%players% <#455A64>/ <#CFD8DC>%max_players% <#455A64>]"
+```
+
+---
+
+## Supported Placeholders
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%state%` | The configured state label from `game-states`. |
+| `%players%` | Current player count. |
+| `%max_players%` | Arena maximum player count. |
+| `%map_name%` | Arena display map name, if used in your custom lines. |
+
+---
+
+## State Labels
+
+The `game-states` section lets you change how arena states appear on signs.
+
+```yaml
+game-states:
+  waiting: "<#00E676><bold>WAITING"
+  starting: "<#FFAB00><bold>STARTING"
+  in-game: "<#FF5252><bold>IN GAME"
+  full-game: "<#D50000><bold>FULL"
+  ending: "<#9E9E9E><bold>ENDING"
+  restarting: "<#607D8B><bold>REBOOTING"
+  inactive: "<#B0BEC5><bold>MAINTENANCE"
+```
+
+---
+
+## System Messages
+
+The top-level messages in this file are used for sign setup feedback.
+
+| Message | Purpose |
+|:--------|:--------|
+| `created` | Sent when an arena sign is registered successfully. |
+| `removed` | Sent when an arena sign is removed. |
+| `no-perm-to-break` | Sent when a player tries to break a registered sign without permission. |
+| `look-at-a-sign` | Sent when the setup action cannot find a valid sign block. |
+
+Breaking registered TNT Run signs requires:
+
+```text
+tntrun.sign.break
+```
+
+---
+
+## Creating Signs
+
+The cleanest way to create a join sign is through the setup menu:
+
+1. Run `/tr edit <arena>`.
+2. Open the sign setup item.
+3. Look at or select the target sign block.
+4. Save it for the arena.
+
+The plugin will then update the sign as the arena state changes.

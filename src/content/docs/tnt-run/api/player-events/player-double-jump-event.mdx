@@ -1,0 +1,67 @@
+---
+title: PlayerDoubleJumpEvent
+description: Documentation for the event fired before a player consumes and performs a double jump.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerDoubleJumpEvent` is triggered after the built-in game, spectator, cooldown, and remaining-jump checks pass, but before the double jump is consumed. Developers can cancel the jump or modify the launch velocity and cooldown.
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.player`
+- **Parent Class:** [`PlayerEvent`](/tnt-run/api/player-events/player-event)
+- **Cancellable:** Yes
+
+<Aside type="tip">
+    Cancelling this event prevents the jump from being consumed and stops the velocity, sound, cooldown, and scoreboard updates from being applied.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `PlayerEvent`, you have access to `getPlayer()` and `getUser()` in addition to the following:
+
+| Method                       | Return Type | Description                                            |
+|:-----------------------------|:------------|:-------------------------------------------------------|
+| `getGame()`                  | `Game`      | Returns the game where the double jump happens.        |
+| `getJumpsLeft()`             | `int`       | Returns the jumps left after this jump is consumed.    |
+| `getCooldownSeconds()`       | `double`    | Returns the cooldown that will be applied.             |
+| `setCooldownSeconds(double)` | `void`      | Replaces the cooldown that will be applied.            |
+| `getVelocity()`              | `Vector`    | Returns the velocity that will be applied.             |
+| `setVelocity(Vector)`        | `void`      | Replaces the velocity that will be applied.            |
+| `isCancelled()`              | `boolean`   | Checks if the double jump has been blocked.            |
+| `setCancelled(boolean)`      | `void`      | Set to `true` to prevent the double jump.              |
+
+---
+
+## Common Use Cases
+* **Custom Boosters:** Increase launch velocity for VIP players or special arenas.
+* **Cooldown Rules:** Lower or raise the cooldown based on permissions.
+* **Anti-Abuse Checks:** Cancel jumps during restricted phases or custom server events.
+* **Cosmetic Effects:** Trigger particles, sounds, or announcements when a jump is used.
+
+---
+
+## Example Usage
+
+This example gives players a stronger final double jump.
+
+```java
+import dev.despical.tntrun.api.event.player.PlayerDoubleJumpEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class DoubleJumpListener implements Listener {
+
+    @EventHandler
+    public void onDoubleJump(PlayerDoubleJumpEvent event) {
+        if (event.getJumpsLeft() <= 1) {
+            event.setVelocity(event.getVelocity().multiply(1.25));
+            event.setCooldownSeconds(2.0);
+        }
+    }
+}
+```

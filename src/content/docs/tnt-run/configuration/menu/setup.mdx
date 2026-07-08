@@ -1,0 +1,134 @@
+---
+title: setup-menu.yml
+description: Configuration for the interactive TNT Run arena setup GUI used by administrators.
+---
+
+The `setup-menu.yml` file controls the GUI opened with `/tntrun edit <arena_id>`. It defines the setup categories, item materials, lore text, feedback messages, and validation output used while configuring an arena.
+
+---
+
+## Setup Categories
+
+### 1. Arena Locations
+
+Use **Manage Arena Locations** (`FILLED_MAP`) to open the location settings for the arena.
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `lobby` | `LODESTONE` | Sets the waiting location used before the countdown starts. |
+| `start` | `BEACON` | Sets the spawn point where players begin the TNT Run. |
+| `end` | `END_PORTAL_FRAME` | Sets the fallback location used when players leave or games end. |
+
+Location items support two controls:
+
+* **Click:** Set the location to your current position.
+* **Shift-click:** Center the location on the block.
+
+### 2. Player Amounts
+
+Use **Player Amounts** (`GLOWSTONE_DUST`) to configure arena capacity.
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `min-player-amount` | `LIME_DYE` | Sets how many players are required before the countdown can start. |
+| `max-player-amount` | `RED_DYE` | Sets the maximum number of players allowed in the arena. |
+
+Controls:
+
+* **Left-click:** Increase the value by 1.
+* **Right-click:** Decrease the value by 1.
+
+### 3. Arena Display
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `arena-sign` | `OAK_SIGN` | Links the sign you are looking at to the arena status. |
+| `map-name` | `NAME_TAG` | Opens the map name dialog and sets the display name used by scoreboards and placeholders. |
+
+### 4. Player Settings
+
+The **Configure Player Settings** (`BOOK`) item opens settings for inventory, effects, and gamemode behavior when players join the arena.
+
+Related toggles in the setup menu:
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `scoreboard-toggle` | `NAME_TAG` | Toggles the arena scoreboard. |
+| `bossbar-toggle` | `ORANGE_DYE` | Toggles the game boss bar for waiting, starting, and active states. |
+
+### 5. Potion Effects
+
+Use **Manage Potion Effects** (`DRAGON_BREATH`) to configure effects applied to arena players.
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `add-potion-effect` | `LIME_DYE` | Opens the effect type selector. |
+| `selected-potion-effects` | `ENDER_CHEST` | Shows currently active potion effects. |
+| `potion-effect-item` | `DRAGON_BREATH` | Displays an active effect and can be right-clicked to remove it. |
+
+Available effect selectors:
+
+| Item Key | Material |
+|:---------|:---------|
+| `potion-effect-speed` | `SUGAR` |
+| `potion-effect-jump-boost` | `SLIME_BALL` |
+| `potion-effect-night-vision` | `GLOWSTONE_DUST` |
+| `potion-effect-slow-falling` | `PHANTOM_MEMBRANE` |
+
+Available levels:
+
+| Item Key | Material | Level |
+|:---------|:---------|:------|
+| `potion-level-1` | `IRON_INGOT` | I |
+| `potion-level-2` | `GOLD_INGOT` | II |
+| `potion-level-3` | `DIAMOND` | III |
+
+### 6. Arena Records
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `arena-record-reset` | `PLAYER_HEAD` | Opens the reset confirmation for the arena's best survival records. |
+| `confirm-arena-record-reset` | `LIME_DYE` | Permanently clears this arena's records. |
+| `cancel-arena-record-reset` | `RED_DYE` | Returns without changing records. |
+
+### 7. Registration & Navigation
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `register-arena` | `FIREWORK_ROCKET` | Runs the integrity check, saves the configuration, and activates the arena. |
+| `go-back` | `ARROW` | Returns to the main menu. |
+
+---
+
+## Common Placeholders
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%arena_id%` | Current arena ID. |
+| `%map_name%` | Current arena display name. |
+| `%record_holder%` | Player holding the best survival record. |
+| `%record_time%` | Best survival time for the arena. |
+| `%potion_effect_count%` | Number of configured potion effects. |
+| `%scoreboard_toggle_status%` | Current scoreboard toggle state. |
+| `%bossbar_toggle_status%` | Current boss bar toggle state. |
+| `%effect_name%` | Selected potion effect name. |
+| `%effect_level%` | Selected potion effect level. |
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  game-locations:
+    name: "<#2196F3><bold>Manage Arena Locations"
+    material: FILLED_MAP
+
+  player-amounts:
+    name: "<#2196F3><bold>Player Amounts"
+    material: GLOWSTONE_DUST
+
+  register-arena:
+    name: "<#00E676><bold>Register the Arena"
+    material: FIREWORK_ROCKET
+```

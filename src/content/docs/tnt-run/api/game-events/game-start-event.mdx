@@ -1,0 +1,63 @@
+---
+title: GameStartEvent
+description: Documentation for the event fired when a TNT Run game enters active play.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameStartEvent` is triggered after a **TNT Run** game enters active play. At this point, players have been moved to the start location, per-game scores have been reset, the survival round has started, block removal has been scheduled, and the start message has been broadcast.
+
+<Aside type="note">
+    This event is informational and is not cancellable. Use it for announcements, analytics, custom timers, and external integrations that should start with the match.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.game`
+- **Parent Class:** [`GameEvent`](/tnt-run/api/game-events/game-event)
+- **Cancellable:** No
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`GameEvent`](/tnt-run/api/game-events/game-event) class, allowing you to access the active `Game` instance and its arena.
+
+| Method       | Return Type | Description                                                       |
+|:-------------|:------------|:------------------------------------------------------------------|
+| `getGame()`  | `Game`      | Returns the active `Game` instance that has started.              |
+| `getArena()` | `Arena`     | Shortcut to return the `Arena` associated with the starting game. |
+
+---
+
+## Lifecycle Notes
+When this event is called:
+* **Player Setup:** Players are already in their designated starting positions.
+* **Score Initialization:** The `ScoreRegistry` has been cleared and prepared for the new session.
+* **Block Removal:** The block removal system has been scheduled.
+* **Ready State:** The arena is now running active gameplay.
+
+---
+
+## Example Usage
+
+This example demonstrates how to send a custom message to all players when a TNT Run match starts.
+
+```java
+import dev.despical.tntrun.api.event.game.GameStartEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class GameStartListener implements Listener {
+
+    @EventHandler
+    public void onGameStart(GameStartEvent event) {
+        String arenaId = event.getArena().getId();
+
+        event.getGame().getUsers().forEach(user -> {
+            user.getPlayer().sendMessage("TNT Run has started in arena: " + arenaId);
+        });
+    }
+}
+```

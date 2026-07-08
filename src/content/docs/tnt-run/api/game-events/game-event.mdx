@@ -1,0 +1,71 @@
+---
+title: GameEvent
+description: The foundation for all game-related events in the TNT Run API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameEvent` class is an abstract base for all events associated with a specific, active game session. It provides developers with direct access to the `Game` instance and its internal managers, making it the primary entry point for manipulating game logic.
+
+<Aside type="note">
+    As an abstract class, you cannot listen to `GameEvent` directly. You must listen to its subclasses, such as `GameStartEvent` or `GameStopEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.game`
+- **Parent Class:** `TNTRunEvent`
+
+---
+
+## Methods
+
+| Method       | Return Type | Description                                              |
+|:-------------|:------------|:---------------------------------------------------------|
+| `getGame()`  | `Game`      | Returns the active `Game` instance.                      |
+| `getArena()` | `Arena`     | Shortcut to return the `Arena` associated with the game. |
+
+---
+
+## Accessible Game Managers
+Through the `Game` object provided by this event, you can access several core managers to customize the game experience:
+
+* **VisibilityManager:** Controls player visibility rules.
+* **ScoreboardManager:** Updates and manages player scoreboards.
+* **ScoreRegistry:** Stores and manages player scores and placements.
+* **MessageTicker:** Displays timed game messages.
+* **PlacementMessenger:** Handles placement-based announcements.
+* **BossBarManager:** Controls the boss bar displays for players in the game.
+
+---
+
+## Known Subclasses
+Since `GameEvent` is the root for game lifecycle notifications, it is implemented by:
+* **`GameStartEvent`**: Fired after a game enters active play.
+* **`GameEndEvent`**: Fired after a game finishes and enters the ending phase.
+* **`GameStateChangeEvent`**: Fired immediately before a game changes state.
+* **`GameStopEvent`**: Fired after a game has been forcefully stopped and cleaned up.
+
+---
+
+## Usage in Listeners
+
+When listening to any game-related event, you can easily pull arena settings or check the current game state.
+
+```java
+import dev.despical.tntrun.api.event.game.GameStartEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class GameStatusListener implements Listener {
+
+    @EventHandler
+    public void onGameEvent(GameStartEvent event) {
+        String arenaId = event.getArena().getId();
+        int players = event.getGame().getUsers().size();
+
+        System.out.println("TNT Run started in arena: " + arenaId + " with " + players + " players.");
+    }
+}
+```

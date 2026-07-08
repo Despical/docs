@@ -1,0 +1,57 @@
+---
+title: spectator-teleporter-menu.yml
+description: Configure the spectator teleporter menu used to jump to alive players.
+---
+
+The `spectator-teleporter-menu.yml` file controls the GUI that lets spectators teleport to alive players during a TNT Run match.
+
+---
+
+## Menu Basics
+
+* **`rows`**: Defines the menu height. TNT Run uses `5` rows by default.
+* **`title`**: The inventory title shown at the top of the GUI.
+* **`items`**: Configurable opener item, decorations, player entries, and page controls.
+
+---
+
+## Menu Items
+
+| Item Key | Slot | Material | Purpose |
+|:---------|:-----|:---------|:--------|
+| `spectator-teleporter` | `0` | `COMPASS` | Item used to open the teleporter from the spectator inventory. |
+| `background-fill` | Multiple | `GRAY_STAINED_GLASS_PANE` | Decoration-only filler around the player list. |
+| `teleport-player` | Dynamic | `PLAYER_HEAD` | Template for alive player entries. Clicking teleports to that player. |
+| `previous-page` | `36` | `ARROW` | Moves to the previous player page. |
+| `next-page` | `44` | `ARROW` | Moves to the next player page. |
+
+---
+
+## Player Entry
+
+The `teleport-player` item is generated dynamically for alive players. It uses the `%target%` placeholder in the item name and displays as a player head.
+
+```yaml
+teleport-player:
+  material: PLAYER_HEAD
+  name: "<#00E676><bold>%target%"
+  lore:
+    - "<#B0BEC5>Click to teleport to this player."
+```
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  spectator-teleporter:
+    slot: 0
+    material: COMPASS
+    name: "<#FF5252><bold>Teleporter"
+
+  next-page:
+    slot: 44
+    material: ARROW
+    name: "<#FFCA28><bold>Next Page"
+```

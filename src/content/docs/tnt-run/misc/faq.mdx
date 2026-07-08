@@ -1,0 +1,97 @@
+---
+title: FAQ
+description: Common TNT Run questions about setup, gameplay, permissions, placeholders, block recovery, and troubleshooting.
+---
+
+## Which command alias should I use?
+
+Both aliases work:
+
+```bash
+/tntrun
+/tr
+```
+
+The docs use `/tr` because it is shorter.
+
+---
+
+## Why can players not join my arena?
+
+Check these first:
+
+* The arena is registered and ready.
+* Lobby, start, and end locations are set.
+* Minimum players is not greater than maximum players.
+* The arena is not full.
+* The player is not already inside another TNT Run arena.
+
+Run `/tr list` to see whether the arena is ready.
+
+---
+
+## Why are blocks not disappearing?
+
+Check `block-removal.yml`:
+
+* The floor material must be listed in `removable-blocks`.
+* The game must be in the `IN_GAME` state.
+* `start-after-seconds` must have elapsed.
+* Players must be moving over blocks within the configured scan depth.
+
+---
+
+## My arena stayed damaged after a restart. What should I check?
+
+Make sure snapshot recovery is enabled:
+
+```yaml
+safety:
+  persist-snapshots: true
+  restore-snapshots-on-startup: true
+```
+
+Also check console logs during startup for restore warnings.
+
+---
+
+## Can I use PlaceholderAPI?
+
+Yes.
+Install PlaceholderAPI and use `%tntrun_*%` placeholders in compatible plugins.
+
+Start with:
+
+* **[General Placeholders](/tnt-run/placeholders/general)**
+* **[Leaderboard Placeholders](/tnt-run/placeholders/leaderboard)**
+
+---
+
+## How do I give VIP players different double jumps?
+
+Configure permission nodes in `config.yml`:
+
+```yaml
+double-jumps:
+  permissions:
+    - tntrun.doublejumps.5
+    - tntrun.doublejumps.3
+    - tntrun.doublejumps.1
+```
+
+Then grant the matching permission with your permissions plugin.
+
+---
+
+## Should I use flat files or MySQL?
+
+Use `flat` for single-server setups and smaller communities.
+Use `mysql` if you need database-backed statistics, network-wide data, or easier external reporting.
+
+---
+
+## Where should I report issues?
+
+Use the GitHub repository if you can provide logs, steps to reproduce, and your server version:
+
+[Create an Issue](https://github.com/Despical/TNTRun/issues/new/choose)

@@ -1,0 +1,51 @@
+---
+title: Arena Commands
+description: Commands for creating, managing, and configuring TNT Run arenas.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Arena management commands allow administrators to build and maintain the game environments. These commands are essential for the initial setup and ongoing management of your **TNT Run** maps.
+
+---
+
+## Create Command
+
+Administrators with the `tntrun.arena.create` permission can register a new arena instance. This command initializes a unique ID for the arena, which will be used for all subsequent configurations.
+
+```bash
+/tntrun create <arena_id>
+```
+
+---
+
+## Delete Command
+
+Administrators with the `tntrun.arena.delete` permission can permanently remove an arena instance. This action unregisters the arena and its associated game instance.
+
+```bash
+/tntrun delete <arena_id>
+```
+
+---
+
+## List Command
+
+Administrators with the `tntrun.arena.list` permission can display a complete list of all registered arena IDs. This is useful for checking active arenas and verifying their names for other commands.
+
+```bash
+/tntrun list
+```
+---
+
+## Edit Command
+
+Administrators with the `tntrun.arena.edit` permission can open the interactive **Setup Menu** for a specific arena. This command is only accessible to players as it opens a GUI to visually configure locations, player limits, signs, and other essential arena settings.
+
+```bash
+/tntrun edit <arena_id>
+```
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `tntrun.arena.*` will provide access to every command listed on this page.
+</Aside>

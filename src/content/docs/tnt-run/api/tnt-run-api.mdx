@@ -1,0 +1,74 @@
+---
+title: Developer API
+description: Learn how to integrate with TNT Run and use its custom event system.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+The **TNT Run** API allows developers to hook into game lifecycles, track player statistics, modify double jump behavior, and react to player eliminations. All custom events in the plugin inherit from the base `TNTRunEvent` class.
+
+---
+
+## Dependency Setup
+
+To start using the API, you need to add the **TNT Run** JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `tnt-run-x.x.x.jar` file inside it.
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        dependencies {
+            compileOnly files('libs/tnt-run-x.x.x.jar')
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        dependencies {
+            compileOnly(files("libs/tnt-run-x.x.x.jar"))
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Maven">
+        ```xml
+        <dependency>
+            <groupId>dev.despical</groupId>
+            <artifactId>tnt-run</artifactId>
+            <version>LATEST</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/tnt-run-x.x.x.jar</systemPath>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+<Aside type="caution">
+    Don't forget to add `TNTRun` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
+</Aside>
+
+```yaml
+# plugin.yml
+name: YourPlugin
+version: 1.0.0
+main: your.package.Main
+depend: [TNTRun]
+```
+
+---
+
+## Base Event Class
+
+Every event provided by the **TNT Run** API extends the `TNTRunEvent` class. This shared base type acts as the root for all custom Bukkit events fired by the plugin.
+
+```java
+public abstract class TNTRunEvent extends Event {
+}
+```
+
+Concrete event classes each provide their own Bukkit `HandlerList`, so you should listen to the specific event you need instead of trying to listen to `TNTRunEvent` directly.
+
+### Next Steps
+Explore the different event categories to start building your integration:
+* [Player Events](/tnt-run/api/player-events/player-event)
+* [Game Events](/tnt-run/api/game-events/game-event)

@@ -1,0 +1,48 @@
+---
+title: System Files
+description: Overview of internal data files managed automatically by TNT Run.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+While **TNT Run** provides many configuration files for customization, it also manages several internal files that act as the plugin's memory. These files are structured specifically for machine reading and fast data access.
+
+<Aside type="danger">
+    **DO NOT MANUAL EDIT:** Manual modification of these files is strongly discouraged. Editing them while the server is running can cause data corruption, loss of arena settings, damaged recovery data, or plugin crashes. Use in-game commands or menus to modify your setups instead.
+</Aside>
+
+---
+
+## Managed Files Overview
+
+| File Path                  | Primary Function                                                         | Management Method                            |
+|:---------------------------|:-------------------------------------------------------------------------|:---------------------------------------------|
+| `arenas.yml`               | Stores arena setup data, locations, toggles, signs, effects, and records.| Managed via `/tr edit <arena>`.              |
+| `data/stats.yml`           | Local database for player statistics and arena records.                  | Used only when `database: flat` is selected. |
+| Block snapshot data        | Stores removed block snapshots for crash-safe arena restoration.         | Managed by the block removal system.         |
+| `menu/`                    | Stores inventory menu layouts for setup, stats, and spectator tools.     | Safe to customize if required item keys stay intact. |
+
+---
+
+## Detailed Breakdown
+
+### arenas.yml
+This is the most critical system file. It contains every arena's location data, map name, readiness state, player limits, sign location, scoreboard and bossbar toggles, potion effects, and record data.
+* **Why you shouldn't touch it:** A single malformed value can prevent an arena from loading correctly.
+* **How to update:** Use `/tr edit <arena>` and the **Setup Menu** to change arena options.
+
+### data/stats.yml
+When your server is set to `flat` database mode, all local player statistics are recorded here.
+
+* **Why you shouldn't touch it:** The plugin keeps player data in memory while the server is running. Manual edits can be overwritten by cached data.
+* **How to update:** If you absolutely must edit this file manually, shut down the server completely first.
+
+### Block Snapshot Data
+This data belongs to the block recovery system. If your server restarts unexpectedly while a match is active, saved snapshots allow TNT Run to restore removed arena blocks.
+* **Why you shouldn't touch it:** Deleting or editing recovery data can leave arenas damaged after interrupted games.
+* **How to update:** Configure behavior through `block-removal.yml` instead.
+
+### menu/
+The `menu/` folder contains GUI layouts such as `setup-menu.yml`, `stats-menu.yml`, `spectator-settings-menu.yml`, and `spectator-teleporter-menu.yml`.
+* **Why it is safer to edit:** Menu files are designed for customization.
+* **What to keep:** Required item keys and actions should remain intact so the backing menu code can still find them.

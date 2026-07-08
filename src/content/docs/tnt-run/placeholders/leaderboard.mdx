@@ -1,0 +1,65 @@
+---
+title: Leaderboard Placeholders
+description: How to display player rankings and top statistics using TNT Run placeholders.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Leaderboard placeholders allow you to display your server's top-performing players on scoreboards, holograms, or custom in-game menus.
+
+<Aside type="caution">
+    To use these placeholders, the **PlaceholderAPI** plugin must be installed on your server.
+</Aside>
+
+---
+
+## Leaderboard Syntax
+
+To fetch leaderboard data, use the following format:
+`%tntrun_leaderboard:<statistic>:<position>:<type>%`
+
+### Parameters
+
+| Argument      | Description                                                                                 |
+|:--------------|:--------------------------------------------------------------------------------------------|
+| `<statistic>` | The stat to be ranked (e.g., `wins`, `loses`, `longest_survive`).                           |
+| `<position>`  | The rank position to display (1, 2, 3...).                                                  |
+| `<type>`      | The type of data to return (`name`, `uuid`, `value`, or `formatted_value`).                 |
+
+---
+
+## Available Statistics
+
+You can use the following statistics with the leaderboard system:
+
+* `wins` - Total number of games won.
+* `loses` - Total number of games lost.
+* `win_streak` - Current winning streak.
+* `games_played` - Total number of games the player has joined.
+* `longest_survive` - Longest survival time ever reached.
+* `arena_time_<arena_id>` - Best survival time for a specific arena.
+
+---
+
+## Usage Examples
+
+| Goal                                             | Placeholder                                                |
+|:-------------------------------------------------|:-----------------------------------------------------------|
+| Name of the 1st place winner                     | `%tntrun_leaderboard:wins:1:name%`                         |
+| Score of the 1st place winner                    | `%tntrun_leaderboard:wins:1:value%`                        |
+| Formatted longest survival time in 1st place     | `%tntrun_leaderboard:longest_survive:1:formatted_value%`   |
+| Name of the 5th most active player               | `%tntrun_leaderboard:games_played:5:name%`                 |
+| Name of the best player on the `factory` arena   | `%tntrun_leaderboard:arena_time_factory:1:name%`           |
+
+---
+
+## Arena Best Placeholders
+
+To display the viewing player's personal best time for a specific arena, use:
+
+```text
+%tntrun_arena_best:<arena_id>%
+%tntrun_arena_best_raw:<arena_id>%
+```
+
+The first placeholder returns a formatted time, while the raw version returns the stored numeric value.

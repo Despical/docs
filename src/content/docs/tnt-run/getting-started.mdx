@@ -1,0 +1,81 @@
+---
+title: Getting Started
+description: Install TNT Run on your Paper or Spigot Minecraft server and prepare the first arena.
+---
+
+import {Aside, Badge, Steps} from "@astrojs/starlight/components";
+
+Welcome to TNT Run! This plugin brings the classic disappearing-floor minigame to your Minecraft server, featuring automated arenas, last-player-standing gameplay, and full customization.
+
+This guide walks you through installation, generated files, required permissions, and the recommended setup path.
+
+---
+
+## Prerequisites
+
+Before installing the plugin, ensure your server environment meets the following requirements:
+
+* **Java Version:** [Java 25](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Minecraft Version:** 1.21.11 or 26.2 (Latest versions recommended).
+* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin like [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) to manage user access.
+
+---
+
+## Installation
+
+Setting up TNT Run is straightforward. Follow these steps to get started:
+
+<Steps>
+    1. Download the latest build of **Advanced Parkour** from the official distribution page.
+    2. Place the `tnt-run-x.x.x.jar` file into your server's `plugins/` directory.
+    3. **PlaceholderAPI** <Badge text="Optional" variant="tip"/> : if you plan to use TNT Run placeholders in external
+    scoreboards, holograms, or menus, install NoteBlockAPI as well.
+    4. Restart the server to generate the default configuration files.
+    5. Verify the installation by running `/tntrun` or `/tr` in-game.
+
+</Steps>
+
+---
+
+## First-Run Configuration
+
+After the first restart, a new folder will be created at `/plugins/TNTRun/`. This folder contains everything you need to customize your game:
+
+| File | Purpose |
+|:--|:--|
+| `config.yml` | Main configuration file controlling core gameplay behavior and plugin settings. |
+| `block-removal.yml` | Control when arena blocks start disappearing, which materials are removable, and how crash recovery works. |
+| `messages.yml` | Customize all in-game messages, titles, subtitles, and text outputs used by TNT Run. |
+| `scoreboard.yml` | Configure the in-game scoreboard layout, lines, and displayed values. |
+| `bossbar.yml` | Customize boss bars used during gameplay, including colors, styles, and messages. |
+| `items.yml` | Configure lobby items such as the leave item, including their name, material, slot, and lore. |
+| `signs.yml` | Customize the appearance and behavior of arena join signs. |
+| `sounds.yml` | Configure external database connections to synchronize player statistics across your network. |
+| `mysql.yml` | MySQL connection settings if `database: mysql` is used. |
+| `arenas.yml` | Automatically saved arena data. Edit through the setup menu whenever possible. |
+| `menu/` | Setup, stats, spectator settings, and spectator teleporter menu layouts. |
+| `Other Files` | Automatically managed internal files used by the TNT Run plugin. |
+
+---
+
+## Basic Command Structure
+
+While you'll spend most of your time in the config files, here are the essential commands:
+
+| Command              | Permission               | Description                                                                        |
+|:---------------------|:-------------------------|:-----------------------------------------------------------------------------------|
+| `/tr create <arena>` | `tntrun.arena.create`    | Creates a new game arena with the specified name.                                  |
+| `/tr edit <arena>`   | `tntrun.arena.create`    | Opens the configuration menu to set up spawns, regions, and settings for an arena. |
+| `/tr help`           | `tntrun.admin.help`   ´  | Displays a comprehensive list of all available commands and their usage.           |
+| `/tr join <arena>`   | *None*                   | Allows a player to join the specified arena.                                       |
+| `/tr leave`          | *None*                   | Allows a player to exit their current game and return to the hub.                  |
+
+---
+
+## Next Steps
+
+Now that the plugin is installed, it's time to dive deeper:
+
+* **[Arena Setup Guide](/tnt-run/arena-setup)**: Learn how to create your first game arena.
+* **[Placeholders](/tnt-run/placeholders/general)**: Hook into PlaceholderAPI for your scoreboards.
+* **[Developer API](/tnt-run/api/tnt-run-api)**: Start building custom integrations.

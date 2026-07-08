@@ -1,0 +1,90 @@
+---
+title: items.yml
+description: Comprehensive guide for customizing TNT Run gameplay items and player tools.
+---
+
+The `items.yml` file allows you to define the visual and functional properties of items used during the game, such as the double jump item, lobby leave item, and play-again item.
+
+---
+
+## Basic Item Structure
+
+Every item in the configuration follows a standard format. Here is an example of the default lobby leave item:
+
+```yaml
+items:
+  leave-item:
+    name: "<#FF5252><bold>Return to Lobby"
+    material: RED_BED
+    slot: 8
+    lore:
+      - "<#B0BEC5>Right-click to leave the game"
+      - "<#B0BEC5>and return to the hub."
+```
+
+---
+
+## Supported Properties
+
+You can use the following keys to further customize your items:
+
+| Key            | Description                                                | Example                |
+|:---------------|:-----------------------------------------------------------|:-----------------------|
+| `material`     | The Bukkit material name for the item.                     | `FEATHER`              |
+| `amount`       | The quantity of the item in the stack.                     | `1`                    |
+| `slot`         | The inventory slot where the item appears.                 | `8`                    |
+| `name`         | The display name of the item.                              | `<gold>Double Jump`    |
+| `lore`         | A list of lines for the item's description.                | `- "<gray>Line 1"`     |
+| `actions`      | Click actions that trigger the item behavior.              | `RIGHT_CLICK`          |
+| `glow`         | If true, adds an enchantment glow without visible enchants.| `true`                 |
+| `item-flags`   | Hides certain item attributes, such as enchants.           | `HIDE_ATTRIBUTES`      |
+| `hide-tooltip` | Hides the default Minecraft tooltip for the item.          | `true`                 |
+
+---
+
+## Gameplay Items
+
+### Double Jump
+
+Players receive this item during the in-game phase. Right-clicking it triggers a double jump if the player has jumps remaining and is not on cooldown.
+
+```yaml
+double-jump:
+  name: "<#00E676><bold>Double Jump"
+  material: FEATHER
+  slot: 0
+  actions:
+    - RIGHT_CLICK
+```
+
+### Play Again
+
+The play-again item tries to move the player into another ready arena that is waiting or starting and still has room.
+
+```yaml
+play-again:
+  name: "<#00E5FF><bold>Play Again"
+  material: PAPER
+  slot: 7
+```
+
+### Leave Item
+
+The leave item returns players to the arena end location. If `instant-leave` is disabled in `config.yml`, it uses a short confirmation flow.
+
+```yaml
+leave-item:
+  name: "<#FF5252><bold>Return to Lobby"
+  material: RED_BED
+  slot: 8
+```
+
+---
+
+## Applying Changes
+
+After editing gameplay items, reload the plugin to apply the new names, materials, lore, and click behavior:
+
+```bash
+/tntrun reload
+```
