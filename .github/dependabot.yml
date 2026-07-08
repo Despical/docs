@@ -4,11 +4,12 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    open-pull-requests-limit: 1
     groups:
-      astro-and-starlight:
-        patterns:
-          - "astro"
-          - "@astrojs/starlight"
+      npm-minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
     ignore:
       - dependency-name: "*"
         update-types:
