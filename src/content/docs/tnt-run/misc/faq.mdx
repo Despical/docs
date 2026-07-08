@@ -1,32 +1,70 @@
 ---
 title: FAQ
-description: Common TNT Run questions about setup, gameplay, permissions, placeholders, block recovery, and troubleshooting.
+description: Quick answers regarding licensing, requirements, and technical details for TNT Run.
 ---
 
-## Which command alias should I use?
+import { Aside } from "@astrojs/starlight/components";
 
-Both aliases work:
-
-```bash
-/tntrun
-/tr
-```
-
-The docs use `/tr` because it is shorter.
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources for the TNT Run plugin.
 
 ---
 
-## Why can players not join my arena?
+## Which Java versions are supported?
 
-Check these first:
+The plugin is compiled using **Java Development Kit (JDK) 25**. Therefore, **Java 25 or newer** is strictly required to run **TNT Run**.
 
-* The arena is registered and ready.
-* Lobby, start, and end locations are set.
-* Minimum players is not greater than maximum players.
-* The arena is not full.
-* The player is not already inside another TNT Run arena.
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
 
-Run `/tr list` to see whether the arena is ready.
+---
+
+## Which Minecraft versions are supported?
+
+**TNT Run** supports a specific range of versions to ensure stability:
+
+* **Supported Versions:** Full and native support for **1.21 and all newer versions** (26.2+).
+
+<Aside type="caution">
+    Sub-versions like 1.20.4 or 1.21.8 are not officially supported. Please ensure you are on the final minor release of your chosen major version.
+</Aside>
+
+---
+
+## Which server software is supported?
+
+Use **Paper** or any Paper fork.
+
+Forks such as Purpur usually work as long as they remain compatible with Paper APIs. Spigot/CraftBukkit are not the recommended target.
+
+---
+
+## What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions. This means you should use the XSeries sound names in your configuration files.
+
+[**List of All Available Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+---
+
+## Does the plugin support PlaceholderAPI?
+
+**Yes.** **TNT Run** provides a comprehensive set of placeholders to display player statistics and real-time game data. You can use these in any compatible plugin like Tab, Scoreboard, or Holographic Displays.
+
+We have categorized our placeholders into two main sections:
+
+* **General & Game Placeholders:** For player stats (wins, points) and arena info.
+  * 👉 [View General Placeholders](/tnt-run/placeholders/general)
+* **Leaderboard Placeholders:** For creating Top 10 lists and ranking displays.
+  * 👉 [View Leaderboard Placeholders](/tnt-run/placeholders/leaderboard)
+
+---
+
+## What is the license for TNT Run?
+
+**TNT Run** is licensed under the [GPL-3.0 License](http://www.gnu.org/licenses/gpl-3.0.html).
+
+See the [LICENSE](https://github.com/Despical/TNTRun/blob/main/LICENSE) file for full copyright notices and third-party attributions.
 
 ---
 
@@ -38,6 +76,8 @@ Check `block-removal.yml`:
 * The game must be in the `IN_GAME` state.
 * `start-after-seconds` must have elapsed.
 * Players must be moving over blocks within the configured scan depth.
+
+If only some floors work, make sure every floor layer material is included in the removable block list.
 
 ---
 
@@ -52,18 +92,6 @@ safety:
 ```
 
 Also check console logs during startup for restore warnings.
-
----
-
-## Can I use PlaceholderAPI?
-
-Yes.
-Install PlaceholderAPI and use `%tntrun_*%` placeholders in compatible plugins.
-
-Start with:
-
-* **[General Placeholders](/tnt-run/placeholders/general)**
-* **[Leaderboard Placeholders](/tnt-run/placeholders/leaderboard)**
 
 ---
 
@@ -83,10 +111,19 @@ Then grant the matching permission with your permissions plugin.
 
 ---
 
-## Should I use flat files or MySQL?
+## How is the performance?
 
-Use `flat` for single-server setups and smaller communities.
-Use `mysql` if you need database-backed statistics, network-wide data, or easier external reporting.
+**TNT Run** is designed to keep arena logic lightweight, restore blocks safely, and avoid unnecessary work outside active games.
+
+For larger servers, use sensible block-removal settings and avoid extremely oversized arenas.
+
+---
+
+## Should I edit arenas.yml manually?
+
+Normally, no. The intended workflow is to use `/tr edit <arena>` and let the setup system serialize the result.
+
+Manual edits are possible, but they are easy to get wrong because arena data includes multiple typed values.
 
 ---
 
