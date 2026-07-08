@@ -1,7 +1,7 @@
 # Despical Docs
-[![Discord](https://img.shields.io/discord/1291011225467224148.svg?color=7289DA&label=discord)](https://discord.gg/YOUR_SERVER)
+[![Discord](https://img.shields.io/discord/1291011225467224148.svg?color=7289DA&label=Discord)](https://discord.gg/uXVU8jmtpU)
 ![Deploy](https://github.com/despical/docs/actions/workflows/deploy.yml/badge.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 This repository contains all the documentation for Despical's plugins and related projects.  
 Content in this repo is automatically published to **https://docs.despical.dev/**.

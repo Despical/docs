@@ -36,8 +36,8 @@ importers:
         specifier: ^0.6.2
         version: 0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))
       starlight-sidebar-topics-dropdown:
-        specifier: ^0.5.2
-        version: 0.5.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))(starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3))))
+        specifier: ^0.5.4
+        version: 0.5.4(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))(starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3))))
 
 packages:
 
@@ -954,6 +954,10 @@ packages:
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
 
+  glob@7.2.3:
+    resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
   h3@1.15.4:
     resolution: {integrity: sha512-z5cFQWDffyOe4vQ9xIqNfCZdV4p//vy6fBnr8Q1AWnVZ0teurKMG66rLj++TKwKPUP3u7iMUvrvKaEUiQw2QWQ==}
 
@@ -1516,9 +1520,9 @@ packages:
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
 
-  starlight-contributor-list@0.4.0:
-    resolution: {integrity: sha512-iQQMGIhv8ef995UlKeTwuFC85QQBEIVjh2oXu2IszNQhFUd1cLMYwoJymhtPv7fFrrh+3ezsLAq4IRS/o7CXQg==}
-    engines: {node: '>=22.12.0'}
+  starlight-contributor-list@0.3.1:
+    resolution: {integrity: sha512-8F3BcnqeCgvI/OcagJCBsp71/XU9/zDiuSmsgAkWrRTxql0H2bG9Z9VXvmwzB/569QVlAsOwK7StAxDxqG6Myw==}
+    engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     deprecated: 'This package is no longer maintained. Please upgrade to the new package: https://www.npmjs.com/package/astro-contributors'
     peerDependencies:
       astro: ^5.0.0
@@ -1529,8 +1533,8 @@ packages:
     peerDependencies:
       '@astrojs/starlight': '>=0.32.0'
 
-  starlight-sidebar-topics-dropdown@0.5.2:
-    resolution: {integrity: sha512-QeqSO5jjk/ZHDfXnUqJF1GpY1ny9dc9LqETuw9V124B93EYtpvCYa+zccxHMHojQvAuG7TguQs212P4XvJX0Wg==}
+  starlight-sidebar-topics-dropdown@0.5.4:
+    resolution: {integrity: sha512-6a9rTqvugvHGgMuGq8IpAoxQn6EQbZpJC/pSXICsuKqHVIUgJQRsvRmRAiUw4ULiNKA74FQ0mOQg3ubQGqJkVQ==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0}
     peerDependencies:
       '@astrojs/starlight': '>=0.32'
@@ -3893,7 +3897,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  starlight-sidebar-topics-dropdown@0.5.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))(starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))):
+  starlight-sidebar-topics-dropdown@0.5.4(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))(starlight-sidebar-topics@0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))):
     dependencies:
       '@astrojs/starlight': 0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3))
       starlight-sidebar-topics: 0.6.2(@astrojs/starlight@0.36.2(astro@5.15.9(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)))

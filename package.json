@@ -22,6 +22,6 @@
     "starlight-contributor-list": "^0.4.0",
     "starlight-image-zoom": "^0.13.2",
     "starlight-sidebar-topics": "^0.6.2",
-    "starlight-sidebar-topics-dropdown": "^0.5.2"
+    "starlight-sidebar-topics-dropdown": "^0.5.4"
   }
 }
