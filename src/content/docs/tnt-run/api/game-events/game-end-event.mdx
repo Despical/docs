@@ -1,0 +1,72 @@
+---
+title: GameEndEvent
+description: Documentation for the event fired when a TNT Run game finishes and final results are available.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameEndEvent` is triggered after a **TNT Run** game finishes and enters the ending phase. At this point, the winner and placements have been calculated, summary messages have been sent, player statistics have been applied, and arena records have been updated.
+
+<Aside type="note">
+    Players are still part of the game while the ending timer counts down. They may leave before the arena fully restarts, so check whether a Bukkit player is online before giving rewards.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.game`
+- **Parent Class:** [`GameEvent`](/tnt-run/api/game-events/game-event)
+- **Cancellable:** No
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`GameEvent`](/tnt-run/api/game-events/game-event) class and adds methods to retrieve final match results.
+
+| Method        | Return Type          | Description                                                                             |
+|:--------------|:---------------------|:----------------------------------------------------------------------------------------|
+| `getWinner()` | `User`               | Returns the `User` who won the game. Can be `null` if no winner exists.                 |
+| `getTop3()`   | `Map<UUID, Integer>` | Returns an immutable map containing the UUIDs and final scores of the top 3 players.    |
+
+---
+
+## Game State at Conclusion
+When this event is called, the game instance is in its ending flow:
+* **Final Rankings:** The `ScoreRegistry` has finalized the winner and top-three results.
+* **Statistic Updates:** Wins, losses, streaks, and survival records have already been applied.
+* **Player Status:** Players remain in the game until the ending timer finishes or they leave.
+
+---
+
+## Example Usage
+
+This example demonstrates how to reward the winner and log the top 3 results.
+
+```java
+import dev.despical.tntrun.api.event.game.GameEndEvent;
+import dev.despical.tntrun.user.User;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class GameRewardListener implements Listener {
+
+    @EventHandler
+    public void onGameEnd(GameEndEvent event) {
+        User winner = event.getWinner();
+
+        if (winner != null) {
+            Player player = winner.getPlayer();
+            if (player != null) {
+                player.giveExpLevels(1);
+                player.sendMessage("You won this TNT Run match!");
+            }
+        }
+
+        event.getTop3().forEach((uuid, score) -> {
+            System.out.println("TNT Run podium: " + uuid + " with " + score + " points.");
+        });
+    }
+}
+```

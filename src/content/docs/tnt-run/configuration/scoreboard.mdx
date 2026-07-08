@@ -1,0 +1,86 @@
+---
+title: scoreboard.yml
+description: Detailed guide for configuring the dynamic, state-based TNT Run scoreboard.
+---
+
+The `scoreboard.yml` file allows you to customize the information displayed on the right side of the screen. The scoreboard is **state-aware**, switching its layout and available placeholders automatically as the game progresses.
+
+---
+
+## Global Placeholders
+
+These placeholders are available in every major stage of the game.
+
+| Placeholder          | Description                                       |
+|:---------------------|:--------------------------------------------------|
+| `%player%`           | The name of the player viewing the scoreboard.    |
+| `%date%`             | The current date.                                 |
+| `%players%`          | Current number of players in the arena.           |
+| `%map_name%`         | Display name of the arena map.                    |
+| `%max_players%`      | Maximum player capacity.                          |
+| `%min_players%`      | Minimum players required to start.                |
+| `%timer%`            | Remaining time in seconds.                        |
+| `%formatted_timer%`  | Remaining time in `MM:SS` format.                 |
+
+---
+
+## State-Specific Placeholders
+
+### 1. Waiting & Starting Phases
+These focus on the countdown and player requirements.
+
+* **`%players_needed%`**: How many more players must join to reach the `min_players` threshold.
+* **`%s%`**: Returns an "s" when the value is plural and an empty string when it is singular.
+
+### 2. In-Game & Ending Phases
+These focus on active survival information.
+
+* **`%players_left%`**: Number of players still alive in the arena.
+* **`%double_jumps%`**: Remaining double jumps for the viewer.
+* **`%max_double_jumps%`**: Maximum double jumps available to the viewer.
+
+---
+
+## State Sections
+
+The default file contains separate sections for each scoreboard situation:
+
+| Section | Used When |
+|:--------|:----------|
+| `waiting` | Arena is waiting for enough players. |
+| `starting-half` | Countdown is active, but the arena still has open slots. |
+| `starting` | Normal countdown before the match begins. |
+| `starting-full` | Arena is completely full and the game is about to start. |
+| `in-game` | Blocks are being removed and players are surviving. |
+| `ending` | Winner summary and cleanup phase. |
+
+---
+
+## Configuration Example
+
+```yaml
+in-game:
+  title: "<#FFC800><bold>TNT RUN"
+  lines:
+    - "<#B0C4DE>%date%"
+    - ""
+    - "<#E6E6E6>Duration: <#00FF95>%formatted_timer%"
+    - ""
+    - "<#E6E6E6>Double Jump: <#00FF95>%double_jumps%<#B0C4DE>/<#00FF95>%max_double_jumps%"
+    - ""
+    - "<#E6E6E6>Players Alive: <#00FF95>%players_left%"
+    - ""
+    - "<#FFC800>www.despical.dev"
+```
+
+---
+
+## Disabling Scoreboards
+
+Scoreboards can be disabled globally in `config.yml`:
+
+```yaml
+scoreboard-enabled: false
+```
+
+They can also be disabled per arena in the setup menu. Both the global setting and the arena setting must allow scoreboards for players to see them.

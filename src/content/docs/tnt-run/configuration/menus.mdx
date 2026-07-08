@@ -1,0 +1,131 @@
+---
+title: GUI Menus
+description: Customize TNT Run setup, statistics, spectator settings, and spectator teleporter menus.
+topic: tnt-run
+---
+
+The `menu/` folder controls the visual layout of TNT Run's inventory interfaces. These menus are used for arena setup, player statistics, spectator settings, and spectator teleporting.
+
+---
+
+## Menu Basics
+
+Most menu files share the same structure:
+
+* **`rows`**: Defines the height of the GUI (1-6).
+* **`title`**: The name displayed at the top of the menu. Supports **MiniMessage** for colors, gradients, and bold text.
+* **`items`**: The configurable buttons, decorations, and interactive entries inside the menu.
+
+---
+
+## setup-menu.yml
+
+The `setup-menu.yml` file defines the appearance, feedback messages, and control items of the interactive GUI opened via `/tntrun edit <arena>`.
+
+### Setup Categories
+
+| Category | Purpose |
+|:---------|:--------|
+| Location Settings | Sets lobby, start, and end locations. |
+| Player Amounts | Controls minimum and maximum player counts. |
+| Arena Sign | Registers a join sign for the arena. |
+| Map Name | Sets the display name used by messages and scoreboards. |
+| Player Settings | Configures inventory, effects, and player state when joining. |
+| Potion Effects | Adds or removes potion effects for arena players. |
+| Scoreboard & BossBar | Toggles arena-specific visual systems. |
+| Arena Records | Resets stored best survival records for the arena. |
+| Register Arena | Runs the integrity check and enables the arena. |
+
+---
+
+## stats-menu.yml
+
+The `stats-menu.yml` file controls the visual layout of the statistics GUI opened by:
+
+```bash
+/tntrun stats [player]
+```
+
+### Statistics Placeholders
+
+These placeholders are used within item names and lore:
+
+* **`%target%`**: The player whose profile is being viewed.
+* **`%games_played%`**: Total TNT Run games played.
+* **`%wins%`**: Total games won.
+* **`%loses%`**: Total games lost.
+* **`%win_streak%`**: Current consecutive wins.
+* **`%longest_win_streak%`**: Highest win streak reached by the player.
+* **`%longest_survive%`**: Longest survival time across all games.
+* **`%arena%`**, **`%best_time%`**, and leaderboard placeholders: Used by arena record entries.
+
+---
+
+## spectator-settings-menu.yml
+
+This menu lets spectators change personal spectator options.
+
+| Item | Behavior |
+|:-----|:---------|
+| Night Vision | Toggles night vision while spectating. |
+| Spectators | Shows or hides other spectators. |
+| Speed | Cycles spectator movement speed. |
+| Close | Closes the menu. |
+
+---
+
+## spectator-teleporter-menu.yml
+
+This menu displays alive players as player heads. Spectators can click a player entry to teleport to that player.
+
+The menu also supports previous and next page buttons for larger games.
+
+---
+
+## Item Configuration
+
+Each menu item can be customized with materials, slots, and unique properties.
+
+| Property | Description |
+|:---------|:------------|
+| `slot` | A single inventory slot, such as `slot: 13`. |
+| `slots` | A list of slots for repeated decoration items, such as `slots: [0, 1, 2]`. |
+| `material` | The Bukkit material to display. |
+| `decoration-only` | If `true`, the item is purely visual and cannot be interacted with. |
+| `skull` | Used for `PLAYER_HEAD` materials. Set to `%target%` to show a player's skin. |
+| `glow` | If `true`, adds an enchantment glint to the item. |
+| `item-flags` | Used to clean up the item's look, such as hiding attributes. |
+| `action` | Connects the item to a built-in menu action. |
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  player_head:
+    slot: 13
+    name: "<#00e5ff><bold>%target%'s Profile"
+    material: PLAYER_HEAD
+    skull: "%target%"
+    lore: []
+
+  wins:
+    slot: 30
+    name: "<light_purple><bold>Wins"
+    material: NETHER_STAR
+    glow: true
+    lore:
+      - "<#B0BEC5>Total games won."
+      - ""
+      - "<white>Count: <light_purple>%wins%"
+```
+
+---
+
+## Menu Editing Tips
+
+* Keep important buttons in stable slots so staff and players build muscle memory.
+* Do not remove required setup items unless you know the backing menu code no longer needs them.
+* Use decoration-only filler items for visual polish without adding accidental actions.
+* Test every changed menu with a non-OP account when possible.

@@ -1,0 +1,82 @@
+---
+title: Double Jumps
+description: Configure and understand TNT Run double jumps, permissions, cooldowns, sounds, and action bar feedback.
+---
+
+Double jumps give players a limited way to recover from mistakes, cross gaps, and make clutch plays.
+They are available during the in-game phase and are disabled for spectators or eliminated players.
+
+---
+
+## Configuration
+
+```yaml
+double-jumps:
+  default: 5
+  delay: 4
+  permissions:
+    - tntrun.doublejumps.3
+    - tntrun.doublejumps.2
+    - tntrun.doublejumps.1
+
+jump-bar: true
+```
+
+| Option | Description |
+|:--|:--|
+| `default` | Double jumps given to players without a matching permission. |
+| `delay` | Cooldown in seconds after each double jump. |
+| `permissions` | Permission nodes that override jump counts. |
+| `jump-bar` | Shows cooldown feedback in the action bar. |
+
+---
+
+## Permission-Based Amounts
+
+The plugin reads the final number from matching permission nodes.
+For example:
+
+```text
+tntrun.doublejumps.3
+```
+
+This gives the player 3 double jumps if the permission appears in the configured permissions list.
+
+<br />
+
+Put higher or more specific permissions first if you want VIP groups to be matched before lower values.
+
+---
+
+## How Players Trigger It
+
+Players can trigger a double jump by:
+
+* Right-clicking the configured double jump item.
+* Using the normal flight-toggle style double jump behavior during the game.
+
+The default item is a feather in slot `0`.
+
+---
+
+## Cooldown and Velocity
+
+When a double jump succeeds, TNT Run launches the player forward and upward.
+The cooldown prevents repeated instant jumps.
+
+Developers can listen to `PlayerDoubleJumpEvent` to cancel a jump, change its velocity, or adjust the cooldown for custom modes.
+
+---
+
+## Sound Feedback
+
+The default double jump sound is configured in `sounds.yml`:
+
+```yaml
+sounds:
+  double-jump:
+    enabled: true
+    sound: ENTITY_FIREWORK_ROCKET_LAUNCH
+    volume: 1.0
+    pitch: 1.0
+```

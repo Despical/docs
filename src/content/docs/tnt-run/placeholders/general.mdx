@@ -1,0 +1,107 @@
+---
+title: Placeholders
+description: List of available PlaceholderAPI placeholders for TNT Run.
+---
+
+To use these placeholders, you must have the **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** plugin installed on your server. These can be used in any plugin that supports PlaceholderAPI (Scoreboards, Chat, Menus, Holograms, etc.).
+
+---
+
+## Server Placeholders
+These placeholders are used to display global information about the TNT Run plugin and its active arenas.
+
+| Placeholder                  | Description                                        |
+|:-----------------------------|:---------------------------------------------------|
+| `%tntrun_arenas_total%`      | Total number of registered arenas.                 |
+| `%tntrun_arenas_ready%`      | Number of arenas that are ready to play.           |
+| `%tntrun_active_games%`      | Number of active game instances.                   |
+| `%tntrun_active_players%`    | Total players currently inside TNT Run arenas.     |
+
+---
+
+## Player Placeholders
+These placeholders are used to display the statistics and current game state of the player who is viewing the placeholder.
+
+| Placeholder                                | Description                                      |
+|:-------------------------------------------|:-------------------------------------------------|
+| `%tntrun_name%`                            | Returns the player's name.                       |
+| `%tntrun_uuid%`                            | Returns the player's unique ID.                  |
+| `%tntrun_is_playing%`                      | Whether the player is currently inside an arena. |
+| `%tntrun_is_spectator%`                    | Whether the player is currently spectating.      |
+| `%tntrun_current_arena%`                   | The player's current arena ID.                   |
+| `%tntrun_current_arena_state%`             | Current state of the player's arena.             |
+| `%tntrun_current_arena_players%`           | Current player count in the player's arena.      |
+| `%tntrun_current_arena_players_left%`      | Number of active survivors left in the arena.    |
+| `%tntrun_current_arena_max_players%`       | Maximum player count of the current arena.       |
+| `%tntrun_current_arena_record_holder%`     | Record holder for the current arena.             |
+| `%tntrun_current_arena_record_time%`       | Formatted record time for the current arena.     |
+| `%tntrun_current_arena_record_time_raw%`   | Raw record time for the current arena.           |
+| `%tntrun_current_arena_best%`              | The viewer's formatted best time in this arena.  |
+| `%tntrun_current_arena_best_raw%`          | The viewer's raw best time in this arena.        |
+| `%tntrun_current_survive_time%`            | Formatted current survival time.                 |
+| `%tntrun_current_survive_time_raw%`        | Raw current survival time.                       |
+| `%tntrun_double_jumps%`                    | Remaining double jumps.                          |
+| `%tntrun_max_double_jumps%`                | Maximum double jumps available to the player.    |
+| `%tntrun_double_jump_cooldown%`            | Current double jump cooldown.                    |
+
+---
+
+## Statistic Placeholders
+These placeholders expose persistent player statistics.
+
+| Placeholder                         | Description                             |
+|:------------------------------------|:----------------------------------------|
+| `%tntrun_games_played%`             | Total games the player participated in. |
+| `%tntrun_wins%`                     | Total number of games won.              |
+| `%tntrun_loses%`                    | Total number of games lost.             |
+| `%tntrun_losses%`                   | Alias for total losses.                 |
+| `%tntrun_win_streak%`               | Current win streak of the player.       |
+| `%tntrun_longest_win_streak%`       | Highest win streak ever reached.        |
+| `%tntrun_longest_survive%`          | Formatted longest survival time.        |
+| `%tntrun_longest_survive_raw%`      | Raw longest survival time.              |
+| `%tntrun_win_rate%`                 | Win rate as a percentage value.         |
+
+---
+
+## Arena Placeholders
+
+These placeholders allow you to fetch real-time data from specific arenas.
+
+---
+
+### Arena Settings
+Format: `%tntrun_arena:<arena_id>:<stat>%`
+
+| Placeholder                                      | Description                                       |
+|:-------------------------------------------------|:--------------------------------------------------|
+| `%tntrun_arena:<id>:min_players%`                | Minimum players required for the specified arena. |
+| `%tntrun_arena:<id>:max_players%`                | Maximum players allowed for the specified arena.  |
+| `%tntrun_arena:<id>:ready%`                      | Whether the arena is registered and ready.        |
+| `%tntrun_arena:<id>:map_name%`                   | Display map name of the specified arena.          |
+| `%tntrun_arena:<id>:scoreboard_enabled%`         | Per-arena scoreboard toggle.                      |
+| `%tntrun_arena:<id>:bossbar_enabled%`            | Per-arena bossbar toggle.                         |
+| `%tntrun_arena:<id>:potion_effects_count%`       | Number of potion effects configured for the arena.|
+| `%tntrun_arena:<id>:has_potion_effects%`         | Whether the arena has any potion effects.         |
+
+### Live Game Data
+Format: `%tntrun_arena:<arena_id>:<stat>%`
+
+| Placeholder                              | Description                                                    |
+|:-----------------------------------------|:---------------------------------------------------------------|
+| `%tntrun_arena:<id>:players%`            | Current number of players in the game.                         |
+| `%tntrun_arena:<id>:players_left%`       | Number of active survivors left in the arena.                  |
+| `%tntrun_arena:<id>:state%`              | Current state of the arena (e.g., waiting, starting, in-game). |
+| `%tntrun_arena:<id>:record_holder%`      | Name of the arena record holder.                               |
+| `%tntrun_arena:<id>:record_time%`        | Formatted best survival time for the arena.                    |
+| `%tntrun_arena:<id>:record_time_raw%`    | Raw best survival time for the arena.                          |
+
+---
+
+## Spectator Placeholders
+These placeholders expose the viewer's spectator preferences.
+
+| Placeholder                               | Description                                      |
+|:------------------------------------------|:-------------------------------------------------|
+| `%tntrun_spectator_speed%`                | Spectator speed setting.                         |
+| `%tntrun_spectator_night_vision_level%`   | Night vision level or state.                     |
+| `%tntrun_spectator_show_others%`          | Whether other spectators are visible.            |

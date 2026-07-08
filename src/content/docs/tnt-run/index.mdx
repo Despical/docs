@@ -1,0 +1,216 @@
+---
+title: TNT Run Documentation
+description: TNT Run is a fast-paced Minecraft minigame plugin for Paper and Spigot with disappearing floors, double jumps, spectator tools, statistics, leaderboards, PlaceholderAPI support, and a developer event API.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## TNT Run
+
+**TNT Run** is a competitive Minecraft minigame where players run across layers of removable blocks while the floor disappears under their feet.
+The goal is simple: keep moving, use your double jumps carefully, avoid falling through every layer, and be the last player alive.
+
+Built for server owners who want a polished arena game, **TNT Run** includes setup menus, join signs, scoreboards, boss bars, spectator menus, per-arena records, statistics, PlaceholderAPI placeholders, and a developer API for custom integrations.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="Install TNT Run and get your server ready for gameplay in minutes."
+        href="/tnt-run/getting-started"
+    />
+
+    <LinkCard
+        title="Arena Setup"
+        description="Create and configure arenas to host TNT Run matches."
+        href="/tnt-run/arena-setup"
+    />
+
+    <LinkCard
+        title="Gameplay Overview"
+        description="Learn how matches work and how winners are decided."
+        href="/tnt-run/gameplay"
+    />
+</CardGrid>
+
+## Features
+
+These pages explain the important gameplay systems from a server owner perspective.
+
+<CardGrid>
+    <LinkCard
+        title="Double Jumps"
+        description="How jump counts, cooldowns, permissions, sounds, and the action bar cooldown work."
+        href="/tnt-run/features/double-jumps"
+    />
+
+    <LinkCard
+        title="Block Removal & Recovery"
+        description="How TNT Run removes floors, snapshots block data, and restores arenas after restarts or crashes."
+        href="/tnt-run/features/block-safety"
+    />
+
+    <LinkCard
+        title="Spectator Mode"
+        description="How eliminated players spectate, teleport to alive players, and configure spectator visibility."
+        href="/tnt-run/features/spectator-mode"
+    />
+</CardGrid>
+
+## Commands
+
+All **TNT Run** commands are grouped by purpose to keep server management clean and intuitive.
+
+<CardGrid>
+    <LinkCard
+        title="Player Commands"
+        description="Commands that can be used by players to join or leave games and view player statistics."
+        href="/tnt-run/commands/player"
+    />
+
+    <LinkCard
+        title="Arena Commands"
+        description="Commands used to create, edit, and manage arenas."
+        href="/tnt-run/commands/arena"
+    />
+
+    <LinkCard
+        title="Admin Commands"
+        description="Administrative commands for managing games and settings."
+        href="/tnt-run/commands/admin"
+    />
+
+    <LinkCard
+        title="Debug Commands"
+        description="Advanced commands for testing and troubleshooting."
+        href="/tnt-run/commands/debug"
+    />
+</CardGrid>
+
+## Configuration Files
+
+**TNT Run** offers extensive configuration through multiple files, allowing full control over visuals, messages, and gameplay behavior.
+
+<CardGrid>
+    <LinkCard
+        title="config.yml"
+        description="Main configuration file controlling core gameplay behavior and plugin settings."
+        href="/tnt-run/configuration/config"
+    />
+
+    <LinkCard
+        title="block-removal.yml"
+        description="Control when arena blocks start disappearing, which materials are removable, and how crash recovery works."
+        href="/tnt-run/configuration/block-removal"
+    />
+
+    <LinkCard
+        title="messages.yml"
+        description="Customize all in-game messages, titles, subtitles, and text outputs used by TNT Run."
+        href="/tnt-run/configuration/messages"
+    />
+
+    <LinkCard
+        title="scoreboard.yml"
+        description="Configure the in-game scoreboard layout, lines, and displayed values."
+        href="/tnt-run/configuration/scoreboard"
+    />
+
+    <LinkCard
+        title="bossbar.yml"
+        description="Customize boss bars used during gameplay, including colors, styles, and messages."
+        href="/tnt-run/configuration/bossbar"
+    />
+
+    <LinkCard
+        title="items.yml"
+        description="Configure lobby items such as the leave item, including their name, material, slot, and lore."
+        href="/tnt-run/configuration/items"
+    />
+
+    <LinkCard
+        title="signs.yml"
+        description="Customize the appearance and behavior of arena join signs."
+        href="/tnt-run/configuration/signs"
+    />
+
+    <LinkCard
+        title="sounds.yml"
+        description="Configure gameplay sounds such as the double jump sound effect."
+        href="/tnt-run/configuration/sounds"
+    />
+
+    <LinkCard
+        title="mysql.yml"
+        description="Configure external database connections to synchronize player statistics across your network."
+        href="/tnt-run/configuration/mysql"
+    />
+
+    <LinkCard
+        title="GUI Menus"
+        description="Customize the setup, statistics, spectator settings, and spectator teleporter menus."
+        href="/tnt-run/configuration/menus"
+    />
+
+    <LinkCard
+        title="Other Files"
+        description="Automatically managed internal files used by the TNT Run plugin."
+        href="/tnt-run/configuration/other-files"
+    />
+</CardGrid>
+
+## Placeholders
+
+**TNT Run** provides built-in placeholders and full **PlaceholderAPI** support, allowing you to display game, arena, and player data across your server.
+
+<CardGrid>
+    <LinkCard
+        title="General Placeholders"
+        description="Placeholders for game state, arena information, and player-related data."
+        href="/tnt-run/placeholders/general"
+    />
+
+    <LinkCard
+        title="Leaderboard Placeholders"
+        description="Placeholders specifically designed to display leaderboard rankings and statistics."
+        href="/tnt-run/placeholders/leaderboard"
+    />
+</CardGrid>
+
+## Developer API
+
+Explore the various events and integration points to extend **TNT Run** functionality.
+
+<CardGrid>
+    <LinkCard
+        title="Player Events"
+        description="Documentation for events related to player actions and statistics."
+        href="/tnt-run/api/player-events/player-event"
+    />
+
+    <LinkCard
+        title="Game Events"
+        description="Events triggered by game state changes, starts, and endings."
+        href="/tnt-run/api/game-events/game-event"
+    />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard
+        title="FAQ"
+        description="Common questions, known issues, and troubleshooting information."
+        href="/tnt-run/misc/faq"
+    />
+
+    <LinkCard
+        title="Source Code"
+        description="Explore the codebase, report issues, or contribute on GitHub."
+        href="https://github.com/Despical/TNTRun"
+        target="_blank"
+        rel="noopener noreferrer"
+    />
+</CardGrid>

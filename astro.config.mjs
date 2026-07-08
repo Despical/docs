@@ -36,6 +36,16 @@ export default defineConfig({
                     label: "spigot-webhook:GitHub",
                     href: "https://github.com/Despical/SpigotSalesWebhook",
                 },
+                {
+                    icon: "github",
+                    label: "tnt-run:GitHub",
+                    href: "https://github.com/Despical/TNTRun",
+                },
+                {
+                    icon: "seti:java",
+                    label: "tnt-run:Javadoc",
+                    href: "https://javadoc.despical.dev/tnt-run/",
+                },
                 {icon: 'discord', label: 'Discord', href: 'https://discord.gg/uXVU8jmtpU'},
                 {icon: 'patreon', label: 'Patreon', href: 'https://patreon.com/despical'},
             ],
@@ -685,6 +695,235 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "TNT Run",
+                        id: "tnt-run",
+                        link: "/tnt-run/",
+                        icon: "tnt-run",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        link: "/tnt-run/getting-started",
+                                    },
+                                    {
+                                        label: "Gameplay Overview",
+                                        link: "/tnt-run/gameplay",
+                                    },
+                                    {
+                                        label: "Arena Setup",
+                                        link: "/tnt-run/arena-setup",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Player Commands",
+                                        link: "/tnt-run/commands/player",
+                                    },
+                                    {
+                                        label: "Arena Commands",
+                                        link: "/tnt-run/commands/arena",
+                                    },
+                                    {
+                                        label: "Admin Commands",
+                                        link: "/tnt-run/commands/admin",
+                                    },
+                                    {
+                                        label: "Debug Commands",
+                                        link: "/tnt-run/commands/debug",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "config.yml",
+                                        link: "/tnt-run/configuration/config",
+                                    },
+                                    {
+                                        label: "block-removal.yml",
+                                        link: "/tnt-run/configuration/block-removal",
+                                    },
+                                    {
+                                        label: "messages.yml",
+                                        link: "/tnt-run/configuration/messages",
+                                    },
+                                    {
+                                        label: "scoreboard.yml",
+                                        link: "/tnt-run/configuration/scoreboard",
+                                    },
+                                    {
+                                        label: "bossbar.yml",
+                                        link: "/tnt-run/configuration/bossbar",
+                                    },
+                                    {
+                                        label: "items.yml",
+                                        link: "/tnt-run/configuration/items",
+                                    },
+                                    {
+                                        label: "signs.yml",
+                                        link: "/tnt-run/configuration/signs",
+                                    },
+                                    {
+                                        label: "sounds.yml",
+                                        link: "/tnt-run/configuration/sounds",
+                                    },
+                                    {
+                                        label: "mysql.yml",
+                                        link: "/tnt-run/configuration/mysql",
+                                    },
+                                    {
+                                        label: "GUI Menus",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "stats-menu.yml",
+                                                link: "/tnt-run/configuration/menu/stats",
+                                            },
+                                            {
+                                                label: "setup-menu.yml",
+                                                link: "/tnt-run/configuration/menu/setup",
+                                            },
+                                            {
+                                                label: "spectator-settings-menu.yml",
+                                                link: "/tnt-run/configuration/menu/spectator-settings",
+                                            },
+                                            {
+                                                label: "spectator-teleporter-menu.yml",
+                                                link: "/tnt-run/configuration/menu/spectator-teleporter",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        label: "Other Files",
+                                        link: "/tnt-run/configuration/other-files",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {
+                                        label: "Double Jumps",
+                                        link: "/tnt-run/features/double-jumps",
+                                    },
+                                    {
+                                        label: "Block Removal & Recovery",
+                                        link: "/tnt-run/features/block-safety",
+                                    },
+                                    {
+                                        label: "Spectator Mode",
+                                        link: "/tnt-run/features/spectator-mode",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {
+                                        label: "General Placeholders",
+                                        link: "/tnt-run/placeholders/general",
+                                    },
+                                    {
+                                        label: "Leaderboard Placeholders",
+                                        link: "/tnt-run/placeholders/leaderboard",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "TNT Run API",
+                                        link: "/tnt-run/api/tnt-run-api",
+                                    },
+                                    {
+                                        label: "Game Events",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "GameEvent",
+                                                link: "/tnt-run/api/game-events/game-event",
+                                            },
+                                            {
+                                                label: "GameStartEvent",
+                                                link: "/tnt-run/api/game-events/game-start-event",
+                                            },
+                                            {
+                                                label: "GameEndEvent",
+                                                link: "/tnt-run/api/game-events/game-end-event",
+                                            },
+                                            {
+                                                label: "GameStopEvent",
+                                                link: "/tnt-run/api/game-events/game-stop-event",
+                                            },
+                                            {
+                                                label: "GameStateChangeEvent",
+                                                link: "/tnt-run/api/game-events/game-state-change-event",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        label: "Player Events",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "PlayerEvent",
+                                                link: "/tnt-run/api/player-events/player-event",
+                                            },
+                                            {
+                                                label: "PlayerJoinAttemptEvent",
+                                                link: "/tnt-run/api/player-events/player-join-attempt-event",
+                                            },
+                                            {
+                                                label: "PlayerLeaveGameEvent",
+                                                link: "/tnt-run/api/player-events/player-leave-game-event",
+                                            },
+                                            {
+                                                label: "PlayerDoubleJumpEvent",
+                                                link: "/tnt-run/api/player-events/player-double-jump-event",
+                                            },
+                                            {
+                                                label: "PlayerEliminateEvent",
+                                                link: "/tnt-run/api/player-events/player-eliminate-event",
+                                            },
+                                            {
+                                                label: "PlayerStatisticChangeEvent",
+                                                link: "/tnt-run/api/player-events/player-statistic-change-event",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "FAQ",
+                                        link: "/tnt-run/misc/faq",
+                                    },
+                                    {
+                                        label: "Source Code",
+                                        link: "https://github.com/Despical/TNTRun",
+                                        attrs: {target: "_blank"},
+                                    },
+                                    {
+                                        label: "Create an Issue",
+                                        link: "https://github.com/Despical/TNTRun/issues/new/choose",
+                                        attrs: {target: "_blank"},
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Warden Party",
                         link: "/warden-party/",
                         icon: "warden-party",
@@ -973,7 +1212,11 @@ export default defineConfig({
                             }
                         ]
                     }
-                ])
+                ], {
+                    topics: {
+                        "tnt-run": ["/tnt-run/misc/source-code", "/tnt-run/configuration/menus"],
+                    },
+                })
             ],
             head: [
                 {

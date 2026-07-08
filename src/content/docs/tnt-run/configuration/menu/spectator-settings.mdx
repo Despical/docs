@@ -1,0 +1,60 @@
+---
+title: spectator-settings-menu.yml
+description: Configure the spectator options menu used by TNT Run spectators.
+---
+
+The `spectator-settings-menu.yml` file controls the personal spectator settings GUI. Spectators use this menu to toggle visibility options and cycle movement speed while watching a game.
+
+---
+
+## Menu Basics
+
+* **`rows`**: Defines the menu height. TNT Run uses `3` rows by default.
+* **`title`**: The inventory title shown at the top of the GUI.
+* **`items`**: Configurable buttons and optional decoration items.
+
+---
+
+## Menu Items
+
+| Item Key | Slot | Material | Purpose |
+|:---------|:-----|:---------|:--------|
+| `spectator-settings` | `4` | `COMPARATOR` | Item used to open spectator settings from the spectator inventory. |
+| `background-fill` | Multiple | `GRAY_STAINED_GLASS_PANE` | Optional decoration-only filler item. |
+| `night-vision-enabled` | `11` | `ENDER_EYE` | Shows night vision as enabled and disables it when clicked. |
+| `night-vision-disabled` | `11` | `ENDER_PEARL` | Shows night vision as disabled and enables it when clicked. |
+| `show-spectators-enabled` | `13` | `LIME_DYE` | Shows other spectators as visible and hides them when clicked. |
+| `show-spectators-disabled` | `13` | `GRAY_DYE` | Shows other spectators as hidden and shows them when clicked. |
+| `speed-disabled` | `15` | `GUNPOWDER` | Shows spectator speed as disabled and cycles speed when clicked. |
+| `speed` | `15` | `SUGAR` | Shows active spectator speed and cycles speed when clicked. |
+| `close` | `26` | `BARRIER` | Closes the settings menu. |
+
+---
+
+## Toggle Pairs
+
+Some settings use two item definitions for the same slot. The plugin decides which item to display based on the player's current spectator state.
+
+| Setting | Enabled Item | Disabled Item |
+|:--------|:-------------|:--------------|
+| Night Vision | `night-vision-enabled` | `night-vision-disabled` |
+| Show Spectators | `show-spectators-enabled` | `show-spectators-disabled` |
+| Speed | `speed` | `speed-disabled` |
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  night-vision-enabled:
+    slot: 11
+    material: ENDER_EYE
+    glow: true
+    name: "<#3F7DCC><bold>Night Vision"
+
+  close:
+    slot: 26
+    material: BARRIER
+    name: "<#FF5252><bold>Close"
+```

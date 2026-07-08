@@ -1,0 +1,69 @@
+---
+title: config.yml
+description: Detailed guide for the main configuration settings of TNT Run.
+---
+
+The `config.yml` file is the heart of **TNT Run**. It controls the game lifecycle, storage mode, arena timing, player rules, chat behavior, command blocking, and diagnostic tools.
+
+---
+
+## General Settings
+
+* **`database`**: Defines how player statistics and records are stored.
+  * `flat`: Local storage using YAML files (**standard for small servers**).
+  * `mysql`: External database storage (**recommended for larger networks**).
+* **`scoreboard-enabled`**: Enables or disables the scoreboard system globally. Arenas can still control their own scoreboard setting from the setup menu.
+* **`name-tags-hidden`**: Hides player name tags during games when enabled.
+* **`update-notifier`**: Checks for newer plugin releases on startup.
+
+**Note:** Changing the database type requires a server restart or plugin reload and does not support automatic data migration.
+
+---
+
+## Time Settings
+
+These values (in seconds) control the pace of your arenas. **TNT Run** uses a smart countdown flow that shortens the start timer as the arena fills.
+
+| Option                    | Default | Description                                                                        |
+|:--------------------------|:--------|:-----------------------------------------------------------------------------------|
+| `waiting-time`            | 300     | The idle timer while the arena waits for enough players.                           |
+| `pre-game-waiting-time`   | 120     | The countdown used after the minimum player count is reached.                      |
+| `game-starting-time`      | 30      | The shorter countdown used when the arena is close to full.                        |
+| `full-game-starting-time` | 15      | The fastest countdown used when the arena reaches its maximum player count.        |
+| `ending-time`             | 10      | Duration of the ending phase before players are returned and the arena resets.     |
+
+---
+
+## Gameplay Mechanics
+
+* **`double-jumps.default`**: The amount of double jumps given to players without a matching permission.
+* **`double-jumps.delay`**: Cooldown, in seconds, before a player can use another double jump.
+* **`double-jumps.permissions`**: Permission-based double jump overrides. The number after the last dot becomes the player's jump amount.
+* **`jump-bar`**: Shows action bar feedback after a player uses a double jump.
+* **`level-bar-timer`**: Uses the player's experience level bar as a visual timer display.
+* **`instant-leave`**:
+  * `true`: Players leave immediately when using the leave item.
+  * `false`: Adds a short confirmation flow to prevent accidental exits.
+
+---
+
+## Chat & Commands
+
+* **`chat-settings.enable-formatting`**: Uses TNT Run's configured chat format from `messages.yml`.
+* **`chat-settings.separate-chat`**: Isolates arena chat from the rest of the server.
+* **`chat-settings.disable-chat-in-game`**: Prevents active players from sending chat while playing.
+* **`chat-settings.dead-chat-visible-to-alive`**: Controls whether alive players can see eliminated/spectator chat.
+* **`command-settings.disable-commands-while-playing`**: Restricts commands while players are inside an arena.
+* **`command-settings.allowed-commands`**: Commands that players may still use while command blocking is active.
+
+Players with `tntrun.commandblock.bypass` can ignore the command block list.
+
+---
+
+## System & Performance
+
+* **`arena-settings.tick-period`**: Controls the internal update frequency of arena logic. The default (`5`) is balanced for normal servers.
+* **`debug`**: Set to `true` to access advanced administrative and troubleshooting commands.
+* **`event-profiling`**: An advanced diagnostic tool.
+  * `enabled`: Measures how long TNT Run event listeners take to process.
+  * `verbose`: Logs every profiled event execution to the console. Use this only for short debugging sessions.

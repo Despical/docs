@@ -1,0 +1,69 @@
+---
+title: PlayerEvent
+description: The foundation for all player-related events in the TNT Run API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerEvent` class is an abstract base for all events involving a specific player.
+It provides developers with a streamlined way to access both the standard Bukkit `Player` object and the internal **TNT Run** `User` instance.
+
+<Aside type="note">
+    Because this is an abstract class, you cannot listen to it directly. Instead, you should listen to its specific subclasses like
+    `PlayerJoinAttemptEvent`, `PlayerLeaveGameEvent`, `PlayerDoubleJumpEvent`, `PlayerEliminateEvent`, or `PlayerStatisticChangeEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.player`
+- **Parent Class:** `TNTRunEvent`
+
+---
+
+## Methods
+
+| Method        | Return Type | Description                                                                |
+|:--------------|:------------|:---------------------------------------------------------------------------|
+| `getPlayer()` | `Player`    | Returns the standard Bukkit `Player` associated with the event.            |
+| `getUser()`   | `User`      | Returns the plugin-specific `User` object, containing stats and game data. |
+
+---
+
+## Known Subclasses
+These events inherit all methods from `PlayerEvent`:
+
+* **`PlayerJoinAttemptEvent`**: Fired when a player tries to join an arena.
+* **`PlayerLeaveGameEvent`**: Fired when a player exits an active game.
+* **`PlayerDoubleJumpEvent`**: Fired before a player consumes and performs a double jump.
+* **`PlayerEliminateEvent`**: Fired after a player is eliminated from active survivors.
+* **`PlayerStatisticChangeEvent`**: Fired before a player's persistent stats are stored.
+
+---
+
+## Usage in Listeners
+When listening to any subclass of `PlayerEvent`, you can immediately access the `User` object to check for statistics or plugin-specific data without manual lookups.
+
+```java
+import dev.despical.tntrun.api.event.player.PlayerJoinAttemptEvent;
+import dev.despical.tntrun.user.User;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class PlayerStatusListener implements Listener {
+
+    @EventHandler
+    public void onAnyPlayerEvent(PlayerJoinAttemptEvent event) {
+        // Accessing Bukkit Player
+        Player bukkitPlayer = event.getPlayer();
+
+        // Accessing TNT Run User
+        User user = event.getUser();
+
+        if (!bukkitPlayer.hasPermission("server.minigames.tntrun")) {
+            event.setCancelled(true);
+        }
+    }
+}
+```

@@ -1,0 +1,80 @@
+---
+title: block-removal.yml
+description: Configure TNT Run block removal timing, scanning behavior, removable materials, and snapshot recovery.
+---
+
+The `block-removal.yml` file controls the floor-removal system. This is one of the most important files for arena feel, performance, and safe recovery after a restart.
+
+---
+
+## Timing Settings
+
+These values control when blocks begin disappearing and how quickly the plugin scans players.
+
+| Option | Default | Description |
+|:-------|:--------|:------------|
+| `start-after-seconds` | `5` | Time before block removal begins after the match starts. |
+| `remove-delay-ticks` | `12` | Delay before blocks are removed after players step on them. |
+| `scan-interval-ticks` | `1` | How often players are scanned for removable blocks. |
+
+Lower values create a faster and more intense match, but they can increase work on busy servers.
+
+---
+
+## Scanning Behavior
+
+The plugin checks blocks under players and uses different scan depths depending on movement.
+
+```yaml
+scanning:
+  depth-on-ground: 2
+  depth-in-air: 6
+```
+
+* **`depth-on-ground`**: How many blocks below a grounded player should be checked.
+* **`depth-in-air`**: How many blocks below an airborne player should be checked. This helps catch lower floor layers during jumps or falls.
+
+---
+
+## Safety & Recovery
+
+Snapshot recovery protects arenas from staying damaged if the server stops during a match.
+
+| Option | Default | Description |
+|:-------|:--------|:------------|
+| `persist-snapshots` | `true` | Saves removed blocks so they can be restored later. |
+| `restore-snapshots-on-startup` | `true` | Restores saved blocks when the plugin starts again. |
+| `restore-only-air` | `true` | Restores a block only if the target position is still air. |
+| `flush-interval-ticks` | `5` | How often recovery data is saved while a game is running. |
+
+:::tip
+Keep snapshot persistence enabled for production arenas. It protects maps from interrupted games, crashes, and forced shutdowns.
+:::
+
+---
+
+## Removable Materials
+
+Only materials listed under `removable-blocks` are removed by the gameplay system. This lets you build decorative supports, walls, glass barriers, and lobby structures that do not disappear.
+
+```yaml
+removable-blocks:
+  - TNT
+  - SAND
+  - SANDSTONE
+  - GRAVEL
+  - TERRACOTTA
+  - RED_SANDSTONE
+  - RED_SAND
+```
+
+---
+
+## Recommended Tuning
+
+| Goal | Suggested Change |
+|:-----|:-----------------|
+| Easier gameplay | Increase `remove-delay-ticks`. |
+| Faster gameplay | Decrease `remove-delay-ticks`. |
+| Less scanning work | Increase `scan-interval-ticks` slightly. |
+| Safer recovery | Keep `persist-snapshots` and `restore-snapshots-on-startup` enabled. |

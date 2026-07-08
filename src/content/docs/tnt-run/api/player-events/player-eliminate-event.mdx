@@ -1,0 +1,63 @@
+---
+title: PlayerEliminateEvent
+description: Documentation for the event fired when a player is eliminated from a TNT Run game.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerEliminateEvent` is triggered after a player is eliminated from the active survivor list. The player has already been marked as a spectator when this event is fired.
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.player`
+- **Parent Class:** [`PlayerEvent`](/tnt-run/api/player-events/player-event)
+- **Cancellable:** No
+
+<Aside type="note">
+    Use this event for rewards, custom announcements, analytics, or external integrations that need to react to eliminations.
+</Aside>
+
+---
+
+## Methods
+
+Since this event extends `PlayerEvent`, you have access to `getPlayer()` and `getUser()` in addition to the following:
+
+| Method             | Return Type | Description                                             |
+|:-------------------|:------------|:--------------------------------------------------------|
+| `getGame()`        | `Game`      | Returns the game the player was eliminated from.        |
+| `getPlayersLeft()` | `int`       | Returns the number of active survivors left afterward.  |
+
+---
+
+## Lifecycle Notes
+When this event is called:
+* The player is no longer an active survivor.
+* The player has already been moved into spectator state.
+* The remaining survivor count is available through `getPlayersLeft()`.
+
+---
+
+## Example Usage
+
+This example broadcasts a custom elimination message to remaining players.
+
+```java
+import dev.despical.tntrun.api.event.player.PlayerEliminateEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class EliminationListener implements Listener {
+
+    @EventHandler
+    public void onEliminate(PlayerEliminateEvent event) {
+        String name = event.getPlayer().getName();
+        int left = event.getPlayersLeft();
+
+        event.getGame().getUsers().forEach(user -> {
+            user.getPlayer().sendMessage(name + " was eliminated. " + left + " players remain.");
+        });
+    }
+}
+```

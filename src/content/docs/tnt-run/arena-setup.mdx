@@ -1,0 +1,111 @@
+---
+title: Arena Setup
+description: Create and configure TNT Run arenas with locations, player limits, signs, records, potion effects, scoreboards, and boss bars.
+---
+
+import { Aside, Steps, Badge } from "@astrojs/starlight/components";
+
+Setting up an arena in **TNT Run** is done through an intuitive in-game GUI. This guide will walk you through the process from the initial command to the final registration.
+
+---
+
+## Step 1: Create the Arena
+
+To begin, you need to initialize a new arena instance. Each arena must have a **unique ID**.
+
+```bash
+/tntrun create <arena_id>
+```
+
+<Aside type="caution">
+    If the ID is already in use, you will receive an error message. Choose a name that is easy to remember (e.g., `winter_1`).
+</Aside>
+
+---
+
+## Step 2: Open the Setup Menu
+
+Once the arena is created, enter the Edit Mode to access the configuration GUI.
+
+```bash
+/tntrun edit <arena_id>
+```
+
+This command opens the main setup menu where all configurations are handled.
+
+---
+
+## Step 3: Configure Game Locations
+
+Click on the **Arena Locations** (`FILLED_MAP`) item in the main menu to set the teleportation points.
+
+* **Lobby** (`LODESTONE`): The location where players are teleported when they join the arena and wait for the game to start.
+* **Start Location** (`BEACON`): The specific point where players are teleported the moment the game loop begins.
+* **End Location** (`END_PORTAL_FRAME`): The location where players are sent after the game ends or if they leave.
+
+<Aside type="tip">
+    You can use the **Go Back** (`ARROW`) item to return to the main setup menu at any time.
+</Aside>
+
+---
+
+## Step 4: Set Player Amounts <Badge text="Optional" variant="tip" />
+
+From the main menu, click on **Player Amounts** (`GLOWSTONE_DUST`) to define the arena's capacity.
+
+* **Minimum Players**: How many players are needed to start the lobby countdown.
+* `LEFT CLICK` to increase | `RIGHT CLICK` to decrease.
+* **Maximum Players**: The total capacity of the arena.
+* `LEFT CLICK` to increase | `RIGHT CLICK` to decrease.
+
+---
+
+## Step 5: Set Optional Settings
+
+| Setting | Description |
+|:--|:--|
+| **Map Name** | Display name used in scoreboards, signs, messages, and placeholders. |
+| **Scoreboard Toggle** | Enables or disables the scoreboard for this arena. |
+| **Bossbar Toggle** | Enables or disables boss bars for this arena. |
+| **Potion Effects** | Applies configured effects to players when the in-game phase starts. |
+
+---
+
+## Step 6: Create an Arena Sign <Badge text="Optional" variant="tip" />
+
+Look directly at a sign and click the **Create Arena Sign** (`OAK_SIGN`) item. This will link the sign to your arena.
+
+The sign will automatically update its status (Waiting, Starting, In-Game, Ending) and display the current player count.
+
+---
+
+
+## Step 7: Register the Arena
+
+Once you have configured all required locations and player amounts, it's time to finalize.
+
+Click the **Register the Arena** (`FIREWORK_ROCKET`) item. The plugin will validate your settings and, if everything is correct, the arena will be activated and ready for players!
+
+---
+
+## Joining the Game
+After successfully registering your arena, players can join the action in two ways:
+
+1. **By Command:** Use `/tntrun join <arena_id>` to enter the lobby.
+2. **By Sign:** If you created an `Arena Sign in Step 6`, simply **Right-Click** the sign to join.
+
+---
+
+## Summary Table
+| Item              | Name                      | Function                                        |
+|:------------------|:--------------------------|:------------------------------------------------|
+| `FILLED_MAP`      | Manage Arena Locations    | Open Lobby, Start, and End location settings.   |
+| `GLOWSTONE_DUST`  | Player Amounts            | Configure minimum and maximum player limits.    |
+| `OAK_SIGN`        | Create Arena Sign         | Link a physical sign to the arena status.       |
+| `NAME_TAG`        | Set Map Name              | Set the display name used in arena placeholders. |
+| `BOOK`            | Configure Player Settings | Configure player inventory, effects, and mode.  |
+| `PLAYER_HEAD`     | Reset Arena Records       | Clear this arena's stored best-time records.    |
+| `DRAGON_BREATH`   | Manage Potion Effects     | Configure effects applied to arena players.     |
+| `NAME_TAG`        | Challenge Scoreboard      | Toggle the arena scoreboard.                    |
+| `ORANGE_DYE`      | Game BossBar              | Toggle the arena boss bar.                      |
+| `FIREWORK_ROCKET` | Register the Arena        | Validate, save, and activate the arena.         |

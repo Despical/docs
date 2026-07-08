@@ -1,0 +1,77 @@
+---
+title: PlayerLeaveGameEvent
+description: Documentation for the event fired right before a player leaves a TNT Run game.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `PlayerLeaveGameEvent` is an informational event called immediately before a player is removed from an active game session. Since the event is triggered before the actual leave cleanup, the player's game state, scores, and arena data are still available when this event is called.
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.player`
+- **Parent Class:** [`PlayerEvent`](/tnt-run/api/player-events/player-event)
+- **Cancellable:** No
+
+<Aside type="note">
+    This event is triggered regardless of how the player leaves: command, leave item, administrator kick, or disconnect.
+</Aside>
+
+---
+
+## Methods
+
+This event inherits `getPlayer()` and `getUser()` from `PlayerEvent`.
+
+| Method        | Return Type   | Description                                      |
+|:--------------|:--------------|:-------------------------------------------------|
+| `getGame()`   | `Game`        | Returns the game instance the player is leaving. |
+| `getReason()` | `LeaveReason` | Returns the specific cause of the departure.     |
+
+---
+
+## Leave Reasons
+The `LeaveReason` enum provides context on why the player is exiting the game:
+
+| Reason          | Description                                                            |
+|:----------------|:-----------------------------------------------------------------------|
+| `LEAVE_COMMAND` | The player manually typed a command to leave.                          |
+| `LEAVE_ITEM`    | The player interacted with the configured leave item.                  |
+| `KICK`          | An administrator kicked the player from the arena.                     |
+| `DISCONNECT`    | The player left the server entirely.                                   |
+
+---
+
+## Lifecycle Notes
+When this event is called:
+* The player is still registered in the game.
+* Inventory restoration and visibility cleanup have not been performed yet.
+* You can still access the player's final in-game state for logging or integrations.
+
+---
+
+## Example Usage
+
+This example shows how to log players who leave during an active game.
+
+```java
+import dev.despical.tntrun.api.event.player.PlayerLeaveGameEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class LeaveLogger implements Listener {
+
+    @EventHandler
+    public void onLeave(PlayerLeaveGameEvent event) {
+        String name = event.getPlayer().getName();
+        String reason = event.getReason().name();
+
+        System.out.println("Player " + name + " is leaving TNT Run. Reason: " + reason);
+
+        if (event.getReason() == PlayerLeaveGameEvent.LeaveReason.DISCONNECT) {
+            // Custom disconnect handling
+        }
+    }
+}
+```

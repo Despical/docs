@@ -1,0 +1,93 @@
+---
+title: stats-menu.yml
+description: Customize the TNT Run player statistics and arena records interface.
+---
+
+The `stats-menu.yml` file controls the statistics GUI opened with `/tntrun stats [player]`. Players can view their overall TNT Run stats, open arena-specific records, and browse leaderboard entries.
+
+---
+
+## Menu Basics
+
+* **`rows`**: Defines the menu height. TNT Run uses `6` rows by default.
+* **`title`**: The inventory title shown at the top of the GUI.
+* **`items`**: Configurable decorations, buttons, stat entries, and arena record templates.
+
+---
+
+## Main Items
+
+| Item Key | Slot | Material | Purpose |
+|:---------|:-----|:---------|:--------|
+| `background_fill` | Multiple | `GRAY_STAINED_GLASS_PANE` | Decorative border/fill item. |
+| `decoration_borders` | Multiple | `RED_STAINED_GLASS_PANE` | Decorative top border items. |
+| `player_head` | `13` | `PLAYER_HEAD` | Shows the viewed player's profile head. |
+| `view_arenas` | `22` | `COMPASS` | Opens arena records and leaderboard pages. |
+| `games_played` | `29` | `TNT` | Shows total games played. |
+| `wins` | `30` | `NETHER_STAR` | Shows total wins. |
+| `loses` | `31` | `REDSTONE_BLOCK` | Shows total losses. |
+| `win_streak` | `32` | `EMERALD` | Shows the current win streak. |
+| `longest_win_streak` | `33` | `BLAZE_POWDER` | Shows the best win streak. |
+| `longest_survive` | `40` | `CLOCK` | Shows the longest survival time. |
+| `back_button` | `49` | `DARK_OAK_DOOR` | Returns to the previous menu. |
+| `previous_page` | `45` | `ARROW` | Shows the previous arena records page. |
+| `next_page` | `53` | `ARROW` | Shows the next arena records page. |
+| `arena_template` | Dynamic | `MAP` | Template used for each arena record entry. |
+
+---
+
+## Actions
+
+| Action | Used By | Behavior |
+|:-------|:--------|:---------|
+| `open_arenas` | `view_arenas` | Opens the arena records view. |
+| `back` | `back_button` | Returns to the previous menu. |
+| `previous_page` | `previous_page` | Moves to the previous arena page. |
+| `next_page` | `next_page` | Moves to the next arena page. |
+
+---
+
+## Statistics Placeholders
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%target%` | Player whose stats are being viewed. |
+| `%games_played%` | Total TNT Run games played. |
+| `%wins%` | Total games won. |
+| `%loses%` | Total games lost. |
+| `%win_streak%` | Current consecutive wins. |
+| `%longest_win_streak%` | Highest win streak reached by the player. |
+| `%longest_survive%` | Longest survival time across all games. |
+
+---
+
+## Arena Record Placeholders
+
+These placeholders are used by `arena_template`.
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%arena%` | Arena display name or ID. |
+| `%best_time%` | Player's best time for that arena. |
+| `%rank%` | Leaderboard rank. |
+| `%player%` | Leaderboard player name. |
+| `%time%` | Leaderboard survival time. |
+| `%color%` | Rank color configured by the template. |
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  player_head:
+    slot: 13
+    name: "<#00e5ff><bold>%target%'s Profile"
+    material: PLAYER_HEAD
+    skull: "%target%"
+
+  view_arenas:
+    slot: 22
+    action: "open_arenas"
+    material: COMPASS
+```

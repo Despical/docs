@@ -1,0 +1,81 @@
+---
+title: GameStopEvent
+description: Documentation for the event fired when a TNT Run game has been completely stopped and cleaned up.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The `GameStopEvent` is triggered after a **TNT Run** game has been forcefully stopped and all internal cleanup logic has been executed. Unlike `GameEndEvent`, which marks the natural end of the competition, this event marks the point where the game world and players have been restored.
+
+---
+
+## Technical Overview
+- **Package:** `dev.despical.tntrun.api.event.game`
+- **Parent Class:** [`GameEvent`](/tnt-run/api/game-events/game-event)
+- **Cancellable:** No
+
+---
+
+## Stop Reasons
+The event provides a `StopReason` to help you determine why the game was stopped.
+
+| Reason            | Description                                             |
+|:------------------|:--------------------------------------------------------|
+| `STOP_COMMAND`    | An administrator manually stopped the game via command. |
+| `SERVER_RELOAD`   | The plugin detected a server reload.                    |
+| `SERVER_SHUTDOWN` | The server is shutting down.                            |
+| `ARENA_DELETED`   | The arena was deleted while the game existed.           |
+
+<Aside type="caution">
+    The game normally transitions into `RESTARTING` after this event unless the server is reloading or shutting down.
+</Aside>
+
+---
+
+## Post-Event Cleanup State
+When this event is called, the following cleanup has already occurred:
+* **UI Removal:** Scoreboards and boss bars have been removed.
+* **Player Restoration:** Inventories, health, food, flight, and potion effects have been reset.
+* **Teleportation:** Players have been moved to the configured end location.
+* **Visibility:** Player visibility rules have been disabled.
+* **Game List:** The active user list has been cleared.
+
+---
+
+## Methods
+
+This event inherits all utility methods from the base [`GameEvent`](/tnt-run/api/game-events/game-event) class.
+
+| Method                | Return Type  | Description                                                |
+|:----------------------|:-------------|:-----------------------------------------------------------|
+| `getGame()`           | `Game`       | Returns the game instance that has stopped.                |
+| `getStopReason()`     | `StopReason` | Returns the reason why the game was stopped.               |
+| `getStoppedPlayers()` | `List<UUID>` | Returns the players that were in the game before cleanup.  |
+
+---
+
+## Example Usage
+
+This example shows how to perform final logging once the game is officially closed.
+
+```java
+import dev.despical.tntrun.api.event.game.GameStopEvent;
+import dev.despical.tntrun.game.StopReason;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public class FinalCleanupListener implements Listener {
+
+    @EventHandler
+    public void onGameStop(GameStopEvent event) {
+        String arenaId = event.getArena().getId();
+        StopReason reason = event.getStopReason();
+
+        System.out.println("TNT Run arena " + arenaId + " stopped. Reason: " + reason);
+
+        if (reason == StopReason.SERVER_SHUTDOWN) {
+            // Urgent cleanup logic
+        }
+    }
+}
+```

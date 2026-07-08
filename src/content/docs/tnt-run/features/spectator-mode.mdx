@@ -1,0 +1,66 @@
+---
+title: Spectator Mode
+description: Configure and understand TNT Run spectator behavior, teleport menus, visibility settings, night vision, and speed controls.
+---
+
+Spectator mode keeps eliminated players engaged without affecting the match.
+Players can watch alive players, teleport through a menu, and tune their own spectator view.
+
+---
+
+## When Players Become Spectators
+
+Players can become spectators when:
+
+* They are eliminated during the in-game phase.
+* They join an arena after the match has already started.
+* The game logic moves them out of the active survivor list.
+
+Spectators are separated from active players and cannot win the current match.
+
+---
+
+## Spectator Teleporter
+
+The teleporter menu is configured in:
+
+```text
+menu/spectator-teleporter-menu.yml
+```
+
+It shows alive players as player heads.
+Clicking a player teleports the spectator to that player's location.
+
+The menu supports pagination through previous and next page buttons.
+
+---
+
+## Spectator Settings
+
+The settings menu is configured in:
+
+```text
+menu/spectator-settings-menu.yml
+```
+
+It includes:
+
+| Setting | Description |
+|:--|:--|
+| Night Vision | Enables or disables night vision for the spectator. |
+| Spectators | Shows or hides other spectators. |
+| Speed | Cycles spectator movement speed. |
+
+---
+
+## Placeholder Support
+
+Spectator preferences are available through PlaceholderAPI:
+
+```text
+%tntrun_spectator_speed%
+%tntrun_spectator_night_vision_level%
+%tntrun_spectator_show_others%
+```
+
+These are useful for custom menus or external scoreboards.
