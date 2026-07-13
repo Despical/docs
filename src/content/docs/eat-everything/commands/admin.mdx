@@ -15,8 +15,6 @@ All commands can be used through `/eateverything` or its alias `/ee`. Unless oth
 
 Displays basic plugin information and confirms that **Eat Everything** is loaded correctly.
 
-Administrators with the `eateverything.main` permission can use this command as a quick health check after installation or reload.
-
 When used without arguments, this command shows the running plugin version and acts as a quick sanity check that the plugin is active.
 
 ```bash
@@ -25,7 +23,11 @@ When used without arguments, this command shows the running plugin version and a
 
 ---
 
-## Nutrition Command
+## Item Editing Commands
+
+These player-only commands read or update the food data on the item held in your main hand.
+
+### Nutrition Command
 
 Administrators with the `eateverything.nutrition` permission can use this command to read or change how many hunger points the held item restores.
 
@@ -39,7 +41,7 @@ This command is commonly used while balancing custom consumables before moving t
 
 ---
 
-## Saturation Command
+### Saturation Command
 
 Administrators with the `eateverything.saturation` permission can use this command to read or change how much saturation the held item restores.
 
@@ -53,7 +55,7 @@ This command is especially useful when fine-tuning whether an item should feel l
 
 ---
 
-## Eat Seconds Command
+### Eat Seconds Command
 
 Administrators with the `eateverything.eatseconds` permission can use this command to read or change how long the item takes to consume.
 
@@ -65,7 +67,7 @@ This edits the consumable timing directly, which makes it useful for fast-use co
 
 ---
 
-## Edible Command
+### Edible Command
 
 Administrators with the `eateverything.edible` permission can use this command to control whether the held item can always be consumed, even when the player is not hungry.
 
@@ -77,7 +79,7 @@ This is useful when you want an item to behave like a true utility consumable in
 
 ---
 
-## Effect Command
+### Effect Command
 
 Administrators with the `eateverything.effect` permission can use this command to add status effects to the held item or clear existing status-effect consume entries from it.
 
@@ -91,7 +93,7 @@ In practice, this command is mostly used while prototyping special consumables b
 
 ---
 
-## Info Command
+### Info Command
 
 Administrators with the `eateverything.info` permission can use this command to inspect the held item's current food properties and consumable effects.
 
@@ -103,7 +105,11 @@ This is one of the most important commands for debugging because it shows the fi
 
 ---
 
-## Item Command
+## Component Testing and Distribution
+
+Once a component is defined in YAML, use this command to create clean test items from the latest configuration.
+
+### Item Command
 
 Administrators with the `eateverything.item` permission can use this command to generate a fresh item from a custom component ID defined in `food-components.yml`.
 
@@ -115,23 +121,7 @@ This makes it the cleanest way to test a component after `/ee reload`, especiall
 
 ---
 
-## Testing & Distribution
-
-Once a component is defined in YAML, these commands help you move from one-off experiments to clean test items and live configuration updates.
-
----
-
-### Version Command
-
-Administrators with the `eateverything.version` permission can use this command to display environment diagnostics.
-
-The output includes plugin, server, Java, JVM, and operating-system information, which makes it useful when reporting bugs or comparing different test environments.
-
-```bash
-/ee version
-```
-
----
+## Help and Configuration
 
 ### Help Command
 
@@ -143,12 +133,6 @@ For players, the help output is interactive: commands can be hovered for descrip
 /ee help
 /ee help --general
 ```
-
----
-
-## Help & Diagnostics
-
-Use this part of the command set when you want to confirm the plugin is running correctly, inspect the final component payload on an item, or collect environment details before troubleshooting.
 
 ---
 
@@ -171,5 +155,5 @@ This command reloads the main config, messages, and custom food component defini
 ## If You Want To Use All Commands
 
 <Aside type="tip">
-    If you want a staff member to have access to the full **Eat Everything** command set, grant the wildcard permission `eateverything.*`. This covers the editing workflow, diagnostics, reload tools, and tab completion support.
+    If you want a staff member to have access to the full **Eat Everything** command set, grant the wildcard permission `eateverything.*`. This covers the editing workflow, reload tools, and tab completion support.
 </Aside>
