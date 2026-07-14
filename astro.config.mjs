@@ -343,6 +343,10 @@ export default defineConfig({
                                         link: "/santa-says/configuration/messages"
                                     },
                                     {
+                                        label: "signs.yml",
+                                        link: "/santa-says/configuration/signs"
+                                    },
+                                    {
                                         label: "scoreboard.yml",
                                         link: "/santa-says/configuration/scoreboard"
                                     },
