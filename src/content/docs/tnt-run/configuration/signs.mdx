@@ -3,7 +3,7 @@ title: signs.yml
 description: Configure TNT Run arena signs, state labels, click behavior messages, and sign display lines.
 ---
 
-The `signs.yml` file controls arena join signs. Signs can show the arena state, player count, maximum player count, and any branding text you want players to see before joining.
+The `signs.yml` file controls arena join signs. Signs can show the arena state, player limits, map metadata, and any branding text you want players to see before joining.
 
 ---
 
@@ -15,7 +15,7 @@ The `lines` section defines the four lines shown on registered arena signs.
 lines:
   - "<gradient:#FF1744:#D50000><bold>TNT Run</gradient>"
   - "%state%"
-  - ""
+  - "<gradient:#00E676:#29B6F6><bold>%map_name%</bold></gradient>"
   - "<#455A64>[ <#CFD8DC>%players% <#455A64>/ <#CFD8DC>%max_players% <#455A64>]"
 ```
 
@@ -27,8 +27,17 @@ lines:
 |:------------|:------------|
 | `%state%` | The configured state label from `game-states`. |
 | `%players%` | Current player count. |
+| `%min_players%` | Minimum players required to start. |
 | `%max_players%` | Arena maximum player count. |
-| `%map_name%` | Arena display map name, if used in your custom lines. |
+| `%map_name%` | Arena display map name. |
+| `%map_author%` | Arena map author. |
+| `%map_difficulty%` | Arena map difficulty. |
+
+Placeholders are resolved before MiniMessage formatting, so they can be placed inside tags such as gradients and bold text:
+
+```yaml
+- "<gradient:#00E676:#29B6F6><bold>%map_name%</bold></gradient>"
+```
 
 ---
 
@@ -59,6 +68,15 @@ The top-level messages in this file are used for sign setup feedback.
 | `removed` | Sent when an arena sign is removed. |
 | `no-perm-to-break` | Sent when a player tries to break a registered sign without permission. |
 | `look-at-a-sign` | Sent when the setup action cannot find a valid sign block. |
+
+The `created` and `removed` messages can use these location placeholders:
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%x%` | Sign block X coordinate. |
+| `%y%` | Sign block Y coordinate. |
+| `%z%` | Sign block Z coordinate. |
+| `%direction%` | Direction the sign is facing. |
 
 Breaking registered TNT Run signs requires:
 
