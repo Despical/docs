@@ -1,0 +1,95 @@
+---
+title: signs.yml
+description: Configure Santa Says arena signs, state labels, click behavior messages, and sign display lines.
+---
+
+The `signs.yml` file controls arena join signs. Signs can show the arena state, player limits, and any branding text you want players to see before joining.
+
+---
+
+## Sign Lines
+
+The `lines` section defines the four lines shown on registered arena signs.
+
+```yaml
+lines:
+  - "<gradient:#FF1744:#D50000><bold>SANTA SAYS</gradient>"
+  - "%state%"
+  - ""
+  - "<#455A64>[ <#CFD8DC>%players% <#455A64>/ <#CFD8DC>%max_players% <#455A64>]"
+```
+
+---
+
+## Supported Placeholders
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%state%` | The configured state label from `game-states`. |
+| `%players%` | Current player count. |
+| `%min_players%` | Minimum players required to start. |
+| `%max_players%` | Arena maximum player count. |
+
+Placeholders are resolved before MiniMessage formatting, so they can be placed inside tags such as gradients and bold text:
+
+```yaml
+- "<gradient:#00E676:#29B6F6><bold>%players% / %max_players%</bold></gradient>"
+```
+
+---
+
+## State Labels
+
+The `game-states` section lets you change how arena states appear on signs.
+
+```yaml
+game-states:
+  waiting: "<#00E676><bold>WAITING"
+  starting: "<#FFAB00><bold>STARTING"
+  in-game: "<#FF5252><bold>IN GAME"
+  full-game: "<#D50000><bold>FULL"
+  ending: "<#9E9E9E><bold>ENDING"
+  restarting: "<#607D8B><bold>REBOOTING"
+  inactive: "<#B0BEC5><bold>MAINTENANCE"
+```
+
+---
+
+## System Messages
+
+The top-level messages in this file are used for sign setup feedback.
+
+| Message | Purpose |
+|:--------|:--------|
+| `created` | Sent when an arena sign is registered successfully. |
+| `removed` | Sent when an arena sign is removed. |
+| `no-perm-to-break` | Sent when a player tries to break a registered sign without permission. |
+| `look-at-a-sign` | Sent when the setup action cannot find a valid sign block. |
+
+The `created` and `removed` messages can use these location placeholders:
+
+| Placeholder | Description |
+|:------------|:------------|
+| `%x%` | Sign block X coordinate. |
+| `%y%` | Sign block Y coordinate. |
+| `%z%` | Sign block Z coordinate. |
+| `%direction%` | Direction the sign is facing. |
+
+Breaking registered Santa Says signs requires:
+
+```text
+santasays.sign.break
+```
+
+---
+
+## Creating Signs
+
+The cleanest way to create a join sign is through the setup menu:
+
+1. Run `/ss edit <arena>`.
+2. Open the sign setup item.
+3. Look at the target sign block.
+4. Click the setup item to register it for the arena.
+
+The plugin will then update the sign as the arena state changes. Run `/santasays reload` after editing `signs.yml` to apply the new layout and messages without restarting the server.
