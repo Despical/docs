@@ -1,0 +1,13 @@
+---
+title: GUI Menus
+description: Overview of Whack Me setup-menu.yml and stats-menu.yml customization.
+---
+
+Whack Me stores its inventory GUI definitions in `/plugins/WhackMe/menu/`. Both files support MiniMessage item names and lore plus standard item properties provided by the bundled item framework.
+
+* **[setup-menu.yml](/whack-me/configuration/menu/setup)** controls the arena setup workflow, dialog labels, items, materials, messages, and registration feedback.
+* **[stats-menu.yml](/whack-me/configuration/menu/stats)** controls player statistics, arena record views, leaderboard lines, navigation, and decoration.
+
+Keep required item keys and action values intact. The Java menu code finds entries by those identifiers; renaming them can remove controls even when the YAML remains valid.
+
+Apply menu changes with `/wm reload`.

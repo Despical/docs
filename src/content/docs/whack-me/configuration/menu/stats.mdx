@@ -1,0 +1,61 @@
+---
+title: stats-menu.yml
+description: Configure the Whack Me player statistics GUI, arena record pages, leaderboard templates, and navigation.
+---
+
+The statistics menu opens with `/wm stats [player]`. It can display the viewer's data or an online/offline target's cached data.
+
+---
+
+## Root Layout
+
+```yaml
+rows: 6
+title: "<dark_gray>➜ <gradient:#00E676:#2979FF><bold>Statistics</bold></gradient>"
+```
+
+The default GUI uses six rows. Slot numbers are zero-based (`0` through `53`).
+
+---
+
+## Overview Items
+
+| Key | Placeholder | Description |
+|:--|:--|:--|
+| `player_head` | `%target%` | Target profile name and skull. |
+| `games_played` | `%games_played%` | Completed games. |
+| `record_score` | `%record_score%` | Highest personal score. |
+| `longest_hit_streak` | `%longest_hit_streak%` | Best uninterrupted streak. |
+| `plus_blocks` | `%whacked_plus_blocks%` | Lifetime positive hits. |
+| `minus_blocks` | `%whacked_minus_blocks%` | Lifetime penalty hits. |
+| `hit_rate` | `%whacked_block_rate%` | Positive hits as a percentage of all scored hits. |
+| `view_arenas` | None | Opens the arena-record browser. |
+
+---
+
+## Arena and Leaderboard Template
+
+`arena_template` creates the record entry for every registered arena. Its lore supports:
+
+* `%arena%`
+* `%record_score%`
+* `%rank%`
+* `%player%`
+
+The template also defines text for no personal record, an empty leaderboard, the top-three entries, a separator, the target player's own rank, and rank colors.
+
+Whack Me's current arena view compares the target's general personal record score against the global record-score leaderboard. Arena-specific global holder/score values are still available elsewhere through arena placeholders and `arenas.yml`.
+
+---
+
+## Navigation and Decoration
+
+* `background_fill` and `decoration_borders` are decoration-only multi-slot entries.
+* `back_button` returns to the prior menu.
+* `previous_page` and `next_page` appear when the arena list spans multiple pages.
+
+Keep the `action` values `open_arenas`, `back`, `previous_page`, and `next_page` unchanged. The code uses those semantics when building the GUI.
+
+The unused `checkpoint_template` key may remain for configuration compatibility; Whack Me does not have checkpoint statistics.
+
+Apply changes with `/wm reload`.
