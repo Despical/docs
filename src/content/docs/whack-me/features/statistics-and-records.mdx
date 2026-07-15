@@ -1,0 +1,99 @@
+---
+title: Statistics & Records
+description: Understand Whack Me persistent statistics, temporary run data, personal records, perfect runs, arena records, menus, and leaderboards.
+---
+
+Whack Me tracks both lifetime player progression and temporary values used to calculate the current run.
+
+---
+
+## Persistent Player Statistics
+
+| Internal key | Meaning |
+|:--|:--|
+| `games_played` | Normally completed runs whose results were applied. |
+| `perfect_runs` | Runs with score above zero and no red-block hits. |
+| `record_score` | Highest score the player has reached in any arena. |
+| `longest_hit_streak` | Highest uninterrupted correct-hit streak across all runs. |
+| `whacked_plus_blocks` | Lifetime green-block hits. |
+| `whacked_minus_blocks` | Lifetime red-block hits. |
+
+These values are stored in `data/stats.yml` or the MySQL statistics table.
+
+---
+
+## Temporary Run Statistics
+
+| Internal key | Meaning |
+|:--|:--|
+| `local_score` | Current run score. |
+| `local_hit_streak` | Current consecutive green-hit streak. |
+| `local_longest_hit_streak` | Best streak within this run. |
+| `local_correct_blocks` | Green hits this run. |
+| `local_wrong_blocks` | Red hits this run. |
+
+Temporary values reset before a run and after cleanup. They are available in live displays, placeholders, and `GameEndEvent` before result cleanup.
+
+---
+
+## Personal Record
+
+After a normal result, `record_score` is updated only when the final score is strictly higher than the player's previous best. It is global to the player rather than tied to one arena.
+
+The finish message selects among normal, new-personal-record, arena-record, and combined arena-plus-personal-record layouts.
+
+---
+
+## Arena Record
+
+Every arena stores:
+
+* `record-holder`
+* `record-score`
+
+A score replaces the arena record when the current record is `0` or the new result is strictly higher. Ties do not change the holder.
+
+The setup menu's confirmation flow resets only these two arena values. It does not erase any player's personal `record_score`.
+
+---
+
+## Perfect Runs and Hit Rate
+
+A perfect run requires:
+
+1. Final score greater than `0`
+2. `local_wrong_blocks` equal to `0`
+
+The hit/success rate is:
+
+```text
+green hits / (green hits + red hits) × 100
+```
+
+The statistics menu displays lifetime hit rate, while the finish message and scoreboard use the current run's success rate.
+
+---
+
+## Statistics Menu
+
+```bash
+/wm stats [player]
+```
+
+The menu supports the sender, online targets, and offline players known to the server cache. It shows lifetime values plus an arena browser and the record-score leaderboard.
+
+See **[stats-menu.yml](/whack-me/configuration/menu/stats)** to customize its layout.
+
+---
+
+## Leaderboards
+
+Whack Me builds leaderboards from persistent statistics and refreshes them after a player result is saved. PlaceholderAPI can return a ranked entry's name, UUID, or raw value.
+
+See **[Leaderboard Placeholders](/whack-me/placeholders/leaderboard)** for syntax and examples.
+
+---
+
+## Cancelled Games
+
+Server reloads, shutdowns, forced stops, and arena deletion clear temporary values without applying the run. Normal finish, leave, kick, and disconnect paths can apply the current result before cleanup.

@@ -1,0 +1,99 @@
+---
+title: Point Blocks
+description: Detailed reference for Whack Me point-block types, spawning, movement phases, scoring, hit states, appearance, and performance controls.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Point blocks are the core of Whack Me. Each one is an invisible armor stand wearing the arena's configured item, moving vertically from one reserved portal-frame location.
+
+---
+
+## Block Types
+
+| Type | Floating label | Default item | Behavior |
+|:--|:--|:--|:--|
+| Green | `point-blocks.punch-me` | `LIME_TERRACOTTA` | Adds 1 score, streak, correct hit, and lifetime positive hit. |
+| Red | `point-blocks.dont-punch-me` | `RED_TERRACOTTA` | Removes 1 score down to a minimum of 0, resets streak, and records a wrong/negative hit. |
+| Gray | `point-blocks.ouch` | `CYAN_TERRACOTTA` | Replaces either active type after it is hit; further hits only play the `ouch` sound. |
+
+Gray is a hit state, not a randomly spawned point type.
+
+---
+
+## Type Balancing
+
+When a new point block is created, Whack Me counts active green and red blocks:
+
+* If more green blocks are visible, the new block is red.
+* Otherwise, the new block is green.
+
+This produces a near-even active distribution without relying on a fixed random percentage.
+
+---
+
+## Location Reservation
+
+Each configured portal location can host one active point block. Whack Me reserves a random free location on spawn and returns it to the available pool when the block finishes its movement or the game is cleaned up.
+
+Duplicate portal locations are removed from the runtime pool. Maximum active blocks are always limited by location capacity.
+
+---
+
+## Spawn Checks
+
+`pointBlockTicks` controls how often the handler checks for missing blocks and defaults to `8` ticks.
+
+On each check, the handler:
+
+1. Updates the player's action bar.
+2. Caps the configured maximum by portal capacity.
+3. Chooses a random target between the minimum and maximum.
+4. Spawns one block when the current count is below that target.
+
+This guarantees replacement below the minimum while allowing natural variation between the minimum and maximum.
+
+---
+
+## Movement Lifecycle
+
+Each point block has three phases:
+
+1. **Rising:** Moves upward every tick until its relative travel passes `0.85` blocks.
+2. **Waiting:** Remains at the peak for `pointBlockWaitTicks`.
+3. **Falling:** Moves downward until its relative travel passes `-0.6`, then despawns and releases the location.
+
+The actual vertical step is clamped to at least `0.01` and cannot exceed `pointBlockMaxYMultiplier`. Defaults are `0.05` movement step, `0.64` maximum step, and `12` peak-wait ticks.
+
+---
+
+## Hit Handling
+
+Only the player currently assigned to the arena can score from its point-block armor stands. On the first hit:
+
+* The score service applies green or red behavior.
+* The scoreboard updates immediately.
+* The item changes to the configured gray hit-state item.
+* The floating label changes to `point-blocks.ouch`.
+
+The block continues its existing movement lifecycle instead of disappearing immediately.
+
+---
+
+## Per-Arena Appearance
+
+Open `/wm edit <arena>` → **Point Block Settings** → **Customize Point Block Looks**. Put a block, player head, or custom item on your cursor and click the green, red, or gray preview.
+
+Whack Me preserves custom item metadata and stores one-item copies in `arenas.yml`.
+
+---
+
+## Asynchronous Movement
+
+`pointBlocksRunAsync` can move animation scheduling outside the main server thread. Entity cleanup is always returned to the main thread, and actual movement uses asynchronous teleport calls.
+
+<Aside type="caution">
+    Asynchronous movement can reduce main-thread scheduling work, but test it with your Paper build and other entity plugins. Keep it disabled if you see visual jitter or compatibility problems.
+</Aside>
+
+All point-block settings are per arena and should be changed through the setup dialog rather than by hand in `arenas.yml`.
