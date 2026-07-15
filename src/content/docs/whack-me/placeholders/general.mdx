@@ -1,0 +1,83 @@
+---
+title: Placeholders
+description: List of available PlaceholderAPI placeholders for Whack Me.
+---
+
+To use these placeholders, you must have the **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** plugin installed on your server. These can be used in any plugin that supports PlaceholderAPI (Scoreboards, Chat, Menus, Holograms, etc.).
+
+---
+
+## Server Placeholders
+These placeholders are used to display global information about the Whack Me plugin and its active arenas.
+
+| Placeholder             | Description                                           |
+|:------------------------|:------------------------------------------------------|
+| `%wm_arenas_total%`     | Total number of registered arenas.                    |
+| `%wm_arenas_ready%`     | Number of arenas that are ready to play.              |
+| `%wm_online_players%`   | Total players currently inside Whack Me arenas.       |
+
+Because each Whack Me arena supports one player at a time, `%wm_online_players%` is also the number of currently occupied arenas.
+
+---
+
+## Player Placeholders
+These placeholders are used to display the current game values of the player who is viewing the placeholder.
+
+| Placeholder                          | Description                                        |
+|:-------------------------------------|:---------------------------------------------------|
+| `%wm_local_score%`                   | Current score earned during the active run.        |
+| `%wm_local_point_streak%`            | Current consecutive correct-hit streak.            |
+| `%wm_local_longest_point_streak%`    | Highest streak reached during the current run.     |
+
+Outside an active run, these temporary values normally return `0`.
+
+---
+
+## Statistic Placeholders
+These placeholders expose persistent player statistics.
+
+| Placeholder                         | Description                                        |
+|:------------------------------------|:---------------------------------------------------|
+| `%wm_whacked_point_blocks%`         | Total number of green point blocks hit.            |
+| `%wm_whacked_minus_point_blocks%`   | Total number of red penalty blocks hit.            |
+| `%wm_whacked_block_rate%`           | Positive-hit rate as a percentage value.           |
+| `%wm_record_score%`                 | Highest personal score ever reached.               |
+| `%wm_perfect_runs%`                 | Total number of perfect runs completed.            |
+| `%wm_games_played%`                 | Total number of completed games.                   |
+| `%wm_tours_played%`                 | Alias for total completed games.                   |
+| `%wm_longest_point_streak%`         | Highest consecutive correct-hit streak.            |
+
+Any known integer statistic can also be requested with the following format:
+`%wm_stat:<statistic_key>%`
+
+For example, `%wm_stat:games_played%`, `%wm_stat:longest_hit_streak%`, `%wm_stat:local_correct_blocks%`, and `%wm_stat:local_wrong_blocks%` are all valid placeholders.
+
+---
+
+## Arena Placeholders
+
+These placeholders allow you to fetch real-time data from specific arenas.
+
+---
+
+### Arena Settings
+Format: `%wm_arena:<arena_id>:<stat>%`
+
+| Placeholder                                  | Description                                             |
+|:---------------------------------------------|:--------------------------------------------------------|
+| `%wm_arena:<id>:ready%`                     | Whether the specified arena is registered and ready.    |
+| `%wm_arena:<id>:record_holder%`             | Name of the specified arena's record holder.            |
+| `%wm_arena:<id>:record_score%`              | Highest score recorded in the specified arena.          |
+
+### Live Game Data
+Format: `%wm_arena:<arena_id>:<stat>%`
+
+| Placeholder                                  | Description                                             |
+|:---------------------------------------------|:--------------------------------------------------------|
+| `%wm_arena:<id>:player_name%`               | Name of the player currently using the arena.           |
+| `%wm_arena:<id>:point_blocks%`              | Number of active point blocks in the arena.             |
+| `%wm_arena:<id>:state%`                     | Current state of the arena.                             |
+| `%wm_arena:<id>:timer%`                     | Remaining game time in seconds.                         |
+| `%wm_arena:<id>:score%`                     | Current score of the active player.                     |
+
+An unknown arena returns `No arena: <id>`. Always use the arena's exact, case-correct ID in third-party configurations.

@@ -1,0 +1,69 @@
+---
+title: Leaderboard Placeholders
+description: How to display player rankings and top statistics using Whack Me placeholders.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Leaderboard placeholders allow you to display your server's top-performing players on scoreboards, holograms, or custom in-game menus.
+
+<Aside type="caution">
+    To use these placeholders, the **PlaceholderAPI** plugin must be installed on your server.
+</Aside>
+
+---
+
+## Leaderboard Syntax
+
+To fetch leaderboard data, use the following format:
+`%wm_leaderboard:<statistic>:<position>:<type>%`
+
+### Parameters
+
+| Argument      | Description                                                                  |
+|:--------------|:-----------------------------------------------------------------------------|
+| `<statistic>` | The stat to be ranked (e.g., `record_score`, `perfect_runs`).                |
+| `<position>`  | The rank position to display (1, 2, 3...).                                   |
+| `<type>`      | The type of data to return (`name`, `uuid`, or `value`).                      |
+
+---
+
+## Available Statistics
+
+You can use the following statistics with the leaderboard system:
+
+* `games_played` - Total number of completed games.
+* `perfect_runs` - Total number of perfect runs.
+* `record_score` - Highest personal score ever reached.
+* `longest_hit_streak` - Highest consecutive correct-hit streak.
+* `whacked_plus_blocks` - Total number of green point blocks hit.
+* `whacked_minus_blocks` - Total number of red penalty blocks hit.
+
+Temporary `local_*` statistics cannot be used for persistent rankings because they are reset after each run. Leaderboards contain the top 10 players and exclude entries with a value of `0`.
+
+---
+
+## Usage Examples
+
+| Goal                                             | Placeholder                                           |
+|:-------------------------------------------------|:------------------------------------------------------|
+| Name of the highest-scoring player               | `%wm_leaderboard:record_score:1:name%`                |
+| Score of the highest-scoring player              | `%wm_leaderboard:record_score:1:value%`               |
+| UUID of the player in 3rd place                  | `%wm_leaderboard:record_score:3:uuid%`                |
+| Name of the player with the most perfect runs    | `%wm_leaderboard:perfect_runs:1:name%`                |
+| Value of the 5th longest lifetime streak         | `%wm_leaderboard:longest_hit_streak:5:value%`         |
+
+---
+
+## Arena Best Placeholders
+
+To display the best recorded score and its holder for a specific arena, use:
+
+```text
+%wm_arena:<arena_id>:record_holder%
+%wm_arena:<arena_id>:record_score%
+```
+
+The first placeholder returns the record holder's name, while the second returns the highest score stored for that arena.
+
+If a valid leaderboard position has no player, the fallback is `No Player` for `name` and `0` for `value`. Invalid statistic names or positions return diagnostic text, so keep public displays within positions `1` through `10`.
