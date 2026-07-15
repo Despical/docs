@@ -46,6 +46,16 @@ export default defineConfig({
                     label: "tnt-run:Javadoc",
                     href: "https://javadoc.despical.dev/tnt-run/",
                 },
+                {
+                    icon: "github",
+                    label: "whack-me:GitHub",
+                    href: "https://github.com/Despical/WhackMe",
+                },
+                {
+                    icon: "seti:java",
+                    label: "whack-me:Javadoc",
+                    href: "https://javadoc.despical.dev/whack-me/",
+                },
                 {icon: 'discord', label: 'Discord', href: 'https://discord.gg/uXVU8jmtpU'},
                 {icon: 'patreon', label: 'Patreon', href: 'https://patreon.com/despical'},
             ],
@@ -699,6 +709,113 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "Whack Me",
+                        id: "whack-me",
+                        link: "/whack-me/",
+                        icon: "whack-me",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/whack-me/getting-started"},
+                                    {label: "Gameplay Overview", link: "/whack-me/gameplay"},
+                                    {label: "Arena Setup", link: "/whack-me/arena-setup"},
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {label: "Player Commands", link: "/whack-me/commands/player"},
+                                    {label: "Arena Commands", link: "/whack-me/commands/arena"},
+                                    {label: "Admin Commands", link: "/whack-me/commands/admin"},
+                                    {label: "Debug Commands", link: "/whack-me/commands/debug"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                collapsed: true,
+                                items: [
+                                    {label: "config.yml", link: "/whack-me/configuration/config"},
+                                    {label: "messages.yml", link: "/whack-me/configuration/messages"},
+                                    {label: "scoreboard.yml", link: "/whack-me/configuration/scoreboard"},
+                                    {label: "bossbar.yml", link: "/whack-me/configuration/bossbar"},
+                                    {label: "signs.yml", link: "/whack-me/configuration/signs"},
+                                    {label: "sounds.yml", link: "/whack-me/configuration/sounds"},
+                                    {label: "mysql.yml", link: "/whack-me/configuration/mysql"},
+                                    {
+                                        label: "GUI Menus",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "setup-menu.yml", link: "/whack-me/configuration/menu/setup"},
+                                            {label: "stats-menu.yml", link: "/whack-me/configuration/menu/stats"},
+                                        ],
+                                    },
+                                    {label: "Other Files", link: "/whack-me/configuration/other-files"},
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {label: "Point Blocks", link: "/whack-me/features/point-blocks"},
+                                    {label: "Statistics & Records", link: "/whack-me/features/statistics-and-records"},
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {label: "General Placeholders", link: "/whack-me/placeholders/general"},
+                                    {label: "Leaderboard Placeholders", link: "/whack-me/placeholders/leaderboard"},
+                                ],
+                            },
+                            {
+                                label: "Music",
+                                items: [
+                                    {label: "NoteBlockAPI", link: "/whack-me/music/note-block-api"},
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {label: "Whack Me API", link: "/whack-me/api/whack-me-api"},
+                                    {
+                                        label: "Game Events",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "GameEvent", link: "/whack-me/api/game-events/game-event"},
+                                            {label: "GameStartEvent", link: "/whack-me/api/game-events/game-start-event"},
+                                            {label: "GameEndEvent", link: "/whack-me/api/game-events/game-end-event"},
+                                            {label: "GameStopEvent", link: "/whack-me/api/game-events/game-stop-event"},
+                                            {label: "GameStateChangeEvent", link: "/whack-me/api/game-events/game-state-change-event"},
+                                        ],
+                                    },
+                                    {
+                                        label: "Player Events",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "PlayerEvent", link: "/whack-me/api/player-events/player-event"},
+                                            {label: "PlayerJoinAttemptEvent", link: "/whack-me/api/player-events/player-join-attempt-event"},
+                                            {label: "PlayerLeaveGameEvent", link: "/whack-me/api/player-events/player-leave-game-event"},
+                                            {label: "PlayerStatisticChangeEvent", link: "/whack-me/api/player-events/player-statistic-change-event"},
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "FAQ", link: "/whack-me/misc/faq"},
+                                    {label: "Source Code", link: "/whack-me/misc/source-code"},
+                                    {
+                                        label: "Create an Issue",
+                                        link: "https://github.com/Despical/WhackMe/issues/new/choose",
+                                        attrs: {target: "_blank"},
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "TNT Run",
                         id: "tnt-run",
                         link: "/tnt-run/",
@@ -1219,6 +1336,7 @@ export default defineConfig({
                 ], {
                     topics: {
                         "tnt-run": ["/tnt-run/misc/source-code", "/tnt-run/configuration/menus"],
+                        "whack-me": ["/whack-me/configuration/menus"],
                     },
                 })
             ],
