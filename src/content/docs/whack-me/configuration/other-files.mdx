@@ -1,0 +1,67 @@
+---
+title: System Files
+description: Overview of internal data files managed automatically by Whack Me.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+While **Whack Me** provides many configuration files for customization, it also manages several internal files that act as the plugin's memory. These files are structured specifically for machine reading and fast data access.
+
+<Aside type="danger">
+    **DO NOT MANUAL EDIT:** Manual modification of these files is strongly discouraged. Editing them while the server is running can cause data corruption, loss of arena settings, damaged recovery data, or plugin crashes. Use in-game commands or menus to modify your setups instead.
+</Aside>
+---
+
+## Managed Files Overview
+
+| File Path            | Primary Function                                                                                     | Management Method                                      |
+|:---------------------|:-----------------------------------------------------------------------------------------------------|:-------------------------------------------------------|
+| `arenas.yml`         | Stores arena locations, portal layouts, point-block settings, visuals, songs, signs, and records.   | Managed via `/wm edit <arena>`.                        |
+| `data/stats.yml`     | Local database for persistent player statistics.                                                    | Used only when `database: flat` is selected.           |
+| Player snapshot data | Stores temporary inventory and player-state snapshots for safe restoration.                         | Managed automatically by the player recovery system.  |
+| `menu/`              | Stores the setup and statistics inventory menu layouts.                                             | Safe to customize if required item keys remain intact. |
+| `musics/`            | Stores bundled and custom NoteBlock Studio songs together with the one-time seed marker.             | Add `.nbs` files while stopped, then restart.          |
+
+---
+
+## Detailed Breakdown
+
+### arenas.yml
+
+This is the most critical Whack Me system file. Each top-level key is an arena ID, and its section stores readiness, start and end locations, the portal layout, active point-block limits, movement settings, custom block items, scoreboard and boss bar toggles, selected music, join signs, and the arena record.
+
+The plugin serializes several typed values here, including locations, JSON portal lists, and item stacks. The runtime-only active point-block list is never persisted.
+
+* **Why you shouldn't touch it:** A malformed location, portal list, or serialized item can prevent an arena from loading correctly. Changes made while the server is running can also be overwritten by the in-memory arena state.
+* **How to update:** Use `/wm edit <arena>` and the **Setup Menu**. Arena deletion should be handled with `/wm delete <arena> --confirm`.
+* **Startup protection:** If a ready arena is missing its start location, end location, or portal locations, Whack Me automatically marks it as not ready instead of starting a broken game.
+
+### data/stats.yml
+
+When `database: flat` is selected, this file stores persistent player statistics such as games played, perfect runs, personal record score, longest hit streak, and lifetime positive or negative block hits. Temporary `local_*` run values are deliberately excluded.
+
+* **Why you shouldn't touch it:** Player statistics are cached while the server is running. Manual edits can be overwritten by cached values or produce inconsistent leaderboard data.
+* **How to update:** Whack Me manages this file through normal gameplay and `/wm stats`. If manual correction is unavoidable, stop the server completely and create a backup first.
+
+### Player Snapshot Data
+
+Whack Me creates temporary snapshots before it clears a player's inventory and state for a game or for custom Portal Editing Mode. These snapshots allow normal cleanup and reconnect recovery to restore the player safely.
+
+* **Why you shouldn't touch it:** Removing or modifying snapshot data can prevent inventory restoration or cause a player to return with incomplete state.
+* **How to update:** Do not manage these files manually. Let Whack Me create, restore, and clean them as players enter and leave game or editing sessions.
+
+### menu/
+
+The `menu/` folder contains `setup-menu.yml` and `stats-menu.yml`. Unlike arena and statistic data, these files are intended for visual customization.
+
+* **Why it is safer to edit:** Menu titles, materials, names, lore, colors, and decorative slots are configuration rather than runtime player data.
+* **What to keep:** Required item keys and action values must remain intact so the backing menu code can locate registration, navigation, setup, and statistics controls.
+* **How to apply changes:** Save the files and run `/wm reload`.
+
+### musics/
+
+This folder contains the bundled starter tracks and any custom NoteBlock Studio `.nbs` files used by the optional NoteBlockAPI integration. The hidden `.default-songs-seeded` marker records that the bundled songs have already been copied once.
+
+* **Why some files are managed:** Editing or deleting the seed marker can cause the plugin to attempt the initial song-seeding process again on a future startup.
+* **How to add music:** Stop the server, place valid `.nbs` files directly in `musics/`, restart, and select them from `/wm edit <arena>`.
+* **What to keep:** Leave `.default-songs-seeded` intact unless you intentionally want to rerun the default-song seed check.
