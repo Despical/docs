@@ -1,0 +1,65 @@
+---
+title: scoreboard.yml
+description: Configure the live Whack Me scoreboard title, lines, placeholders, and global or per-arena visibility.
+---
+
+`scoreboard.yml` defines the sidebar shown during a **Whack Me** run. Unlike multi-stage minigames, **Whack Me** uses one title and one line list throughout its short single-player game.
+
+---
+
+## Supported Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%player%` | Name of the player viewing the board. |
+| `%date%` | Current server date. |
+| `%arena%` | Arena ID. |
+| `%timer%` | Remaining time in seconds. |
+| `%formatted_timer%` | Remaining time in `MM:SS`. |
+| `%score%` | Current run score. |
+| `%hit_streak%` | Current consecutive correct-hit streak. |
+| `%record_score%` | Arena's current record score. |
+| `%record_holder%` | Arena's current record holder. |
+| `%success_rate%` | Current correct-hit percentage with one decimal place. |
+
+---
+
+## Example
+
+```yaml
+title: "<gradient:#00E676:#29B6F6><bold>WHACK ME</bold></gradient>"
+lines:
+  - "<#B0C4DE>%date%"
+  - ""
+  - "<#E6E6E6>Arena: <#29B6F6>%arena%"
+  - "<#E6E6E6>Time: <#FFCA28>%formatted_timer%"
+  - ""
+  - "<#E6E6E6>Score: <#00E676>%score%"
+  - "<#E6E6E6>Hit Streak: <#00E676>%hit_streak%"
+  - ""
+  - "<#E6E6E6>Record: <#FFD54F>%record_score%"
+```
+
+The title and lines support MiniMessage. Empty strings create visual spacing.
+
+---
+
+## Disabling Scoreboards
+
+Scoreboards can be disabled globally in `config.yml`:
+
+```yaml
+scoreboard-enabled: false
+```
+
+They can also be disabled per arena in the setup menu. Both the global setting and the arena setting must allow scoreboards for players to see them.
+
+---
+
+## Applying Changes
+
+You don't need to restart your server to see most content changes. Simply modify the file and use the reload command to apply your updates:
+
+```bash
+/wm reload
+```

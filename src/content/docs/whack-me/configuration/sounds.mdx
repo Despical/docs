@@ -1,0 +1,40 @@
+---
+title: sounds.yml
+description: Configure Whack Me correct-hit, penalty, repeated-hit, finish, and record sounds.
+---
+
+Each sound entry can be enabled independently and has a registry name, volume, and pitch.
+
+---
+
+## Sound Events
+
+| Key | Default sound | Trigger |
+|:--|:--|:--|
+| `point` | `ENTITY_EXPERIENCE_ORB_PICKUP` | A green block is hit. |
+| `minus-point` | `BLOCK_NOTE_BLOCK_BASS` | A red block is hit. |
+| `ouch` | Empty | An already-hit gray block is struck again. |
+| `game-finished` | `ENTITY_PLAYER_LEVELUP` | A normal finish without a new arena record. |
+| `record-broken` | `UI_TOAST_CHALLENGE_COMPLETE` | A new arena record is established. |
+
+---
+
+## Entry Format
+
+```yaml
+sounds:
+  point:
+    enabled: true
+    sound: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 1.0
+    pitch: 2.0
+```
+
+* Set `enabled: false` to disable an event.
+* An empty `sound` also disables playback for that entry.
+* Registry names such as `minecraft:entity.experience_orb.pickup`, dotted names, and Bukkit-style enum names are accepted.
+* Invalid names are skipped and logged during load.
+
+Volume controls audible range as well as loudness. Pitch is commonly kept between `0.5` and `2.0`.
+
+Apply changes with `/wm reload`.

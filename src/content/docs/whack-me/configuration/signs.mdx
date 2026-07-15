@@ -1,0 +1,61 @@
+---
+title: signs.yml
+description: Configure Whack Me join-sign creation feedback, dynamic states, display lines, click behavior, and break permissions.
+---
+
+`signs.yml` controls the automatically updated join signs created from an arena setup menu.
+
+---
+
+## Creating and Using a Sign
+
+1. Place any supported sign block.
+2. Open `/wm edit <arena>`.
+3. Look directly at the sign and click **Create Arena Sign**.
+4. Players right-click the sign to run the same join checks as `/wm join <arena>`.
+
+Whack Me waxes registered signs to prevent ordinary text editing. Breaking one requires `whackme.sign.break`; otherwise the break is cancelled and `no-perm-to-break` is sent.
+
+---
+
+## Sign Lines
+
+The `lines` list maps to the sign's four front lines. Extra values are ignored and missing lines are blank.
+
+```yaml
+lines:
+  - "<gradient:#00E676:#29B6F6><bold>WHACK ME</bold></gradient>"
+  - "<#FFFFFF><bold>%arena%</bold>"
+  - ""
+  - "%state%"
+```
+
+| Placeholder | Description |
+|:--|:--|
+| `%arena%` | Arena ID linked to the sign. |
+| `%state%` | Formatted value from `game-states`. |
+
+---
+
+## State Labels
+
+```yaml
+game-states:
+  waiting: "<#00E676><bold>WAITING"
+  in-game: "<#FF5252><bold>IN GAME"
+  ending: "<#FFAB00><bold>ENDING"
+  restarting: "<#607D8B><bold>REBOOTING"
+  inactive: "<#B0BEC5><bold>MAINTENANCE"
+```
+
+Signs refresh when the arena changes state, a player joins or is cleaned up, the arena is reloaded, or sign configuration is reloaded.
+
+---
+
+## System Messages
+
+`created`, `removed`, `no-perm-to-break`, `look-at-a-sign`, and `already-game-sign` can be customized with MiniMessage.
+
+Creation and removal feedback supports `%x%`, `%y%`, `%z%`, and `%direction%` for the sign block.
+
+Apply changes with `/wm reload`.
