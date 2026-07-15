@@ -1,0 +1,65 @@
+---
+title: Debug Commands
+description: Enable debug mode, preview MiniMessage components, and inspect event timing reports.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Debug commands are powerful tools designed for testing and resolving issues. To prevent accidental use, these commands are hidden and disabled by default.
+
+---
+
+## Enabling Debug Mode
+
+Before you can use these commands, you must enable debug mode in your `config.yml`. This toggle acts as a safety gate for advanced administrative operations.
+
+```yaml
+# Enabling debug mode allows administrators to access advanced troubleshooting commands.
+debug: true
+
+# Enables profiling for Whack Me events to measure execution time.
+# Recommended for identifying lag or slow external plugins.
+event-profiling:
+  enabled: true
+  # If enabled, logs every event execution with timing details to the console.
+  verbose: false
+```
+
+---
+
+## Component Command
+
+Administrators with the `whackme.debug.component` permission can use this command to preview chat formatting and component parsing in real-time. Instead of constantly reloading configuration files to see how a message looks, you can test colors, hex codes, and placeholders directly in-game.
+
+The plugin will parse direct MiniMessage input using its internal chat manager and send the resulting component back to you, exactly as it would appear in a game message or announcement.
+
+```bash
+/wm debug component <message>
+```
+
+Example:
+
+```bash
+/wm debug component <gradient:#00E676:#29B6F6><bold>Whack Me</bold></gradient>
+```
+
+---
+
+## Dump Command
+
+Administrators with the `whackme.debug.dump` permission can generate a comprehensive performance report of the plugin's internal events. This command is directly tied to the **Event Profiling** system in the `config.yml`.
+
+When executed, the plugin will send a timings report to the sender, detailing how long various event listeners took to process. This is the primary tool for diagnosing "server lag" or identifying conflicts with slow external plugins.
+
+```bash
+/wm debug dump
+```
+
+### Details
+* **Prerequisite:** `event-profiling` must be enabled in `config.yml` for meaningful data.
+
+---
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `whackme.debug.*` will provide access to every command listed on this page.
+</Aside>
