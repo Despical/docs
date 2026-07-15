@@ -1,0 +1,76 @@
+---
+title: Getting Started
+description: Install Whack Me on your Paper Minecraft server and prepare the first arena.
+---
+
+import { Aside, Badge, Steps } from "@astrojs/starlight/components";
+
+Welcome to **Whack Me**! This plugin brings a timed single-player whack-a-block challenge to your server, with configurable arenas, records, statistics, join signs, and optional music.
+
+This guide covers installation, optional integrations, generated files, permissions, and the recommended first-run path.
+
+---
+
+## Prerequisites
+
+Before installing the plugin, ensure your server environment meets the following requirements:
+
+* **Java Version:** [Java 25](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Minecraft Version:** 1.21.11 or 26.2 (Latest versions recommended).
+* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin like [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) to manage user access.
+
+---
+
+## Installation
+
+Setting up Whack Me is straightforward. Follow these steps to get started:
+
+<Steps>
+    1. Download the latest Whack Me build from [SpigotMC](https://www.spigotmc.org/resources/whack-me.104912/) or [BuiltByBit](https://builtbybit.com/resources/whack-me.50294/).
+    2. Place `whack-me-x.x.x.jar` in the server's `plugins/` directory.
+    3. **PlaceholderAPI** <Badge text="Optional" variant="tip"/> : if you plan to use Whack Me placeholders in external
+    scoreboards, holograms, or menus, install NoteBlockAPI as well.
+    4. Restart the server to generate the default configuration files.
+    5. Verify the installation by running `/whackme` or `/wm` in-game.
+</Steps>
+
+---
+
+## First-Run Configuration
+
+After the first restart, a new folder will be created at `/plugins/WhackMe/`. This folder contains everything you need to customize your game:
+
+| File or folder | Purpose |
+|:--|:--|
+| `config.yml` | Storage, game duration, replay cooldown, chat, commands, update checks, and diagnostics. |
+| `messages.yml` | All player-facing messages and point-block labels. |
+| `scoreboard.yml` | Live in-game scoreboard title, lines, and placeholders. |
+| `bossbar.yml` | Boss bar enable state, text, style, and color. |
+| `signs.yml` | Join-sign messages, state labels, and four display lines. |
+| `sounds.yml` | Point, penalty, finish, and record sounds. |
+| `mysql.yml` | MySQL JDBC connection and table settings. |
+| `menu/` | Setup and statistics menu layouts. |
+| `musics/` | Bundled and custom NoteBlock Studio `.nbs` songs. |
+| `Other Files` | Automatically managed internal files used by the Whack Me plugin. |
+
+---
+
+## Basic Command Structure
+
+| Command              | Permission               | Description                                                                        |
+|:---------------------|:-------------------------|:------------------------------------------------------|
+| `/wm create <arena>` | `whackme.arena.create`   | Create an arena with a unique ID.                     |
+| `/wm edit <arena>`   | `whackme.arena.edit`     | Open the interactive setup menu.                      |
+| `/wm help`           | `whackme.command.help`   | Display the commands available to the sender.         |
+| `/wm join <arena>`   | None                     | Start a run in an available registered arena.         |
+| `/wm leave`          | None                     | Leave the current run and return to its end location. |
+
+---
+
+## Next Steps
+
+Now that the plugin is installed, it's time to dive deeper:
+
+* **[Arena Setup Guide](/whack-me/arena-setup)**: Learn how to create your first game arena.
+* **[Placeholders](/whack-me/placeholders/general)**: Hook into PlaceholderAPI for your scoreboards.
+* **[Developer API](/whack-me/api/whack-me-api)**: Start building custom integrations.

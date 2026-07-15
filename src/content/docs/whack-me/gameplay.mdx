@@ -1,0 +1,107 @@
+---
+title: Gameplay Overview
+description: Understand Whack Me game flow, point-block scoring, timers, statistics, records, player protection, and cleanup.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+**Whack Me** is a fast, single-player score challenge. A player enters an available arena and hits rising green point blocks while avoiding red penalty blocks. Every run lasts for the configured time, then the plugin calculates results and restores the player.
+
+---
+
+## The Game Loop
+
+1. The player joins a registered, unoccupied arena by command or sign.
+2. Whack Me saves the player's inventory and state, clears the inventory, resets temporary statistics, and teleports the player to the arena start.
+3. The scoreboard, boss bar, action bar, and optional arena music begin.
+4. Point blocks rise from randomly reserved portal locations until the timer reaches zero.
+5. Results, personal records, the arena record, and persistent statistics are calculated.
+6. The player's saved state is restored, the player is teleported to the end location, and the arena immediately becomes available again.
+
+<div class="yt-wrapper">
+    <iframe
+        src="https://www.youtube.com/embed/qqqkKbX1FRM"
+        title="Whack me Gameplay"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+Only one player can occupy an arena at a time. Different arenas can run independently at the same time.
+
+---
+
+## Point-Block Results
+
+| Block | Default appearance | Result |
+|:--|:--|:--|
+| Green | `LIME_TERRACOTTA` | Adds 1 score, adds 1 to the current streak, and records a correct hit. |
+| Red | `RED_TERRACOTTA` | Removes 1 score without going below 0, resets the streak, and records a wrong hit. |
+| Gray | `CYAN_TERRACOTTA` | The hit-state shown after any point block is struck. Hitting it again only plays the `ouch` sound. |
+
+The selector balances active green and red blocks: it chooses red whenever more green blocks are currently visible; otherwise it chooses green. This keeps the two active types close to an even distribution.
+
+<Aside type="tip">
+    Every arena can use different block or custom-item appearances. See **[Point Blocks](/whack-me/features/point-blocks)** for movement and spawn controls.
+</Aside>
+
+---
+
+## Timer and Feedback
+
+`game-settings.gameplay-time` in `config.yml` controls the run length and defaults to `30` seconds.
+
+During a run:
+
+* The action bar can show `%score%`, `%timer%`, `%timer_formatted%`, and `%hit_streak%`.
+* The scoreboard can show the current arena, time, score, streak, record, record holder, and success rate.
+* The boss bar drains from full to empty based on remaining time.
+* Configured sounds confirm correct hits, penalties, normal finishes, and record-breaking finishes.
+
+---
+
+## Results and Records
+
+At a normal finish, Whack Me calculates:
+
+* Final score
+* Previous and new personal record
+* Longest streak in the run
+* Correct and wrong hit counts
+* Success rate: `correct hits / all scored hits × 100`
+* Whether the run was perfect
+* Whether the arena record was broken
+
+A **perfect run** requires a score above zero and no red-block hits. The arena record is replaced only by a strictly higher score, except that the first completed result establishes the initial record.
+
+See **[Statistics & Records](/whack-me/features/statistics-and-records)** for every persistent value.
+
+---
+
+## Player Protection
+
+While a player is inside an arena, Whack Me:
+
+* Prevents block breaking and placing
+* Prevents item dropping, pickup, inventory interaction, and hand swapping
+* Prevents damage and keeps food level full
+* Optionally isolates or disables chat
+* Optionally blocks commands except configured allowed commands
+
+Staff can bypass command blocking with `whackme.commandblock.bypass`.
+
+---
+
+## Leaving, Quitting, and Forced Stops
+
+`/wm leave` ends the current run and applies its result before cleanup. An administrator kick also follows the normal result path.
+
+If a player disconnects, their in-progress run is finalized without an on-screen result message. When they reconnect, Whack Me restores their saved state and teleports them to the arena's end location.
+
+Server reloads, shutdowns, `/wm stop`, and arena deletion are treated as cancellations: temporary progress is cleared and does not affect persistent run statistics.
+
+---
+
+## Replay Cooldown
+
+`game-settings.cooldown-seconds` controls the delay before a player may join another game. Set it to `0` to disable the delay. Players with `whackme.cooldown.bypass` ignore it.
