@@ -1,0 +1,99 @@
+---
+title: Admin Commands
+description: Administrative commands for Whack Me help, live games, configuration reloads, and command-policy bypasses.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+All commands can use `/whackme` or `/wm`. Console availability is noted where relevant.
+
+---
+
+## Main Command
+
+Displays the installed version and author. Administrators also receive a pointer to the help menu.
+
+```bash
+/wm
+```
+
+* **Permission:** `whackme.command.help` (granted by default)
+* **Sender:** Player or console
+
+---
+
+## Help Command
+
+Displays player commands, then adds administrative commands when the sender has `whackme.admin.help`. If debug mode is enabled, the debug section is appended as well.
+
+```bash
+/wm help
+```
+
+* **Permission:** `whackme.command.help`
+* **Sender:** Player or console
+
+---
+
+## Reload Command
+
+Reloads messages, config options, command policy, menu items, event profiling, signs, boss bar settings, sounds, and live game presentation.
+
+```bash
+/wm reload
+```
+
+* **Permission:** `whackme.admin.reload`
+* **Sender:** Player or console
+
+<Aside type="caution">
+    Changing `database` requires a full restart to construct a different storage backend. The reload command does not migrate data between flat file and MySQL.
+</Aside>
+
+---
+
+## Stop Command
+
+Force-stops an active game without applying its run statistics.
+
+```bash
+/wm stop [arena]
+```
+
+* **Permission:** `whackme.admin.stop`
+* **Sender:** Player or console; the console must provide an arena ID.
+
+Without an argument, a player targets their current arena. With an arena ID, the command can stop a game remotely. The player is restored and moved to the end location, and `GameStopEvent` reports `STOP_COMMAND`.
+
+---
+
+## Kick Command
+
+Removes an online player from their current Whack Me game.
+
+```bash
+/wm kick <player>
+```
+
+* **Permission:** `whackme.admin.kick`
+* **Sender:** Player
+
+The player is restored and teleported to the end location. Unlike `/wm stop`, the kick follows the normal finish path and can apply the current run result.
+
+---
+
+## Command-Blocking Bypass
+
+Players inside an arena can be restricted to configured commands. Grant the following permission to staff who need unrestricted command access during a run:
+
+```text
+whackme.commandblock.bypass
+```
+
+The separate `whackme.cooldown.bypass` permission ignores the replay cooldown.
+
+---
+
+<Aside type="tip">
+    `whackme.admin` grants the administrative command group and all arena management commands. `whackme.*` grants every Whack Me permission.
+</Aside>
