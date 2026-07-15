@@ -1,0 +1,73 @@
+---
+title: Whack Me Documentation
+description: Whack Me is a fast-paced single-player Minecraft minigame with configurable point blocks, arena records, statistics, leaderboards, music, PlaceholderAPI support, and a developer event API.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## Whack Me
+
+**Whack Me** is a timed, single-player Minecraft minigame where point blocks rise from a configurable arena layout. Players hit green blocks to score, avoid red penalty blocks, build streaks, and chase both personal and arena records before the timer expires.
+
+Built for server owners who want a polished replayable challenge, **Whack Me** includes an in-game setup workflow, join signs, per-arena visuals and movement settings, statistics menus, global leaderboards, scoreboards, boss bars, sounds, optional NoteBlockAPI music, PlaceholderAPI placeholders, flat-file or MySQL storage, and a developer event API.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install Whack Me and prepare your server for the first game." href="/whack-me/getting-started" />
+    <LinkCard title="Arena Setup" description="Create a portal layout and configure every arena option step by step." href="/whack-me/arena-setup" />
+    <LinkCard title="Gameplay Overview" description="Learn how scoring, streaks, timers, records, and cleanup work." href="/whack-me/gameplay" />
+</CardGrid>
+
+## Features
+
+<CardGrid>
+    <LinkCard title="Point Blocks" description="Understand block types, spawning, movement, hit handling, and arena-specific tuning." href="/whack-me/features/point-blocks" />
+    <LinkCard title="Statistics & Records" description="See which values are tracked and how personal, arena, and leaderboard records are calculated." href="/whack-me/features/statistics-and-records" />
+    <LinkCard title="Arena Music" description="Install NoteBlockAPI, add NBS files, preview songs, and select music per arena." href="/whack-me/music/note-block-api" />
+</CardGrid>
+
+## Commands
+
+<CardGrid>
+    <LinkCard title="Player Commands" description="Join and leave games or inspect online and offline player statistics." href="/whack-me/commands/player" />
+    <LinkCard title="Arena Commands" description="Create, list, edit, and safely delete arenas." href="/whack-me/commands/arena" />
+    <LinkCard title="Admin Commands" description="Reload configuration, stop games, kick players, and manage command access." href="/whack-me/commands/admin" />
+    <LinkCard title="Debug Commands" description="Preview MiniMessage output and inspect event timing reports." href="/whack-me/commands/debug" />
+</CardGrid>
+
+## Configuration Files
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Control gameplay duration, cooldowns, storage, chat, command blocking, and diagnostics." href="/whack-me/configuration/config" />
+    <LinkCard title="messages.yml" description="Customize player feedback, results, setup output, and chat text with MiniMessage." href="/whack-me/configuration/messages" />
+    <LinkCard title="scoreboard.yml" description="Configure the live game scoreboard and its score, timer, streak, and record fields." href="/whack-me/configuration/scoreboard" />
+    <LinkCard title="bossbar.yml" description="Configure the optional timer-progress boss bar." href="/whack-me/configuration/bossbar" />
+    <LinkCard title="signs.yml" description="Customize right-click arena join signs, state labels, and system feedback." href="/whack-me/configuration/signs" />
+    <LinkCard title="sounds.yml" description="Choose sounds, volume, and pitch for hits, finishes, and new records." href="/whack-me/configuration/sounds" />
+    <LinkCard title="mysql.yml" description="Connect Whack Me to an external database for persistent player statistics." href="/whack-me/configuration/mysql" />
+    <LinkCard title="GUI Menus" description="Customize the setup and player statistics inventory menus." href="/whack-me/configuration/menus" />
+    <LinkCard title="Other Files" description="Understand automatically managed arena, stat, inventory, and music data." href="/whack-me/configuration/other-files" />
+</CardGrid>
+
+## Placeholders
+
+<CardGrid>
+    <LinkCard title="General Placeholders" description="Display totals, live arena data, and persistent or per-run player statistics." href="/whack-me/placeholders/general" />
+    <LinkCard title="Leaderboard Placeholders" description="Build ranked displays for any supported persistent statistic." href="/whack-me/placeholders/leaderboard" />
+</CardGrid>
+
+## Developer API
+
+<CardGrid>
+    <LinkCard title="Player Events" description="Control join attempts and observe leaves or statistic updates." href="/whack-me/api/player-events/player-event" />
+    <LinkCard title="Game Events" description="React to game starts, normal endings, forced stops, and state changes." href="/whack-me/api/game-events/game-event" />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard title="FAQ" description="Find quick answers to installation, arena, music, database, and gameplay problems." href="/whack-me/misc/faq" />
+    <LinkCard title="Source Code" description="Browse the repository, build the plugin, report issues, or contribute." href="https://github.com/Despical/WhackMe" target="_blank" rel="noopener noreferrer" />
+</CardGrid>
