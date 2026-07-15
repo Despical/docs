@@ -1,0 +1,117 @@
+---
+title: Developer API
+description: Add Whack Me as a dependency and integrate with its game lifecycle, player flow, and statistic events.
+---
+
+import { Tabs, TabItem, Aside } from "@astrojs/starlight/components";
+
+Whack Me exposes Bukkit events under `dev.despical.whackme.api.event`. Integrations can deny arena joins, observe normal or forced game endings, react to state transitions, capture leave reasons, and validate or replace statistic changes.
+
+---
+
+## Dependency Setup
+
+Whack Me can be consumed from JitPack:
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        repositories {
+            maven { url = 'https://jitpack.io' }
+        }
+
+        dependencies {
+            compileOnly 'com.github.Despical:WhackMe:main-SNAPSHOT'
+        }
+        ```
+    </TabItem>
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        repositories {
+            maven("https://jitpack.io")
+        }
+
+        dependencies {
+            compileOnly("com.github.Despical:WhackMe:main-SNAPSHOT")
+        }
+        ```
+    </TabItem>
+    <TabItem label="Maven">
+        ```xml
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+        <dependency>
+            <groupId>com.github.Despical</groupId>
+            <artifactId>WhackMe</artifactId>
+            <version>main-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+For a production integration, pin a stable Whack Me release or commit instead of tracking a moving branch snapshot.
+
+---
+
+## plugin.yml
+
+```yaml
+name: YourPlugin
+version: 1.0.0
+main: your.package.YourPlugin
+depend: [WhackMe]
+```
+
+Use `softdepend: [WhackMe]` only when your plugin can run safely without the integration.
+
+---
+
+## Base Event Type
+
+All public events extend:
+
+```java
+dev.despical.whackme.api.event.WhackMeEvent
+```
+
+Each concrete Bukkit event owns a separate `HandlerList`.
+
+<Aside type="caution">
+    Bukkit does not dispatch subclass events to a listener registered only for `WhackMeEvent`, `GameEvent`, or `PlayerEvent`. Listen to the concrete event class you need.
+</Aside>
+
+---
+
+## Register a Listener
+
+```java
+import dev.despical.whackme.api.event.player.PlayerJoinAttemptEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public final class WhackMeListener implements Listener {
+
+    @EventHandler
+    public void onJoinAttempt(PlayerJoinAttemptEvent event) {
+        if (!event.getPlayer().hasPermission("network.whackme.play")) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage("You cannot join Whack Me yet.");
+        }
+    }
+}
+```
+
+Register it normally from your plugin's `onEnable` method.
+
+---
+
+## Event Categories
+
+* **[Game Events](/whack-me/api/game-events/game-event):** start, normal end, forced stop, and state change.
+* **[Player Events](/whack-me/api/player-events/player-event):** join attempt, leave reason, and statistic mutation.
+
+The current API does not emit a separate event for individual point-block hits. Use `PlayerStatisticChangeEvent` with `Statistics.LOCAL_SCORE`, `PLUS_BLOCKS`, or `MINUS_BLOCKS` when statistic-level observation is sufficient.
