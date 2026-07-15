@@ -1,0 +1,52 @@
+---
+title: bossbar.yml
+description: Configure the Whack Me boss bar toggle, MiniMessage text, timer progress, overlay style, and color.
+---
+
+The boss bar provides a compact timer-progress display during the run. Its progress starts at full and drains to zero according to `game-settings.gameplay-time`.
+
+---
+
+## Configuration
+
+```yaml
+enabled: true
+text: "<yellow><bold>Playing <gradient:#00E676:#29B6F6><bold>WHACK ME</bold></gradient> <yellow><bold>by <aqua><bold>DESPICAL"
+overlay: PROGRESS
+color: PINK
+```
+
+* **`enabled`**: Global boss bar switch.
+* **`text`**: MiniMessage title used throughout the game.
+* **`overlay`**: Bar segmentation style.
+* **`color`**: Standard Adventure boss bar color.
+
+---
+
+## Overlay Values
+
+`PROGRESS`, `NOTCHED_6`, `NOTCHED_10`, `NOTCHED_12`, or `NOTCHED_20`
+
+## Color Values
+
+`PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, or `WHITE`
+
+Invalid values fall back to the plugin defaults and may produce a console warning depending on the underlying parser.
+
+---
+
+## Per-Arena Toggle
+
+Each arena can disable its own boss bar from `/wm edit <arena>` → **Other Arena Settings**. Both the global and arena switch must allow the bar.
+
+Apply changes with `/wm reload`; active arena boss bars are refreshed.
+
+---
+
+## Applying Changes
+
+You don't need to restart your server to see most boss bar changes. Simply modify the file and use the reload command:
+
+```bash
+/wm reload
+```
