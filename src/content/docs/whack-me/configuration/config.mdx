@@ -1,0 +1,131 @@
+---
+title: config.yml
+description: Detailed guide to Whack Me storage, game duration, cooldown, chat, command blocking, display, update, and diagnostic settings.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`config.yml` controls **Whack Me**'s server-wide behavior. Arena-specific values such as point-block movement, portal locations, music, and per-arena display toggles are configured through `/wm edit <arena>`.
+
+---
+
+## Storage
+
+```yaml
+database: flat
+```
+
+* `flat`: Stores persistent player statistics in `data/stats.yml`.
+* `mysql`: Uses the connection in `mysql.yml` and creates the configured statistics table.
+
+<Aside type="caution">
+    Storage changes take effect after a restart and do not migrate existing data. Export or migrate the values yourself before switching an established server.
+</Aside>
+
+---
+
+## Game Settings
+
+```yaml
+game-settings:
+  block-commands: true
+  block-leave-command: false
+  gameplay-time: 30
+  cooldown-seconds: 0
+```
+
+| Option | Default | Description |
+|:--|:--|:--|
+| `block-commands` | `true` | Master switch for restricting commands while a player occupies an arena. |
+| `block-leave-command` | `false` | When false, `/wm leave` and `/whackme leave` are always added to the allowlist. |
+| `gameplay-time` | `30` | Run duration in seconds. The boss bar and timer displays use this value. |
+| `cooldown-seconds` | `0` | Delay before another game can be joined; `0` disables it. |
+
+`whackme.cooldown.bypass` ignores the replay cooldown. `whackme.commandblock.bypass` ignores command restrictions.
+
+---
+
+## Scoreboard
+
+```yaml
+scoreboard-enabled: true
+```
+
+This is the global scoreboard switch. The global setting and the arena's **Arena Scoreboard** toggle must both be enabled.
+
+---
+
+## Chat Settings
+
+```yaml
+chat-settings:
+  enable-formatting: true
+  separate-chat: true
+  disable-chat-in-game: false
+```
+
+* **`enable-formatting`** uses `chat-format` from `messages.yml`.
+* **`separate-chat`** isolates the arena player from outside chat and removes arena players from outside recipients.
+* **`disable-chat-in-game`** cancels all chat from an active arena player and sends `game.chat-disabled-in-game`.
+
+With formatting and separation both disabled, Minecraft's normal chat flow is left unchanged.
+
+---
+
+## Allowed Commands
+
+```yaml
+command-settings:
+  allowed-commands:
+    - "wm leave"
+    - "whackme leave"
+    - "wm stats"
+    - "whackme stats"
+```
+
+Entries are case-insensitive and may include or omit the leading slash.
+
+* A root such as `msg` allows all `/msg ...` arguments.
+* A subcommand such as `wm stats` allows that command and any additional arguments.
+* `*` allows everything.
+* Namespaced roots such as `minecraft:msg` are normalized to `msg`.
+
+---
+
+## Update Notifier
+
+```yaml
+update-notifier: true
+```
+
+Checks for a newer **Whack Me** release during startup and logs the distribution link when an update is available.
+
+---
+
+## Debug and Event Profiling
+
+```yaml
+debug: false
+
+event-profiling:
+  enabled: false
+  verbose: false
+```
+
+* **`debug`** registers the hidden debug command group on startup.
+* **`event-profiling.enabled`** records execution times for **Whack Me** event listeners.
+* **`event-profiling.verbose`** logs every profiled execution and can create substantial console output.
+
+See **[Debug Commands](/whack-me/commands/debug)** for component previews and timing dumps.
+
+---
+
+## Applying Changes
+
+Most options apply with:
+
+```bash
+/wm reload
+```
+
+Restart for storage backend changes and for enabling or disabling debug command registration.

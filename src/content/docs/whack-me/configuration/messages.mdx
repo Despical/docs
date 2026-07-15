@@ -1,0 +1,109 @@
+---
+title: messages.yml
+description: Customize all Whack Me point-block labels, game results, commands, setup feedback, chat, and system messages with MiniMessage.
+---
+
+`messages.yml` contains the player-facing text used throughout Whack Me. Values can be a single string or a YAML list when the corresponding message is multi-line.
+
+---
+
+## MiniMessage Support
+
+**Whack Me** utilizes the **MiniMessage** library, allowing you to create clean visuals without the limitations of traditional legacy color codes. You can use HEX colors, gradients, bold text, hover events, and click events.
+
+* **Gradients:** `<gradient:#ff3b3b:#ffd93b>Your Text Here</gradient>`
+* **HEX Colors:** `<color:#55ff55>Solid Color Text</color>`
+* **Legacy Tags:** Simple tags like `<red>`, `<b>` (bold), or `<underlined>` are also supported.
+
+---
+
+## Centered Message Lists
+
+Arena creation, deletion, registration, and result summaries are centered automatically. Prefix an individual line with `%no_center%` to send it without centering:
+
+```yaml
+game:
+  finished:
+    - "%no_center%<green><bold>────────────────────────"
+    - "<gradient:#00E676:#2979FF><bold>GAME FINISHED!</bold></gradient>"
+```
+
+---
+
+## Main Message Groups
+
+| Path | Purpose |
+|:--|:--|
+| `point-blocks.*` | Floating names for green, red, and already-hit gray blocks. |
+| `game.action-bar` | Live score, timer, and streak feedback. |
+| `game.start-message` | Instructions sent when a run begins. |
+| `game.finished` | Normal finish summary. |
+| `game.new-record` | Personal-record summary. |
+| `game.global-record-broken` | Arena-record summary without a new personal best. |
+| `game.global-record-broken-and-pr` | Combined arena and personal record summary. |
+| `help-message` | Public command list. |
+| `admin-help-message` | Administrative command list. |
+| `debug-help-message` | Debug commands appended when debug mode is active. |
+| `created-arena` through `created-arenas` | Setup, deletion, and arena-list output. |
+| `server-*-detected` and `game-stopped-*` | Cancellation notices that explicitly state stats were unaffected. |
+| `chat-format` | Arena chat format when plugin formatting is enabled. |
+| `stats-menu.no-arenas` | Feedback when no arenas can be displayed in the statistics GUI. |
+
+---
+
+## Gameplay Placeholders
+
+| Placeholder | Used for |
+|:--|:--|
+| `%score%` | Live local score in the action bar. |
+| `%timer%` | Remaining seconds. |
+| `%timer_formatted%` | Remaining time in `MM:SS` format. |
+| `%hit_streak%` | Current correct-hit streak. |
+| `%points%` | Final run score. |
+| `%max_streak%` | Longest streak reached during the run. |
+| `%success_rate%` | Correct hits divided by all scored hits. |
+| `%green_blocks%` | Correct green-block hits in this run. |
+| `%red_blocks%` | Wrong red-block hits in this run. |
+| `%previous_record%` | Personal record before this result. |
+| `%personal_record%` | Personal record after considering this result. |
+| `%miss_status%` | Generated no-hit, perfect-run, or miss summary line. |
+
+---
+
+## Command and Setup Placeholders
+
+| Placeholder | Used for |
+|:--|:--|
+| `%label%` | Command label the sender used, such as `wm`. |
+| `%usage%` | Correct command syntax. |
+| `%arguments%` | Unrecognized argument string. |
+| `%player%` | Target player name. |
+| `%arena%` | Arena ID in admin feedback. |
+| `%id%` | Arena ID in create/delete messages. |
+| `%arenas%` | Formatted clickable arena list. |
+| `%sender%` / `%message%` | Arena chat sender and content. |
+
+`setup-menu.yml` contains its own setup GUI messages and placeholders; `signs.yml` contains join-sign feedback.
+
+---
+
+## Disabling a Message
+
+Set an optional single-line message to an empty string. For a list, use an empty list:
+
+```yaml
+game:
+  action-bar: ""
+
+server-reload-detected: []
+```
+
+---
+
+## Applying Changes
+
+You don't need to restart your server to see most message changes. Simply modify the file and use the reload command to apply your updates:
+
+```bash
+/wm reload
+```
