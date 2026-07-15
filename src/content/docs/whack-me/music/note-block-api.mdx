@@ -1,0 +1,71 @@
+---
+title: NoteBlockAPI Music
+description: Install NoteBlockAPI, use Whack Me bundled songs, add custom NBS files, preview tracks, and assign music per arena.
+---
+
+import { Aside, Badge, Steps } from "@astrojs/starlight/components";
+
+Whack Me supports per-arena Note Block Studio music through [NoteBlockAPI](https://github.com/koca2000/NoteBlockAPI) <Badge text="Optional" variant="tip" />.
+
+---
+
+## Installation
+
+<Steps>
+    1. Download a server-compatible NoteBlockAPI plugin build.
+    2. Place it in `plugins/` beside Whack Me.
+    3. Restart the server so NoteBlockAPI loads before Whack Me.
+    4. Open `/wm edit <arena>` and choose **Select Arena Music**.
+</Steps>
+
+Without NoteBlockAPI, Whack Me uses a no-op radio implementation and the setup menu displays installation guidance instead of song choices.
+
+---
+
+## Bundled Songs
+
+On first startup, Whack Me seeds these files into `/plugins/WhackMe/musics/`:
+
+* Alan Walker - Fade
+* Bangarang
+* Oppan Gangnam Style
+* Rude
+* The Entertainer
+
+The hidden `.default-songs-seeded` marker ensures missing bundled songs are not copied back on every later startup.
+
+---
+
+## Add Custom Songs
+
+1. Stop the server.
+2. Copy valid `.nbs` files directly into `/plugins/WhackMe/musics/`.
+3. Start the server.
+4. Check console output for loaded and failed song counts.
+
+Only files ending with lowercase `.nbs` in the top level of `musics/` are loaded. Subdirectories are not scanned as song collections.
+
+---
+
+## Select and Preview
+
+Open `/wm edit <arena>` → **Select Arena Music**:
+
+* **Left-click** a song to select it.
+* **Right-click** to start a private looping preview.
+* Select **No Song** to clear the arena selection.
+* Closing or leaving the song page stops the preview.
+
+The selected entry glows in the menu.
+
+---
+
+## Playback Behavior
+
+When a player joins an arena with a valid selected song, Whack Me creates a private repeating radio for that player. Playback stops when the player leaves, disconnects, finishes, is removed, or the arena shuts down.
+
+If a saved arena song is missing during startup, Whack Me logs the arena and song name, then resets that arena to no music.
+
+<Aside type="caution">
+    Adding or replacing NBS files requires a restart. `/wm reload` refreshes configuration and menus but does not rebuild the radio's loaded song map.
+</Aside>
