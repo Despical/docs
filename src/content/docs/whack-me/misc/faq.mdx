@@ -1,0 +1,177 @@
+---
+title: FAQ
+description: Quick answers regarding licensing, requirements, and technical details for Whack Me.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources for the Whack Me plugin.
+
+---
+
+## Which Java versions are supported?
+
+The plugin is compiled using **Java Development Kit (JDK) 25**. Therefore, **Java 25 or newer** is strictly required to run **Whack Me**.
+
+<Aside type="note">
+    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+</Aside>
+
+---
+
+## Which Minecraft versions are supported?
+
+**Whack Me** supports a specific range of versions to ensure stability:
+
+* **Supported Versions:** Full and native support for **1.21.11 - 26.2 and all newer versions**.
+
+<Aside type="caution">
+    Sub-versions like 1.20.4 or 1.21.8 are not officially supported. Please ensure you are on the final minor release of your chosen major version.
+</Aside>
+
+---
+
+## Which server software is supported?
+
+Use **Paper** or any Paper fork.
+
+Forks such as Purpur usually work as long as they remain compatible with Paper APIs. Spigot/CraftBukkit are not the recommended target.
+
+---
+
+## What are the available sound names?
+
+The plugin utilizes the **XSeries** library to ensure sound compatibility across different Minecraft versions. This means you should use the XSeries sound names in your configuration files.
+
+[**List of All Available Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
+
+---
+
+## Does the plugin support PlaceholderAPI?
+
+**Yes.** **Whack Me** provides a comprehensive set of placeholders to display player statistics and real-time game data. You can use these in any compatible plugin like Tab, Scoreboard, or Holographic Displays.
+
+We have categorized our placeholders into two main sections:
+
+* **General & Game Placeholders:** For player stats (wins, points) and arena info.
+* 👉 [View General Placeholders](/whack-me/placeholders/general)
+* **Leaderboard Placeholders:** For creating Top 10 lists and ranking displays.
+* 👉 [View Leaderboard Placeholders](/whack-me/placeholders/leaderboard)
+
+---
+
+## What is the license for Whack Me?
+
+**Whack Me** is licensed under the [GPL-3.0 License](http://www.gnu.org/licenses/gpl-3.0.html).
+
+See the [LICENSE](https://github.com/Despical/WhackMe/blob/main/LICENSE) file for full copyright notices and third-party attributions.
+
+---
+
+## Is Whack Me multiplayer?
+
+Each arena is single-player and accepts one player at a time. Create multiple arenas to let multiple people play concurrently.
+
+---
+
+## Why can I not register an arena?
+
+Registration requires all three:
+
+1. Start location
+2. End location
+3. At least one portal location
+
+The failure message names the first missing value. Follow the **[Arena Setup Guide](/whack-me/arena-setup)** from top to bottom.
+
+---
+
+## Why is the start location rejected?
+
+In normal layout mode, the start must be surrounded by end portal frames in all eight horizontal neighboring positions. Shift-click **Set Start Location** to place that ring automatically, or enable **Manage Portal Layout** and build a custom frame arrangement.
+
+---
+
+## Why are point-block settings locked?
+
+The arena has no portal locations. Complete the automatic frame ring or exit custom Portal Editing Mode after placing at least one frame.
+
+---
+
+## Why do fewer blocks appear than my maximum?
+
+The maximum is capped by portal location count. Spawning also selects a changing target between the configured minimum and maximum rather than filling to maximum at all times.
+
+---
+
+## Can I change the green, red, and gray blocks?
+
+Yes. Open `/wm edit <arena>` → **Point Block Settings** → **Customize Point Block Looks**, put an item on your cursor, and click a preview. Custom heads and item metadata are supported.
+
+---
+
+## Why is the song selector unavailable?
+
+Install NoteBlockAPI and restart the server. Whack Me chooses its radio implementation only at startup. Custom files must be valid lowercase-extension `.nbs` files directly inside `/plugins/WhackMe/musics/`.
+
+---
+
+## Why did an arena lose its selected song?
+
+If a configured `.nbs` song is missing or fails to load during startup, Whack Me logs it and resets the arena to no music. Restore the file, restart, and select it again.
+
+---
+
+## Why does PlaceholderAPI show nothing?
+
+Ensure PlaceholderAPI loaded before Whack Me, then restart. Whack Me registers the `wm` expansion internally; you do not need to download it with `/papi ecloud download`.
+
+Use syntax such as `%wm_games_played%` or `%wm_arena:arcade:record_score%`.
+
+---
+
+## How do I remove a join sign?
+
+Break it with `whackme.sign.break`. Whack Me unregisters the sign and reports its location. Players without that permission cannot break a tracked sign.
+
+---
+
+## Why is the scoreboard or boss bar missing?
+
+Check both levels:
+
+* Scoreboard: `scoreboard-enabled: true` and the arena scoreboard toggle enabled.
+* Boss bar: `bossbar.yml` has `enabled: true` and the arena boss bar toggle enabled.
+
+Run `/wm reload` after editing presentation files.
+
+---
+
+## How do I switch between flat file and MySQL?
+
+Stop the server, configure the new backend, change `database`, and restart. Whack Me does not migrate data, so copy or transform existing statistics before switching.
+
+---
+
+## Should I edit arenas.yml manually?
+
+Normally, no. It contains serialized locations, JSON lists, and item stacks and is cached while the server runs. Use `/wm edit <arena>` and make backups before manual offline changes.
+
+---
+
+## Point blocks look jittery or use too much server time. What should I tune?
+
+Try these per-arena changes:
+
+* Increase **Spawn Check Period** to perform checks less often.
+* Reduce maximum active blocks.
+* Use fewer portal locations if the map is excessive.
+* Test **Asynchronous Movement** on your Paper build.
+
+Use event profiling and `/wm debug dump` only for diagnosis; it profiles Whack Me events, not all server entity work.
+
+---
+
+## Where can I report a problem?
+
+Open a [Whack Me issue](https://github.com/Despical/WhackMe/issues/new/choose) with your server version, Java version, Whack Me version, relevant logs, config excerpts, and exact reproduction steps.
