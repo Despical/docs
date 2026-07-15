@@ -1,0 +1,43 @@
+---
+title: PlayerLeaveGameEvent
+description: Event fired immediately before a player is removed from a Whack Me game, including the departure reason.
+---
+
+`PlayerLeaveGameEvent` fires before cleanup, teleportation, and temporary-stat reset. The player and current run values are still attached to the game.
+
+The event is informational and cannot prevent departure.
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Game being left. |
+| `getReason()` | `LeaveReason` | Cause of departure. |
+| `getPlayer()` | `Player` | Leaving Bukkit player. |
+| `getUser()` | `User` | Whack Me user with temporary values still available. |
+
+---
+
+## Leave Reasons
+
+| `LeaveReason` | Meaning |
+|:--|:--|
+| `FINISH` | Normal timer expiry. |
+| `LEAVE_COMMAND` | Player used `/wm leave`. |
+| `KICK` | Administrator used `/wm kick`. |
+| `QUIT` | Player disconnected. |
+| `RELOAD` | Reload interrupted the game. |
+| `SHUTDOWN` | Server shutdown interrupted the game. |
+| `STOP_COMMAND` | Administrator force-stopped the game. |
+| `ARENA_DELETED` | Active arena was deleted. |
+
+```java
+@EventHandler
+public void onLeave(PlayerLeaveGameEvent event) {
+    getLogger().info(event.getPlayer().getName() + " left Whack Me: " + event.getReason());
+}
+```
+
+Forced-stop paths can also produce a later `GameStopEvent` after cleanup.

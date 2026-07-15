@@ -1,0 +1,41 @@
+---
+title: PlayerJoinAttemptEvent
+description: Cancellable event fired after built-in Whack Me checks pass but before the player joins the target game.
+---
+
+`PlayerJoinAttemptEvent` is the supported extension point for custom access rules, maintenance, network queues, or external cooldowns.
+
+---
+
+## Event Timing
+
+Whack Me fires it only after checking that:
+
+* The player is not already in an arena.
+* The target arena is ready and has a game runtime.
+* The arena is unoccupied.
+* The built-in replay cooldown allows the player.
+
+Cancellation prevents the join and does not modify the game. No denial message is sent automatically.
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Target game. |
+| `getPlayer()` | `Player` | Joining player. |
+| `getUser()` | `User` | Whack Me user. |
+| `isCancelled()` | `boolean` | Whether entry is denied. |
+| `setCancelled(boolean)` | `void` | Deny or allow the attempt. |
+
+```java
+@EventHandler
+public void onJoinAttempt(PlayerJoinAttemptEvent event) {
+    if (maintenanceArenas.contains(event.getGame().getArena().getId())) {
+        event.setCancelled(true);
+        event.getPlayer().sendMessage("This arena is under maintenance.");
+    }
+}
+```

@@ -1,0 +1,38 @@
+---
+title: PlayerEvent
+description: Base class and shared methods for Whack Me player events.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`PlayerEvent` is the abstract base for Whack Me events associated with a Bukkit player.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.whackme.api.event.player`
+* **Parent:** `WhackMeEvent`
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Live Bukkit player. |
+| `getUser()` | `User` | Whack Me user model resolved for that player. |
+
+<Aside type="caution">
+    A player can disconnect before delayed work runs. Retain the UUID rather than the Bukkit entity for asynchronous or long-lived work.
+</Aside>
+
+---
+
+## Concrete Events
+
+* `PlayerJoinAttemptEvent`
+* `PlayerLeaveGameEvent`
+* `PlayerStatisticChangeEvent<T>`
+
+Listen to a concrete event rather than `PlayerEvent` itself.

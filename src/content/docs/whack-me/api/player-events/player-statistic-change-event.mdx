@@ -1,0 +1,41 @@
+---
+title: PlayerStatisticChangeEvent
+description: Cancellable generic event fired before a Whack Me persistent or temporary statistic value is stored.
+---
+
+`PlayerStatisticChangeEvent<T>` lets integrations observe, replace, or cancel runtime statistic updates.
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getStatisticType()` | `StatisticType<T>` | Statistic definition being changed. |
+| `getOldValue()` | `T` | Currently stored value. |
+| `getNewValue()` | `T` | Value that will be stored. |
+| `setNewValue(T)` | `void` | Replace the pending value. |
+| `isCancelled()` | `boolean` | Whether the update will be discarded. |
+| `setCancelled(boolean)` | `void` | Cancel or restore the update. |
+| `getPlayer()` | `Player` | Affected Bukkit player. |
+| `getUser()` | `User` | Affected Whack Me user. |
+
+The event covers both persistent statistics and temporary `local_*` run values. Database loading bypasses it; it represents changes requested through the runtime user statistics API.
+
+---
+
+## Example
+
+```java
+import dev.despical.whackme.api.event.player.PlayerStatisticChangeEvent;
+import dev.despical.whackme.stats.Statistics;
+
+@EventHandler
+public void onStatisticChange(PlayerStatisticChangeEvent<Integer> event) {
+    if (event.getStatisticType() == Statistics.LOCAL_SCORE) {
+        event.setNewValue(Math.max(0, event.getNewValue()));
+    }
+}
+```
+
+Because the event is generic, a handler may receive different statistic value types in future versions. Check `getStatisticType()` before assuming the value type in shared listeners.
