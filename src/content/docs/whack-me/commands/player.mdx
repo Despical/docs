@@ -1,0 +1,44 @@
+---
+title: Player Commands
+description: Commands players use to join and leave Whack Me games or inspect player statistics.
+---
+
+All player commands support `/whackme` and the shorter `/wm` alias.
+
+---
+
+## Join Command
+
+Joins a registered, currently unoccupied arena and immediately starts a timed run.
+
+```bash
+/wm join <arena>
+```
+
+The join fails when the arena does not exist, is not registered, is already occupied, the player is already in an arena, or the replay cooldown is active. The command has no permission requirement.
+
+---
+
+## Leave Command
+
+Leaves the current game, restores the player's saved state, and teleports them to the arena's configured end location.
+
+```bash
+/wm leave
+```
+
+The command has no permission requirement. Unless `game-settings.block-leave-command` is enabled, Whack Me automatically allows it even while command blocking is active.
+
+---
+
+## Stats Command
+
+Opens the statistics GUI.
+
+```bash
+/wm stats [player]
+```
+
+Without an argument, the menu shows your own values. With a player name, it can show online players and players already known to the server's offline-player cache.
+
+The overview includes games played, personal record score, longest hit streak, positive and negative block totals, hit rate, arena records, and leaderboard positions. This command has no permission requirement.

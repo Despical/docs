@@ -1,0 +1,80 @@
+---
+title: Arena Commands
+description: Commands for creating, listing, editing, and deleting Whack Me arenas.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Arena commands manage the single-player game instances used by Whack Me. Use `/whackme` or `/wm` for every command on this page.
+
+---
+
+## Create Command
+
+Creates a new, unconfigured arena with a unique ID.
+
+```bash
+/wm create <arena_id>
+```
+
+* **Permission:** `whackme.arena.create`
+* **Sender:** Player
+
+The arena is kept in memory immediately and saved to `arenas.yml` by the automatic save system or server shutdown. Continue with `/wm edit <arena_id>`.
+
+---
+
+## List Command
+
+Lists every arena and its readiness state.
+
+```bash
+/wm list
+```
+
+* **Permission:** `whackme.arena.list`
+* **Sender:** Player
+
+Ready arena IDs are clickable join actions. Incomplete IDs are clickable setup actions.
+
+---
+
+## Edit Command
+
+Opens the interactive setup menu for an existing arena.
+
+```bash
+/wm edit <arena_id>
+```
+
+* **Permission:** `whackme.arena.edit`
+* **Sender:** Player
+
+See the **[Arena Setup Guide](/whack-me/arena-setup)** for every page and validation rule.
+
+---
+
+## Delete Command
+
+Uses a confirmation flow to permanently unregister an arena.
+
+```bash
+/wm delete <arena_id>
+/wm delete <arena_id> --confirm
+/wm delete <arena_id> --cancel
+```
+
+* **Permission:** `whackme.arena.delete`
+* **Sender:** Player
+
+Running the command without a flag prints clickable confirm and cancel actions. `--confirm` stops an occupied game as an arena-deletion cancellation, removes its join signs, and deletes its section from `arenas.yml`. `--cancel` leaves everything unchanged.
+
+<Aside type="danger">
+    Arena deletion cannot be undone through Whack Me. Back up `arenas.yml` before removing a production arena.
+</Aside>
+
+---
+
+<Aside type="tip">
+    Grant `whackme.arena.*` for access to all arena management commands.
+</Aside>
