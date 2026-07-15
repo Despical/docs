@@ -1,0 +1,41 @@
+---
+title: GameStopEvent
+description: Event fired after a Whack Me game is force-stopped and cleaned up.
+---
+
+`GameStopEvent` reports abnormal termination after the active user has been detached and cleanup has run.
+
+---
+
+## Stop Reasons
+
+| `StopReason` | Trigger |
+|:--|:--|
+| `STOP_COMMAND` | `/wm stop [arena]` |
+| `SERVER_RELOAD` | Plugin or server reload |
+| `SERVER_SHUTDOWN` | Server shutdown |
+| `ARENA_DELETED` | Confirmed deletion of an occupied arena |
+
+Forced stops do not apply temporary run results to persistent statistics.
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getStopReason()` | `StopReason` | Cause of the forced stop. |
+| `getStoppedPlayers()` | `List<UUID>` | Immutable snapshot captured before cleanup. |
+| `getGame()` | `Game` | Cleaned game object. |
+| `getArena()` | `Arena` | Related arena. |
+
+The current game model is single-player, so the stopped-player list normally contains one UUID.
+
+```java
+@EventHandler
+public void onGameStop(GameStopEvent event) {
+    getLogger().info("Stopped " + event.getArena().getId()
+        + " because of " + event.getStopReason()
+        + "; players=" + event.getStoppedPlayers());
+}
+```

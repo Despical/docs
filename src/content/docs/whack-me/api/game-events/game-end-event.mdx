@@ -1,0 +1,38 @@
+---
+title: GameEndEvent
+description: Event fired when a Whack Me run reaches its normal ending phase, before result persistence and cleanup.
+---
+
+`GameEndEvent` fires when the timer expires and the game reaches its normal ending phase.
+
+---
+
+## Timing Guarantees
+
+At dispatch time:
+
+* Point generation has stopped.
+* The player/user is still attached to the game.
+* Temporary run statistics are still available.
+* Personal and arena records have not yet been updated.
+* Player cleanup and teleportation have not yet run.
+
+The event is not fired for forced stops. Use `GameStopEvent` for reload, shutdown, command stop, and arena-deletion cancellations.
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getFinalScore()` | `int` | Current `LOCAL_SCORE`, or `0` if the user is already unavailable. |
+| `getGame()` | `Game` | Inherited live game. |
+| `getArena()` | `Arena` | Inherited arena. |
+
+```java
+@EventHandler
+public void onGameEnd(GameEndEvent event) {
+    UUID playerId = event.getGame().getUser().getUUID();
+    analytics.recordScore(playerId, event.getFinalScore());
+}
+```
