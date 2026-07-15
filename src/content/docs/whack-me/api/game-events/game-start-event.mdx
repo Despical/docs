@@ -1,0 +1,37 @@
+---
+title: GameStartEvent
+description: Event fired after a Whack Me run enters active gameplay.
+---
+
+`GameStartEvent` fires after the game enters `IN_GAME`.
+
+---
+
+## Timing Guarantees
+
+Before dispatch:
+
+* The gameplay timer is set from `game-settings.gameplay-time`.
+* Boss bar progress is set to full.
+* Point-block spawning has started.
+* The player is attached to the game and has already been prepared and teleported.
+
+The event is informational and not cancellable. Deny a player earlier with `PlayerJoinAttemptEvent` or cancel the `WAITING → IN_GAME` transition with care through `GameStateChangeEvent`.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.whackme.api.event.game`
+* **Parent:** `GameEvent`
+* **Methods:** Inherits `getGame()` and `getArena()`
+
+```java
+@EventHandler
+public void onGameStart(GameStartEvent event) {
+    Player player = event.getGame().getPlayer();
+    if (player != null) {
+        player.sendMessage("Hit green blocks and avoid red ones!");
+    }
+}
+```

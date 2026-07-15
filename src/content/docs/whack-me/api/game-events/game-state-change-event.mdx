@@ -1,0 +1,38 @@
+---
+title: GameStateChangeEvent
+description: Cancellable event fired immediately before a Whack Me game state transition.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`GameStateChangeEvent` fires before Whack Me assigns a new game state.
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getOldState()` | `GameState` | State still assigned during event dispatch. |
+| `getNewState()` | `GameState` | Requested destination. |
+| `isCancelled()` | `boolean` | Whether the transition will be prevented. |
+| `setCancelled(boolean)` | `void` | Retain the old state when true. |
+| `getGame()` | `Game` | Related live game. |
+| `getArena()` | `Arena` | Related arena. |
+
+States are `INACTIVE`, `WAITING`, `IN_GAME`, `ENDING`, and `RESTARTING`.
+
+Cancelling prevents the assignment and the destination state's first tick.
+
+<Aside type="danger">
+    Cancelling cleanup transitions such as `ENDING → RESTARTING` or `RESTARTING → WAITING` can leave the arena occupied or prevent cleanup. Only cancel when your integration deliberately manages the resulting lifecycle.
+</Aside>
+
+```java
+@EventHandler
+public void onStateChange(GameStateChangeEvent event) {
+    if (event.getNewState() == GameState.IN_GAME && maintenanceArenas.contains(event.getArena().getId())) {
+        event.setCancelled(true);
+    }
+}
+```

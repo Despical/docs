@@ -1,0 +1,52 @@
+---
+title: GameEvent
+description: Base class and shared methods for Whack Me game lifecycle events.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`GameEvent` is the abstract base for events associated with one live Whack Me game session.
+
+<Aside type="note">
+    Listen to a concrete subclass. Bukkit does not deliver child events to a handler declared only for `GameEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.whackme.api.event.game`
+* **Parent:** `WhackMeEvent`
+
+---
+
+## Methods
+
+| Method | Return type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Live game associated with the event. |
+| `getArena()` | `Arena` | Arena that owns the game. |
+
+Through `Game`, listeners can read the player/user, timer, state, point handler, scoreboard manager, boss bar manager, and arena.
+
+<Aside type="caution">
+    `Game` is a live runtime object. Do not mutate it from asynchronous work, and do not retain it after the session is cleaned up.
+</Aside>
+
+---
+
+## Concrete Events
+
+* `GameStartEvent`
+* `GameEndEvent`
+* `GameStopEvent`
+* `GameStateChangeEvent`
+
+```java
+@EventHandler
+public void onStart(GameStartEvent event) {
+    String arenaId = event.getArena().getId();
+    int duration = event.getGame().getTimer();
+    getLogger().info("Whack Me started in " + arenaId + " for " + duration + " seconds.");
+}
+```
