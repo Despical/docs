@@ -1,0 +1,84 @@
+---
+title: setup-menu.yml
+description: Customize the Whack Me arena setup GUI, point-block dialogs, item appearance, and setup feedback.
+---
+
+`setup-menu.yml` drives both the inventory pages opened by `/wm edit <arena>` and the modern point-block settings dialogs.
+
+---
+
+## Menu Title
+
+```yaml
+title: "<gradient:#FF5252:#D50000><bold>GAME SETUP</bold></gradient> <dark_gray><bold>></bold></dark_gray> <gold><bold>%arena_id%</bold>"
+```
+
+`%arena_id%` is available in the title and point-block dialog text.
+
+---
+
+## Home and Location Items
+
+| Key | Purpose |
+|:--|:--|
+| `game-locations` | Opens the start/end page. |
+| `start` | Sets the start point and contains success or invalid-location feedback. |
+| `end` | Sets the cleanup and exit point. |
+| `portal-layout` | Toggles custom frame editing and its enter/leave messages. |
+| `point-blocks` | Opens settings when portal locations exist. |
+| `point-blocks-locked` | Explains why settings are unavailable before portal setup. |
+| `song-selector` | Opens the NoteBlockAPI song browser. |
+| `other-settings` | Opens per-arena scoreboard and boss bar toggles. |
+| `arena-record-reset` | Opens record confirmation when a record is available. |
+| `arena-sign` | Registers the sign being viewed. |
+| `register-arena` | Validates and activates the arena. |
+| `go-back` | Returns to the previous setup page. |
+
+---
+
+## Point-Block Dialog
+
+`point-block-settings-dialog` defines:
+
+* Main and external titles
+* Group names and descriptions for active-block limits and vertical movement
+* Labels and descriptions for minimum, maximum, movement step, maximum step, peak wait, spawn check period, and asynchronous movement
+* Save, back, setup-exit, and appearance buttons
+* Enabled and disabled value text
+
+The numeric ranges are enforced by code, not YAML. Editing dialog descriptions does not change those limits.
+
+---
+
+## Appearance Items
+
+`point-block-appearance` controls the green, red, and gray preview names, cursor instructions, success feedback, and lore. The actual item assigned to each state is stored per arena in `arenas.yml`, not in this menu file.
+
+---
+
+## Music Items
+
+| Key | Purpose |
+|:--|:--|
+| `song-no-selection` | Clears arena music. |
+| `song-item` | Template for each loaded `.nbs` song. |
+| `song-nbs-not-installed` | Explains how to install NoteBlockAPI. |
+
+`%song_name%` is replaced in song templates and `%selected_song%` is replaced on the home-page selector item.
+
+---
+
+## Display and Record Items
+
+* `scoreboard-toggle` uses `%scoreboard_status%`.
+* `bossbar-toggle` uses `%bossbar_status%`.
+* `arena-record-reset` uses `%record_holder%` and `%record_score%`.
+* `confirm-arena-record-reset` supports `%arena_id%` in its message.
+
+---
+
+## Required Keys
+
+Do not rename item keys or remove the `register-arena.missing-option` and `register-arena.registered-successfully` message lists. The backing menu code retrieves these exact paths.
+
+Names, materials, lore, colors, sounds described by text, and most visual item properties can be customized safely. Apply changes with `/wm reload`.
