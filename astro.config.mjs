@@ -805,7 +805,11 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/whack-me/misc/faq"},
-                                    {label: "Source Code", link: "/whack-me/misc/source-code"},
+                                    {
+                                        label: "Source Code",
+                                        link: "https://github.com/Despical/WhackMe",
+                                        attrs: {target: "_blank"},
+                                    },
                                     {
                                         label: "Create an Issue",
                                         link: "https://github.com/Despical/WhackMe/issues/new/choose",
