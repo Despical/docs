@@ -1,0 +1,55 @@
+---
+title: PlayerEvent
+description: The foundation for all player-related events in the King of the Ladder API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`PlayerEvent` is the abstract base for KOTL events associated with one Bukkit player. It exposes both the Bukkit player and the plugin-specific user.
+
+<Aside type="note">
+    Listen to a concrete subclass. `PlayerEvent` itself does not own a Bukkit handler list.
+</Aside>
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.player`
+* **Parent Class:** `KOTLEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Bukkit player associated with the event. |
+| `getUser()` | `User` | KOTL user containing statistics and current arena access. |
+
+---
+
+## Known Subclasses
+
+* [`PlayerEnterArenaEvent`](/kotl/api/player-events/player-enter-arena-event)
+* [`PlayerLeaveArenaEvent`](/kotl/api/player-events/player-leave-arena-event)
+* [`PlayerBecomeKingEvent`](/kotl/api/player-events/player-become-king-event)
+* [`PlayerStatisticChangeEvent`](/kotl/api/player-events/player-statistic-change-event)
+
+---
+
+## Example
+
+```java
+import dev.despical.kotl.api.events.player.PlayerEnterArenaEvent;
+import dev.despical.kotl.user.User;
+import org.bukkit.event.EventHandler;
+
+@EventHandler
+public void onArenaEntry(PlayerEnterArenaEvent event) {
+    User user = event.getUser();
+    String arenaId = event.getArena().getId();
+
+    user.sendRawMessage("Entering " + arenaId);
+}
+```
