@@ -1,0 +1,47 @@
+---
+title: Player Commands
+description: Commands available to players for viewing King of the Ladder help and statistics.
+---
+
+Player commands let regular players inspect **KOTL** information and statistics. Arena entry and exit are handled automatically by the configured game area, so no player join or leave command is required.
+
+All commands use the `/kotl` root.
+
+---
+
+## Main Command
+
+Displays the installed KOTL version and author. Senders with administrative help access also receive a link to the help command.
+
+```bash
+/kotl
+```
+
+---
+
+## Help Command
+
+Displays the player help menu. If the sender also has `kotl.admin.help`, the output expands to include administrative commands. Debug commands appear only when debug mode is enabled and the sender has the required access.
+
+```bash
+/kotl help
+```
+
+---
+
+## Stats Command
+
+Opens the in-game statistics menu.
+
+```bash
+/kotl stats [player]
+```
+
+Without an argument, it displays your own totals and arena records. With a player name, it can display data for:
+
+* An online player.
+* An offline player already known to the server cache.
+
+The menu includes tours played, total crown score, kills, deaths, per-arena scores, and the top three entries for each arena leaderboard.
+
+This command is player-only because it opens an inventory interface.
