@@ -1,0 +1,80 @@
+---
+title: Admin Commands
+description: Administrative commands used to manage King of the Ladder games and plugin configuration.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Admin commands are designed for server administrators and staff members to stop active arenas, remove players, and reload plugin configuration.
+
+---
+
+## Stop Command
+
+Stops the sender's current arena or a specified arena.
+
+```bash
+/kotl stop [arena]
+```
+
+Behavior:
+
+* A player can omit the arena argument to stop the game they are currently inside.
+* Console senders must provide an arena ID.
+* A specified arena must exist.
+* All players receive the stop message, are moved to the end location, and have their state restored.
+* Statistics are saved for `STOP_COMMAND`.
+
+**Permission:** `kotl.admin.stop`
+
+---
+
+## Kick Command
+
+Removes an online player from their active KOTL arena and teleports them to that arena's end location.
+
+```bash
+/kotl kick <player>
+```
+
+The command reports an error if the target is offline or not currently inside a KOTL arena.
+
+**Permission:** `kotl.admin.kick`
+
+---
+
+## Reload Command
+
+Stops all active games with `SERVER_RELOAD`, then reloads:
+
+* `messages.yml`
+* `config.yml` options
+* Setup and stats menu items
+* Event profiling settings
+* Allowed command rules
+* Game manager data
+* Arena outline tasks
+
+```bash
+/kotl reload
+```
+
+Because the stop reason is `SERVER_RELOAD`, current arena progress is not saved as completed gameplay.
+
+**Permission:** `kotl.admin.reload`
+
+---
+
+## Command Blocking Bypass
+
+When `command-settings.disable-commands-while-playing` is enabled, arena players can only run commands listed in `command-settings.allowed-commands`.
+
+Grant this permission to staff who must use unrestricted commands while inside an arena:
+
+```text
+kotl.command.override
+```
+
+<Aside type="tip">
+    The `kotl.admin.*` parent permission grants admin help, kick, reload, stop, all arena commands, and command override access.
+</Aside>
