@@ -1,0 +1,66 @@
+---
+title: PlayerStatisticChangeEvent
+description: Event fired before a King of the Ladder player statistic is stored.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`PlayerStatisticChangeEvent<T>` exposes the statistic key, previous value, and mutable new value before a KOTL user update is written.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.player`
+* **Parent Class:** [`PlayerEvent`](/kotl/api/player-events/player-event)
+* **Cancellable:** Yes
+
+<Aside type="tip">
+    The generic value can be an integer or the per-arena score map. Check the statistic type before casting.
+</Aside>
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getStat()` | `StatisticType<T>` | Statistic being updated. |
+| `getOldValue()` | `T` | Value before the requested update. |
+| `getNewValue()` | `T` | Value that will be stored. |
+| `setNewValue(T)` | `void` | Replaces the pending value. |
+| `isCancelled()` | `boolean` | Whether the update is blocked. |
+| `setCancelled(boolean)` | `void` | Blocks or restores the update. |
+
+---
+
+## Integer Statistics
+
+* `Statistics.KILL`
+* `Statistics.DEATH`
+* `Statistics.SCORE`
+* `Statistics.TOURS_PLAYED`
+
+`Statistics.ARENA_SCORES` uses `Map<String, Integer>`.
+
+---
+
+## Score Booster Example
+
+```java
+import dev.despical.kotl.api.events.player.PlayerStatisticChangeEvent;
+import dev.despical.kotl.stats.Statistics;
+import org.bukkit.event.EventHandler;
+
+@EventHandler
+public void onStatisticChange(PlayerStatisticChangeEvent<Integer> event) {
+    if (event.getStat() != Statistics.SCORE || !event.getPlayer().hasPermission("kotl.double-score")) {
+        return;
+    }
+
+    int gain = event.getNewValue() - event.getOldValue();
+    event.setNewValue(event.getOldValue() + gain * 2);
+}
+```
+
+Cancelling the event leaves the old value unchanged.
