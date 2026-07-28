@@ -1,0 +1,64 @@
+---
+title: scoreboard.yml
+description: Detailed guide for configuring the King of the Ladder arena scoreboard.
+---
+
+The `scoreboard.yml` file controls the scoreboard shown while a player is inside a KOTL arena. Unlike a round-based game, KOTL uses one continuous title and line list.
+
+---
+
+## Configuration Structure
+
+```yaml
+title: "<#FFC800><bold>KING OF THE LADDER"
+lines:
+  - "<#B0C4DE>%date%"
+  - ""
+  - "<#EEF2F7>Arena: <#00FF95>%arena%"
+  - "<#EEF2F7>Players: <#00FF95>%players%"
+```
+
+* **`title`**: Scoreboard title parsed with MiniMessage.
+* **`lines`**: Ordered scoreboard entries. Empty strings create spacing.
+
+---
+
+## Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%player%` | Name of the player viewing the scoreboard. |
+| `%date%` | Current date captured by the scoreboard formatter. |
+| `%arena%` | Current arena ID. |
+| `%players%` | Number of players inside the arena. |
+| `%king%` | Current king, or `None`. |
+| `%last_king%` | Most recent successful king. |
+| `%top_king%` | Arena record holder. |
+| `%top_king_score%` | Arena record score. |
+| `%score%` | Viewer's total crown score. |
+| `%arena_score%` | Viewer's score in the current arena. |
+| `%tours_played%` | Viewer's total tours. |
+| `%kills%` | Viewer's total kills. |
+| `%deaths%` | Viewer's total deaths. |
+
+Scoreboards update when a crown claim succeeds and can be rebuilt when arena settings change.
+
+---
+
+## Disabling Scoreboards
+
+The global switch is in `config.yml`:
+
+```yaml
+scoreboard-enabled: false
+```
+
+Each arena also has an **Arena Scoreboard** toggle in the Player Settings setup page. Both switches must be enabled.
+
+---
+
+## Applying Changes
+
+```bash
+/kotl reload
+```
