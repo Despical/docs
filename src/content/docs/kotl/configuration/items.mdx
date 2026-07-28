@@ -1,0 +1,51 @@
+---
+title: items.yml
+description: Configure the King of the Ladder game area selector tool.
+---
+
+The `items.yml` file defines the selector wand used to store the two corners of an arena's game area.
+
+---
+
+## Default Item
+
+```yaml
+items:
+  area-selector:
+    material: BLAZE_ROD
+    name: "<#FFAB00><bold>Game Area Selector"
+    lore:
+      - "<#FFCA28><bold>LEFT CLICK <#B0BEC5>to select the first corner."
+      - "<#FFD54F><bold>RIGHT CLICK <#B0BEC5>to select and save the second corner."
+```
+
+The setup menu gives this item a persistent arena ID, so each wand edits only the arena from which it was created.
+
+---
+
+## Supported Properties
+
+| Key | Description |
+|:--|:--|
+| `material` | Bukkit material used for the wand. |
+| `name` | MiniMessage display name. |
+| `lore` | MiniMessage instruction lines. |
+| `amount` | Optional item stack amount supported by the item loader. |
+| `glow` | Optional visual enchantment glint supported by the item loader. |
+
+---
+
+## Selector Controls
+
+* **Left-click a block:** Sets the first corner and starts a new selection.
+* **Right-click a block:** Requires the first corner, saves the second corner, and updates the arena cuboid.
+
+The tool reports coordinates and total selected block count through `messages.yml`.
+
+---
+
+## Applying Changes
+
+```bash
+/kotl reload
+```
