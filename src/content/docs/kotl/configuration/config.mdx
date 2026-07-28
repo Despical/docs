@@ -1,0 +1,170 @@
+---
+title: config.yml
+description: Detailed guide for the main configuration settings of King of the Ladder.
+---
+
+The `config.yml` file is the heart of **KOTL**. It controls storage, arena detection, crown cooldowns, player state, chat isolation, combat protection, command blocking, item pickup, notifications, and update checks.
+
+---
+
+## Database
+
+* **`database`**: Selects the player statistic storage backend.
+  * `flat_file`: Local YAML storage in `data/stats.yml`.
+  * `mysql`: External MySQL storage configured through `mysql.yml`.
+
+Changing the database type does not migrate existing data. Restart or reload KOTL after changing it.
+
+---
+
+## Arena Detection
+
+```yaml
+arena-schedulers:
+  type: 1
+  interval: 2
+  async: false
+```
+
+| Option | Default | Description |
+|:--|:--|:--|
+| `type` | `1` | `1` periodically checks all online players. Other values use block-to-block movement events. |
+| `interval` | `2` | Tick period used by the type `1` detector. Lower values detect boundaries sooner. |
+| `async` | `false` | Scheduler option reserved for supported detection implementations. Keep disabled for normal use. |
+
+---
+
+## King Settings
+
+| Option | Default | Description |
+|:--|:--|:--|
+| `become-king-in-a-row` | `true` | Allows the current king to score again after cooldown. |
+| `cooldown` | `5` | Seconds before a player can claim the same arena plate again. Use `0` to disable. |
+| `cooldown-override-permission` | Empty | Optional permission that bypasses the king cooldown. |
+| `cooldown-bar` | `true` | Displays cooldown progress and time in the action bar. |
+| `cooldown-when-alone` | `false` | Applies the crown cooldown when only one player is in the arena. |
+| `show-cooldown-on-rejoin` | `true` | Restores an active cooldown bar when the player re-enters the arena. |
+
+### Plate Knockback
+
+```yaml
+king-settings:
+  plate-knockback:
+    enabled: true
+    horizontal-strength: 1.25
+    vertical-strength: 0.45
+```
+
+The horizontal value pushes the new king away from the plate center. The vertical value adds upward velocity.
+
+---
+
+## Visual Systems
+
+* **`boss-bar-enabled`**: Global boss bar switch. `bossbar.yml` and the arena-specific toggle must also allow the bar.
+* **`scoreboard-enabled`**: Global scoreboard switch. The arena-specific setup toggle must also be enabled.
+* **`fireworks-on-new-king`**: Launches celebration fireworks after every successful crown claim.
+
+---
+
+## Player Settings
+
+```yaml
+player-settings:
+  clear-inventory-on-join: true
+  clear-effects-on-join: true
+```
+
+* **`clear-inventory-on-join`**: Saves and clears inventory contents on entry, then restores them on exit.
+* **`clear-effects-on-join`**: Removes active potion effects when entering and leaving an arena.
+
+Both values can also be changed through the setup menu's Player Settings page. They are global, not per-arena.
+
+---
+
+## Chat Settings
+
+| Option | Default | Description |
+|:--|:--|:--|
+| `separate-chat` | `true` | Arena players see messages only from players in the same arena. |
+| `block-outside-chat` | `true` | Arena players do not receive messages sent by players outside games. |
+| `disable-chat-in-game` | `false` | Prevents arena players from sending chat. |
+| `enable-formatting` | `true` | Uses `messages.yml` `chat-format` instead of the server's normal format. |
+
+When either `separate-chat` or `block-outside-chat` is enabled, messages from outside players are filtered away from active arena players.
+
+---
+
+## Damage and Items
+
+* **`disable-fall-damage`**: Cancels fall damage for players inside KOTL arenas.
+* **`pick-up-items`**:
+  * `false`: Removes and cancels picked-up item entities and arrows.
+  * `true`: Allows arena players to pick up items and arrows.
+
+Item dropping is always blocked for arena players.
+
+---
+
+## Arena Outlines
+
+```yaml
+arena-outlines:
+  step: .4
+  particle: FLAME
+```
+
+* **`step`**: Distance between particles along each cuboid edge.
+* **`particle`**: Bukkit particle used by the setup outline preview.
+
+---
+
+## Command Settings
+
+```yaml
+command-settings:
+  disable-commands-while-playing: true
+  allowed-commands:
+    - "kotl leave"
+    - "kotl stats"
+```
+
+* **`disable-commands-while-playing`**: Restricts commands while a player is inside an arena.
+* **`allowed-commands`**: Allows a full command, a command prefix, a root command, or `*`.
+
+Examples:
+
+* `msg` allows the root command with all arguments.
+* `kotl stats` allows that subcommand and any following arguments.
+* Leading slashes and command namespaces are normalized.
+
+Players with `kotl.command.override` bypass this restriction.
+
+---
+
+## Notifications
+
+```yaml
+notify:
+  join: true
+  leave: true
+```
+
+* **`join`**: Announces a successful arena entry to the arena.
+* **`leave`**: Announces a player departure to the remaining arena players.
+
+---
+
+## Diagnostics and Updates
+
+* **`update-notifier`**: Checks the official resource for a newer release during startup.
+* **`debug`**: Optional hidden setting that enables debug command registration.
+* **`event-profiling.enabled`**: Optional hidden setting that records KOTL custom event timings.
+* **`event-profiling.verbose`**: Logs every profiled event invocation.
+
+```yaml
+debug: false
+event-profiling:
+  enabled: false
+  verbose: false
+```
