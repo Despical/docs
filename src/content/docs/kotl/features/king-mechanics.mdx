@@ -1,0 +1,82 @@
+---
+title: King Mechanics
+description: How King of the Ladder processes pressure plate claims, cooldowns, repeated kings, knockback, fireworks, and record updates.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The king plate is the central scoring mechanic in **KOTL**. A claim begins only when a player physically activates the exact pressure plate location stored for their arena.
+
+---
+
+## Claim Validation
+
+KOTL checks crown claims in this order:
+
+1. The player must be inside an active arena.
+2. The activated block must equal the arena's stored king plate.
+3. If the player is already king, `king-settings.become-king-in-a-row` must allow repeated claims.
+4. The player must pass the arena-specific king cooldown unless they have the configured bypass permission.
+5. `PlayerBecomeKingEvent` must not be cancelled.
+
+If any check fails, the claim does not update scores, cooldowns, announcements, fireworks, or knockback.
+
+---
+
+## Cooldown Settings
+
+| Setting | Default | Description |
+|:--|:--|:--|
+| `king-settings.cooldown` | `5` | Seconds before the same player can score again in the same arena. Set `0` to disable. |
+| `king-settings.cooldown-override-permission` | Empty | Optional permission that bypasses the king cooldown. |
+| `king-settings.cooldown-bar` | `true` | Shows remaining time and progress in the action bar. |
+| `king-settings.cooldown-when-alone` | `false` | Applies cooldowns even when only one player is inside the arena. |
+| `king-settings.show-cooldown-on-rejoin` | `true` | Restores an active action bar cooldown when the player re-enters the same arena. |
+
+Cooldowns are stored in memory by player UUID and arena ID. They do not survive a full plugin reload or server restart.
+
+---
+
+## Repeated Crown Claims
+
+When `king-settings.become-king-in-a-row` is `true`, the current king can step on the plate again after passing the cooldown. KOTL sends `game.king-retained` instead of `game.new-king`.
+
+When it is `false`, the current king cannot score again until another player becomes king.
+
+---
+
+## Score Updates
+
+A successful crown claim:
+
+* Adds `1` to the winner's total `score`.
+* Adds `1` to the winner's score for the current arena.
+* Adds `1` to `tours_played` for every player inside the arena.
+* Stores the winner as `last-king`.
+* Replaces `top-king` and `top-king-score` only when the new arena score is higher.
+
+<Aside type="note">
+    The top king record is based on the player's accumulated score for that arena, not the number of consecutive claims in one visit.
+</Aside>
+
+---
+
+## Plate Knockback
+
+The plugin pushes a successful king away from the center of the pressure plate so narrow towers cannot be held indefinitely.
+
+| Setting | Default | Description |
+|:--|:--|:--|
+| `king-settings.plate-knockback.enabled` | `true` | Enables post-claim velocity. |
+| `king-settings.plate-knockback.horizontal-strength` | `1.25` | Horizontal force away from the plate. |
+| `king-settings.plate-knockback.vertical-strength` | `0.45` | Upward velocity added to the push. |
+
+If the player's position does not produce a usable direction, KOTL falls back to the opposite facing direction and then to a fixed horizontal direction.
+
+---
+
+## Celebration Fireworks
+
+When `fireworks-on-new-king` is enabled, KOTL launches one firework above the plate and six delayed fireworks at open positions inside the selected game area.
+
+Random positions are rejected when they are too close to players or do not have enough passable space. If no safe position is found, KOTL falls back to the area or plate location.
