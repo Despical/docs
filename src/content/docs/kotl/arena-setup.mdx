@@ -1,0 +1,142 @@
+---
+title: Arena Setup
+description: Create and configure King of the Ladder arenas with an end location, king plate, game area, player settings, records, scoreboards, and boss bars.
+---
+
+import { Aside, Steps, Badge } from "@astrojs/starlight/components";
+
+Setting up an arena in **King of the Ladder** is done through an in-game GUI. This guide covers the complete process from the first command to final registration.
+
+---
+
+## Step 1: Create the Arena
+
+Each arena must have a unique ID.
+
+```bash
+/kotl create <arena_id>
+```
+
+<Aside type="caution">
+    If the ID already exists, KOTL will reject the command. Use a short ID that is easy to reuse in commands and placeholders, such as `tower_1`.
+</Aside>
+
+---
+
+## Step 2: Open the Setup Menu
+
+```bash
+/kotl edit <arena_id>
+```
+
+The menu opens in Creative mode and contains the end location, king plate, game area, player settings, arena records, and registration controls.
+
+---
+
+## Step 3: Set the End Location
+
+The **Set End Location** item uses `END_PORTAL_FRAME`.
+
+* **Click:** Saves your exact position, yaw, and pitch.
+* **Shift-click:** Centers the location on the current block and resets pitch to `0`.
+
+This is the safety location used when players die, are kicked, a game is stopped, or the plugin restores a player after a disconnect.
+
+---
+
+## Step 4: Set the King Plate
+
+The **Set King Plate** item uses the currently selected pressure plate material.
+
+* **Left-click:** Gives you a tagged pressure plate tool. Place it at the crown position.
+* **Right-click:** Places the king plate directly at your current block.
+* **Shift-click:** Opens the pressure plate material selector.
+
+The default material is `OAK_PRESSURE_PLATE`. Wood, stone, and polished blackstone pressure plates can be exposed through `setup-menu.yml`.
+
+<Aside type="caution">
+    The king plate must be inside the selected game area. KOTL warns immediately when the plate is outside the area and refuses final registration until it is fixed.
+</Aside>
+
+---
+
+## Step 5: Select the Game Area
+
+Click **Select Game Area** to receive the configured blaze rod selector.
+
+<Steps>
+    1. Left-click a block to select the first corner.
+    2. Right-click a block in the same loaded world to select the second corner.
+    3. KOTL saves both corners and reports the selected block count.
+    4. Right-click the menu item itself to enable or disable the particle outline preview.
+</Steps>
+
+The cuboid must include every location where players should be considered part of the game. Walking outside the cuboid removes the player from the arena.
+
+---
+
+## Step 6: Configure Player Settings <Badge text="Optional" variant="tip" />
+
+The **Configure Player Settings** item opens:
+
+| Setting | Scope | Behavior |
+|:--|:--|:--|
+| Join Gamemode | Per arena | Applies Survival, Creative, Adventure, or no forced mode. |
+| Clear Inventory | Global | Saves and clears inventories on entry, then restores them on exit. |
+| Clear Effects | Global | Removes active potion effects when players enter and leave. |
+| Arena Scoreboard | Per arena | Enables or disables the arena scoreboard. |
+| Game BossBar | Per arena | Enables or disables the arena boss bar. |
+
+The global inventory and effect toggles are written back to `config.yml`. Scoreboard, boss bar, and gamemode choices are stored for the current arena.
+
+---
+
+## Step 7: Register the Arena
+
+Click **Register the Arena** (`FIREWORK_ROCKET`) after all required values are present.
+
+KOTL checks:
+
+1. The end location is set.
+2. The king plate is set.
+3. Both game area corners are set.
+4. Both corners are in the same loaded world.
+5. The king plate is inside the game area.
+
+When validation succeeds, KOTL marks the arena as ready and enabled, saves `arenas.yml`, and starts detecting players inside the area.
+
+---
+
+## Arena Availability
+
+After registration, the registration item becomes **Arena Availability**.
+
+* Disabling the arena stops its active game, removes players, and makes the area safe to edit.
+* Enabling the arena starts player detection again.
+
+Use the toggle before rebuilding the tower or changing area corners.
+
+---
+
+## Resetting Arena Records <Badge text="Optional" variant="tip" />
+
+The `PLAYER_HEAD` item shows the current top king and score. Its confirmation page permanently:
+
+* Clears the current, last, and top king values for the arena.
+* Resets the arena top score to `0`.
+* Removes that arena score from every currently loaded player.
+* Saves both arena and player data.
+
+---
+
+## Summary Table
+
+| Item | Name | Function |
+|:--|:--|:--|
+| `END_PORTAL_FRAME` | Set End Location | Saves the location used when players leave or are restored. |
+| Pressure plate | Set King Plate | Places the crown trigger and selects its material. |
+| `BLAZE_ROD` | Select Game Area | Gives the cuboid wand or toggles the area outline. |
+| `BOOK` | Configure Player Settings | Controls gamemode, inventory, effects, scoreboard, and boss bar. |
+| `PLAYER_HEAD` | Reset Arena King Records | Clears the arena's stored crown records after confirmation. |
+| `FIREWORK_ROCKET` | Register the Arena | Validates, saves, and enables a new arena. |
+| `LIME_DYE` or `GRAY_DYE` | Arena Availability | Enables or disables player detection after registration. |
