@@ -48,6 +48,16 @@ export default defineConfig({
                 },
                 {
                     icon: "github",
+                    label: "kotl:GitHub",
+                    href: "https://github.com/Despical/KOTL",
+                },
+                {
+                    icon: "seti:java",
+                    label: "kotl:Javadoc",
+                    href: "https://javadoc.despical.dev/kotl/",
+                },
+                {
+                    icon: "github",
                     label: "whack-me:GitHub",
                     href: "https://github.com/Despical/WhackMe",
                 },
@@ -1049,6 +1059,199 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "KOTL",
+                        id: "kotl",
+                        link: "/kotl/",
+                        icon: "kotl",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {
+                                        label: "Getting Started",
+                                        link: "/kotl/getting-started",
+                                    },
+                                    {
+                                        label: "Gameplay Overview",
+                                        link: "/kotl/gameplay",
+                                    },
+                                    {
+                                        label: "Arena Setup",
+                                        link: "/kotl/arena-setup",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {
+                                        label: "Player Commands",
+                                        link: "/kotl/commands/player",
+                                    },
+                                    {
+                                        label: "Arena Commands",
+                                        link: "/kotl/commands/arena",
+                                    },
+                                    {
+                                        label: "Admin Commands",
+                                        link: "/kotl/commands/admin",
+                                    },
+                                    {
+                                        label: "Debug Commands",
+                                        link: "/kotl/commands/debug",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "config.yml",
+                                        link: "/kotl/configuration/config",
+                                    },
+                                    {
+                                        label: "messages.yml",
+                                        link: "/kotl/configuration/messages",
+                                    },
+                                    {
+                                        label: "scoreboard.yml",
+                                        link: "/kotl/configuration/scoreboard",
+                                    },
+                                    {
+                                        label: "bossbar.yml",
+                                        link: "/kotl/configuration/bossbar",
+                                    },
+                                    {
+                                        label: "items.yml",
+                                        link: "/kotl/configuration/items",
+                                    },
+                                    {
+                                        label: "mysql.yml",
+                                        link: "/kotl/configuration/mysql",
+                                    },
+                                    {
+                                        label: "GUI Menus",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "stats-menu.yml",
+                                                link: "/kotl/configuration/menu/stats",
+                                            },
+                                            {
+                                                label: "setup-menu.yml",
+                                                link: "/kotl/configuration/menu/setup",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        label: "Other Files",
+                                        link: "/kotl/configuration/other-files",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {
+                                        label: "King Mechanics",
+                                        link: "/kotl/features/king-mechanics",
+                                    },
+                                    {
+                                        label: "Arena Detection & Player State",
+                                        link: "/kotl/features/arena-detection",
+                                    },
+                                    {
+                                        label: "Statistics & Records",
+                                        link: "/kotl/features/statistics-and-records",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {
+                                        label: "General Placeholders",
+                                        link: "/kotl/placeholders/general",
+                                    },
+                                    {
+                                        label: "Leaderboard Placeholders",
+                                        link: "/kotl/placeholders/leaderboard",
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {
+                                        label: "KOTL API",
+                                        link: "/kotl/api/kotl-api",
+                                    },
+                                    {
+                                        label: "Game Events",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "GameEvent",
+                                                link: "/kotl/api/game-events/game-event",
+                                            },
+                                            {
+                                                label: "GameStopEvent",
+                                                link: "/kotl/api/game-events/game-stop-event",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        label: "Player Events",
+                                        collapsed: true,
+                                        items: [
+                                            {
+                                                label: "PlayerEvent",
+                                                link: "/kotl/api/player-events/player-event",
+                                            },
+                                            {
+                                                label: "PlayerEnterArenaEvent",
+                                                link: "/kotl/api/player-events/player-enter-arena-event",
+                                            },
+                                            {
+                                                label: "PlayerLeaveArenaEvent",
+                                                link: "/kotl/api/player-events/player-leave-arena-event",
+                                            },
+                                            {
+                                                label: "PlayerBecomeKingEvent",
+                                                link: "/kotl/api/player-events/player-become-king-event",
+                                            },
+                                            {
+                                                label: "PlayerStatisticChangeEvent",
+                                                link: "/kotl/api/player-events/player-statistic-change-event",
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {
+                                        label: "FAQ",
+                                        link: "/kotl/misc/faq",
+                                    },
+                                    {
+                                        label: "Source Code",
+                                        link: "https://github.com/Despical/KOTL",
+                                        attrs: {target: "_blank"},
+                                    },
+                                    {
+                                        label: "Create an Issue",
+                                        link: "https://github.com/Despical/KOTL/issues/new/choose",
+                                        attrs: {target: "_blank"},
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Warden Party",
                         link: "/warden-party/",
                         icon: "warden-party",
@@ -1340,6 +1543,7 @@ export default defineConfig({
                 ], {
                     topics: {
                         "tnt-run": ["/tnt-run/misc/source-code", "/tnt-run/configuration/menus"],
+                        "kotl": ["/kotl/misc/source-code", "/kotl/configuration/menus"],
                         "whack-me": ["/whack-me/configuration/menus"],
                     },
                 })
