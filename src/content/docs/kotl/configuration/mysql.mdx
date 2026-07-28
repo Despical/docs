@@ -1,0 +1,85 @@
+---
+title: MySQL Configuration
+description: Connect King of the Ladder to MySQL for persistent player statistics and per-arena scores.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+By default, **KOTL** stores player data in `data/stats.yml`. MySQL can be used when statistics need to live in an external database.
+
+<Aside type="caution">
+    Set `database: mysql` in `config.yml` before configuring this file. KOTL does not automatically migrate existing flat-file data.
+</Aside>
+
+---
+
+## Database Address
+
+```yaml
+address: jdbc:mysql://localhost:3306/<database_name>?useSSL=false&autoReConnect=true&createDatabaseIfNotExist=true
+```
+
+| Part | Description |
+|:--|:--|
+| `localhost` | Database host or IP address. |
+| `3306` | MySQL port. |
+| `<database_name>` | Database name that must be replaced. |
+| `useSSL=false` | Disables SSL unless your database requires it. |
+| `autoReConnect=true` | Requests automatic reconnection. |
+| `createDatabaseIfNotExist=true` | Allows creation when the account has permission. |
+
+---
+
+## Credentials
+
+```yaml
+user: root
+password: <your_password>
+```
+
+Replace both values with a dedicated database account. The password is stored as plain text, so never publish `mysql.yml`.
+
+---
+
+## Statistics Table
+
+The current storage implementation reads:
+
+```yaml
+stats-table: kotl_stats
+```
+
+<Aside type="caution">
+    Some generated KOTL files may contain the legacy key `table`. The current MySQL storage code reads `stats-table`, so rename that key before enabling MySQL.
+</Aside>
+
+The table contains:
+
+* `uuid`
+* `name`
+* `kill`
+* `death`
+* `score`
+* `tours_played`
+* Serialized `arena_scores`
+
+KOTL creates the table if needed and adds missing statistic columns during startup.
+
+---
+
+## Startup Test
+
+```yaml
+test-on-startup: true
+```
+
+When enabled, the shared database connection layer validates credentials during startup and reports connection errors to the console.
+
+---
+
+## Common Issues
+
+* **Access denied:** Verify username, password, database grants, and permitted host.
+* **Communications link failure:** Verify host, port, firewall, and MySQL availability.
+* **Unknown database:** Create it manually or grant permission for `createDatabaseIfNotExist`.
+* **Queries reference a null table:** Ensure the key is named `stats-table`.
