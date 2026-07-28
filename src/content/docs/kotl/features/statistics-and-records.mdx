@@ -1,0 +1,85 @@
+---
+title: Statistics & Records
+description: How KOTL stores player totals, per-arena crown scores, arena records, statistics menus, and leaderboards.
+---
+
+KOTL tracks global player progress and a separate crown score for every arena.
+
+---
+
+## Persistent Player Statistics
+
+| Statistic Key | Meaning |
+|:--|:--|
+| `kill` | Opponents credited to the player through an arena death. |
+| `death` | Player deaths that occur inside an arena. |
+| `score` | Total successful crown claims across every arena. |
+| `tours_played` | Total crown claim cycles witnessed while inside an arena. |
+| `arena_scores` | A map of arena ID to the player's crown score in that arena. |
+
+All currently present players gain one tour when a valid crown claim completes. The winner also gains one global score and one point in the current arena.
+
+---
+
+## Arena Records
+
+Each arena stores:
+
+| Arena Option | Meaning |
+|:--|:--|
+| `last-king` | Most recent successful crown claimant. |
+| `top-king` | Player holding the highest accumulated score in that arena. |
+| `top-king-score` | The record holder's stored arena score. |
+| `king` | Current runtime king. This value is not written as a persistent arena option. |
+
+The top record changes only when a player's arena score becomes strictly higher than the saved top score.
+
+---
+
+## Storage Backends
+
+* **Flat file:** Stores player data in `data/stats.yml`.
+* **MySQL:** Stores UUID, name, integer statistics, and serialized arena scores in a configurable table.
+
+KOTL saves loaded player data automatically every five minutes, on normal arena exit, and during shutdown. Leaderboards are built from all available offline statistics.
+
+---
+
+## Leaderboards
+
+Global leaderboards are created for:
+
+* `kill`
+* `death`
+* `score`
+* `tours_played`
+
+KOTL also creates `arena_score_<arena_id>` for every registered arena. Entries with numeric value `0` are excluded and the remaining entries are ordered from highest to lowest.
+
+---
+
+## Statistics Menu
+
+```bash
+/kotl stats [player]
+```
+
+The main page shows the target player's totals. The arena records page displays:
+
+* The player's score for each arena.
+* The top three leaderboard entries.
+* The target player's own position when it is below the top three.
+
+Online users are read from live memory. Offline users are loaded through the statistics cache.
+
+---
+
+## Reset Behavior
+
+The setup menu can reset one arena's records. Confirmation:
+
+* Removes that arena ID from loaded players' `arena_scores`.
+* Clears current, last, and top king values.
+* Resets the top score to `0`.
+* Saves arena and player data.
+* Refreshes live arena scoreboards.
