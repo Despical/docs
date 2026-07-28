@@ -1,0 +1,110 @@
+---
+title: Gameplay Overview
+description: Understand King of the Ladder arena entry, crown claims, combat rules, deaths, cooldowns, and records.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import gameImg from '../../../assets/kotl/images/game.jpg';
+
+**King of the Ladder** is a continuous competitive minigame built around climbing, positioning, and control of the highest point. Players enter a configured game area, climb toward the pressure plate, and fight to claim the crown before their opponents.
+
+Every valid plate activation awards a crown score. There is no waiting countdown or round state: the arena remains available while it is enabled, and players can move into or out of the competition at any time.
+
+---
+
+## The Game Loop
+
+1. A player walks into a registered and enabled game area.
+2. KOTL saves the player's inventory and applies the configured arena state.
+3. Players climb the structure and fight inside the same arena.
+4. Stepping on the configured king plate attempts a crown claim.
+5. A successful claim updates statistics, announces the king, applies cooldown and knockback rules, and can launch fireworks.
+6. Leaving the selected area restores the player and saves statistics.
+
+<img src={gameImg.src} alt="King of the Ladder gameplay artwork" />
+
+---
+
+## Automatic Arena Entry
+
+KOTL detects whether a player's location is inside the selected cuboid. Only arenas with both `ready: true` and `enabled: true` can accept players.
+
+Two detection modes are available:
+
+| Scheduler Type | Behavior |
+|:--|:--|
+| `1` | Periodically checks every online player at the configured tick interval. |
+| `2` | Checks transitions when a player moves to a different block. |
+
+When a player moves directly from one arena area into another, KOTL removes them from the old game and then attempts to add them to the new one.
+
+---
+
+## Becoming King
+
+A crown claim begins when a player physically activates the configured pressure plate.
+
+The claim succeeds only when:
+
+* The player is already registered inside that arena.
+* Repeated claims are allowed, or the player is not the current king.
+* The player is not on the arena-specific king cooldown.
+* `PlayerBecomeKingEvent` is not cancelled by another plugin.
+
+On success, KOTL:
+
+* Stores the player's name as the current king.
+* Sends either the new-king or king-retained announcement.
+* Adds `1` to the player's total score and current arena score.
+* Adds `1` tour to every player currently in the arena.
+* Updates the arena's last king and top king record.
+* Refreshes all arena scoreboards.
+* Applies plate knockback and optional fireworks.
+
+<Aside type="tip">
+    See **[King Mechanics](/kotl/features/king-mechanics)** for every cooldown, permission, action bar, knockback, and celebration setting.
+</Aside>
+
+---
+
+## Combat and Protection Rules
+
+Players in the same arena can attack one another, including through projectiles. KOTL sets direct event damage to `0`, while still allowing normal hit and knockback behavior.
+
+Cross-boundary combat is blocked:
+
+* Arena players cannot damage players outside an arena.
+* Outside players cannot damage arena players.
+* Players in different KOTL arenas cannot damage each other.
+
+Inside an arena, block breaking, block placing, inventory clicks, food-level changes, and item dropping are blocked. Fall damage can also be disabled through `config.yml`.
+
+---
+
+## Death and Respawn
+
+When a player dies in an arena:
+
+* Drops and experience are suppressed.
+* The normal death message is hidden.
+* The player is respawned automatically.
+* A valid player killer receives one kill.
+* The dead player receives one death.
+* The player is removed from the arena and respawns at its end location.
+* Saved inventory and player state are restored.
+
+Disconnecting also removes the player from the active arena. When they return, KOTL sends them to the arena end location and restores their saved state.
+
+---
+
+## Statistics and Records
+
+KOTL stores five persistent statistic groups:
+
+* Total kills
+* Total deaths
+* Total crown score
+* Total tours played
+* A separate crown score for every arena
+
+Each arena also stores the last king, top king, and top king score. Players can inspect these records through `/kotl stats [player]`.
