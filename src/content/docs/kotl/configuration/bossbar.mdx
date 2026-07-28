@@ -1,0 +1,60 @@
+---
+title: bossbar.yml
+description: Customize the King of the Ladder gameplay boss bar text, style, color, and visibility.
+---
+
+The `bossbar.yml` file controls the single boss bar shown to players inside a KOTL arena.
+
+---
+
+## Global File Toggle
+
+```yaml
+enabled: true
+```
+
+The bar is shown only when all three switches are enabled:
+
+1. `config.yml` `boss-bar-enabled`
+2. `bossbar.yml` `enabled`
+3. The current arena's **Game BossBar** setup toggle
+
+---
+
+## Appearance
+
+```yaml
+text: "<yellow><bold>Playing <gradient:#ff3b3b:#ff7a7a>KING OF THE LADDER</gradient> <yellow><bold>by <aqua><bold>DESPICAL"
+overlay: PROGRESS
+color: BLUE
+```
+
+### Text
+
+Supports MiniMessage colors, gradients, and formatting. An empty text value makes the bar invisible.
+
+### Overlay
+
+Available values:
+
+* `PROGRESS`
+* `NOTCHED_6`
+* `NOTCHED_10`
+* `NOTCHED_12`
+* `NOTCHED_20`
+
+### Color
+
+Available values:
+
+`PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, `WHITE`
+
+The default progress is full. The current KOTL gameplay flow does not use the bar as a timer.
+
+---
+
+## Applying Changes
+
+```bash
+/kotl reload
+```
