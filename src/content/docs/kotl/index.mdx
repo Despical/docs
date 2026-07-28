@@ -1,0 +1,130 @@
+---
+title: King of the Ladder Documentation
+description: King of the Ladder is a competitive Minecraft climbing minigame for Paper with automatic arena entry, crown scoring, configurable player rules, statistics, leaderboards, PlaceholderAPI support, and a developer event API.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## King of the Ladder
+
+**King of the Ladder**, also known as **KOTL**, is a competitive Minecraft minigame where players climb a ladder tower, reach the pressure plate at the top, claim the crown, and knock challengers back down.
+Every successful crown claim adds to the player's total and arena score. The goal is to become king as many times as possible while keeping other players away from the top.
+
+Built for server owners who want a continuous arena competition, **KOTL** includes an in-game setup menu, automatic area entry and exit detection, scoreboards, boss bars, king cooldowns, per-arena records, statistics, PlaceholderAPI placeholders, and a developer API for custom integrations.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard
+        title="Getting Started"
+        description="Install KOTL and get your server ready for gameplay in minutes."
+        href="/kotl/getting-started"
+    />
+
+    <LinkCard
+        title="Arena Setup"
+        description="Create and configure a complete King of the Ladder arena."
+        href="/kotl/arena-setup"
+    />
+
+    <LinkCard
+        title="Gameplay Overview"
+        description="Learn how area entry, crown claims, combat, deaths, and records work."
+        href="/kotl/gameplay"
+    />
+</CardGrid>
+
+## Features
+
+These pages explain the important gameplay systems from a server owner perspective.
+
+<CardGrid>
+    <LinkCard
+        title="King Mechanics"
+        description="How the king plate, repeated claims, cooldowns, knockback, and fireworks work."
+        href="/kotl/features/king-mechanics"
+    />
+
+    <LinkCard
+        title="Arena Detection & Player State"
+        description="How players enter and leave areas and how inventories, effects, combat, and damage are handled."
+        href="/kotl/features/arena-detection"
+    />
+
+    <LinkCard
+        title="Statistics & Records"
+        description="How global scores, arena scores, kills, deaths, tours, records, and leaderboards are stored."
+        href="/kotl/features/statistics-and-records"
+    />
+</CardGrid>
+
+## Commands
+
+All **KOTL** commands are grouped by purpose to keep server management clean and intuitive.
+
+<CardGrid>
+    <LinkCard
+        title="Player Commands"
+        description="Commands used to view help and inspect online or offline player statistics."
+        href="/kotl/commands/player"
+    />
+
+    <LinkCard
+        title="Arena Commands"
+        description="Commands used to create, edit, list, and delete arenas."
+        href="/kotl/commands/arena"
+    />
+
+    <LinkCard
+        title="Admin Commands"
+        description="Administrative commands for stopping games, kicking players, and reloading settings."
+        href="/kotl/commands/admin"
+    />
+
+    <LinkCard
+        title="Debug Commands"
+        description="Advanced commands for MiniMessage testing and event timing reports."
+        href="/kotl/commands/debug"
+    />
+</CardGrid>
+
+## Configuration Files
+
+**KOTL** offers detailed configuration through multiple files, allowing full control over gameplay, storage, visuals, messages, and menus.
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Core gameplay, storage, chat, commands, cooldowns, and arena detection." href="/kotl/configuration/config" />
+    <LinkCard title="messages.yml" description="All chat messages, setup feedback, command help, and cooldown text." href="/kotl/configuration/messages" />
+    <LinkCard title="scoreboard.yml" description="The in-arena scoreboard title, lines, and runtime placeholders." href="/kotl/configuration/scoreboard" />
+    <LinkCard title="bossbar.yml" description="The gameplay boss bar text, color, overlay, and global file toggle." href="/kotl/configuration/bossbar" />
+    <LinkCard title="items.yml" description="The game area selection tool used during arena setup." href="/kotl/configuration/items" />
+    <LinkCard title="mysql.yml" description="External database connection and statistics table settings." href="/kotl/configuration/mysql" />
+    <LinkCard title="GUI Menus" description="Customize the arena setup and player statistics interfaces." href="/kotl/configuration/menus" />
+    <LinkCard title="Other Files" description="Automatically managed arena and local statistics data." href="/kotl/configuration/other-files" />
+</CardGrid>
+
+## Placeholders
+
+**KOTL** provides built-in placeholders and full **PlaceholderAPI** support for global, arena, player, statistic, and leaderboard data.
+
+<CardGrid>
+    <LinkCard title="General Placeholders" description="Server totals, live arena data, player state, and statistics." href="/kotl/placeholders/general" />
+    <LinkCard title="Leaderboard Placeholders" description="Ranked global statistics and per-arena crown scores." href="/kotl/placeholders/leaderboard" />
+</CardGrid>
+
+## Developer API
+
+Explore the lifecycle events and integration points exposed by **KOTL**.
+
+<CardGrid>
+    <LinkCard title="Player Events" description="Arena entry, arena exit, crown claim, and statistic change events." href="/kotl/api/player-events/player-event" />
+    <LinkCard title="Game Events" description="The game event base and post-cleanup game stop event." href="/kotl/api/game-events/game-event" />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard title="FAQ" description="Common questions, requirements, setup problems, and troubleshooting information." href="/kotl/misc/faq" />
+    <LinkCard title="Source Code" description="Explore the codebase, report issues, or contribute on GitHub." href="https://github.com/Despical/KOTL" target="_blank" rel="noopener noreferrer" />
+</CardGrid>
