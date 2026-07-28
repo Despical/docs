@@ -1,0 +1,123 @@
+---
+title: Developer API
+description: Integrate with King of the Ladder and listen to its custom Bukkit event system.
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+The **KOTL** API exposes synchronous Bukkit events for arena entry, arena exit, crown claims, statistic changes, and completed game cleanup.
+
+---
+
+## Dependency Setup
+
+KOTL is available through JitPack.
+
+<Tabs>
+    <TabItem label="Gradle (Groovy)">
+        ```groovy
+        repositories {
+            maven { url = 'https://jitpack.io' }
+        }
+
+        dependencies {
+            compileOnly group: 'com.github.Despical', name: 'KOTL', version: 'main-SNAPSHOT'
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Gradle (Kotlin)">
+        ```kotlin
+        repositories {
+            maven("https://jitpack.io")
+        }
+
+        dependencies {
+            compileOnly("com.github.Despical:KOTL:main-SNAPSHOT")
+        }
+        ```
+    </TabItem>
+
+    <TabItem label="Maven">
+        ```xml
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+        <dependency>
+            <groupId>com.github.Despical</groupId>
+            <artifactId>KOTL</artifactId>
+            <version>main-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        ```
+    </TabItem>
+</Tabs>
+
+<Aside type="caution">
+    Add `KOTL` to your plugin's `depend` or `softdepend` list so the API is available before your integration initializes.
+</Aside>
+
+```yaml
+name: YourPlugin
+version: 1.0.0
+main: your.package.Main
+depend: [KOTL]
+```
+
+---
+
+## Base Event Class
+
+All custom events extend:
+
+```java
+dev.despical.kotl.api.events.KOTLEvent
+```
+
+`KOTLEvent` is a shared marker. Concrete classes own their own Bukkit `HandlerList`, so register listeners for concrete events.
+
+---
+
+## Event Types
+
+`EventType` maps stable identifiers to concrete event classes:
+
+| EventType | Event Class |
+|:--|:--|
+| `GAME_STOP` | `GameStopEvent` |
+| `PLAYER_ENTER_ARENA` | `PlayerEnterArenaEvent` |
+| `PLAYER_LEAVE_ARENA` | `PlayerLeaveArenaEvent` |
+| `PLAYER_BECOME_KING` | `PlayerBecomeKingEvent` |
+| `PLAYER_STAT_CHANGE` | `PlayerStatisticChangeEvent` |
+
+`EventRegistry.getRegisteredTypes()` returns the complete unmodifiable set. `getEventClass(type)` resolves a class, and `matches(type, event)` performs a type check.
+
+`EventManager` is an internal dispatcher. External plugins should listen to events instead of manually calling lifecycle factory methods.
+
+---
+
+## Registering a Listener
+
+```java
+import dev.despical.kotl.api.events.player.PlayerBecomeKingEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public final class CrownListener implements Listener {
+
+    @EventHandler
+    public void onBecomeKing(PlayerBecomeKingEvent event) {
+        String player = event.getPlayer().getName();
+        String arena = event.getArena().getId();
+
+        System.out.println(player + " claimed the crown in " + arena);
+    }
+}
+```
+
+Next:
+
+* [Player Events](/kotl/api/player-events/player-event)
+* [Game Events](/kotl/api/game-events/game-event)
