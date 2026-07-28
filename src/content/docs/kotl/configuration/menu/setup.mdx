@@ -1,0 +1,104 @@
+---
+title: setup-menu.yml
+description: Configuration for the interactive King of the Ladder arena setup GUI.
+---
+
+The `setup-menu.yml` file controls the GUI opened with `/kotl edit <arena_id>`. It defines item materials, names, lore, page controls, status text, and registration feedback.
+
+---
+
+## Main Setup Page
+
+| Item Key | Default Material | Purpose |
+|:--|:--|:--|
+| `end` | `END_PORTAL_FRAME` | Saves the end location. |
+| `king-plate` | `OAK_PRESSURE_PLATE` | Gives or places the plate and opens material selection. |
+| `platform-selector` | `BLAZE_ROD` | Gives the area wand or toggles the outline. |
+| `player-settings` | `BOOK` | Opens player and visual settings. |
+| `arena-record-reset` | `PLAYER_HEAD` | Shows the record and opens reset confirmation. |
+| `register-arena` | `FIREWORK_ROCKET` | Validates and registers an incomplete arena. |
+| `arena-toggle` | `LIME_DYE` or `GRAY_DYE` | Enables or disables a registered arena. |
+
+---
+
+## End Location Controls
+
+* Click saves the exact player position and view direction.
+* Shift-click centers X and Z on the block and sets pitch to `0`.
+
+The `message` custom value is sent after the location is saved.
+
+---
+
+## King Plate Controls
+
+* Left-click gives a tagged placement tool.
+* Right-click places the selected material at the player's block.
+* Shift-click opens the material selector.
+
+`pressure-plate-material` defines:
+
+* Available `materials`
+* Item `slots`
+* `back-slot`
+* Selected and unselected status text
+* The material item template
+
+The default list includes all common wooden plates, stone, and polished blackstone.
+
+---
+
+## Player Settings Page
+
+| Item Key | Default Material | Scope |
+|:--|:--|:--|
+| `gamemode-selector` | `DIAMOND_PICKAXE` | Per arena |
+| `clear-inventory-toggle` | `BARREL` | Global config |
+| `clear-effects-toggle` | `POTION` | Global config |
+| `scoreboard-toggle` | `NAME_TAG` | Per arena |
+| `bossbar-toggle` | `ORANGE_DYE` | Per arena |
+
+The gamemode page offers `SURVIVAL`, `CREATIVE`, and `ADVENTURE`. `clear-gamemode` removes the forced gamemode so the player can keep their current mode.
+
+---
+
+## Record Confirmation
+
+| Item Key | Default Material | Purpose |
+|:--|:--|:--|
+| `arena-record-reset` | `PLAYER_HEAD` | Preview current holder and score. |
+| `confirm-arena-record-reset` | `LIME_DYE` | Permanently clears the arena records. |
+| `cancel-arena-record-reset` | `RED_DYE` | Returns without changing data. |
+
+---
+
+## Registration Feedback
+
+`register-arena` contains centered message lists for:
+
+* `missing-option`
+* `invalid-game-area`
+* `king-plate-outside-area`
+* `registered-successfully`
+
+The required values are End Location, King Plate, and Game Area. Registration also verifies world consistency and plate containment.
+
+---
+
+## Common Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%arena_id%` | Current arena ID. |
+| `%selected_material%` | Current king plate material. |
+| `%material%` | Plate material entry. |
+| `%status%` | Selected or unselected plate state. |
+| `%outline_status%` | Area outline state. |
+| `%current_gamemode%` | Arena join gamemode. |
+| `%inventory_toggle_status%` | Global inventory clearing state. |
+| `%effects_toggle_status%` | Global potion clearing state. |
+| `%scoreboard_toggle_status%` | Arena scoreboard state. |
+| `%bossbar_toggle_status%` | Arena boss bar state. |
+| `%record_holder%` | Arena top king. |
+| `%record_score%` | Arena top king score. |
+| `%toggle_action%` | Enable or disable action shown by the availability item. |
