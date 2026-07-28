@@ -1,0 +1,85 @@
+---
+title: stats-menu.yml
+description: Customize the King of the Ladder player statistics and arena leaderboard interface.
+---
+
+The `stats-menu.yml` file controls the GUI opened with `/kotl stats [player]`.
+
+---
+
+## Menu Basics
+
+* **`rows`**: Menu height. KOTL uses `6` rows by default.
+* **`title`**: MiniMessage inventory title.
+* **`items`**: Decorations, player totals, navigation, and arena templates.
+
+---
+
+## Main Items
+
+| Item Key | Slot | Material | Purpose |
+|:--|:--|:--|:--|
+| `background_fill` | Multiple | `GRAY_STAINED_GLASS_PANE` | Decorative fill and border. |
+| `decoration_borders` | Multiple | `RED_STAINED_GLASS_PANE` | Decorative profile border. |
+| `player_head` | `13` | `PLAYER_HEAD` | Displays the target player's skin. |
+| `view_arenas` | `22` | `COMPASS` | Opens per-arena records. |
+| `score` | `30` | `NETHER_STAR` | Total crown score. |
+| `kills` | `31` | `IRON_SWORD` | Total kills. |
+| `deaths` | `32` | `SKELETON_SKULL` | Total deaths. |
+| `games_played` | `40` | `LEATHER_BOOTS` | Total tours played. |
+| `back_button` | `49` | `DARK_OAK_DOOR` | Returns to the main profile page. |
+| `previous_page` | `45` | `ARROW` | Previous arena page. |
+| `next_page` | `53` | `ARROW` | Next arena page. |
+| `arena_template` | Dynamic | `MAP` | One per registered arena. |
+
+---
+
+## Actions
+
+| Action | Used By | Behavior |
+|:--|:--|:--|
+| `open_arenas` | `view_arenas` | Opens the arena records browser. |
+| `back` | `back_button` | Returns to the main profile. |
+| `previous_page` | `previous_page` | Moves backward through arena pages. |
+| `next_page` | `next_page` | Moves forward through arena pages. |
+
+---
+
+## Player Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%target%` | Player whose profile is displayed. |
+| `%games_played%` | Total tours played. |
+| `%score%` | Total crown score. |
+| `%kill%` | Total kills. |
+| `%death%` | Total deaths. |
+
+---
+
+## Arena Template
+
+Each `arena_template` item shows:
+
+* `%arena%`: Arena ID.
+* `%score%`: Target player's score in that arena.
+* Top three `%rank%`, `%player%`, and `%record_score%` values.
+* The target player's own rank when it is outside the top three.
+
+`color-1`, `color-2`, and `color-3` control podium colors. Empty leaderboards use `empty-leaderboard`.
+
+---
+
+## Configuration Example
+
+```yaml
+items:
+  view_arenas:
+    slot: 22
+    action: "open_arenas"
+    material: COMPASS
+
+  arena_template:
+    material: MAP
+    name: "<#29B6F6><bold>%arena%"
+```
