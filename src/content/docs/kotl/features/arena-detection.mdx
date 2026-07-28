@@ -1,0 +1,106 @@
+---
+title: Arena Detection & Player State
+description: How KOTL detects game area transitions and protects inventories, effects, combat, chat, blocks, and player state.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+KOTL arenas are persistent game areas instead of timed match lobbies. A player's membership is determined by whether their current location is inside a registered and enabled cuboid.
+
+---
+
+## Detection Modes
+
+Configure detection under `arena-schedulers`:
+
+```yaml
+arena-schedulers:
+  type: 1
+  interval: 2
+  async: false
+```
+
+| Type | Behavior | Relevant Setting |
+|:--|:--|:--|
+| `1` | Checks all online players on a repeating task. | `interval` controls the period in server ticks. |
+| Any other value | Checks when `PlayerMoveEvent` crosses into a different block. | `interval` is not used by the event listener. |
+
+The current implementation stores the `async` value with scheduler options, but the built-in general detector runs through the plugin scheduler.
+
+---
+
+## Entry Requirements
+
+An arena can detect a player only when:
+
+* It has been registered with `ready: true`.
+* It is currently `enabled: true`.
+* Both game area corners exist.
+* Both corners belong to the same loaded world.
+* The player's location is inside the inclusive X, Y, and Z bounds.
+* `PlayerEnterArenaEvent` is not cancelled.
+
+---
+
+## State Saved on Entry
+
+When entry succeeds, KOTL:
+
+* Saves the player's inventory state.
+* Restores health to `20`.
+* Optionally clears inventory contents.
+* Optionally removes active potion effects.
+* Applies the arena gamemode when one is configured.
+* Sets food level to `20`.
+* Creates the arena scoreboard when global and arena toggles allow it.
+* Adds the configured boss bar when all three boss bar toggles allow it.
+* Restores an active king cooldown action bar when configured.
+
+---
+
+## Exit and Restoration
+
+Walking outside the cuboid fires `PlayerLeaveArenaEvent` with `AREA_EXIT`, removes UI, restores the saved inventory, and saves statistics.
+
+Other leave reasons include:
+
+* `DEATH`
+* `KICK`
+* `DISCONNECT`
+* `ARENA_DELETED`
+* `ARENA_DISABLED`
+* `SERVER_RELOAD`
+* `SERVER_SHUTDOWN`
+* `STOP_COMMAND`
+
+When a player disconnects inside an arena, KOTL remembers that arena for the runtime. On reconnect, the player is teleported to its end location and their saved state is restored.
+
+---
+
+## Arena Protections
+
+Inside a KOTL arena:
+
+* Inventory clicks are cancelled.
+* Block breaking and placement are cancelled.
+* Item dropping is cancelled.
+* Food-level changes are cancelled.
+* Fall damage can be cancelled.
+* Item and arrow pickup can be removed and cancelled.
+
+Players in the same arena can hit each other and receive knockback, but KOTL sets direct damage to `0`. Any attack that crosses the arena boundary or targets another KOTL arena is cancelled.
+
+---
+
+## Chat Isolation
+
+KOTL can isolate both directions of chat:
+
+* Arena chat can be limited to players in the same arena.
+* Messages sent outside games can be hidden from arena players.
+* Arena players can be prevented from sending chat entirely.
+* KOTL can replace the normal chat format with `messages.yml` `chat-format`.
+
+<Aside type="tip">
+    Use **[config.yml](/kotl/configuration/config)** for the full chat and command policy reference.
+</Aside>
