@@ -1,0 +1,52 @@
+---
+title: PlayerBecomeKingEvent
+description: Event fired before a valid King of the Ladder crown claim is applied.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`PlayerBecomeKingEvent` fires after repeated-king and cooldown checks pass, but before KOTL changes the king or any statistics.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.player`
+* **Parent Class:** [`PlayerEvent`](/kotl/api/player-events/player-event)
+* **Cancellable:** Yes
+
+<Aside type="caution">
+    Cancelling prevents the crown change, cooldown, score updates, announcements, fireworks, scoreboard refresh, and plate knockback.
+</Aside>
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Player attempting the crown claim. |
+| `getUser()` | `User` | KOTL user for that player. |
+| `getGame()` | `Game` | Active game. |
+| `getArena()` | `Arena` | Arena containing the plate. |
+| `getPreviousKing()` | `String` or `null` | King name captured before the claim. |
+| `isRepeatedClaim()` | `boolean` | Whether the same player is claiming consecutively. |
+| `isCancelled()` | `boolean` | Whether the claim is blocked. |
+| `setCancelled(boolean)` | `void` | Blocks or restores the claim. |
+
+---
+
+## Example
+
+```java
+import dev.despical.kotl.api.events.player.PlayerBecomeKingEvent;
+import org.bukkit.event.EventHandler;
+
+@EventHandler
+public void onCrownClaim(PlayerBecomeKingEvent event) {
+    if (event.isRepeatedClaim() && !event.getPlayer().hasPermission("kotl.repeat")) {
+        event.setCancelled(true);
+        event.getPlayer().sendMessage("Another player must claim the crown first.");
+    }
+}
+```
