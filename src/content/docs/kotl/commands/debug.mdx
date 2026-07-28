@@ -1,0 +1,66 @@
+---
+title: Debug Commands
+description: Advanced King of the Ladder tools for MiniMessage testing and custom event profiling.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Debug commands are hidden and disabled by default. Enable them only while testing or diagnosing a problem.
+
+---
+
+## Enabling Debug Mode
+
+Add these settings to `config.yml`:
+
+```yaml
+debug: true
+
+event-profiling:
+  enabled: true
+  verbose: false
+```
+
+* **`debug`**: Registers command framework debug features.
+* **`event-profiling.enabled`**: Records listener execution time for KOTL custom events.
+* **`event-profiling.verbose`**: Logs every profiled event call. Keep this disabled outside short diagnostic sessions.
+
+Reload KOTL after changing these settings.
+
+---
+
+## Component Command
+
+Parses direct MiniMessage input with KOTL's chat manager and sends the rendered component back to the player.
+
+```bash
+/kotl debug component <message>
+```
+
+Example:
+
+```bash
+/kotl debug component <gradient:#FFD700:#FF8F00><bold>King test</bold></gradient>
+```
+
+This command is player-only.
+
+**Permission:** `kotl.debug.component`
+
+---
+
+## Dump Command
+
+Sends the accumulated KOTL custom event timing report to the command sender.
+
+```bash
+/kotl debug dump
+```
+
+The report is useful only when `event-profiling.enabled` is `true`.
+
+**Permission:** `kotl.debug.dump`
+
+<Aside type="tip">
+    The `kotl.debug.*` parent permission includes component testing, timing reports, and debug tab completion.
+</Aside>
