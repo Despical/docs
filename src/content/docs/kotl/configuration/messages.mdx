@@ -1,0 +1,103 @@
+---
+title: messages.yml
+description: Customize all King of the Ladder chat messages, setup feedback, command help, cooldown text, and system output using MiniMessage.
+---
+
+The `messages.yml` file controls the text players and administrators see. It includes crown announcements, chat restrictions, setup validation, arena management, help menus, stop reasons, and statistics menu feedback.
+
+---
+
+## MiniMessage Support
+
+**KOTL** uses Adventure **MiniMessage**.
+
+* **Gradients:** `<gradient:#FFD700:#FF8F00>King</gradient>`
+* **HEX Colors:** `<#00E676>Success`
+* **Formatting:** `<bold>`, `<italic>`, `<underlined>`, and `<st>`
+* **Interactions:** `<click:run_command:/kotl list>` and `<hover:show_text:'Open arenas'>`
+
+---
+
+## Common Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%player%` | Player involved in a message. |
+| `%arena%` | Current arena ID. |
+| `%arena_id%` | Arena ID used by setup messages. |
+| `%id%` | Arena ID used by command messages. |
+| `%label%` | Root command label used by the sender. |
+| `%king%` | Current or new king name. |
+| `%time%` | Remaining crown cooldown time. |
+| `%progress%` | Rendered action bar cooldown progress. |
+
+Setup-specific messages also use `%first_xyz%`, `%second_xyz%`, `%blocks%`, and `%material%`.
+
+---
+
+## Game Messages
+
+The `game` section contains:
+
+| Key | Used When |
+|:--|:--|
+| `player-joined` | A player enters an arena and join notifications are enabled. |
+| `player-left` | A player leaves and leave notifications are enabled. |
+| `new-king` | A different player successfully claims the crown. |
+| `king-retained` | The current king successfully claims again. |
+| `chat-disabled-in-game` | Arena chat sending is disabled. |
+| `command-disabled-in-game` | The player attempts a blocked command. |
+| `cooldown-format` | The crown cooldown action bar is rendered. |
+
+`chat-format` is used when arena chat formatting is enabled. It supports `%sender%` and `%message%`.
+
+---
+
+## Stop and Restoration Messages
+
+Separate message lists explain why an arena ended:
+
+* `server-reload-detected`
+* `server-shutdown-detected`
+* `game-stopped-by-command`
+* `game-stopped-due-to-arena-deletion`
+* `game-stopped-due-to-arena-disable`
+
+These messages are sent before teleportation and state restoration.
+
+---
+
+## Setup Messages
+
+The `setup` section reports:
+
+* Area selector delivery and both selected corners.
+* The selected block count.
+* Area outline enable and disable state.
+* King plate tool delivery, placement, material changes, and out-of-area warnings.
+* Arena record reset completion.
+* Arena enable and disable state.
+
+The centered arena creation, registration, deletion, and validation messages support MiniMessage click and hover actions.
+
+---
+
+## Command Help
+
+The default file contains separate lists:
+
+* `help-message`
+* `admin-help-message`
+* `debug-help-message`
+
+KOTL chooses which sections to display based on the sender's permissions and debug state.
+
+---
+
+## Applying Changes
+
+Reload the plugin after editing messages:
+
+```bash
+/kotl reload
+```
