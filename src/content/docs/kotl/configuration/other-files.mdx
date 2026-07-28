@@ -1,0 +1,69 @@
+---
+title: System Files
+description: Overview of internal arena and player data files managed automatically by King of the Ladder.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+KOTL manages files that act as the plugin's persistent memory.
+
+<Aside type="danger">
+    Avoid manually editing these files while the server is running. Cached arena and player data can overwrite manual changes or become inconsistent.
+</Aside>
+
+---
+
+## Managed Files Overview
+
+| File Path | Primary Function | Management Method |
+|:--|:--|:--|
+| `arenas.yml` | Arena readiness, availability, locations, plate, gamemode, UI toggles, outlines, and records. | `/kotl edit <arena>` |
+| `data/stats.yml` | Flat-file player names, statistics, and per-arena scores. | Automatic |
+| Saved inventory data | Player state temporarily stored while a player is inside an arena. | Automatic |
+| `menu/` | Configurable setup and statistics menu layouts. | Safe to customize with required keys preserved |
+
+---
+
+## arenas.yml
+
+Persistent arena keys include:
+
+* `ready`
+* `enabled`
+* `end`
+* `plate`
+* `area-min`
+* `area-max`
+* `arena-plate`
+* `arena-gamemode`
+* `arena-scoreboard-enabled`
+* `arena-bossbar-enabled`
+* `show-outlines`
+* `last-king`
+* `top-king`
+* `top-king-score`
+
+The current runtime king is deliberately not stored as a persistent arena key.
+
+Use the setup menu whenever possible because location values require the plugin's serializer format.
+
+---
+
+## data/stats.yml
+
+Used when flat-file storage is active. It stores each player's UUID, name, integer statistics, and serialized per-arena score map.
+
+If manual recovery is unavoidable:
+
+1. Shut down the server completely.
+2. Create a backup.
+3. Edit only known values.
+4. Validate YAML before restarting.
+
+---
+
+## Saved Player State
+
+KOTL saves inventory state before changing arena inventory contents. The data is used when players leave, die, reconnect after an arena disconnect, or are removed by administration.
+
+Do not remove saved state files while players are active in arenas.
