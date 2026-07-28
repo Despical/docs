@@ -1,0 +1,85 @@
+---
+title: Placeholders
+description: List of available PlaceholderAPI placeholders for King of the Ladder.
+---
+
+To use these placeholders, install **[PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)** before KOTL starts. The expansion identifier is `kotl`.
+
+---
+
+## Server Placeholders
+
+These values do not require a player context.
+
+| Placeholder | Description |
+|:--|:--|
+| `%kotl_arenas_total%` | Total number of registered arena objects. |
+| `%kotl_arenas_ready%` | Number of arenas marked ready. |
+| `%kotl_active_games%` | Number of arenas that currently contain at least one player. |
+| `%kotl_active_players%` | Total players currently inside all KOTL arenas. |
+
+---
+
+## Player Placeholders
+
+| Placeholder | Description |
+|:--|:--|
+| `%kotl_name%` | Player name. |
+| `%kotl_uuid%` | Player UUID. |
+| `%kotl_is_playing%` | Whether the player is currently inside an arena. |
+| `%kotl_current_arena%` | Current arena ID, or `none`. |
+| `%kotl_current_arena_players%` | Player count in the current arena. |
+| `%kotl_current_arena_king%` | Current king, or `none`. |
+| `%kotl_current_arena_last_king%` | Most recent king, or `none`. |
+| `%kotl_current_arena_top_king%` | Arena record holder, or `none`. |
+| `%kotl_current_arena_top_king_score%` | Arena record score. |
+| `%kotl_current_arena_score%` | Viewing player's score in the current arena. |
+
+---
+
+## Statistic Placeholders
+
+Short forms:
+
+| Placeholder | Description |
+|:--|:--|
+| `%kotl_games_played%` | Total tours played. |
+| `%kotl_tours_played%` | Alias for total tours played. |
+| `%kotl_score%` | Total crown score. |
+| `%kotl_kills%` | Total kills. |
+| `%kotl_deaths%` | Total deaths. |
+
+Structured forms:
+
+| Placeholder | Description |
+|:--|:--|
+| `%kotl_stat:kill%` | Total kills. `kills` is also accepted. |
+| `%kotl_stat:death%` | Total deaths. `deaths` is also accepted. |
+| `%kotl_stat:score%` | Total crown score. |
+| `%kotl_stat:tours_played%` | Total tours. `games_played` is also accepted. |
+| `%kotl_stat:arena_score:<arena_id>%` | Player's crown score in a specific arena. |
+
+---
+
+## Arena Placeholders
+
+Format:
+
+```text
+%kotl_arena:<arena_id>:<value>%
+```
+
+| Placeholder | Description |
+|:--|:--|
+| `%kotl_arena:<id>:players%` | Current player count. |
+| `%kotl_arena:<id>:ready%` | Whether registration is complete. |
+| `%kotl_arena:<id>:enabled%` | Whether area detection is enabled. |
+| `%kotl_arena:<id>:king%` | Current runtime king. |
+| `%kotl_arena:<id>:last_king%` | Most recent king. `last-king` is also accepted. |
+| `%kotl_arena:<id>:top_king%` | Arena record holder. `top-king` is also accepted. |
+| `%kotl_arena:<id>:top_king_score%` | Arena record score. `top-king-score` is also accepted. |
+| `%kotl_arena:<id>:gamemode%` | Configured join gamemode. |
+| `%kotl_arena:<id>:scoreboard_enabled%` | Arena scoreboard toggle. |
+| `%kotl_arena:<id>:bossbar_enabled%` | Arena boss bar toggle. |
+
+Invalid arena IDs or unsupported values return an empty string.
