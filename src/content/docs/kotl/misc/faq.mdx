@@ -1,0 +1,129 @@
+---
+title: FAQ
+description: Quick answers regarding requirements, setup, gameplay, storage, permissions, and licensing for King of the Ladder.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Welcome to the Frequently Asked Questions section for **King of the Ladder**.
+
+---
+
+## Which Java version is required?
+
+KOTL is compiled with **Java 25**, so Java 25 or newer is required.
+
+<Aside type="note">
+    The plugin will not load on an older Java runtime.
+</Aside>
+
+---
+
+## Which server software should I use?
+
+Use **Paper** or a compatible Paper fork. The current build compiles against the Paper 1.21.11 API.
+
+---
+
+## How do players join an arena?
+
+There is no normal join command. Players automatically enter when they walk inside a registered, enabled game area.
+
+If entry does not work, verify:
+
+* The arena is registered and ready.
+* Arena Availability is enabled.
+* Both game area corners are in the same loaded world.
+* The player is inside the complete X, Y, and Z cuboid.
+* No external listener is cancelling `PlayerEnterArenaEvent`.
+
+---
+
+## Why does registration fail?
+
+KOTL requires:
+
+* End Location
+* King Plate
+* Both Game Area corners
+* Matching worlds for both corners
+* King Plate located inside the selected Game Area
+
+The registration message identifies the missing or invalid value.
+
+---
+
+## Why can the current king not score again?
+
+Check:
+
+```yaml
+king-settings:
+  become-king-in-a-row: true
+  cooldown: 5
+```
+
+The player may still be on cooldown. If `become-king-in-a-row` is `false`, a different player must claim the crown first.
+
+---
+
+## Why is the scoreboard or boss bar missing?
+
+Scoreboards need:
+
+* `config.yml` `scoreboard-enabled: true`
+* Arena Scoreboard enabled in the setup menu
+
+Boss bars need:
+
+* `config.yml` `boss-bar-enabled: true`
+* `bossbar.yml` `enabled: true`
+* Game BossBar enabled for the arena
+* Non-empty `bossbar.yml` text
+
+---
+
+## How do I allow staff commands inside arenas?
+
+Grant:
+
+```text
+kotl.command.override
+```
+
+Or add the required command root or prefix to `command-settings.allowed-commands`.
+
+---
+
+## Does KOTL support PlaceholderAPI?
+
+Yes. Install PlaceholderAPI before KOTL and use:
+
+* [General Placeholders](/kotl/placeholders/general)
+* [Leaderboard Placeholders](/kotl/placeholders/leaderboard)
+
+---
+
+## Which statistics are stored?
+
+KOTL stores kills, deaths, total crown score, tours played, and a crown score per arena. Arenas also store last king, top king, and top king score.
+
+---
+
+## Should I edit arenas.yml manually?
+
+Normally, no. Location values use a serializer and the plugin caches arena data. Use `/kotl edit <arena_id>`.
+
+---
+
+## What is the license?
+
+KOTL is licensed under the [GPL-3.0 License](http://www.gnu.org/licenses/gpl-3.0.html).
+
+See the [repository LICENSE](https://github.com/Despical/KOTL/blob/main/LICENSE) for full notices.
+
+---
+
+## Where should I report issues?
+
+[Create an Issue](https://github.com/Despical/KOTL/issues/new/choose) with reproduction steps, logs, Java version, and server version.
