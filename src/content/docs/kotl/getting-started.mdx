@@ -1,0 +1,76 @@
+---
+title: Getting Started
+description: Install King of the Ladder on your Paper Minecraft server and prepare the first arena.
+---
+
+import { Badge, Steps } from "@astrojs/starlight/components";
+
+Welcome to King of the Ladder! This plugin brings a continuous ladder-climbing competition to your Minecraft server, featuring automatic arena detection, crown scoring, per-arena records, and extensive customization.
+
+This guide walks you through installation, generated files, essential permissions, and the recommended setup path.
+
+---
+
+## Prerequisites
+
+Before installing the plugin, ensure your server environment meets the following requirements:
+
+* **Java Version:** [Java 25](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Minecraft Version:** Use a current Paper-compatible server. The current project build targets Paper 1.21.11 and the project advertises Minecraft 26.2.
+* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin like [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) to manage staff access.
+* **PlaceholderAPI** <Badge text="Optional" variant="tip" /> : Required only when KOTL placeholders will be used in external scoreboards, holograms, menus, or chat.
+
+---
+
+## Installation
+
+Setting up KOTL is straightforward. Follow these steps to get started:
+
+<Steps>
+    1. Download the latest **King of the Ladder** build from an official distribution page.
+    2. Place the `king-of-the-ladder-x.x.x.jar` file into your server's `plugins/` directory.
+    3. Install **PlaceholderAPI** first if you plan to use KOTL placeholders.
+    4. Restart the server to generate the default configuration files.
+    5. Verify the installation by running `/kotl` in-game or from the console.
+</Steps>
+
+---
+
+## First-Run Configuration
+
+After the first restart, a new folder is created at `/plugins/KOTL/`.
+
+| File | Purpose |
+|:--|:--|
+| `config.yml` | Core gameplay, database, scheduler, king cooldown, chat, command, and player settings. |
+| `messages.yml` | In-game messages, setup feedback, help menus, and command output. |
+| `scoreboard.yml` | In-arena scoreboard title, lines, and placeholders. |
+| `bossbar.yml` | Boss bar enable state, text, overlay, and color. |
+| `items.yml` | The configurable game area selector item. |
+| `mysql.yml` | MySQL connection settings when `database: mysql` is used. |
+| `arenas.yml` | Automatically saved arena locations, toggles, and records. |
+| `data/stats.yml` | Local player statistics when flat-file storage is active. |
+| `menu/setup-menu.yml` | Arena setup menu items and validation feedback. |
+| `menu/stats-menu.yml` | Player statistics, arena records, and leaderboard interface. |
+
+---
+
+## Basic Command Structure
+
+| Command | Permission | Description |
+|:--|:--|:--|
+| `/kotl create <arena_id>` | `kotl.arena.create` | Creates a new arena with a unique ID. |
+| `/kotl edit <arena_id>` | `kotl.arena.edit` | Opens the setup menu for an existing arena. |
+| `/kotl list` | `kotl.arena.list` | Lists ready, disabled, and incomplete arenas. |
+| `/kotl help` | `kotl.command.help` | Shows player commands and any admin commands available to the sender. |
+| `/kotl stats [player]` | None | Opens statistics for yourself or a cached online or offline player. |
+
+KOTL does not require a normal join command. Players enter an enabled, registered arena automatically when they walk into its configured game area and leave automatically when they move outside it.
+
+---
+
+## Next Steps
+
+* **[Arena Setup Guide](/kotl/arena-setup)**: Create and register your first game area.
+* **[Placeholders](/kotl/placeholders/general)**: Connect KOTL data to PlaceholderAPI-compatible plugins.
+* **[Developer API](/kotl/api/kotl-api)**: Build integrations with KOTL events.
