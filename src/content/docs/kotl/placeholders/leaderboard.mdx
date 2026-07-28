@@ -1,0 +1,65 @@
+---
+title: Leaderboard Placeholders
+description: Display ranked King of the Ladder statistics and per-arena crown scores with PlaceholderAPI.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Leaderboard placeholders display top players on scoreboards, holograms, menus, and chat.
+
+<Aside type="caution">
+    PlaceholderAPI must be installed. Leaderboards are built from the player data available through the configured KOTL storage backend.
+</Aside>
+
+---
+
+## Syntax
+
+```text
+%kotl_leaderboard:<statistic>:<position>:<type>%
+```
+
+| Argument | Description |
+|:--|:--|
+| `<statistic>` | Global statistic key or an arena leaderboard ID. |
+| `<position>` | One-based rank such as `1`, `2`, or `10`. |
+| `<type>` | `name`, `uuid`, `value`, or `formatted_value`. |
+
+`formatted_value` currently returns the same numeric text as `value`.
+
+---
+
+## Available Statistics
+
+* `kill`
+* `death`
+* `score`
+* `tours_played`
+* `arena_score_<arena_id>`
+
+Numeric entries with a value of `0` are excluded.
+
+---
+
+## Examples
+
+| Goal | Placeholder |
+|:--|:--|
+| Name of the top overall scorer | `%kotl_leaderboard:score:1:name%` |
+| Score of the top overall scorer | `%kotl_leaderboard:score:1:value%` |
+| UUID of the third-ranked killer | `%kotl_leaderboard:kill:3:uuid%` |
+| Name of the most active player | `%kotl_leaderboard:tours_played:1:name%` |
+| Top player in arena `tower` | `%kotl_leaderboard:arena_score_tower:1:name%` |
+| Top score in arena `tower` | `%kotl_leaderboard:arena_score_tower:1:formatted_value%` |
+
+---
+
+## Empty Positions
+
+If a requested position does not exist:
+
+* `name` returns `No Player`.
+* `value` and `formatted_value` return `0`.
+* `uuid` returns a generated placeholder UUID.
+
+Design external displays so empty positions are either hidden or shown as an unclaimed rank.
