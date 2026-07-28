@@ -1,0 +1,70 @@
+---
+title: GameStopEvent
+description: Event fired after a King of the Ladder game is stopped and its players are cleaned up.
+---
+
+The `GameStopEvent` is fired after KOTL completes game cleanup.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.game`
+* **Parent Class:** [`GameEvent`](/kotl/api/game-events/game-event)
+* **Cancellable:** No
+
+---
+
+## Cleanup State
+
+Before this event fires:
+
+* Players receive the configured stop message when one exists.
+* Players are teleported to the arena end location where possible.
+* Inventory and player state restoration is scheduled or completed.
+* Players are removed from the game set.
+* Scoreboards and boss bars are removed.
+
+The event keeps an immutable UUID snapshot of players captured before cleanup.
+
+---
+
+## Stop Reasons
+
+| Reason | Description |
+|:--|:--|
+| `ARENA_DELETED` | The arena was permanently deleted. |
+| `ARENA_DISABLED` | The arena availability toggle was disabled. |
+| `SERVER_RELOAD` | KOTL or the server is reloading. |
+| `SERVER_SHUTDOWN` | The server is shutting down. |
+| `STOP_COMMAND` | An administrator used `/kotl stop`. |
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Game that was stopped. |
+| `getArena()` | `Arena` | Arena associated with the game. |
+| `getReason()` | `StopReason` | Cleanup reason. |
+| `getStoppedPlayers()` | `List<UUID>` | Immutable pre-cleanup player snapshot. |
+
+---
+
+## Example
+
+```java
+import dev.despical.kotl.api.events.game.GameStopEvent;
+import dev.despical.kotl.game.StopReason;
+import org.bukkit.event.EventHandler;
+
+@EventHandler
+public void onGameStop(GameStopEvent event) {
+    StopReason reason = event.getReason();
+
+    if (reason == StopReason.ARENA_DISABLED) {
+        System.out.println("Maintenance started for " + event.getArena().getId());
+    }
+}
+```

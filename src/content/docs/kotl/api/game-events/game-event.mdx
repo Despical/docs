@@ -1,0 +1,57 @@
+---
+title: GameEvent
+description: The foundation for all game-related events in the King of the Ladder API.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`GameEvent` is the abstract base for KOTL events associated with one game instance.
+
+<Aside type="note">
+    You cannot listen to `GameEvent` directly because it does not own a handler list. Listen to `GameStopEvent`.
+</Aside>
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.game`
+* **Parent Class:** `KOTLEvent`
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getGame()` | `Game` | Associated game instance. |
+| `getArena()` | `Arena` | Arena owned by the game. |
+
+Through `Game`, integrations can inspect the player snapshot, `ScoreboardManager`, and `BossBarManager`.
+
+---
+
+## Known Subclass
+
+* **`GameStopEvent`**: Fired after an arena game has been stopped and cleaned up.
+
+---
+
+## Listener Example
+
+```java
+import dev.despical.kotl.api.events.game.GameStopEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public final class GameLifecycleListener implements Listener {
+
+    @EventHandler
+    public void onGameStop(GameStopEvent event) {
+        String arenaId = event.getArena().getId();
+        int stoppedPlayers = event.getStoppedPlayers().size();
+
+        System.out.println(arenaId + " stopped with " + stoppedPlayers + " players.");
+    }
+}
+```
