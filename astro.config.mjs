@@ -18,9 +18,11 @@ export default defineConfig({
         sitemap(),
         starlight({
             title: 'Despical Docs',
+            favicon: '/favicon.svg',
             description: "Official documentation for Despical's Minecraft plugins, developer tools, frameworks, setup guides, API references, and operational notes.",
             social: [
                 {icon: 'github', label: 'home:GitHub', href: 'https://github.com/Despical'},
+                {icon: 'seti:java', label: 'home:Javadoc', href: 'https://javadoc.despical.dev/'},
                 {
                     icon: "github",
                     label: "command-framework:Github",
