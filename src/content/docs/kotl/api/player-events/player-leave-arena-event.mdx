@@ -1,0 +1,58 @@
+---
+title: PlayerLeaveArenaEvent
+description: Event fired immediately before a player is removed from a King of the Ladder arena.
+---
+
+`PlayerLeaveArenaEvent` fires while the player is still registered in the game. Listeners can inspect membership, statistics, UI managers, and arena state before removal.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.player`
+* **Parent Class:** [`PlayerEvent`](/kotl/api/player-events/player-event)
+* **Cancellable:** No
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Player leaving the arena. |
+| `getUser()` | `User` | KOTL user before cleanup. |
+| `getGame()` | `Game` | Game being left. |
+| `getArena()` | `Arena` | Arena being left. |
+| `getReason()` | `LeaveReason` | Reason for removal. |
+
+---
+
+## Leave Reasons
+
+| Reason | Meaning |
+|:--|:--|
+| `AREA_EXIT` | Player crossed outside the selected cuboid. |
+| `DEATH` | Player died and is being restored outside the arena. |
+| `KICK` | Administrator used `/kotl kick`. |
+| `DISCONNECT` | Player left the server. |
+| `ARENA_DELETED` | Arena was deleted. |
+| `ARENA_DISABLED` | Arena was disabled. |
+| `SERVER_RELOAD` | Plugin or server reload. |
+| `SERVER_SHUTDOWN` | Server shutdown. |
+| `STOP_COMMAND` | Administrator stopped the arena. |
+
+---
+
+## Example
+
+```java
+import dev.despical.kotl.api.events.player.PlayerLeaveArenaEvent;
+import org.bukkit.event.EventHandler;
+
+@EventHandler
+public void onArenaLeave(PlayerLeaveArenaEvent event) {
+    if (event.getReason() == PlayerLeaveArenaEvent.LeaveReason.DEATH) {
+        System.out.println(event.getPlayer().getName() + " died in " + event.getArena().getId());
+    }
+}
+```
