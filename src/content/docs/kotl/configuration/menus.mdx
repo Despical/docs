@@ -1,0 +1,96 @@
+---
+title: GUI Menus
+description: Customize King of the Ladder setup and statistics inventory interfaces.
+topic: kotl
+---
+
+The `menu/` folder controls the visual layout of KOTL's arena setup and player statistics interfaces.
+
+---
+
+## Menu Basics
+
+The two files use:
+
+* **`title`**: Inventory title with MiniMessage support.
+* **`rows`**: Menu height where the menu supports configurable rows.
+* **`items`**: Interactive buttons, decoration items, templates, and feedback.
+
+---
+
+## setup-menu.yml
+
+Opened through:
+
+```bash
+/kotl edit <arena_id>
+```
+
+It controls:
+
+| Category | Purpose |
+|:--|:--|
+| End Location | Stores the restore and exit position. |
+| King Plate | Places the trigger and selects its material. |
+| Game Area | Gives the cuboid selector and toggles outlines. |
+| Player Settings | Gamemode, inventory, effects, scoreboard, and boss bar. |
+| Arena Records | Displays and resets top king data. |
+| Arena Availability | Enables or disables a registered arena. |
+| Registration | Validates and saves a new arena. |
+
+---
+
+## stats-menu.yml
+
+Opened through:
+
+```bash
+/kotl stats [player]
+```
+
+It controls the profile page, total statistics, arena record browser, leaderboard templates, paging buttons, and rank colors.
+
+### Statistics Placeholders
+
+* `%target%`
+* `%games_played%`
+* `%score%`
+* `%kill%`
+* `%death%`
+
+### Arena Template Placeholders
+
+* `%arena%`
+* `%score%`
+* `%rank%`
+* `%player%`
+* `%record_score%`
+* `%color%`
+
+---
+
+## Item Properties
+
+| Property | Description |
+|:--|:--|
+| `slot` | One inventory slot. |
+| `slots` | Multiple slots for decoration items. |
+| `material` | Bukkit material displayed by the item. |
+| `name` | MiniMessage item name. |
+| `lore` | MiniMessage description lines. |
+| `decoration-only` | Marks a visual item with no action. |
+| `skull` | Player skin source for `PLAYER_HEAD`. |
+| `glow` | Adds a visual enchantment glint. |
+| `item-flags` | Hides selected vanilla tooltip sections. |
+| `hide-tooltip` | Hides the complete vanilla tooltip where supported. |
+| `action` | Connects a stats menu item to a built-in behavior. |
+
+---
+
+## Menu Editing Tips
+
+* Keep required item keys unchanged.
+* Keep actions attached to the intended buttons.
+* Do not define more pressure plate materials than available slots.
+* Test registration errors, record confirmation, and pagination after changing slots.
+* Reload KOTL after editing either file.
