@@ -1,0 +1,62 @@
+---
+title: PlayerEnterArenaEvent
+description: Event fired before a player enters a King of the Ladder arena.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`PlayerEnterArenaEvent` fires after KOTL detects an eligible area transition but before the player is added to the game.
+
+---
+
+## Technical Overview
+
+* **Package:** `dev.despical.kotl.api.events.player`
+* **Parent Class:** [`PlayerEvent`](/kotl/api/player-events/player-event)
+* **Cancellable:** Yes
+
+<Aside type="caution">
+    Cancelling this event prevents every part of entry, including inventory saving, gamemode changes, scoreboard creation, boss bar display, and potion removal.
+</Aside>
+
+---
+
+## Methods
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Player attempting to enter. |
+| `getUser()` | `User` | KOTL user for the player. |
+| `getGame()` | `Game` | Target game. |
+| `getArena()` | `Arena` | Target arena. |
+| `isCancelled()` | `boolean` | Whether entry is blocked. |
+| `setCancelled(boolean)` | `void` | Blocks or restores the entry attempt. |
+
+---
+
+## Common Uses
+
+* Arena-specific permissions
+* Maintenance locks
+* Party or queue requirements
+* External cooldowns
+* Entry logging
+
+---
+
+## Example
+
+```java
+import dev.despical.kotl.api.events.player.PlayerEnterArenaEvent;
+import org.bukkit.event.EventHandler;
+
+@EventHandler
+public void onArenaEntry(PlayerEnterArenaEvent event) {
+    String permission = "server.kotl." + event.getArena().getId();
+
+    if (!event.getPlayer().hasPermission(permission)) {
+        event.setCancelled(true);
+        event.getPlayer().sendMessage("You cannot enter this arena.");
+    }
+}
+```
