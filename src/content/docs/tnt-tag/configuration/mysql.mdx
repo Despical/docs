@@ -1,0 +1,24 @@
+---
+title: mysql.yml
+description: Store TNT Tag player statistics in a shared MySQL database.
+---
+
+Set `Database-Enabled: true` in `config.yml` before TNT Tag uses this file.
+
+```yaml
+address: "localhost:3306"
+user: "user"
+password: "password"
+table: "tnttag_stats"
+test-on-startup: true
+```
+
+| Key | Purpose |
+|:--|:--|
+| `address` | Database host and port. |
+| `user` | MySQL account name. |
+| `password` | Account password. |
+| `table` | Table used for TNT Tag statistics. |
+| `test-on-startup` | Tests the connection while the plugin starts. |
+
+Use a dedicated database account with access only to the required schema. Stop the server before switching an existing installation from flat-file storage to MySQL, keep a backup of `stats.yml`, and verify a test player's statistics after restart.

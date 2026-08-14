@@ -1,0 +1,22 @@
+---
+title: arena.yml
+description: Understand the TNT Tag arena data saved by the setup editor.
+---
+
+`arena.yml` is managed by the arena editor and loaded during startup. Each arena stores its identity, readiness, player limits, locations, optional power-up positions, and join signs.
+
+## Stored Data
+
+| Value | Purpose |
+|:--|:--|
+| Arena identifier | Stable name used by commands and placeholders. |
+| `mapName` | Display name used in messages, signs, rewards, and scoreboards. |
+| Minimum and maximum players | Controls countdown start and capacity. |
+| Ready state | Determines whether players may join. |
+| Lobby location | Waiting area before gameplay. |
+| Start location | Main game spawn and optional deathmatch return point. |
+| End location | Exit destination after leaving or game cleanup. |
+| Power locations | Candidate positions for temporary pickups. |
+| Signs | Blocks associated with arena join signs. |
+
+Use `/tnttag edit <arena>` for changes whenever possible. Manual YAML edits can create invalid world references or incomplete locations. Stop the server first if a manual repair is unavoidable, and keep a backup of the file.
