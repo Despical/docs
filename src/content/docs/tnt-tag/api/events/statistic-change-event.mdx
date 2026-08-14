@@ -1,0 +1,18 @@
+---
+title: StatisticChangeEvent
+description: Fired when a TNT Tag user statistic is updated.
+---
+
+Package: `dev.despical.tnttag.api.events.player`
+
+The event exposes `getUser()`, `getStatisticType()`, `getValue()`, and `getNewValue()`. Statistic types include wins, losses, games played, players tagged, and times tagged.
+
+```java
+@EventHandler
+public void onStatisticChange(StatisticChangeEvent event) {
+    StatisticType type = event.getStatisticType();
+    int currentValue = event.getNewValue();
+}
+```
+
+The associated arena may be absent when a statistic is changed outside an active match. Treat `getArena()` as nullable in this event.
