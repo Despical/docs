@@ -1,0 +1,61 @@
+---
+title: Creating Upgrades
+description: Create, register, reload, and test a complete Item Upgrader recipe.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+## Complete Example
+
+```yaml
+upgrades:
+  reinforced_blade:
+    from:
+      item: IRON_SWORD
+      name: "&fReinforced Blade"
+      amount: 1
+    to:
+      item: DIAMOND_SWORD
+      name: "&bMasterwork Blade"
+      lore:
+        - "&7Upgrade chance: &f%chance%%"
+        - "&7Price: &f%price%"
+      amount: 1
+      item-flags: []
+      unbreakable: false
+      hide-tooltip: false
+      decoration-only: false
+      custom-model-data: 0
+    chance: 75
+    coin: 2500
+    enchantments:
+      - "SHARPNESS:3"
+    reset-enchants: false
+    disallowed-enchantments:
+      - "VANISHING_CURSE"
+    required-items:
+      crystal:
+        material: AMETHYST_SHARD
+        name: ""
+        amount: 8
+        lore: []
+        enchantments: []
+    no-required-items-found: "&cYou need 8 amethyst shards."
+```
+
+## Registration Checklist
+
+<Steps>
+1. Add `IRON_SWORD` to `config.yml` under `upgradable-items`.
+2. Give the recipe a unique key such as `reinforced_blade`.
+3. Use a valid Bukkit material or supported custom-item prefix for `from.item` and `to.item`.
+4. Match `from.name` exactly when the source needs a custom display name. Leave it empty for an unnamed source.
+5. Configure the result and optional restrictions.
+6. Run `/itemupgrader reload` and inspect the console for invalid item or enchantment messages.
+7. Use `/itemupgrader item <player> reinforced_blade true` to give the source item for testing.
+8. Test with insufficient source quantity, ingredients, money, a conflicting enchantment, success, failure, and menu cancellation.
+</Steps>
+
+<Aside type="note">
+Recipe matching uses the source material and display name. Lore and enchantments do not select the recipe; use `disallowed-enchantments` when an enchantment must block it.
+</Aside>
