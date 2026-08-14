@@ -1,0 +1,28 @@
+---
+title: Leaderboard Placeholders
+description: Display ranked TNT Tag player names and values through PlaceholderAPI.
+---
+
+Use the following format:
+
+```text
+%tnttag_top:<statistic>:<position>:name%
+%tnttag_top:<statistic>:<position>:value%
+```
+
+## Parameters
+
+- `<statistic>`: `wins`, `loses`, `games_played`, `tagged_players`, or `times_tagged`.
+- `<position>`: One-based leaderboard position, such as `1`, `2`, or `10`.
+- Final segment: `name` returns the player name; any other value segment returns the statistic value. Use `value` for clarity.
+
+## Examples
+
+```text
+%tnttag_top:wins:1:name%
+%tnttag_top:wins:1:value%
+%tnttag_top:tagged_players:3:name%
+%tnttag_top:tagged_players:3:value%
+```
+
+If a position is empty, TNT Tag returns `placeholders.empty-position` or `placeholders.empty-value` from `messages.yml`.

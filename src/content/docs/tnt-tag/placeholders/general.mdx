@@ -1,0 +1,48 @@
+---
+title: General Placeholders
+description: Display global, player, and per-arena TNT Tag values through PlaceholderAPI.
+---
+
+Install PlaceholderAPI and restart the server. TNT Tag registers its expansion automatically with the identifier `tnttag`.
+
+## Global Placeholders
+
+| Placeholder | Output |
+|:--|:--|
+| `%tnttag_online_players%` | Players across all TNT Tag arenas. |
+| `%tnttag_all_alive_players%` | Active, non-eliminated players across all arenas. |
+| `%tnttag_arena_size%` | Number of registered arenas. |
+| `%tnttag_available_arena_size%` | Arenas accepting players in waiting or starting state with a free slot. |
+
+## Player Placeholders
+
+| Placeholder | Output |
+|:--|:--|
+| `%tnttag_wins%` | Player wins. |
+| `%tnttag_loses%` | Player losses. |
+| `%tnttag_games_played%` | Completed games played. |
+| `%tnttag_tagged_players%` | Successful tag transfers. |
+| `%tnttag_times_tagged%` | Times the player received TNT. |
+| `%tnttag_goal%` | Localized current goal: tag someone or run away. Returns no value outside an arena. |
+
+## Per-Arena Placeholders
+
+Replace `<arena>` with the exact arena identifier.
+
+| Placeholder | Output |
+|:--|:--|
+| `%tnttag_<arena>:players%` | Current arena player count. |
+| `%tnttag_<arena>:players_left%` | Active players remaining. |
+| `%tnttag_<arena>:min_players%` | Minimum players. |
+| `%tnttag_<arena>:max_players%` | Maximum players. |
+| `%tnttag_<arena>:timer%` | Timer text used by the arena scoreboard. |
+| `%tnttag_<arena>:unformatted_timer%` | Raw timer in seconds. |
+| `%tnttag_<arena>:formatted_timer%` | Timer formatted as minutes and seconds. |
+| `%tnttag_<arena>:temp_timer%` | Current temporary round or intermission timer. |
+| `%tnttag_<arena>:round%` | Current round number. |
+| `%tnttag_<arena>:state%` | Internal uppercase arena state. |
+| `%tnttag_<arena>:state_pretty%` | Human-readable arena state. |
+| `%tnttag_<arena>:map_name%` | Configured map display name. |
+| `%tnttag_<arena>:players_needed%` | Additional players required to reach the minimum. |
+
+Example: `%tnttag_factory:players_left%`.
