@@ -1,0 +1,22 @@
+---
+title: GameStateChangeEvent
+description: Fired when a TNT Tag arena transitions between lifecycle states.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Package: `dev.despical.tnttag.api.events.game`
+
+The event exposes `getArena()`, `getOldArenaState()`, and `getNewArenaState()`. Arena states include waiting, starting, in-game, ending, restarting, and inactive.
+
+```java
+@EventHandler
+public void onStateChange(GameStateChangeEvent event) {
+    Arena arena = event.getArena();
+    ArenaState currentState = arena.getArenaState();
+}
+```
+
+<Aside type="caution">
+In TNT Tag 1.9.5, both state accessors can report the previous state because the event is constructed before the arena field is changed. If exact transition values matter, verify behavior against the version installed on your server.
+</Aside>
