@@ -23,6 +23,28 @@ export default defineConfig({
             social: [
                 {icon: 'github', label: 'home:GitHub', href: 'https://github.com/Despical'},
                 {icon: 'seti:java', label: 'home:Javadoc', href: 'https://javadoc.despical.dev/'},
+                {icon: 'discord', label: 'home:Discord', href: 'https://discord.gg/uXVU8jmtpU'},
+                {icon: 'patreon', label: 'home:Patreon', href: 'https://patreon.com/despical'},
+                {
+                    icon: "external",
+                    label: "advanced-parkour:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/advanced-parkour.133887/",
+                },
+                {
+                    icon: "external",
+                    label: "advanced-parkour:BuiltByBit",
+                    href: "https://builtbybit.com/resources/advanced-parkour.101133/",
+                },
+                {
+                    icon: "external",
+                    label: "carousel:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/carousel.116224/",
+                },
+                {
+                    icon: "external",
+                    label: "carousel:BuiltByBit",
+                    href: "https://builtbybit.com/resources/carousel.50204/",
+                },
                 {
                     icon: "github",
                     label: "command-framework:Github",
@@ -32,6 +54,31 @@ export default defineConfig({
                     icon: "seti:java",
                     label: "command-framework:Javadoc",
                     href: "https://javadoc.despical.dev/command-framework/"
+                },
+                {
+                    icon: "external",
+                    label: "command-framework:SpigotMC",
+                    href: "https://spigotmc.org/resources/89933/",
+                },
+                {
+                    icon: "external",
+                    label: "easter-eggs:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/eastereggs.116086/",
+                },
+                {
+                    icon: "external",
+                    label: "easter-eggs:BuiltByBit",
+                    href: "https://builtbybit.com/resources/easter-eggs.50201/",
+                },
+                {
+                    icon: "external",
+                    label: "eat-everything:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/eat-everything.116884/",
+                },
+                {
+                    icon: "external",
+                    label: "eat-everything:BuiltByBit",
+                    href: "https://builtbybit.com/resources/eat-everything.50202/",
                 },
                 {
                     icon: "github",
@@ -49,6 +96,16 @@ export default defineConfig({
                     href: "https://javadoc.despical.dev/tnt-run/",
                 },
                 {
+                    icon: "external",
+                    label: "tnt-run:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/tnt-run.83196/",
+                },
+                {
+                    icon: "external",
+                    label: "tnt-run:BuiltByBit",
+                    href: "https://builtbybit.com/resources/tnt-run.116706/",
+                },
+                {
                     icon: "github",
                     label: "kotl:GitHub",
                     href: "https://github.com/Despical/KOTL",
@@ -57,6 +114,16 @@ export default defineConfig({
                     icon: "seti:java",
                     label: "kotl:Javadoc",
                     href: "https://javadoc.despical.dev/kotl/",
+                },
+                {
+                    icon: "external",
+                    label: "kotl:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/king-of-the-ladder.80686/",
+                },
+                {
+                    icon: "external",
+                    label: "kotl:BuiltByBit",
+                    href: "https://builtbybit.com/resources/king-of-the-ladder.51128/",
                 },
                 {
                     icon: "external",
@@ -70,6 +137,21 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "santa-says:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/santa-says.132658/",
+                },
+                {
+                    icon: "external",
+                    label: "santa-says:BuiltByBit",
+                    href: "https://builtbybit.com/resources/santa-says-christmas-minigame.94410/",
+                },
+                {
+                    icon: "external",
+                    label: "the-snake:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/the-snake.120508/",
+                },
+                {
+                    icon: "external",
                     label: "tnt-tag:SpigotMC",
                     href: "https://www.spigotmc.org/resources/117862/",
                 },
@@ -77,6 +159,16 @@ export default defineConfig({
                     icon: "external",
                     label: "tnt-tag:BuiltByBit",
                     href: "https://builtbybit.com/resources/tnt-tag.50271/",
+                },
+                {
+                    icon: "external",
+                    label: "warden-party:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/warden-party.117447/",
+                },
+                {
+                    icon: "external",
+                    label: "warden-party:BuiltByBit",
+                    href: "https://builtbybit.com/resources/warden-party.50166/",
                 },
                 {
                     icon: "github",
@@ -88,8 +180,26 @@ export default defineConfig({
                     label: "whack-me:Javadoc",
                     href: "https://javadoc.despical.dev/whack-me/",
                 },
-                {icon: 'discord', label: 'Discord', href: 'https://discord.gg/uXVU8jmtpU'},
-                {icon: 'patreon', label: 'Patreon', href: 'https://patreon.com/despical'},
+                {
+                    icon: "external",
+                    label: "whack-me:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/whack-me.104912/",
+                },
+                {
+                    icon: "external",
+                    label: "whack-me:BuiltByBit",
+                    href: "https://builtbybit.com/resources/whack-me.50294/",
+                },
+                {
+                    icon: "external",
+                    label: "marketplace:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/authors/despical.615094/",
+                },
+                {
+                    icon: "external",
+                    label: "marketplace:BuiltByBit",
+                    href: "https://builtbybit.com/creators/despical.257098/",
+                },
             ],
             lastUpdated: true,
             editLink: {
