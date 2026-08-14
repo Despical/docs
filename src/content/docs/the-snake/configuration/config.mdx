@@ -1,0 +1,103 @@
+---
+title: config.yml
+description: Configure The Snake storage mode, saving, messages, sounds, placeholder fallbacks, and update checks.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`config.yml` contains global behavior shared by every Snake arena. Per-arena locations, blocks, speed, and win conditions belong in `arena.yml` and should normally be changed through the arena editor.
+
+---
+
+## Storage Selection
+
+The current runtime selects a database implementation from the `database` key:
+
+```yaml
+database: flat
+```
+
+Accepted values are:
+
+* `flat`, `flatfile`, or `default` for `stats.yml` storage;
+* `mysql` or `sql` for the connection defined in `mysql.yml`.
+
+<Aside type="caution" title="Current key mismatch">
+    The v1.5.8 default file still contains `mysql-enabled: false`, but the current runtime reads `database`. Add `database: mysql` to select MySQL or `database: flat` to make the intended mode explicit.
+</Aside>
+
+---
+
+## Saving and Updates
+
+| Key | Default | Purpose |
+|:--|:--|:--|
+| `statistic-saving-period` | `300` | Describes a statistics saving interval in seconds. The current scheduler uses a fixed five-minute interval. |
+| `update-notifier` | `true` | Checks Spigot resource `120508` during startup and logs a link when an update is available. |
+
+---
+
+## Command Messages
+
+`messages.commands` controls usage errors and all arena join, edit, and deletion feedback.
+
+| Key | Used when |
+|:--|:--|
+| `correct-usage` | A command is missing required arguments. `{0}` is the expected usage. |
+| `created-arena` | A new arena is created. `{0}` is the arena ID. |
+| `deleted-arena` | An arena is deleted. `{0}` is the arena ID. |
+| `no-arena` | The supplied arena ID does not exist. |
+| `someone-editing` | Another player already has the arena editor open. |
+| `already-editing` | The sender is already editing the arena. |
+| `editing-now` | Editing starts successfully. |
+| `arena-already-created` | Create is used with an existing ID. |
+| `arena-not-ready` | Join is attempted before all locations are saved. |
+| `already-playing` | A player already belongs to a Snake arena. |
+| `someone-playing` | The target arena is occupied. |
+| `not-playing` | Leave is used outside a Snake arena. |
+
+Messages support legacy ampersand color codes. Positional variables use `{0}`, `{1}`, and `{2}`.
+
+---
+
+## Game Messages
+
+The `messages.game` section has separate results for quitting, dying, and winning:
+
+* `quit` and `died` receive the current score as `{0}` and total board cells as `{1}`;
+* the `*-without-a-score` variants are used when the score is zero;
+* `win-eaten-all` is used when `targetScore` is `0`;
+* `win-reached-target-score` receives the configured target as `{2}`.
+
+---
+
+## Direction Subtitles
+
+`messages.subtitles.up`, `down`, `left`, and `right` are shown after an accepted turn. `messages.subtitles.new-point` appears when an apple is collected.
+
+---
+
+## Sounds
+
+Each entry under `sounds` has a `sound`, `volume`, and `pitch`:
+
+| Entry | Trigger |
+|:--|:--|
+| `fail` | A collision or non-wrapping border loss. |
+| `direction-change` | A valid direction change. |
+| `tick` | Every snake movement update. |
+| `point` | Apple collection. |
+| `win` | A completed win condition. |
+
+Set a sound to `NONE` to disable it.
+
+---
+
+## Placeholder Fallbacks
+
+The `placeholders` section controls output when data is missing:
+
+* `no-player`: an arena has no current player;
+* `not-in-arena`: the requested player is not playing;
+* `no-name` and `no-value`: reserved leaderboard fallbacks;
+* `states.waiting`, `pre-in-game`, `in-game`, `ending`, and `inactive`: friendly text for `state_pretty`.

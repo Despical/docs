@@ -1,0 +1,30 @@
+---
+title: Other Files
+description: Understand The Snake flat-file statistics and temporary inventory backup data.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## stats.yml
+
+`stats.yml` is used when `database: flat` is selected or when the database selector is absent or invalid.
+
+Player records are stored below their UUID and include every persistent statistic. The flat-file implementation can load active players, inspect offline players, build the leaderboard cache, and save all currently loaded users.
+
+Do not edit `stats.yml` while the server is running. A later save can overwrite manual changes.
+
+---
+
+## Inventory Backups
+
+The Snake saves player inventories before joining a game and before entering the arena editor. The inventory is restored after leaving, after editor mode ends, or when a disconnected player rejoins and is sent to the arena end location.
+
+<Aside type="caution">
+    Do not delete plugin data while a player is in a game or editor session. The temporary backup is the recovery source for their original inventory.
+</Aside>
+
+---
+
+## Safe Backups
+
+For a complete backup, stop the server and copy the entire `/plugins/Snake/` directory. If MySQL is enabled, back up the configured statistics table as well.
