@@ -1,27 +1,58 @@
 ---
 title: Admin Commands
-description: Item Upgrader reload, help, version, item-give, debug, permission, and tab-completion reference.
+description: Administrative commands used to manage Item Upgrader items and plugin configuration.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
 
-| Command | Permission | Description |
-|:--|:--|:--|
-| `/itemupgrader reload` | `itemupgrader.reload` | Reloads configuration, allowed worlds, menu access, and upgrade recipes. |
-| `/itemupgrader help` | `itemupgrader.help` | Lists commands and descriptions. |
-| `/itemupgrader version` | `itemupgrader.version` | Shows plugin, server, Java, JVM, and operating-system details. Player-only. |
-| `/itemupgrader item <player> <recipe> <true if from>` | `itemupgrader.item` | Gives the source or result item defined by a recipe. |
-| `/itemupgrader debug name` | Operator only | Prints the held display name in configuration-friendly legacy format. |
+Admin Commands are designed for **server administrators and staff members** to manage **Item Upgrader** items and plugin configuration.
 
-`itemupgrader.tabcompleter` controls suggestions. `itemupgrader.updatenotify` is declared but is not checked by the 1.8.3 startup update logger. The `itemupgrader.*` wildcard includes all declared nodes.
+All commands use `/itemupgrader`. Unless otherwise stated, all commands can also be executed from the console.
 
-## Item Command Boolean
+---
 
-The current 1.8.3 implementation uses:
+## Item Command
 
-- `true` to give the recipe's original `from` item;
-- `false` to give the upgraded `to` item.
+Administrators with the `itemupgrader.item` permission can give the source or result item defined by an upgrade recipe to a player.
 
-<Aside type="caution">
-The command's built-in description reverses this boolean wording in 1.8.3. The behavior above follows the current implementation and should be verified again after upgrading the plugin.
+The final boolean controls which recipe item is given: `true` gives the original `from` item, while `false` gives the upgraded `to` item.
+
+```bash
+/itemupgrader item <player> <item_name> <true_if_from>
+```
+
+---
+
+## Reload Command
+
+Administrators with the `itemupgrader.reload` permission can reload the upgrade recipes, allowed worlds, menu permission, and configuration files without restarting the server.
+
+```bash
+/itemupgrader reload
+```
+
+---
+
+## Version Command
+
+Administrators with the `itemupgrader.version` permission can display detailed information about the plugin, server, Java runtime, JVM, and operating system.
+
+This command is only accessible to players.
+
+```bash
+/itemupgrader version
+```
+
+---
+
+## Help Command
+
+Administrators with the `itemupgrader.help` permission can display a list of available commands and their descriptions.
+
+```bash
+/itemupgrader help
+```
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `itemupgrader.*` will provide access to every command listed on this page, together with tab completion and update notifications.
 </Aside>
