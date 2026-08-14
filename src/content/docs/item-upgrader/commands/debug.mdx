@@ -1,0 +1,24 @@
+---
+title: Debug Commands
+description: Advanced troubleshooting tools for inspecting Item Upgrader item names.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Debug commands are troubleshooting tools designed for inspecting item data. They are only available to server operators.
+
+---
+
+## Name Command
+
+Server operators can use this command to print the display name of the item in their main hand in a configuration-friendly legacy format.
+
+Run this command in-game as a server operator while holding a non-empty item in the main hand.
+
+```bash
+/itemupgrader debug name
+```
+
+<Aside type="caution">
+    Debug commands are intended for configuration and troubleshooting. Only grant operator access to trusted administrators.
+</Aside>
