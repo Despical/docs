@@ -1,0 +1,37 @@
+---
+title: Arena Commands
+description: Administrative commands and permissions for creating, editing, and deleting The Snake arenas.
+---
+
+All arena commands must be run by a player. The editor depends on the sender's position, inventory, and block interactions.
+
+| Command | Permission | Description |
+|:--|:--|:--|
+| `/snake create <arena id>` | `snake.arena.create` | Creates a new arena entry and immediately starts editing it. |
+| `/snake edit <arena id>` | `snake.arena.edit` | Loads the arena editor items for an existing arena. |
+| `/snake delete <arena id>` | `snake.arena.delete` | Stops, removes, and deletes the arena from `arena.yml`. |
+
+---
+
+## Permission Group
+
+The declared parent permission is `snake.*`. It grants:
+
+* `snake.arena.create`
+* `snake.arena.delete`
+* `snake.arena.edit`
+* `snake.tabcompleter`
+
+The parent is granted to server operators by default.
+
+---
+
+## Command Behavior
+
+* Arena IDs must be unique.
+* Create writes placeholder location values before the editor opens.
+* Edit is blocked while another player is editing the same arena.
+* Delete stops the arena task before removing its configuration entry.
+* Tab completion suggests `create`, `delete`, `edit`, `join`, and `leave`; arena IDs are suggested for `delete`, `edit`, and `join`.
+
+Deleting an arena is permanent unless `arena.yml` is restored from a backup.
