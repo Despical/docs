@@ -1,0 +1,23 @@
+---
+title: Join Signs
+description: Create TNT Tag arena join signs and customize their live text.
+---
+
+Join signs provide a clickable arena entry point and display live arena information.
+
+## Create a Sign
+
+1. Open `/tnttag edit <arena>`.
+2. Select the sign setup option.
+3. Look directly at the sign block you want to register.
+4. Confirm the selection and save the arena.
+
+The sign location is stored under the arena in `arena.yml`. Breaking a registered sign removes its association when the player has the required permission.
+
+## Display Tokens
+
+The `signs` section of `messages.yml` supports `%state%`, `%map_name%`, `%players%`, and `%max_players%`. State labels come from `arena-states` in the same file.
+
+## Permissions
+
+TNT Tag 1.9.5 checks `tnttag.admin.sign.create` and `tnttag.admin.sign.break` at runtime. See [Admin Commands](/tnt-tag/commands/admin#join-sign-permissions) for the declared-permission mismatch in this version.
