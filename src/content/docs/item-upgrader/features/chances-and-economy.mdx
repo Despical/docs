@@ -1,0 +1,22 @@
+---
+title: Chances and Economy
+description: Configure Item Upgrader success rolls, source loss, Vault prices, and display placeholders.
+---
+
+## Chance Roll
+
+Each confirmed attempt generates a random integer from 1 through 100. The upgrade succeeds when that number is less than or equal to `chance`. For example, `chance: 75` succeeds on 1 through 75.
+
+A failed roll consumes the recipe's reserved `from.amount` and gives no result. Required ingredients follow the global failure-removal setting.
+
+## Economy
+
+`coin` is checked through Vault before the chance roll. If the balance is too low, the menu closes and returns the reserved source item. The configured amount is withdrawn only after a successful roll.
+
+When Vault or an economy provider is unavailable, Item Upgrader treats the balance as unavailable and skips both the insufficient-balance check and withdrawal. Install and verify both plugins before using non-zero prices.
+
+## Display Placeholders
+
+Result names and lore can display `%price%` and `%chance%`. Lore also accepts `%needed_coins%` for compatibility with existing configurations.
+
+These values are display substitutions only. The `coin` and `chance` fields remain authoritative.

@@ -1,0 +1,33 @@
+---
+title: Required Items
+description: Require and optionally consume exact materials, display names, lore, quantities, and enchantment levels.
+---
+
+Required items act as recipe ingredients in addition to the held source item.
+
+```yaml
+required-items:
+  crystal:
+    material: AMETHYST_SHARD
+    name: "&dRefined Crystal"
+    amount: 4
+    lore:
+      - "&7Upgrade catalyst"
+    enchantments:
+      - "LUCK_OF_THE_SEA:1"
+no-required-items-found: "&cYou need four refined crystals."
+```
+
+## Matching Rules
+
+- `material` must match.
+- A non-empty `name` must match the item's display name exactly.
+- A non-empty `lore` list must equal the item's complete lore.
+- Every configured enchantment must be present at the listed level or higher.
+- Matching stacks across the first 36 inventory slots are added until `amount` is reached.
+
+## Removal Rules
+
+The global `required-items.remove-on-success` and `remove-on-failure` switches independently control consumption. Removal scans the main storage slots and deducts matching stacks until the required amount is removed.
+
+Use distinctive names or lore for valuable custom ingredients, and test stacked and split-stack inventories before publishing a recipe.
