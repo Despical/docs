@@ -1,0 +1,29 @@
+---
+title: GameStateChangeEvent
+description: Event fired whenever a The Snake arena changes lifecycle state.
+---
+
+`GameStateChangeEvent` reports the state before and after every arena transition.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event.game`
+* **Parent Class:** `SnakeEvent`
+* **Cancellable:** No
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getArena()` | `Arena` | Arena changing state. |
+| `getOldState()` | `ArenaState` | State saved before the transition. |
+| `getNewState()` | `ArenaState` | Arena's current state after the transition. |
+| `getUser()` | `User` | Current assigned user, which may be `null` during empty states. |
+
+Possible states are `INACTIVE`, `WAITING`, `PRE_IN_GAME`, `IN_GAME`, and `ENDING`.
+
+```java
+@EventHandler
+public void onSnakeState(GameStateChangeEvent event) {
+    getLogger().info(event.getArena().getId() + ": "
+        + event.getOldState() + " -> " + event.getNewState());
+}
+```
