@@ -1,0 +1,50 @@
+---
+title: Frequently Asked Questions
+description: Answers to common Item Upgrader dependency, matching, pricing, chance, ingredient, custom-item, and reload questions.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Where can I download Item Upgrader?
+
+Use the official [SpigotMC](https://www.spigotmc.org/resources/116575/) or [BuiltByBit](https://builtbybit.com/resources/item-upgrader-oraxen-itemsadder.50263/) distribution page.
+
+## Why does the menu say my item is not upgradable?
+
+Add the source material to `config.yml` under `upgradable-items`. Then confirm that a recipe's `from.item` and `from.name` match the held item exactly and reload the plugin.
+
+## Why does the plugin load a stone instead of my custom item?
+
+The custom-item provider is missing, failed to enable, or could not resolve the identifier. Check the console, prefix, item ID, and addon loading delay.
+
+## Is Vault required?
+
+Only for meaningful non-zero prices. Install Vault and a compatible economy provider. Without a provider, balance checks and withdrawals are skipped.
+
+## Is money charged when an upgrade fails?
+
+No. The current implementation withdraws `coin` only after success. The source item is still lost on failure, and required ingredients may also be removed depending on `config.yml`.
+
+## How can I make a guaranteed upgrade?
+
+Use `chance: 100`. Values are compared against a random integer from 1 through 100.
+
+## Can I keep the old enchantments?
+
+Set `reset-enchants: false`. Set it to true when the output should use only the recipe's configured enchantments.
+
+## Why does one recipe replace another?
+
+Source lookup uses material and display name. Two recipes with the same source material and name are ambiguous, so the later one becomes the active match. Give each source a distinct name.
+
+## Can messages use PlaceholderAPI?
+
+Player-context messages passed through the chat manager can use PlaceholderAPI when it is installed. Item Upgrader does not register its own PlaceholderAPI expansion.
+
+## Do I need to restart after every edit?
+
+`/itemupgrader reload` reloads `config.yml`, `messages.yml`, allowed worlds, permissions, and recipes. Restart after installing or removing dependencies, changing server versions, or diagnosing provider load-order issues.
+
+<Aside type="tip">
+For support, include Item Upgrader, server, and Java versions, the relevant recipe, the held item's exact metadata, installed addon versions, console errors, and reproduction steps.
+</Aside>
