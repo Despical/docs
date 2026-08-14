@@ -59,6 +59,26 @@ export default defineConfig({
                     href: "https://javadoc.despical.dev/kotl/",
                 },
                 {
+                    icon: "external",
+                    label: "item-upgrader:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/116575/",
+                },
+                {
+                    icon: "external",
+                    label: "item-upgrader:BuiltByBit",
+                    href: "https://builtbybit.com/resources/item-upgrader-oraxen-itemsadder.50263/",
+                },
+                {
+                    icon: "external",
+                    label: "tnt-tag:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/117862/",
+                },
+                {
+                    icon: "external",
+                    label: "tnt-tag:BuiltByBit",
+                    href: "https://builtbybit.com/resources/tnt-tag.50271/",
+                },
+                {
                     icon: "github",
                     label: "whack-me:GitHub",
                     href: "https://github.com/Despical/WhackMe",
@@ -827,6 +847,220 @@ export default defineConfig({
                                         link: "https://github.com/Despical/WhackMe/issues/new/choose",
                                         attrs: {target: "_blank"},
                                     },
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "Item Upgrader",
+                        id: "item-upgrader",
+                        link: "/item-upgrader/",
+                        icon: "item-upgrader",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/item-upgrader/getting-started"},
+                                    {label: "Upgrade Flow", link: "/item-upgrader/upgrade-flow"},
+                                    {label: "Creating Upgrades", link: "/item-upgrader/creating-upgrades"},
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {label: "Player Command", link: "/item-upgrader/commands/player"},
+                                    {label: "Admin Commands", link: "/item-upgrader/commands/admin"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {label: "config.yml", link: "/item-upgrader/configuration/config"},
+                                    {label: "messages.yml", link: "/item-upgrader/configuration/messages"},
+                                    {label: "upgrades.yml", link: "/item-upgrader/configuration/upgrades"},
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {label: "Chances and Economy", link: "/item-upgrader/features/chances-and-economy"},
+                                    {label: "Required Items", link: "/item-upgrader/features/required-items"},
+                                    {label: "Enchantments and Metadata", link: "/item-upgrader/features/enchantments-and-metadata"},
+                                    {label: "Custom Items", link: "/item-upgrader/features/custom-items"},
+                                    {label: "Chained Upgrades", link: "/item-upgrader/features/chained-upgrades"},
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "FAQ", link: "/item-upgrader/misc/faq"},
+                                    {label: "SpigotMC Distribution", link: "https://www.spigotmc.org/resources/116575/", attrs: {target: "_blank"}},
+                                    {label: "BuiltByBit Distribution", link: "https://builtbybit.com/resources/item-upgrader-oraxen-itemsadder.50263/", attrs: {target: "_blank"}},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "The Snake",
+                        id: "the-snake",
+                        link: "/the-snake/",
+                        icon: "the-snake",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/the-snake/getting-started"},
+                                    {label: "Gameplay Overview", link: "/the-snake/gameplay"},
+                                    {label: "Arena Setup", link: "/the-snake/arena-setup"},
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {label: "Player Commands", link: "/the-snake/commands/player"},
+                                    {label: "Arena Commands", link: "/the-snake/commands/arena"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                collapsed: true,
+                                items: [
+                                    {label: "config.yml", link: "/the-snake/configuration/config"},
+                                    {label: "mysql.yml", link: "/the-snake/configuration/mysql"},
+                                    {label: "arena.yml", link: "/the-snake/configuration/arena"},
+                                    {label: "Other Files", link: "/the-snake/configuration/other-files"},
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {label: "Controls and Movement", link: "/the-snake/features/controls-and-movement"},
+                                    {label: "Arena Options", link: "/the-snake/features/arena-options"},
+                                    {label: "Statistics and Leaderboards", link: "/the-snake/features/statistics-and-leaderboards"},
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {label: "General Placeholders", link: "/the-snake/placeholders/general"},
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {label: "The Snake API", link: "/the-snake/api/the-snake-api"},
+                                    {
+                                        label: "Events",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "SnakeEvent", link: "/the-snake/api/events/snake-event"},
+                                            {label: "GameStartEvent", link: "/the-snake/api/events/game-start-event"},
+                                            {label: "GameEndEvent", link: "/the-snake/api/events/game-end-event"},
+                                            {label: "GameStateChangeEvent", link: "/the-snake/api/events/game-state-change-event"},
+                                            {label: "KeyPressedEvent", link: "/the-snake/api/events/key-pressed-event"},
+                                            {label: "NewScoreEvent", link: "/the-snake/api/events/new-score-event"},
+                                            {label: "StatisticChangeEvent", link: "/the-snake/api/events/statistic-change-event"},
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "FAQ", link: "/the-snake/misc/faq"},
+                                    {
+                                        label: "SpigotMC Distribution",
+                                        link: "https://www.spigotmc.org/resources/the-snake.120508/",
+                                        attrs: {target: "_blank"},
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "TNT Tag",
+                        id: "tnt-tag",
+                        link: "/tnt-tag/",
+                        icon: "tnt-tag",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/tnt-tag/getting-started"},
+                                    {label: "Gameplay Overview", link: "/tnt-tag/gameplay"},
+                                    {label: "Arena Setup", link: "/tnt-tag/arena-setup"},
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {label: "Player Commands", link: "/tnt-tag/commands/player"},
+                                    {label: "Admin Commands", link: "/tnt-tag/commands/admin"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                collapsed: true,
+                                items: [
+                                    {label: "config.yml", link: "/tnt-tag/configuration/config"},
+                                    {label: "messages.yml", link: "/tnt-tag/configuration/messages"},
+                                    {label: "items.yml", link: "/tnt-tag/configuration/items"},
+                                    {label: "power-ups.yml", link: "/tnt-tag/configuration/power-ups"},
+                                    {label: "rewards.yml", link: "/tnt-tag/configuration/rewards"},
+                                    {label: "mysql.yml", link: "/tnt-tag/configuration/mysql"},
+                                    {label: "bungee.yml", link: "/tnt-tag/configuration/bungee"},
+                                    {label: "arena.yml", link: "/tnt-tag/configuration/arena"},
+                                    {label: "Other Files", link: "/tnt-tag/configuration/other-files"},
+                                ],
+                            },
+                            {
+                                label: "Features",
+                                items: [
+                                    {label: "Tagging and Rounds", link: "/tnt-tag/features/tagging-and-rounds"},
+                                    {label: "Deathmatch", link: "/tnt-tag/features/deathmatch"},
+                                    {label: "Spectator Mode", link: "/tnt-tag/features/spectator-mode"},
+                                    {label: "Power-Ups", link: "/tnt-tag/features/power-ups"},
+                                    {label: "Join Signs", link: "/tnt-tag/features/signs"},
+                                    {label: "Statistics and Leaderboards", link: "/tnt-tag/features/statistics-and-leaderboards"},
+                                    {label: "Bungee Mode", link: "/tnt-tag/features/bungee-mode"},
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {label: "General Placeholders", link: "/tnt-tag/placeholders/general"},
+                                    {label: "Leaderboard Placeholders", link: "/tnt-tag/placeholders/leaderboard"},
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                collapsed: true,
+                                items: [
+                                    {label: "TNT Tag API", link: "/tnt-tag/api/tnt-tag-api"},
+                                    {
+                                        label: "Events",
+                                        collapsed: true,
+                                        items: [
+                                            {label: "TNTTagEvent", link: "/tnt-tag/api/events/tnt-tag-event"},
+                                            {label: "GameStartEvent", link: "/tnt-tag/api/events/game-start-event"},
+                                            {label: "GameStateChangeEvent", link: "/tnt-tag/api/events/game-state-change-event"},
+                                            {label: "GameStopEvent", link: "/tnt-tag/api/events/game-stop-event"},
+                                            {label: "JoinAttemptEvent", link: "/tnt-tag/api/events/join-attempt-event"},
+                                            {label: "LeaveAttemptEvent", link: "/tnt-tag/api/events/leave-attempt-event"},
+                                            {label: "RoundStartEvent", link: "/tnt-tag/api/events/round-start-event"},
+                                            {label: "PlayerEliminatedEvent", link: "/tnt-tag/api/events/player-eliminated-event"},
+                                            {label: "StatisticChangeEvent", link: "/tnt-tag/api/events/statistic-change-event"},
+                                        ],
+                                    },
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "FAQ", link: "/tnt-tag/misc/faq"},
+                                    {label: "SpigotMC Distribution", link: "https://www.spigotmc.org/resources/117862/", attrs: {target: "_blank"}},
+                                    {label: "BuiltByBit Distribution", link: "https://builtbybit.com/resources/tnt-tag.50271/", attrs: {target: "_blank"}},
                                 ],
                             },
                         ],
