@@ -1,0 +1,48 @@
+---
+title: upgrades.yml
+description: Complete Item Upgrader recipe reference for source matching, result metadata, chance, cost, enchantments, and ingredients.
+---
+
+Every direct child under `upgrades` is a named recipe. Recipe keys are used by the admin item command and must be unique.
+
+## Source Item
+
+| Key | Default | Purpose |
+|:--|:--|:--|
+| `from.item` | Required | Vanilla material or supported custom-item identifier. |
+| `from.name` | Empty | Exact legacy display name used with the material to select the recipe. |
+| `from.amount` | `1` | Amount reserved and consumed by the attempt. Minimum is one. |
+
+## Result Item
+
+| Key | Default | Purpose |
+|:--|:--|:--|
+| `to.item` | Required | Result material or custom item. |
+| `to.name` | Provider/default name | Result display name. Supports `%price%` and `%chance%`. |
+| `to.lore` | Empty | Result lore. Supports `%price%`, `%needed_coins%`, and `%chance%`. |
+| `to.amount` | `1` | Result stack amount. Minimum is one. |
+| `to.item-flags` | Empty | Bukkit item flags applied to the result. |
+| `to.unbreakable` | `false` | Marks the result unbreakable. |
+| `to.hide-tooltip` | `false` | Hides the tooltip on supported server versions and overrides visible flags. |
+| `to.decoration-only` | `false` | Makes only decorative text visible on supported versions. |
+| `to.custom-model-data` | Unset | Applies integer custom model data when the server supports it. |
+
+Supported item flags include `HIDE_ENCHANTS`, `HIDE_ATTRIBUTES`, `HIDE_UNBREAKABLE`, `HIDE_DESTROYS`, `HIDE_PLACED_ON`, and `HIDE_POTION_EFFECTS`.
+
+## Attempt Rules
+
+| Key | Purpose |
+|:--|:--|
+| `chance` | Success threshold from the random 1-100 roll. Values below one are normalized to one. |
+| `coin` | Vault price withdrawn only after success. A missing economy makes balance checks and withdrawals inactive. |
+| `enchantments` | Result enchantments in `NAME:LEVEL` format. Modern namespaced lookups are attempted when legacy names do not resolve. |
+| `reset-enchants` | When false, source enchantments are copied and merged into the result. When true, only configured result enchantments remain. |
+| `disallowed-enchantments` | Source enchantments that block the menu before an attempt. |
+
+When both the source and result define the same enchantment and merging is enabled, the item builder preserves the effective higher level.
+
+## Required Items
+
+Each entry can require a `material`, exact `name`, `amount`, exact `lore`, and minimum enchantment levels. `no-required-items-found` is the recipe-specific rejection message.
+
+See [Required Items](/item-upgrader/features/required-items) for matching and removal details.

@@ -1,0 +1,55 @@
+---
+title: config.yml
+description: Configure Item Upgrader menu access, worlds, source materials, addon loading, sounds, ingredient removal, and update checks.
+---
+
+## Menu Access
+
+| Key | Default | Purpose |
+|:--|:--|:--|
+| `confirmation-menu` | `true` | Opens a second menu before the chance roll. |
+| `upgrade-menu-perm` | Empty | Custom permission required to open the menu. Empty allows everyone. |
+| `allowed-worlds` | Three vanilla worlds | Worlds where `/itemupgrader` may open. Empty allows every world. |
+
+World names and custom permission nodes are case-sensitive in practice. After editing them, run `/itemupgrader reload` and test with a non-operator account.
+
+## Source Material Allowlist
+
+`upgradable-items` contains the Bukkit material names allowed to reach recipe matching.
+
+```yaml
+upgradable-items:
+  - IRON_SWORD
+  - DIAMOND_PICKAXE
+```
+
+Every vanilla source material used in `upgrades.yml` must appear here. Custom source items still resolve to an underlying Bukkit material, so test the provider item after registering it.
+
+## Addon Loading Delay
+
+`addons.wait-for-addons-to-load` is measured in server ticks. When EcoItems, Oraxen, or ItemsAdder is enabled, Item Upgrader waits this long before registering recipes so the provider can finish loading its items. The default is `50` ticks.
+
+## Menu Sounds
+
+Sound values use `SOUND:VOLUME:PITCH`:
+
+```yaml
+menu-sounds:
+  upgrade-menu-opened: ""
+  block-upgraded: BLOCK_ANVIL_USE:1:1
+  no-enough-balance: BLOCK_ANVIL_STEP:1:1
+  item-broken: BLOCK_ANVIL_LAND:1:1
+```
+
+Leave a value empty to disable that sound.
+
+## Required Item Removal
+
+- `required-items.remove-on-success` removes recipe ingredients after a successful roll.
+- `required-items.remove-on-failure` removes them after a failed roll.
+
+The source upgrade item is handled separately: its configured `from.amount` is consumed on failure and replaced by the result on success.
+
+## Update Checks
+
+`update-notifier` enables the startup version check. The `itemupgrader.updatenotify` node is declared in `plugin.yml`, but version 1.8.3 logs update results during startup and does not check that permission at runtime.
