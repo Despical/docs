@@ -1,0 +1,80 @@
+---
+title: Arena Setup
+description: Create a The Snake arena, select a valid 2D game board, configure options, and test the result.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+The arena editor uses protected inventory items instead of a long command sequence. Creating an arena immediately saves its entry to `arena.yml` and places the creator in edit mode.
+
+---
+
+## Before You Begin
+
+Prepare:
+
+* a rectangular two-dimensional wall or floor to act as the board;
+* a start location where the player can view the entire board;
+* an end location used after the round;
+* enough board blocks for the intended target score and snake length.
+
+The two board corners must share either the same X coordinate or the same Z coordinate. This makes the board a true 2D plane while Y supplies its height.
+
+---
+
+## Create the Arena
+
+<Steps>
+    1. Run `/snake create <arena id>`.
+    2. Move to the camera position, face the board, and use **Set Start Location**.
+    3. Move to the safe return point and use **Set End Location**.
+    4. Hold **Board Setter** and click the first board corner.
+    5. Click the opposite corner on the same 2D plane.
+    6. Open **Options** and adjust the arena settings.
+    7. Use **Save** to serialize all changed locations and options.
+    8. Use **Stop Editing** to restore the inventory and leave editor mode.
+</Steps>
+
+---
+
+## Editor Items
+
+| Slot | Item | Purpose |
+|:--|:--|:--|
+| 1 | Set Start Location | Saves the player's current position and facing direction. |
+| 2 | Set End Location | Saves the destination used after a round or reconnect recovery. |
+| 5 | Board Setter | Selects the two corners used to calculate every playable cell. |
+| 7 | Options | Opens the arena options and game block menus. |
+| 8 | Save | Writes changed locations and all current options to `arena.yml`. |
+| 9 | Stop Editing | Leaves edit mode and restores the saved player inventory. |
+
+The editor items cannot be dropped or moved through normal inventory clicks.
+
+---
+
+## Board Selection Rules
+
+The board can be:
+
+* a vertical X/Y plane with both corners sharing the same Z coordinate; or
+* a vertical Z/Y plane with both corners sharing the same X coordinate.
+
+If both X and Z differ, the editor rejects the second point and clears the pending selection. Select the first corner again before retrying.
+
+<Aside type="caution">
+    The board snapshot includes every block between the two corners. Avoid selecting a thick 3D region or unrelated nearby builds.
+</Aside>
+
+---
+
+## Validate the Arena
+
+After saving and leaving the editor:
+
+1. Run `/snake join <arena id>`.
+2. Confirm the player can see the full board from the fixed camera position.
+3. Test W, A, S, and D in every direction.
+4. Confirm apples never spawn outside the selected board.
+5. Lose once and win once to verify messages, sounds, block restoration, statistics, inventory restoration, and the end teleport.
+
+Use `/snake edit <arena id>` for later adjustments. Only one player can edit an arena at a time.

@@ -1,0 +1,76 @@
+---
+title: Gameplay Overview
+description: Learn how The Snake starts rounds, moves the snake, awards points, detects collisions, and records results.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+**The Snake** runs one player per arena. Every ready arena waits independently, so several players can play at the same time as long as they use different arenas.
+
+---
+
+## Round Flow
+
+<Steps>
+    1. A player runs `/snake join <arena id>`.
+    2. The plugin saves and clears the player's inventory, resets food and experience, switches the player to Adventure mode, heals them, and applies Night Vision.
+    3. The player is teleported to the arena start location and mounted on an invisible vehicle so the camera remains fixed on the board.
+    4. The board is snapshotted, a random snake head position is selected, and an apple is placed on an unused board block.
+    5. The snake begins moving according to the arena's tick interval.
+    6. The player steers with movement input until the win or loss condition is reached.
+    7. After the configured end timer, the board and player state are restored and the player is teleported to the end location.
+</Steps>
+
+---
+
+## Scoring and Growth
+
+Each collected apple:
+
+* adds one point to the current score;
+* grows the snake by one segment;
+* plays the configured point sound;
+* displays the configured `new-point` subtitle;
+* places a new apple on an unoccupied board block;
+* fires `NewScoreEvent` for integrations.
+
+The player wins when either:
+
+* the configured `targetScore` is reached; or
+* `targetScore` is `0` and the snake fills every possible board position.
+
+---
+
+## Losing the Round
+
+The round ends as a loss when:
+
+* the head moves outside the board while wrap-around is disabled; or
+* the head collides with the snake's body.
+
+The plugin checks body collisions from the third segment onward so the head can follow directly behind its newest segment without a false positive.
+
+<Aside type="note">
+    Leaving manually is recorded as a quit, not a death. It still stores games played, total score, and best score, but it does not reset the win streak in the current implementation.
+</Aside>
+
+---
+
+## Persistent Statistics
+
+At round end, The Snake stores:
+
+| Statistic | Updated when |
+|:--|:--|
+| Wins | The player reaches the target score or fills the board. |
+| Losses | Available in the data model, but the current round-ending code does not increment it. |
+| Win streak | Increased after a win and reset after a collision or border death. |
+| Best score | Replaced only when the current score is higher. |
+| Total score | Increased by the score from every completed, failed, or manually left round. |
+| Games played | Increased when an end message is finalized. |
+
+---
+
+## Disconnect Recovery
+
+If a player disconnects while playing, the plugin clears the active arena state and remembers the arena temporarily. On the next join, the player is sent to the arena end location and their saved inventory is restored.
