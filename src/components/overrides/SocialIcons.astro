@@ -19,7 +19,14 @@ const links = (config.social || [])
     })
     .map((link) => {
         const index = link.label.indexOf(":");
-        return index !== -1 ? { ...link, label: link.label.substring(index + 1) } : link;
+        const label = index !== -1 ? link.label.substring(index + 1) : link.label;
+        const icon = label === "SpigotMC"
+            ? "spigotmc"
+            : label === "BuiltByBit"
+                ? "builtbybit"
+                : link.icon;
+
+        return { ...link, label, icon };
     })
     .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
 ---
