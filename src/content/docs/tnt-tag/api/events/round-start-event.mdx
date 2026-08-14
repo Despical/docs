@@ -1,0 +1,18 @@
+---
+title: RoundStartEvent
+description: Fired when a new timed TNT Tag round begins.
+---
+
+Package: `dev.despical.tnttag.api.events.game`
+
+Use `getRound()` for the new round number and `getArena()` for its players and configuration.
+
+```java
+@EventHandler
+public void onRoundStart(RoundStartEvent event) {
+    int round = event.getRound();
+    Arena arena = event.getArena();
+}
+```
+
+The event is informational and cannot change tagger selection or cancel the round.

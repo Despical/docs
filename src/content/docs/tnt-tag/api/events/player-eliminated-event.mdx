@@ -1,0 +1,20 @@
+---
+title: PlayerEliminatedEvent
+description: Fired when a TNT Tag user is eliminated from the active-player pool.
+---
+
+Package: `dev.despical.tnttag.api.events.player`
+
+`getExplodedUser()` returns the eliminated user. `isDiedFromExplosion()` distinguishes elimination caused by an explosion from other removal paths.
+
+```java
+@EventHandler
+public void onEliminated(PlayerEliminatedEvent event) {
+    User user = event.getExplodedUser();
+    if (event.isDiedFromExplosion()) {
+        // Handle a timed or nearby blast elimination.
+    }
+}
+```
+
+The event inherits `getArena()` and cannot be cancelled.
