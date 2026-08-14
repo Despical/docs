@@ -1,0 +1,63 @@
+---
+title: Arena Setup
+description: Create, edit, validate, and test a complete TNT Tag arena.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+Each TNT Tag arena needs a lobby location, game start location, end location, valid player limits, and a saved ready state. Power-up locations and join signs are optional.
+
+## Create the Arena
+
+```text
+/tnttag create <arena>
+```
+
+Arena identifiers must be unique. Use a short, stable identifier because commands and per-arena placeholders reference it directly.
+
+## Open the Editor
+
+```text
+/tnttag edit <arena>
+```
+
+The editor is the recommended way to configure an arena. Avoid changing serialized locations in `arena.yml` while the server is running.
+
+## Required Setup
+
+<Steps>
+1. Set the **lobby location**, where waiting players are held before the match.
+2. Set the **start location**, where active players are sent when gameplay begins.
+3. Set the **end location**, where players leave after the game or with `/tnttag leave`.
+4. Set the **minimum players** required to begin the starting countdown.
+5. Set the **maximum players** accepted by the arena.
+6. Set a **map name** for scoreboards, signs, messages, and placeholders.
+7. Save the editor and confirm that the arena is marked ready.
+</Steps>
+
+## Optional Setup
+
+### Power-Up Locations
+
+Add one or more pickup locations in the editor. TNT Tag selects from these positions when it spawns a configured power-up. A collected location becomes available again for later spawns.
+
+### Join Signs
+
+Use the editor's sign option while looking at a sign to associate it with the arena. Live sign text is read from `messages.yml` and updates with the arena state and player count.
+
+### Bungee Mode
+
+When `Bungee-Enabled` is enabled, TNT Tag is designed for one arena per game server. Configure the hub routing and MOTD in `bungee.yml` before enabling the mode.
+
+## Validation Checklist
+
+- The arena has lobby, start, and end locations.
+- Minimum players is at least one and does not exceed maximum players.
+- The arena reports as ready in `/tnttag list`.
+- All game areas are loaded and accessible.
+- At least the minimum number of test players can join.
+- A complete round, elimination, win, and inventory restoration have been tested.
+
+<Aside type="tip">
+Use `/tnttag forcestart <arena>` during testing after at least one player has joined. Use `/tnttag stop <arena>` to cancel the test safely.
+</Aside>

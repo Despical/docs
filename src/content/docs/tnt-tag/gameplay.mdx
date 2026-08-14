@@ -1,0 +1,55 @@
+---
+title: Gameplay Overview
+description: Learn the complete TNT Tag match flow from joining through rounds, eliminations, deathmatch, rewards, and cleanup.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+TNT Tag is played over a sequence of timed rounds. Players who hold TNT are tagged and must transfer it to another active player before the round ends.
+
+## Match Flow
+
+<Steps>
+1. Players join an arena in the `WAITING_FOR_PLAYERS` state.
+2. When the minimum player count is reached, the starting countdown begins.
+3. At game start, the first round selects one or more tagged players.
+4. A tagged player punches an untagged player to transfer the TNT.
+5. When the timer reaches zero, remaining tagged players explode and become spectators.
+6. The next round starts after the configured intermission. Its duration may be shorter than the previous round.
+7. Deathmatch activates when the alive-player threshold is reached.
+8. The last alive player wins. If no players remain, the game ends in a draw.
+9. Statistics and rewards are processed, inventories are restored, and the arena restarts.
+</Steps>
+
+## Tagged Players
+
+The initial tagger count is calculated from `Round-Settings.Tagged-Player-Percentage`. TNT Tag uses one tagged player when the configured percentage is non-positive or when the alive player count reaches `Round-Settings.Only-One-Tagged-After`.
+
+Tagged players receive a TNT item and helmet, the configured speed effect, and a compass that tracks the nearest available target. A successful hit removes the tag from the attacker, gives it to the victim, and updates both players' statistics.
+
+## Round Timer
+
+The first round uses `Round-Settings.First-Round`. After every round, `Round-Settings.Round-Time-Decreasing-By` is subtracted until `Round-Settings.Minimum-Round-Duration` is reached. `Round-Settings.Wait-Until-Next-Round` controls the intermission between explosions and the next selection.
+
+## Elimination
+
+At the end of a round, every tagged player is eliminated. With `Multiple-Explosion` enabled, a tagged player's block explosion can also eliminate nearby untagged players. Eliminated players remain in the arena as spectators.
+
+<Aside type="caution">
+Players who join after a game has already started are permanent spectators for that match. They are excluded from normal end-game statistics and rewards.
+</Aside>
+
+## Winning and Draws
+
+The last active player is the winner. If an explosion leaves no active players, the match is a draw. `Win-On-A-Draw` controls whether draw participants receive a win or a loss in their stored statistics. The reward system can separately run `Win`, `Lose`, `Draw`, and `End-Game` command groups.
+
+## Arena States
+
+| Internal state | Meaning |
+|:--|:--|
+| `WAITING_FOR_PLAYERS` | The arena accepts players and waits for the minimum count. |
+| `STARTING` | The pre-game countdown is running. |
+| `IN_GAME` | Tag rounds are active. |
+| `ENDING` | Results are shown before cleanup. |
+| `RESTARTING` | Players and arena data are being reset. |
+| `INACTIVE` | The arena is not ready or has been disabled. |
