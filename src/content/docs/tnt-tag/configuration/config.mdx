@@ -1,0 +1,72 @@
+---
+title: config.yml
+description: Configure TNT Tag round timers, deathmatch, effects, explosions, spectators, storage, inventory handling, and global behavior.
+---
+
+`config.yml` contains the global gameplay and operational settings. Restart the server after structural changes; `/tnttag reload` is suitable for ordinary text and value changes.
+
+## Round Settings
+
+| Path | Default | Purpose |
+|:--|:--|:--|
+| `Round-Settings.First-Round` | `60` | Duration of the first round in seconds. |
+| `Round-Settings.Round-Time-Decreasing-By` | `5` | Seconds removed after each round. |
+| `Round-Settings.Minimum-Round-Duration` | `20` | Lowest permitted round duration. |
+| `Round-Settings.Wait-Until-Next-Round` | `8` | Intermission between rounds. |
+| `Round-Settings.Tagged-Player-Percentage` | `12.7` | Percentage of alive players selected as tagged. Use zero or lower for one tagger. |
+| `Round-Settings.Only-One-Tagged-After` | `7` | Forces one tagger at or below this alive-player count. Use zero or lower to disable. |
+
+## Deathmatch and State Timers
+
+| Path | Default | Purpose |
+|:--|:--|:--|
+| `Deathmatch-Settings.After` | `6` | Starts deathmatch at this many remaining players. |
+| `Deathmatch-Settings.TP-To-Spawn-Point` | `true` | Returns alive players to the start location for deathmatch rounds. |
+| `Time-Settings.Lobby-Waiting-Time` | `45` | Interval for waiting-player messages. |
+| `Time-Settings.Lobby-Starting-Time` | `15` | Starting countdown after the minimum player count is met. |
+| `Time-Settings.Ending-Time` | `5` | Delay before ending cleanup and lobby routing. |
+
+## Player Effects
+
+`Potion-Effects.Speed.Untagged-Players` and `Tagged-Players` set the effect levels. A value of zero disables the corresponding speed effect. The two `Potion-Effects.Night-Vision` switches separately control night vision for tagged and untagged players.
+
+## Explosions and Fireworks
+
+`Explosion-Settings.Power` sets explosion strength. `Multiple-Explosion` allows the blast to eliminate nearby untagged players, and `Explosion-Countdown-Bar` mirrors the countdown on the tagged player's experience bar.
+
+`Firework-Settings` controls the effect used after a tag transfer. Its nested `Start-Fireworks` entries define scheduled effects launched when a match starts. Colors use `RED:GREEN:BLUE`, delays are measured in ticks, and effect types include `BALL`, `BALL_LARGE`, `STAR`, `CREEPER`, and `BURST`.
+
+## Spectators and Statistics
+
+- `Spectator-Settings.TP-Spawn-After-Exploding` returns eliminated players to the arena start.
+- `Statistic-Saving-Period` sets the save interval in seconds. Set it to `0` to save on shutdown or reload only.
+- `Win-On-A-Draw` determines whether draw participants gain a win or a loss.
+
+## Commands and Joining
+
+- `Block-Commands` blocks non-whitelisted commands during a game.
+- `Whitelisted-Commands` accepts command prefixes. Prefix an entry with `exact:` to require an exact command name.
+- `Join-Permission` may contain a custom permission. Leave it empty for public joining.
+
+## Display and Communication
+
+- `Game-Bar-Enabled` controls the in-game boss bar.
+- `Scoreboard-Enabled` controls the game scoreboard.
+- `Hide-Players` hides arena players from players outside their match; spectators remain hidden regardless.
+- `Chat-Format-Enabled` enables the format from `messages.yml`.
+- `Disable-Separate-Chat` makes arena chat visible outside the arena.
+
+## Inventory and Storage
+
+`Inventory-Manager.Enabled` saves and restores player state around a match. `Do-Not-Restore` can exclude `health`, `max-health`, or `health-scale`. Keep the manager enabled unless another system deliberately handles arena inventories.
+
+Set `Database-Enabled: true` to use the connection in `mysql.yml`; otherwise statistics are stored in `stats.yml`.
+
+## Remaining Switches
+
+| Key | Purpose |
+|:--|:--|
+| `Bungee-Enabled` | Enables one-arena-per-server network behavior. |
+| `Instant-Leave` | Removes the leave-item confirmation window. |
+| `Summary-On-Quick-Stop` | Shows the result summary after an admin stop. |
+| `Update-Notifier-Enabled` | Checks for new TNT Tag versions. |

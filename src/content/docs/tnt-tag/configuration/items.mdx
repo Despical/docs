@@ -1,0 +1,30 @@
+---
+title: items.yml
+description: Configure TNT Tag game, lobby, spectator, replay, and force-start items.
+---
+
+Every item entry supports a display `name`, Bukkit `material`, zero-based hotbar `slot`, and `lore` list.
+
+| Entry | Used by |
+|:--|:--|
+| `nearest-player` | Compass given to tagged players to locate the nearest target. |
+| `tnt` | Held item and helmet representation for a tagged player. |
+| `leave-item` | Lobby item used to leave or confirm leaving. |
+| `play-again` | End-game item used to queue for another match. |
+| `settings-item` | Opens spectator preferences. |
+| `teleporter-item` | Opens the alive-player teleporter menu. |
+| `force-start-item` | Staff shortcut for starting the current arena. |
+
+## Example
+
+```yaml
+items:
+  leave-item:
+    name: "&c&lReturn to Lobby &7(Right Click)"
+    material: RED_BED
+    slot: 8
+    lore:
+      - "&7Right-click to leave to the lobby!"
+```
+
+Use a valid Bukkit material name. Slots `0` through `8` represent the player's hotbar from left to right. Reload and test an item after changing its material or slot.

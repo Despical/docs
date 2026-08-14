@@ -1,0 +1,55 @@
+---
+title: messages.yml
+description: Customize TNT Tag command text, game announcements, scoreboards, bars, signs, spectator menus, state names, and player-list name tags.
+---
+
+`messages.yml` controls nearly every player-facing string. Legacy `&` color codes are supported, and sections that explicitly mention PlaceholderAPI can also use placeholders from installed expansions.
+
+## Main Sections
+
+| Section | Purpose |
+|:--|:--|
+| `commands` | Usage, permission, join, leave, stats, setup, reload, and admin feedback. |
+| `arena` and `game` | Waiting, start, tag, explosion, deathmatch, draw, winner, and summary messages. |
+| `items` | Leave confirmation and spectator item feedback. |
+| `game-bar` | Boss-bar text for arena states and round countdowns. |
+| `action-bar` | Short live prompts such as the current goal. |
+| `Scoreboard` | Titles, lines, goals, and state-specific layouts. |
+| `spectator-gui` | Spectator settings and teleporter menu text. |
+| `signs` | Join-sign lines and sign interaction messages. |
+| `placeholders` | Fallback text for empty leaderboard positions and values. |
+| `arena-states` | Human-readable state names. |
+| `name-tags` | Player-list formats for tagged, untagged, spectator, and permanent-spectator players. |
+
+## Built-In Sign Tokens
+
+Join-sign lines can use:
+
+```text
+%state%
+%map_name%
+%players%
+%max_players%
+```
+
+## Player-List Name Tags
+
+The `name-tags` section changes the name shown in the player list, not the label above the player's head. It supports PlaceholderAPI plus:
+
+```text
+%player%
+%original_name%
+```
+
+Leave a value empty to preserve that group's normal player-list name. All modified names are restored after the final round.
+
+## Scoreboards and Bars
+
+Scoreboard titles and lines support PlaceholderAPI when it is installed. Keep line counts and YAML indentation intact. The game bar uses the state-specific messages in this file; an empty message hides that state rather than displaying blank text.
+
+## Editing Safely
+
+1. Keep keys and indentation unchanged.
+2. Quote text containing YAML-sensitive characters such as `:` or `#`.
+3. Run `/tnttag reload`.
+4. Test waiting, starting, active, ending, spectator, and draw states because each can use a different section.
