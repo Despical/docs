@@ -1,0 +1,44 @@
+---
+title: PlaceholderAPI Placeholders
+description: Complete list of player and arena placeholders exposed by The Snake.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Install [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) to use The Snake values in compatible scoreboards, holograms, chat plugins, menus, and tab lists. The expansion identifier is `snake` and registers internally when PlaceholderAPI is present.
+
+---
+
+## Player Placeholders
+
+| Placeholder | Output |
+|:--|:--|
+| `%snake_player_name%` | Player name. |
+| `%snake_player_uuid%` | Player UUID. |
+| `%snake_player_arena%` | Current arena ID or `placeholders.not-in-arena`. |
+| `%snake_player_wins%` | Stored wins. |
+| `%snake_player_win-streak%` | Current win streak. |
+| `%snake_player_games-played%` | Stored games played. |
+| `%snake_player_best-score%` | Highest single-round score. |
+| `%snake_player_total-score%` | Sum of finalized round scores. |
+
+Player placeholders return no value when the requesting integration does not provide a player context.
+
+---
+
+## Arena Placeholders
+
+Replace `<arena-id>` with the exact configured ID:
+
+| Placeholder | Output |
+|:--|:--|
+| `%snake_arena:<arena-id>:player%` | Current player name or `placeholders.no-player`. |
+| `%snake_arena:<arena-id>:state%` | Raw lifecycle state. |
+| `%snake_arena:<arena-id>:state_pretty%` | Friendly state text from `config.yml`. |
+| `%snake_arena:<arena-id>:score%` | Current round score. |
+
+An unknown arena returns `No arena with the given ID.` and an unknown arena field returns `No placeholder like that.`
+
+<Aside type="note">
+    The plugin builds internal leaderboards, but the current expansion does not expose ranked name or value placeholders.
+</Aside>
