@@ -1,0 +1,42 @@
+---
+title: Getting Started
+description: Install Item Upgrader, understand optional integrations, and prepare the first recipe.
+---
+
+import { Badge, Steps } from "@astrojs/starlight/components";
+
+## Requirements
+
+* **Java:** Java 21 or newer.
+* **Server:** Spigot or Paper. The current distribution supports Minecraft 1.8 through 1.21.11.
+* **Vault plus an economy provider** <Badge text="Optional" variant="tip" />: Required only for paid upgrades.
+* **PlaceholderAPI** <Badge text="Optional" variant="tip" />: Allows external placeholders inside supported player messages.
+* **Oraxen, ItemsAdder, or EcoItems** <Badge text="Optional" variant="tip" />: Install only the custom-item providers used by your recipes.
+
+## Installation
+
+<Steps>
+1. Download Item Upgrader from its official [SpigotMC](https://www.spigotmc.org/resources/116575/) or [BuiltByBit](https://builtbybit.com/resources/item-upgrader-oraxen-itemsadder.50263/) page.
+2. Place `item-upgrader-x.x.x.jar` in the server's `plugins/` directory.
+3. Install Vault, an economy provider, or any custom-item plugin required by your configuration.
+4. Restart the server to generate `/plugins/ItemUpgrader/`.
+5. Hold a source item from the default recipes and run `/itemupgrader`.
+</Steps>
+
+## Generated Files
+
+| File | Purpose |
+|:--|:--|
+| `config.yml` | Menu access, allowed worlds, source material allowlist, addon delay, sounds, and ingredient removal rules. |
+| `messages.yml` | Player feedback and the upgrade and confirmation menu layouts. |
+| `upgrades.yml` | All item transformation recipes. |
+
+## First Custom Recipe
+
+1. Add the source material to `upgradable-items` in `config.yml`.
+2. Add one recipe under `upgrades` in `upgrades.yml`.
+3. Run `/itemupgrader reload`.
+4. Hold at least the recipe's `from.amount` in the main hand.
+5. Open `/itemupgrader` and test the cancel, success, and failure paths.
+
+Continue with [Creating Upgrades](/item-upgrader/creating-upgrades) for a complete field-by-field example.
