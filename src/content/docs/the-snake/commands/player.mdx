@@ -3,30 +3,38 @@ title: Player Commands
 description: Player-facing commands for joining and leaving The Snake arenas.
 ---
 
-The root command is `/snake`. Player commands are restricted to in-game players because the game requires a player inventory, location, and camera.
+Player Commands are available to **regular players** and do not require administrative permissions. These commands allow players to interact with **The Snake** gameplay by joining and leaving arenas.
 
-| Command | Permission | Description |
-|:--|:--|:--|
-| `/snake` | None | Displays no menu by itself, but validates the root command and reports unrecognized subcommands. |
-| `/snake join <arena id>` | None | Attempts to join the specified ready and unoccupied arena. |
-| `/snake leave` | None | Leaves the current arena, restores the inventory, and teleports to the end location. |
+All commands use `/snake`. The internal command fallback prefix is `thesnake`.
 
 ---
 
-## Join Requirements
+## Main Command
 
-`/snake join <arena id>` succeeds only when:
+The main command validates the root command and reports unrecognized subcommands. When executed without arguments, it does not open a menu.
 
-* the arena exists;
-* all required arena locations have been saved;
-* the arena is marked ready;
-* the player is not already in a Snake arena; and
-* the target arena does not already have a player.
+```bash
+/snake
+```
+
+---
+
+## Join Command
+
+Allows a player to join a **The Snake** arena. The target arena must exist, be completely configured, be marked as ready, and not already contain another player.
 
 An arena accepts one player at a time.
 
+```bash
+/snake join <arena_id>
+```
+
 ---
 
-## Leaving Safely
+## Leave Command
 
-Use `/snake leave` instead of removing the player with another plugin. The normal leave flow restores potion effects, inventory data, board blocks, statistics, the invisible camera vehicle, and arena availability.
+Safely removes the player from the current arena, restores their inventory and potion effects, removes the camera vehicle, resets the board, and teleports them to the configured end location.
+
+```bash
+/snake leave
+```
