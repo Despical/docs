@@ -1,0 +1,60 @@
+---
+title: Arena Commands
+description: Commands for creating, managing, and configuring TNT Tag arenas.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Arena management commands allow administrators to build and maintain the game environments. These commands are essential for the initial setup and ongoing management of your **TNT Tag** maps.
+
+---
+
+## Create Command
+
+Administrators with the `tnttag.admin.create` permission can register a new arena instance.
+
+This command is only accessible to players and cannot be used while the sender is in an arena.
+
+```bash
+/tnttag create <arena_name>
+```
+
+---
+
+## Delete Command
+
+Administrators with the `tnttag.admin.delete` permission can permanently stop, unregister, and remove an arena instance from `arena.yml`.
+
+This command is only accessible to players and cannot be used while the sender is in an arena.
+
+```bash
+/tnttag delete <arena_name>
+```
+
+---
+
+## List Command
+
+Administrators with the `tnttag.admin.list` permission can display a complete list of all registered arena IDs.
+
+This command is only accessible to players.
+
+```bash
+/tnttag list
+```
+
+---
+
+## Edit Command
+
+Administrators with the `tnttag.admin.edit` permission can open the interactive arena setup menu for an existing arena.
+
+This command is only accessible to players because it opens a GUI.
+
+```bash
+/tnttag edit <arena_name>
+```
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `tnttag.admin.*` will provide access to every command listed on this page.
+</Aside>
