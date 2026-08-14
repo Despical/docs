@@ -1,0 +1,44 @@
+---
+title: Statistics and Leaderboards
+description: Understand The Snake statistics, flat-file and MySQL persistence, autosaving, offline caches, and leaderboard refreshes.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+The Snake tracks six integer statistics for each player:
+
+| Key | Meaning |
+|:--|:--|
+| `win` | Number of won rounds. |
+| `lose` | Loss counter stored by the data model. The current game code does not increment it. |
+| `win_streak` | Consecutive wins, reset after a collision or border loss. |
+| `best_score` | Highest score reached in one round. |
+| `total_score` | Sum of all finalized round scores. |
+| `games_played` | Number of finalized rounds. |
+
+---
+
+## Storage Modes
+
+* **Flat file:** Stores values in `stats.yml` under each player's UUID.
+* **MySQL:** Creates or updates a table with UUID, name, and one column for every persistent statistic.
+
+MySQL loads and saves through a single background executor. Batch saves run in a transaction and the executor is given up to 10 seconds to finish during shutdown.
+
+---
+
+## Autosaving
+
+The plugin starts a five-minute asynchronous autosave task. Player data is also saved when a round is cleared and during plugin shutdown.
+
+<Aside type="note">
+    The shipped `statistic-saving-period` setting is present in `config.yml`, but the current autosave scheduler uses a fixed five-minute interval.
+</Aside>
+
+---
+
+## Leaderboard Cache
+
+When PlaceholderAPI is enabled, the plugin creates an internal leaderboard manager and refreshes all persistent integer leaderboards during autosave. Entries with values of zero are omitted and the remaining entries are sorted from highest to lowest.
+
+The current PlaceholderAPI expansion exposes player and arena placeholders only. It does not yet expose ranked leaderboard position placeholders.

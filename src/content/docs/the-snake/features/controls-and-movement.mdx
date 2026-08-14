@@ -1,0 +1,49 @@
+---
+title: Controls and Movement
+description: Configure and understand WASD input, direction changes, movement intervals, and collision behavior in The Snake.
+---
+
+The Snake reads Paper player input and maps the normal movement keys to the two axes of the selected 2D board.
+
+| Input | Board direction |
+|:--|:--|
+| W | Up |
+| S | Down |
+| A | Left relative to the saved start-location facing direction |
+| D | Right relative to the saved start-location facing direction |
+
+The start location's facing direction matters. Set it while looking directly toward the board so left and right feel natural.
+
+---
+
+## One Turn Per Movement
+
+The plugin accepts at most one non-empty direction input before the next snake movement. This prevents multiple direction changes from being queued inside one update interval.
+
+When a valid direction change is accepted, the configured arrow subtitle and direction-change sound are shown to the player.
+
+---
+
+## Opposite Movement
+
+By default, the snake cannot reverse directly into the opposite direction. The **Head Opposite Movement** option permits a reversal only while the snake consists of its head alone.
+
+Once the snake has more than one segment, opposite movement remains blocked to prevent an immediate body collision.
+
+---
+
+## Movement Speed
+
+`tickInterval` controls how many server ticks pass between board updates:
+
+* lower values move the snake faster;
+* higher values move the snake slower;
+* the minimum accepted value is `1` tick.
+
+At 20 server ticks per second, an interval of `3` moves the snake about 6.67 cells per second.
+
+---
+
+## Wrap Around
+
+When enabled, crossing one board edge places the head on the opposite edge. When disabled, moving outside the selected board ends the round as a loss.
