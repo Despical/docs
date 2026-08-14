@@ -1,0 +1,19 @@
+---
+title: Deathmatch
+description: Configure TNT Tag's final phase and distinguish it from the one-tagger threshold.
+---
+
+Deathmatch begins when the number of active players is less than or equal to `Deathmatch-Settings.After`. It is designed to keep the final rounds focused and prevent players from remaining spread across a large map.
+
+When `Deathmatch-Settings.TP-To-Spawn-Point` is enabled, alive players return to the arena start location as new deathmatch rounds begin. Disable it if your map is small or if forced teleports interfere with the intended layout.
+
+## Separate Thresholds
+
+Deathmatch and tagger count use different settings:
+
+| Setting | Effect |
+|:--|:--|
+| `Deathmatch-Settings.After` | Enables the final match phase. |
+| `Round-Settings.Only-One-Tagged-After` | Forces a single tagged player per round. |
+
+The two values may be equal, but they do not have to be. Test the transition with the smallest realistic player group before selecting production values.

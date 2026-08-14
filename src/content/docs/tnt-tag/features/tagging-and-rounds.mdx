@@ -1,0 +1,24 @@
+---
+title: Tagging and Rounds
+description: Understand TNT Tag tagger selection, tag transfers, timers, explosions, and decreasing round duration.
+---
+
+## Selecting Tagged Players
+
+At the beginning of each round, TNT Tag selects tagged players from the active-player pool. `Round-Settings.Tagged-Player-Percentage` determines the normal count. The game switches to one tagger when the remaining player count reaches `Round-Settings.Only-One-Tagged-After` or when the percentage is configured as zero or lower.
+
+## Tagged Player Equipment
+
+A tagged player receives the configured TNT item, TNT head display, nearest-player compass, speed or night-vision effects, and the tagged player-list format. The compass points toward the nearest eligible untagged player.
+
+## Transferring the Tag
+
+Punching an untagged player transfers the role immediately. The attacker becomes untagged, the victim receives TNT, player effects and name tags are refreshed, and the statistics for players tagged and times tagged are updated. The optional transfer firework is configured in `config.yml`.
+
+## Decreasing Timers
+
+The first round uses `Round-Settings.First-Round`. Each later round subtracts `Round-Time-Decreasing-By`, but never goes below `Minimum-Round-Duration`. The next selection begins after `Wait-Until-Next-Round`.
+
+## Explosion Result
+
+Tagged players explode when the timer expires and become spectators. With `Multiple-Explosion: true`, nearby untagged players can also be eliminated by the block explosion. If one player survives, that player wins; if nobody survives, the result is a draw.

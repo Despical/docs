@@ -1,0 +1,22 @@
+---
+title: Spectator Mode
+description: Configure TNT Tag eliminated players, late joins, spectator settings, visibility, and teleport tools.
+---
+
+Eliminated players remain inside the match as spectators. They can use the configured settings item and teleporter compass without affecting active players.
+
+## Spectator Preferences
+
+The settings menu controls spectator speed, night vision, and whether other spectators are shown or hidden. Supported speed choices range from no effect through levels I to IV. These preferences are stored with the player's spectator-related data.
+
+## Teleporter
+
+The teleporter menu lists active players. Selecting a player moves the spectator to that player's location. `TP-Spawn-After-Exploding` separately controls the initial teleport immediately after elimination.
+
+## Late Joins
+
+A player who joins during `IN_GAME` or `ENDING` becomes a permanent spectator. Permanent spectators can watch, but they are not inserted into the alive-player pool and do not receive ordinary end-game statistics or rewards.
+
+## Visibility
+
+Spectators are hidden from active players. `Hide-Players` additionally controls whether players inside the arena are hidden from people outside it.
