@@ -1,0 +1,50 @@
+---
+title: Frequently Asked Questions
+description: Answers to common TNT Tag installation, arena, permission, storage, Bungee, and troubleshooting questions.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## What Java version is required?
+
+TNT Tag 1.9.5 is built for Java 21. Use Paper and the Java version recommended for your Minecraft server release.
+
+## Where can I download TNT Tag?
+
+Use the official [SpigotMC](https://www.spigotmc.org/resources/117862/) or [BuiltByBit](https://builtbybit.com/resources/tnt-tag.50271/) distribution page.
+
+## Why is my arena inactive?
+
+Open `/tnttag edit <arena>` and verify the lobby, start, and end locations, player limits, map name, and saved ready state. Also confirm that every referenced world is loaded.
+
+## Why can nobody join?
+
+Check arena readiness and capacity, the current state, and `Join-Permission` in `config.yml`. Operators bypass the custom join permission. Bungee mode changes the normal join flow.
+
+## How do I allow moderation commands during a game?
+
+Add the command to `Whitelisted-Commands` or grant `tnttag.command.override` to the staff group.
+
+## Why can I not create or break a join sign?
+
+TNT Tag 1.9.5 checks `tnttag.admin.sign.create` and `tnttag.admin.sign.break` at runtime. Grant those exact permissions explicitly. The wildcard declaration uses different sign node names in this version.
+
+## Does TNT Tag support MySQL?
+
+Yes. Set `Database-Enabled: true`, configure `mysql.yml`, restart, and verify the connection. Keep a backup of `stats.yml` before switching an existing installation.
+
+## Can players join a running match?
+
+Yes, but they become permanent spectators until that match ends. They do not enter the alive-player pool or receive ordinary result statistics and rewards.
+
+## How many arenas should a Bungee game server have?
+
+One. Build and test the arena first, then enable Bungee mode and configure the hub and MOTD in `bungee.yml`.
+
+## Why are placeholders blank?
+
+Confirm PlaceholderAPI is installed and loaded, then use the exact `tnttag` identifier. Player placeholders require an online player context, and `%tnttag_goal%` requires that player to be inside an arena.
+
+<Aside type="tip">
+When reporting a problem, include the TNT Tag version, Paper version, Java version, full startup log, relevant configuration, and exact reproduction steps.
+</Aside>
