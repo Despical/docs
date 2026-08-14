@@ -1,0 +1,56 @@
+---
+title: Player Commands
+description: TNT Tag commands for joining, leaving, viewing statistics, and checking leaderboards.
+---
+
+All commands use `/tnttag`. The plugin also uses `ttag` as its internal command fallback prefix.
+
+## Join an Arena
+
+```text
+/tnttag join <arena>
+```
+
+Joins the named arena when it is ready and has an available slot. No permission is required unless `Join-Permission` is configured in `config.yml`.
+
+If the match has already started, the joining player becomes a permanent spectator for that match.
+
+## Join a Random Arena
+
+```text
+/tnttag randomjoin
+```
+
+Selects an available arena automatically. This command is not available while Bungee mode is enabled.
+
+## Leave
+
+```text
+/tnttag leave
+```
+
+Leaves the current arena. When the lobby leave item is used and `Instant-Leave` is disabled, the player must click again within three seconds to confirm. The second click cancels the leave request.
+
+## View Statistics
+
+```text
+/tnttag stats [player]
+```
+
+Opens or displays the stored statistics for yourself or the specified player. The available records are wins, losses, games played, players tagged, and times tagged.
+
+## View a Leaderboard
+
+```text
+/tnttag top <statistic>
+```
+
+Shows the ranking for a statistic. Valid statistic names are based on the stored types:
+
+- `wins`
+- `loses`
+- `games_played`
+- `tagged_players`
+- `times_tagged`
+
+The leaderboard command can also be run from the server console.

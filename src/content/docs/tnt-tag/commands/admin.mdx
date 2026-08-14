@@ -1,0 +1,47 @@
+---
+title: Admin Commands
+description: TNT Tag administrative commands and permissions for arena management, live games, signs, and configuration.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+## Command Reference
+
+| Command | Permission | Description |
+|:--|:--|:--|
+| `/tnttag create <arena>` | `tnttag.admin.create` | Creates a new arena. |
+| `/tnttag delete <arena>` | `tnttag.admin.delete` | Permanently deletes an arena. |
+| `/tnttag edit <arena>` | `tnttag.admin.edit` | Opens the arena setup editor. |
+| `/tnttag list` | `tnttag.admin.list` | Lists registered arenas and their status. |
+| `/tnttag forcestart [arena]` | `tnttag.admin.forcestart` | Skips the waiting countdown for the selected or current arena. |
+| `/tnttag stop [arena]` | `tnttag.admin.stop` | Immediately stops the selected or current game. |
+| `/tnttag reload` | `tnttag.admin.reload` | Reloads the plugin's configuration files. |
+| `/tnttag version` | `tnttag.admin.version` | Displays version information. |
+| `/tnttag help` | `tnttag.admin.help` | Shows the command help menu. |
+
+Administrative commands are available through the `tnttag.admin.*` wildcard declared in `plugin.yml`. The tab completion check uses `tnttag.admin.tabcompleter`.
+
+## Force-Start and Stop
+
+`forcestart` requires an arena with joined players. It is useful for controlled setup tests. `stop` performs a quick stop, removes players, and resets the arena without treating it as a naturally completed match.
+
+## Command Blocking Bypass
+
+When `Block-Commands` is enabled, active players can only use the configured whitelist unless they have:
+
+```text
+tnttag.command.override
+```
+
+## Join Sign Permissions
+
+The current runtime checks these permissions when a player creates or breaks an arena sign:
+
+```text
+tnttag.admin.sign.create
+tnttag.admin.sign.break
+```
+
+<Aside type="caution">
+TNT Tag 1.9.5 declares `tnttag.sign.create` and `tnttag.sign.break` under `tnttag.admin.*`, while the sign listener checks the `tnttag.admin.sign.*` names shown above. Grant the runtime names explicitly until this mismatch is corrected in a later release.
+</Aside>
