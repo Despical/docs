@@ -1,0 +1,25 @@
+---
+title: StatisticChangeEvent
+description: Public The Snake statistic event class and its current runtime limitation.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`StatisticChangeEvent` is a public synchronous event type that carries a user and an integer value.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event.player`
+* **Parent Class:** `SnakeEvent`
+* **Cancellable:** No
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getUser()` | `User` | Player whose value is represented. |
+| `getValue()` | `int` | Integer value supplied to the event constructor. |
+
+<Aside type="caution" title="Not currently dispatched">
+    The v1.5.8 source includes this class, but the statistic mutation code does not currently call it. Do not rely on receiving this event until a build explicitly connects it to statistic changes.
+</Aside>
+
+If you need current statistics, query them at `GameEndEvent` or through PlaceholderAPI until dispatch support is added.

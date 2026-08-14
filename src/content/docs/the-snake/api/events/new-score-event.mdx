@@ -1,0 +1,27 @@
+---
+title: NewScoreEvent
+description: Event fired after a player collects an apple and increases the current Snake score.
+---
+
+`NewScoreEvent` fires after the score increments and a new apple position is selected.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event.player`
+* **Parent Class:** `SnakeEvent`
+* **Cancellable:** No
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getArena()` | `Arena` | Active arena. |
+| `getUser()` | `User` | Player who collected the apple. |
+| `getScore()` | `int` | New current score after the increment. |
+
+```java
+@EventHandler
+public void onSnakeScore(NewScoreEvent event) {
+    event.getUser().getPlayer().sendMessage(
+        "Current score: " + event.getScore()
+    );
+}
+```
