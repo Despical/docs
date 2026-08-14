@@ -1,0 +1,19 @@
+---
+title: JoinAttemptEvent
+description: Fired before a user is admitted to a TNT Tag arena and may be cancelled.
+---
+
+Package: `dev.despical.tnttag.api.events.game`
+
+`JoinAttemptEvent` exposes `getArena()` and `getUser()` and implements Bukkit's `Cancellable` interface.
+
+```java
+@EventHandler
+public void onJoinAttempt(JoinAttemptEvent event) {
+    if (maintenanceApplies(event.getUser().getPlayer())) {
+        event.setCancelled(true);
+    }
+}
+```
+
+The event runs after the command path has checked basic arena availability and permissions but before the user is fully added. Send your own explanation to the player when cancelling.
