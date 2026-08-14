@@ -12,6 +12,9 @@ const links = (config.social || [])
         if (project && l.label.startsWith(`${project}:`))
             return true;
 
+        if (l.label.startsWith("marketplace:"))
+            return Boolean(project);
+
         if (l.label.startsWith("home:"))
             return !project;
 
