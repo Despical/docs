@@ -1,0 +1,37 @@
+---
+title: Upgrade Flow
+description: Understand Item Upgrader validation, menu item custody, confirmation, chance, costs, ingredients, and restoration.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+When a player runs `/itemupgrader`, the plugin evaluates the held item before any inventory menu opens.
+
+<Steps>
+1. Wait for configured addon items to finish loading.
+2. Check the optional menu permission and allowed-world list.
+3. Reject an empty hand or a material missing from `upgradable-items`.
+4. Match the held material and display name to a recipe's `from` item.
+5. Reject source items containing a configured disallowed enchantment.
+6. Check required ingredients and the source stack amount.
+7. Remove the recipe's source amount from the main hand while the protected preview menu is open.
+8. Check the player's Vault balance when the result is clicked.
+9. Open the confirmation menu when enabled.
+10. Roll a random number from 1 through 100 and compare it with `chance`.
+</Steps>
+
+## Success
+
+The configured result is placed into the player's main hand or inventory, the Vault price is withdrawn, the success message and sound play, and required ingredients are removed when `required-items.remove-on-success` is enabled.
+
+## Failure
+
+The reserved source item is lost, no result is given, and the failure message and sound play. Required ingredients are removed only when `required-items.remove-on-failure` is enabled. The configured coin price is not withdrawn on failure.
+
+## Closing a Menu
+
+Closing or cancelling before a roll returns the reserved source amount. The menu tracks its handoff to the confirmation screen so that the item is not duplicated or lost during the transition.
+
+<Aside type="caution">
+Always test upgrades with disposable items on a staging server. A failed chance roll is intentionally destructive to the source amount.
+</Aside>
