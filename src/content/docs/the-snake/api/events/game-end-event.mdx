@@ -1,0 +1,27 @@
+---
+title: GameEndEvent
+description: Event fired after The Snake detects a win or loss and enters its ending delay.
+---
+
+`GameEndEvent` fires after a win or loss condition changes the arena to `ENDING` and the built-in result message is finalized.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event.game`
+* **Parent Class:** `SnakeEvent`
+* **Cancellable:** No
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getArena()` | `Arena` | Arena whose round has ended. |
+| `getUser()` | `User` | Player still assigned during the ending delay. |
+
+The player has not yet been returned to the end location. The delay is controlled by the arena's `endTimer` option.
+
+```java
+@EventHandler
+public void onSnakeEnd(GameEndEvent event) {
+    int score = event.getArena().getScore();
+    getLogger().info(event.getUser().getName() + " finished with " + score);
+}
+```

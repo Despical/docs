@@ -1,0 +1,28 @@
+---
+title: GameStartEvent
+description: Event fired when a player is accepted into a ready The Snake arena and round initialization begins.
+---
+
+`GameStartEvent` fires when a waiting arena detects its assigned player and changes to `PRE_IN_GAME`.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event.game`
+* **Parent Class:** `SnakeEvent`
+* **Cancellable:** No
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getArena()` | `Arena` | Arena beginning the round. |
+| `getUser()` | `User` | Assigned player wrapper. |
+
+At this moment the player is already teleported and mounted, but the next arena tick still has to snapshot the board, select the first head position, place an apple, and enter `IN_GAME`.
+
+```java
+@EventHandler
+public void onSnakeStart(GameStartEvent event) {
+    event.getUser().getPlayer().sendMessage(
+        "Starting Snake arena " + event.getArena().getId()
+    );
+}
+```
