@@ -1,0 +1,19 @@
+---
+title: GameStopEvent
+description: Fired when a TNT Tag game ends naturally or is stopped quickly.
+---
+
+Package: `dev.despical.tnttag.api.events.game`
+
+Use `isQuickStop()` to distinguish an administrative or forced stop from normal game completion.
+
+```java
+@EventHandler
+public void onGameStop(GameStopEvent event) {
+    if (event.isQuickStop()) {
+        // Skip normal completion handling.
+    }
+}
+```
+
+The event also inherits `getArena()` and cannot be cancelled.

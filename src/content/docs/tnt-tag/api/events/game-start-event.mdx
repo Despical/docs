@@ -1,0 +1,17 @@
+---
+title: GameStartEvent
+description: Fired when a TNT Tag arena begins active gameplay.
+---
+
+Package: `dev.despical.tnttag.api.events.game`
+
+`GameStartEvent` is fired as the arena moves from its pre-game countdown into the active match. Use `getArena()` to access players, settings, and arena state.
+
+```java
+@EventHandler
+public void onGameStart(GameStartEvent event) {
+    Bukkit.getLogger().info("TNT Tag started in " + event.getArena().getIdentifier());
+}
+```
+
+The event is informational and cannot be cancelled.
