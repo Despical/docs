@@ -1,0 +1,16 @@
+---
+title: bungee.yml
+description: Configure TNT Tag hub routing and server-list MOTD behavior for Bungee mode.
+---
+
+This file is active when `Bungee-Enabled: true` is set in `config.yml`. The mode is intended for one TNT Tag arena per game server.
+
+| Key | Default | Purpose |
+|:--|:--|:--|
+| `Hub` | `lobby` | Proxy server name used as the network hub. |
+| `Connect-To-Hub` | `true` | Sends players to the hub when a match ends. When disabled, players are queued for another game. |
+| `MOTD.Enabled` | `true` | Publishes the current arena state in the server-list MOTD. |
+| `MOTD.Message` | Configured text | Overall MOTD format. Supports `%state%`. |
+| `MOTD.Game-States` | State map | Text used for waiting, starting, playing, ending, restarting, and inactive states. |
+
+The `Hub` value must match the proxy configuration exactly. Configure plugin messaging between the backend and proxy, then test both normal game completion and manual leaving before opening the server to players.
