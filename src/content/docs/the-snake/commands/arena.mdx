@@ -1,37 +1,46 @@
 ---
 title: Arena Commands
-description: Administrative commands and permissions for creating, editing, and deleting The Snake arenas.
+description: Commands for creating, managing, and configuring The Snake arenas.
 ---
 
-All arena commands must be run by a player. The editor depends on the sender's position, inventory, and block interactions.
+import { Aside } from '@astrojs/starlight/components';
 
-| Command | Permission | Description |
-|:--|:--|:--|
-| `/snake create <arena id>` | `snake.arena.create` | Creates a new arena entry and immediately starts editing it. |
-| `/snake edit <arena id>` | `snake.arena.edit` | Loads the arena editor items for an existing arena. |
-| `/snake delete <arena id>` | `snake.arena.delete` | Stops, removes, and deletes the arena from `arena.yml`. |
+Arena management commands allow administrators to build and maintain the game environments. These commands are essential for the initial setup and ongoing management of your **The Snake** maps.
 
 ---
 
-## Permission Group
+## Create Command
 
-The declared parent permission is `snake.*`. It grants:
+Administrators with the `snake.arena.create` permission can register a new arena instance and immediately begin editing it.
 
-* `snake.arena.create`
-* `snake.arena.delete`
-* `snake.arena.edit`
-* `snake.tabcompleter`
+Arena IDs must be unique. The command creates the arena's placeholder locations in `arena.yml` before opening the editor.
 
-The parent is granted to server operators by default.
+```bash
+/snake create <arena_id>
+```
 
 ---
 
-## Command Behavior
+## Delete Command
 
-* Arena IDs must be unique.
-* Create writes placeholder location values before the editor opens.
-* Edit is blocked while another player is editing the same arena.
-* Delete stops the arena task before removing its configuration entry.
-* Tab completion suggests `create`, `delete`, `edit`, `join`, and `leave`; arena IDs are suggested for `delete`, `edit`, and `join`.
+Administrators with the `snake.arena.delete` permission can stop and permanently remove an arena instance from `arena.yml`.
 
-Deleting an arena is permanent unless `arena.yml` is restored from a backup.
+```bash
+/snake delete <arena_id>
+```
+
+---
+
+## Edit Command
+
+Administrators with the `snake.arena.edit` permission can load the editor items for an existing arena.
+
+Editing is blocked while another player is editing the same arena. This command is only accessible to players because the editor depends on the sender's position, inventory, and block interactions.
+
+```bash
+/snake edit <arena_id>
+```
+
+<Aside type="tip">
+    For server administrators, granting the wildcard permission `snake.*` will provide access to every command listed on this page and command tab completion.
+</Aside>
