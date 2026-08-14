@@ -1,0 +1,54 @@
+---
+title: Item Upgrader Documentation
+description: Item Upgrader provides configurable item-to-item upgrades with chances, economy prices, ingredients, enchantments, custom items, chained recipes, world restrictions, and confirmation menus.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## Item Upgrader
+
+**Item Upgrader** lets players transform a held item into a configured result through a protected graphical menu. Every upgrade can define its source identity, output item, quantity, success chance, Vault price, required ingredients, enchantment behavior, item flags, model data, and failure result.
+
+The plugin supports vanilla materials and custom items from Oraxen, ItemsAdder, and EcoItems. Multiple recipes can form upgrade chains, while permissions and allowed-world settings control where the menu is available.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install Item Upgrader and verify its dependencies and generated files." href="/item-upgrader/getting-started" />
+    <LinkCard title="Upgrade Flow" description="Follow an item from validation through confirmation, payment, success, or failure." href="/item-upgrader/upgrade-flow" />
+    <LinkCard title="Creating Upgrades" description="Build a complete upgrade recipe and test it safely." href="/item-upgrader/creating-upgrades" />
+</CardGrid>
+
+## Commands
+
+<CardGrid>
+    <LinkCard title="Player Command" description="Open the upgrade menu for the item held in the main hand." href="/item-upgrader/commands/player" />
+    <LinkCard title="Admin Commands" description="Reload files, inspect versions, give recipe items, and manage access." href="/item-upgrader/commands/admin" />
+</CardGrid>
+
+## Configuration
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Configure confirmation, permissions, worlds, source materials, sounds, addons, and ingredient removal." href="/item-upgrader/configuration/config" />
+    <LinkCard title="messages.yml" description="Customize command feedback, validation messages, and both menu layouts." href="/item-upgrader/configuration/messages" />
+    <LinkCard title="upgrades.yml" description="Reference every source, output, chance, price, enchantment, metadata, and ingredient option." href="/item-upgrader/configuration/upgrades" />
+</CardGrid>
+
+## Features
+
+<CardGrid>
+    <LinkCard title="Chances and Economy" description="Control success rolls, failed items, Vault withdrawals, and result placeholders." href="/item-upgrader/features/chances-and-economy" />
+    <LinkCard title="Required Items" description="Require exact ingredient names, lore, amounts, and enchantment levels." href="/item-upgrader/features/required-items" />
+    <LinkCard title="Enchantments and Metadata" description="Merge or reset enchants and configure flags, durability, model data, tooltips, and armor trims." href="/item-upgrader/features/enchantments-and-metadata" />
+    <LinkCard title="Custom Items" description="Use Oraxen, ItemsAdder, and EcoItems identifiers in recipes and menus." href="/item-upgrader/features/custom-items" />
+    <LinkCard title="Chained Upgrades" description="Connect result items to later recipes without ambiguous source matching." href="/item-upgrader/features/chained-upgrades" />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard title="FAQ" description="Common questions about dependencies, prices, failures, matching, custom items, and reloads." href="/item-upgrader/misc/faq" />
+    <LinkCard title="Get Item Upgrader on SpigotMC" description="Open the official SpigotMC distribution page." href="https://www.spigotmc.org/resources/116575/" target="_blank" rel="noopener noreferrer" />
+    <LinkCard title="Get Item Upgrader on BuiltByBit" description="Open the official BuiltByBit distribution page." href="https://builtbybit.com/resources/item-upgrader-oraxen-itemsadder.50263/" target="_blank" rel="noopener noreferrer" />
+</CardGrid>
