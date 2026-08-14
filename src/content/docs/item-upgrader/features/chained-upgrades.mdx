@@ -1,0 +1,33 @@
+---
+title: Chained Upgrades
+description: Connect Item Upgrader recipes so one result becomes the source of the next stage.
+---
+
+A chain is created by making one recipe's `to` item match a later recipe's `from` material and display name.
+
+```yaml
+upgrades:
+  iron_to_diamond:
+    from:
+      item: IRON_SWORD
+      name: ""
+    to:
+      item: DIAMOND_SWORD
+      name: "&bForged Blade"
+    chance: 100
+
+  diamond_to_netherite:
+    from:
+      item: DIAMOND_SWORD
+      name: "&bForged Blade"
+    to:
+      item: NETHERITE_SWORD
+      name: "&5Master Blade"
+    chance: 50
+```
+
+Add every vanilla source material used by the chain to `config.yml`'s `upgradable-items` list.
+
+Recipe selection uses material plus display name. Give each chain stage a distinct name when multiple recipes share a material; otherwise a later registration with the same source key replaces the earlier lookup.
+
+Decide deliberately whether enchantments carry between stages with `reset-enchants`, and test every stage using the exact result produced by the previous one.
