@@ -1,0 +1,35 @@
+---
+title: rewards.yml
+description: Configure TNT Tag commands for winners, losers, draws, and every eligible player at game end.
+---
+
+Set `Rewards-Enabled: true` to activate rewards. Four groups are available: `Win`, `Lose`, `Draw`, and `End-Game`. A player receives the applicable result group before the lower-priority end-game group.
+
+## Command Context
+
+Commands run from the console by default. Prefix a command with `p:` to run it as the player.
+
+```yaml
+Rewards:
+  Win:
+    - "p:say I won the game!"
+  Lose:
+    - "chance(10):eco give %player% 8"
+  Draw:
+    - "p:say %map_name% ended with a draw!"
+  End-Game:
+    - "p:say %map_name% has ended!"
+```
+
+Use `chance(NUMBER):` to give a command a percentage chance. It may appear before or after `p:`.
+
+## Reward Placeholders
+
+```text
+%player%     Player name
+%arena%      Arena identifier
+%map_name%   Arena display name
+%players%    Current arena player count
+```
+
+Permanent spectators who joined after gameplay began do not receive the normal match statistics or reward processing.

@@ -1,0 +1,30 @@
+---
+title: power-ups.yml
+description: Define TNT Tag power-up names, potion effects, levels, durations, items, holograms, and spawn chances.
+---
+
+Each child of `power-ups` is an independent pickup definition.
+
+```yaml
+power-ups:
+  speed-1:
+    name: "&a&lSPEED (15 SECS)"
+    effect-duration: 15
+    hologram-duration: 5
+    level: 3
+    chance: 50
+    effect: SPEED
+    item: DIRT
+```
+
+| Key | Purpose |
+|:--|:--|
+| `name` | Hologram and pickup display text. |
+| `effect-duration` | Potion effect duration in seconds. |
+| `hologram-duration` | Time the pickup remains visible before expiring. |
+| `level` | Potion amplifier level used by the pickup. |
+| `chance` | Percentage chance used when the plugin attempts a spawn. |
+| `effect` | Bukkit potion effect type, such as `SPEED` or `INVISIBILITY`. |
+| `item` | Bukkit material displayed at the configured arena location. |
+
+Only active, untagged players can collect a power-up. Spectators and tagged players cannot consume it. Add spawn positions through the arena editor, then test each custom effect name and material after a reload.
