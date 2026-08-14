@@ -1,0 +1,77 @@
+---
+title: Developer API
+description: Add TNT Tag as a compile-time dependency and listen to its Bukkit game and player events.
+---
+
+import { Aside, Tabs, TabItem } from "@astrojs/starlight/components";
+
+TNT Tag exposes Bukkit events for arena lifecycle changes, join and leave attempts, rounds, eliminations, and statistics.
+
+## Dependency Setup
+
+Place the TNT Tag JAR in a `libs` directory in your project and add it as a compile-only dependency.
+
+<Tabs>
+<TabItem label="Gradle (Groovy)">
+```groovy
+dependencies {
+    compileOnly files('libs/tnt-tag-x.x.x.jar')
+}
+```
+</TabItem>
+<TabItem label="Gradle (Kotlin)">
+```kotlin
+dependencies {
+    compileOnly(files("libs/tnt-tag-x.x.x.jar"))
+}
+```
+</TabItem>
+<TabItem label="Maven">
+```xml
+<dependency>
+    <groupId>dev.despical</groupId>
+    <artifactId>tnt-tag</artifactId>
+    <version>LATEST</version>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/libs/tnt-tag-x.x.x.jar</systemPath>
+</dependency>
+```
+</TabItem>
+</Tabs>
+
+Add the plugin load dependency:
+
+```yaml
+depend: [TNTTag]
+```
+
+## Listener Example
+
+```java
+public final class TNTTagListener implements Listener {
+    @EventHandler
+    public void onRoundStart(RoundStartEvent event) {
+        Arena arena = event.getArena();
+        int round = event.getRound();
+        // React to this arena's new round.
+    }
+}
+```
+
+Register the listener with Bukkit's plugin manager during `onEnable()`.
+
+<Aside type="note">
+Every custom event extends `TNTTagEvent` and exposes `getArena()`. Listen to concrete event classes because each class owns its Bukkit handler list.
+</Aside>
+
+## Event Reference
+
+- [TNTTagEvent](/tnt-tag/api/events/tnt-tag-event)
+- [GameStartEvent](/tnt-tag/api/events/game-start-event)
+- [GameStateChangeEvent](/tnt-tag/api/events/game-state-change-event)
+- [GameStopEvent](/tnt-tag/api/events/game-stop-event)
+- [JoinAttemptEvent](/tnt-tag/api/events/join-attempt-event)
+- [LeaveAttemptEvent](/tnt-tag/api/events/leave-attempt-event)
+- [RoundStartEvent](/tnt-tag/api/events/round-start-event)
+- [PlayerEliminatedEvent](/tnt-tag/api/events/player-eliminated-event)
+- [StatisticChangeEvent](/tnt-tag/api/events/statistic-change-event)

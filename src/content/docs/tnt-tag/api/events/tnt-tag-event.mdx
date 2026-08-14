@@ -1,0 +1,14 @@
+---
+title: TNTTagEvent
+description: Base class shared by all TNT Tag custom Bukkit events.
+---
+
+Package: `dev.despical.tnttag.api.events`
+
+`TNTTagEvent` extends Bukkit's `Event` and stores the arena associated with the event.
+
+```java
+Arena arena = event.getArena();
+```
+
+Concrete events provide their own `HandlerList`. Register listeners for a specific event class rather than expecting a listener for the abstract base class to receive every subtype.
