@@ -3,54 +3,60 @@ title: Player Commands
 description: TNT Tag commands for joining, leaving, viewing statistics, and checking leaderboards.
 ---
 
-All commands use `/tnttag`. The plugin also uses `ttag` as its internal command fallback prefix.
+Player Commands are available to **regular players** and do not require administrative permissions. These commands allow players to interact with **TNT Tag** gameplay by joining arenas, leaving matches, and viewing statistics.
 
-## Join an Arena
+All commands use `/tnttag`. The internal command fallback prefix is `ttag`.
 
-```text
+---
+
+## Join Command
+
+Allows a player to join a **TNT Tag** arena. The plugin checks that the arena is ready and has an available slot before allowing the player to join.
+
+No permission is required unless `Join-Permission` is configured in `config.yml`. If the match has already started, the joining player becomes a permanent spectator for that match.
+
+```bash
 /tnttag join <arena>
 ```
 
-Joins the named arena when it is ready and has an available slot. No permission is required unless `Join-Permission` is configured in `config.yml`.
+---
 
-If the match has already started, the joining player becomes a permanent spectator for that match.
+## Random Join Command
 
-## Join a Random Arena
+Selects an available arena automatically and joins it. This command is not available while Bungee mode is enabled.
 
-```text
+```bash
 /tnttag randomjoin
 ```
 
-Selects an available arena automatically. This command is not available while Bungee mode is enabled.
+---
 
-## Leave
+## Leave Command
 
-```text
+Safely removes the player from their current **TNT Tag** arena.
+
+```bash
 /tnttag leave
 ```
 
-Leaves the current arena. When the lobby leave item is used and `Instant-Leave` is disabled, the player must click again within three seconds to confirm. The second click cancels the leave request.
+---
 
-## View Statistics
+## Stats Command
 
-```text
+Displays stored **TNT Tag** statistics for yourself or the specified player, including wins, losses, games played, players tagged, and times tagged.
+
+```bash
 /tnttag stats [player]
 ```
 
-Opens or displays the stored statistics for yourself or the specified player. The available records are wins, losses, games played, players tagged, and times tagged.
+---
 
-## View a Leaderboard
+## Top Command
 
-```text
+Displays the leaderboard for a stored statistic. Valid values include `wins`, `loses`, `games_played`, `tagged_players`, and `times_tagged`.
+
+This command can also be executed from the console.
+
+```bash
 /tnttag top <statistic>
 ```
-
-Shows the ranking for a statistic. Valid statistic names are based on the stored types:
-
-- `wins`
-- `loses`
-- `games_played`
-- `tagged_players`
-- `times_tagged`
-
-The leaderboard command can also be run from the server console.
