@@ -1,0 +1,21 @@
+---
+title: Enchantments and Metadata
+description: Control Item Upgrader enchantment merging, conflicts, flags, unbreakability, tooltips, model data, decoration, and armor trims.
+---
+
+## Result Enchantments
+
+Add enchantments as `NAME:LEVEL` entries. Item Upgrader first checks legacy Bukkit names, then attempts a Minecraft namespaced lookup. Verify the exact name on your target server version.
+
+## Reset or Merge
+
+- `reset-enchants: true` discards source enchantments and applies only the result configuration.
+- `reset-enchants: false` copies source enchantments and merges them with configured result enchantments.
+
+Use `disallowed-enchantments` to reject a source before the menu opens. This is useful for curses or custom upgrade paths that must not accept certain item states.
+
+## Result Metadata
+
+The result can define item flags, `unbreakable`, `hide-tooltip`, `decoration-only`, and `custom-model-data`. Feature availability depends on the Minecraft version. `hide-tooltip` takes precedence over ordinary item-flag visibility.
+
+When both source and output are compatible armor items, Item Upgrader transfers armor metadata such as trim information to the result where supported.
