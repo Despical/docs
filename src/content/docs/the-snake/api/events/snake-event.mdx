@@ -1,0 +1,26 @@
+---
+title: SnakeEvent
+description: Base class for all public Bukkit events exposed by The Snake.
+---
+
+`SnakeEvent` extends Bukkit's `Event` class and is the common parent of every public event in the plugin.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event`
+* **Parent Class:** `org.bukkit.event.Event`
+* **Asynchronous:** No
+* **Cancellable:** No
+
+The base class contains no shared arena or player accessor because `KeyPressedEvent` and statistic-related events have different contexts. Use the methods on each concrete event.
+
+## Listener Example
+
+```java
+@EventHandler
+public void onAnySnakeEvent(SnakeEvent event) {
+    getLogger().info("Snake event: " + event.getEventName());
+}
+```
+
+Prefer concrete event listeners when you need arena, player, state, or score data.
