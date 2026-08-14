@@ -1,0 +1,59 @@
+---
+title: The Snake API
+description: Integrate with The Snake through its Bukkit events, arena objects, players, states, and scores.
+---
+
+import { Aside, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+The Snake exposes Bukkit events for round lifecycle changes, player input, and score updates. Event classes live under `dev.despical.snake.api.event` and are dispatched on the primary server thread.
+
+<Aside type="note">
+    The plugin is distributed as a premium resource. Compile integrations against a legitimately obtained plugin JAR and declare The Snake as a dependency or soft dependency in your own plugin metadata.
+</Aside>
+
+---
+
+## Available Events
+
+<CardGrid>
+    <LinkCard title="SnakeEvent" description="Base event type shared by every public Snake event." href="/the-snake/api/events/snake-event" />
+    <LinkCard title="GameStartEvent" description="Fires when a waiting arena accepts its player and begins round initialization." href="/the-snake/api/events/game-start-event" />
+    <LinkCard title="GameEndEvent" description="Fires after a win or loss is detected and the arena enters its ending delay." href="/the-snake/api/events/game-end-event" />
+    <LinkCard title="GameStateChangeEvent" description="Reports every transition between inactive, waiting, starting, active, and ending states." href="/the-snake/api/events/game-state-change-event" />
+    <LinkCard title="KeyPressedEvent" description="Reports the current W, A, S, D, or no-input state from Paper player input." href="/the-snake/api/events/key-pressed-event" />
+    <LinkCard title="NewScoreEvent" description="Fires after an apple is collected and the round score increases." href="/the-snake/api/events/new-score-event" />
+    <LinkCard title="StatisticChangeEvent" description="Public statistic event class and its current dispatch limitation." href="/the-snake/api/events/statistic-change-event" />
+</CardGrid>
+
+---
+
+## Register a Listener
+
+```java
+public final class SnakeIntegration extends JavaPlugin implements Listener {
+
+    @Override
+    public void onEnable() {
+        getServer().getPluginManager().registerEvents(this, this);
+    }
+}
+```
+
+Add the dependency so your plugin loads after Snake:
+
+```yaml
+softdepend:
+  - Snake
+```
+
+Use `depend` instead if your plugin cannot function without The Snake.
+
+---
+
+## Event Guarantees
+
+* Events are synchronous Bukkit events.
+* None of the current public event classes implements `Cancellable`.
+* `GameStartEvent` fires before the board is snapshotted and before active movement starts.
+* `GameEndEvent` fires after the result is identified and its message is sent, but before the ending timer returns the player.
+* `NewScoreEvent` sees the already incremented score.
