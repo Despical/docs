@@ -1,0 +1,44 @@
+---
+title: arena.yml
+description: Reference the locations and per-arena options serialized by The Snake.
+---
+
+`arena.yml` is the persistent store for arena geometry and per-arena gameplay options. The supported workflow is to use `/snake create` and `/snake edit` instead of editing serialized locations manually.
+
+---
+
+## Arena Structure
+
+Each arena is stored below `arenas.<id>` with four locations:
+
+| Key | Purpose |
+|:--|:--|
+| `startLocation` | Camera and player start position. Its facing direction helps map A and D. |
+| `endLocation` | Safe location used after the round and for reconnect recovery. |
+| `firstCorner` | First boundary of the two-dimensional board. |
+| `secondCorner` | Opposite boundary of the two-dimensional board. |
+
+All four must resolve to non-default locations before the arena becomes ready.
+
+---
+
+## Saved Options
+
+| Key | Type | Default |
+|:--|:--|:--|
+| `endTimer` | Integer | `100` |
+| `targetScore` | Integer | `0` |
+| `tickInterval` | Integer | `3`, minimum `1` |
+| `headMoveOpposite` | Boolean | `false` |
+| `wrapAround` | Boolean | `true` |
+| `snakeHead` | Material name | `WHITE_WOOL` |
+| `segments` | Material name | `GRAY_WOOL` |
+| `apple` | Material name | `YELLOW_TERRACOTTA` |
+
+---
+
+## Loading Behavior
+
+At startup, the plugin reads every ID, deserializes all four locations, loads the options, marks complete arenas ready, and starts each ready arena in the waiting state.
+
+Unknown or incomplete arenas remain unavailable to `/snake join` until fixed and saved through the editor.

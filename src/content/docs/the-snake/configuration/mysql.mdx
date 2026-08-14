@@ -1,0 +1,65 @@
+---
+title: mysql.yml
+description: Configure MySQL statistics storage for The Snake, including JDBC, credentials, table creation, and startup checks.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+MySQL storage lets multiple server processes point at one statistics table. Arena definitions remain local in `arena.yml`.
+
+---
+
+## Enable MySQL
+
+<Steps>
+    1. Create a MySQL database and a restricted database user.
+    2. Add `database: mysql` to `config.yml`.
+    3. Set `address`, `user`, and `password` in `mysql.yml`.
+    4. Stop and start the server.
+    5. Confirm that the configured table was created and no connection warning appears.
+</Steps>
+
+<Aside type="caution">
+    The shipped `mysql-enabled` key is not the selector read by the v1.5.8 runtime. Use `database: mysql` in `config.yml`.
+</Aside>
+
+---
+
+## Connection Settings
+
+| Key | Purpose |
+|:--|:--|
+| `address` | Full JDBC URL, including host, port, database name, and connection parameters. |
+| `user` | MySQL account name. |
+| `password` | Password for that account. |
+| `stats-table` | Table name used for Snake statistics. Default: `the_snake_stats`. |
+| `test-on-startup` | Lets the shared database layer validate the connection during startup. |
+
+```yaml
+address: jdbc:mysql://127.0.0.1:3306/minecraft?useSSL=false&autoReconnect=true&createDatabaseIfNotExist=true
+user: snake_plugin
+password: change-this-password
+stats-table: the_snake_stats
+test-on-startup: true
+```
+
+---
+
+## Table Structure
+
+The plugin creates the table if it does not exist. It stores:
+
+* `uuid` as the primary key;
+* the latest player `name`;
+* integer columns for `win`, `lose`, `win_streak`, `best_score`, `total_score`, and `games_played`.
+
+If a newer build introduces a missing persistent statistic column, startup initialization adds it automatically with its default value.
+
+---
+
+## Security
+
+* Use a dedicated database user with access only to the Snake database.
+* Keep `mysql.yml` out of public repositories and support logs.
+* Back up the database before renaming `stats-table` or migrating between storage modes.
+* Do not paste real credentials into issue reports.
