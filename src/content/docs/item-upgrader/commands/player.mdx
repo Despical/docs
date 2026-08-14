@@ -1,0 +1,25 @@
+---
+title: Player Command
+description: Open the Item Upgrader menu for the item in the player's main hand.
+---
+
+## Open the Menu
+
+```text
+/itemupgrader
+```
+
+No built-in permission is required by default. Set `upgrade-menu-perm` in `config.yml` to require a custom permission node.
+
+The command is player-only and checks:
+
+- addon items have finished loading;
+- the optional custom permission;
+- the current world is allowed;
+- the main hand is not empty;
+- the material appears in `upgradable-items`;
+- a recipe matches the material and display name;
+- no disallowed enchantment is present;
+- required ingredients and source amount are available.
+
+The internal command fallback prefix is `iupgrader`.
