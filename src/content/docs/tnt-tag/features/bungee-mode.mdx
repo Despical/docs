@@ -1,0 +1,25 @@
+---
+title: Bungee Mode
+description: Run TNT Tag as a one-arena game server behind a proxy.
+---
+
+Set `Bungee-Enabled: true` in `config.yml` to use TNT Tag as a dedicated network game server. Configure only one arena on that backend.
+
+## Behavior Changes
+
+- Players are automatically routed into the configured arena flow.
+- Normal random-arena joining is disabled.
+- Backend join and quit announcements are suppressed.
+- The server-list MOTD can expose the arena's current state.
+- At game end, players either connect to the configured hub or queue for another game.
+- Arena sign setup is unnecessary on the dedicated game server.
+
+## Setup Checklist
+
+1. Create and fully test the single arena before enabling Bungee mode.
+2. Match `bungee.yml`'s `Hub` value to the proxy server name.
+3. Confirm backend-to-proxy plugin messaging is available.
+4. Enable and test the MOTD state formats.
+5. Verify leave, kick, server shutdown, natural win, and draw routing.
+
+Do not expose the backend directly to players. Network authentication and forwarding must be configured correctly at the proxy and Paper layers.

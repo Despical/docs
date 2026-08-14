@@ -1,0 +1,20 @@
+---
+title: Power-Ups
+description: Set up TNT Tag temporary potion-effect pickups and arena spawn locations.
+---
+
+Power-ups are temporary display items that grant a configured potion effect when an eligible player moves close enough to collect one.
+
+## Setup
+
+1. Define the pickup in `power-ups.yml`.
+2. Open `/tnttag edit <arena>`.
+3. Add one or more power-up locations.
+4. Save the arena and reload the plugin.
+5. Test the effect, level, duration, display item, hologram lifetime, and spawn chance.
+
+## Eligibility
+
+Only an active untagged player can collect a spawned power-up. Tagged players and spectators are ignored. A location is released after the pickup is collected or expires, allowing it to be used again later.
+
+The `chance` value is evaluated when TNT Tag attempts a spawn; it is not a promise that an item will exist for that percentage of the match. Use several test rounds when balancing low-chance effects.

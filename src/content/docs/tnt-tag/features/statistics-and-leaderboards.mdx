@@ -1,0 +1,24 @@
+---
+title: Statistics and Leaderboards
+description: Reference the TNT Tag statistics, save behavior, commands, and draw handling.
+---
+
+## Stored Statistics
+
+| Type | Meaning |
+|:--|:--|
+| `WINS` | Naturally completed games won. |
+| `LOSES` | Naturally completed games lost. |
+| `GAMES_PLAYED` | Completed games in which the player was a normal participant. |
+| `TAGGED_PLAYERS` | Successful tag transfers made by the player. |
+| `TIMES_TAGGED` | Times another player transferred TNT to this player. |
+
+Players who enter after a match begins are permanent spectators and are excluded from normal match-result updates. `Win-On-A-Draw` determines whether a draw increments wins or losses for eligible participants.
+
+## Commands
+
+Use `/tnttag stats [player]` for an individual record and `/tnttag top <statistic>` for a ranking. PlaceholderAPI can display both personal values and arbitrary ranked positions.
+
+## Storage
+
+Statistics use `stats.yml` by default or the table configured in `mysql.yml` when `Database-Enabled` is true. `Statistic-Saving-Period` controls periodic writes. Use MySQL when multiple TNT Tag servers need one shared leaderboard.
