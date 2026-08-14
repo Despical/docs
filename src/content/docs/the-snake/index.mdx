@@ -1,0 +1,59 @@
+---
+title: The Snake Documentation
+description: The Snake is a single-player Minecraft minigame with grid movement, configurable boards, score targets, statistics, PlaceholderAPI support, MySQL storage, and developer events.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## The Snake
+
+**The Snake** brings the classic Snake game into Minecraft. A player controls a block-based snake across a two-dimensional arena board, collects apples to score and grow, and tries to avoid hitting the snake's own body or an arena border.
+
+Each arena is a separate single-player board with its own movement speed, win condition, wrap-around rule, block palette, start location, and exit location. The plugin also includes persistent statistics, leaderboards, PlaceholderAPI integration, flat-file or MySQL storage, and Bukkit events for custom integrations.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install The Snake and prepare the plugin for its first arena." href="/the-snake/getting-started" />
+    <LinkCard title="Arena Setup" description="Create a two-dimensional board and configure every arena option." href="/the-snake/arena-setup" />
+    <LinkCard title="Gameplay Overview" description="Learn how movement, apples, growth, collisions, and win conditions work." href="/the-snake/gameplay" />
+</CardGrid>
+
+## Features
+
+<CardGrid>
+    <LinkCard title="Controls and Movement" description="Understand WASD input, direction rules, movement speed, and wrap-around behavior." href="/the-snake/features/controls-and-movement" />
+    <LinkCard title="Arena Options" description="Reference every per-arena timer, score, movement, and block option." href="/the-snake/features/arena-options" />
+    <LinkCard title="Statistics and Leaderboards" description="See which records are stored and how flat-file and MySQL storage behave." href="/the-snake/features/statistics-and-leaderboards" />
+</CardGrid>
+
+## Commands
+
+<CardGrid>
+    <LinkCard title="Player Commands" description="Join or leave an arena with the player-facing command set." href="/the-snake/commands/player" />
+    <LinkCard title="Arena Commands" description="Create, edit, and delete Snake arenas with the exact permissions required." href="/the-snake/commands/arena" />
+</CardGrid>
+
+## Configuration Files
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Configure messages, sounds, placeholder fallbacks, storage, saving, and update checks." href="/the-snake/configuration/config" />
+    <LinkCard title="mysql.yml" description="Configure the JDBC connection and statistics table used by MySQL storage." href="/the-snake/configuration/mysql" />
+    <LinkCard title="arena.yml" description="Understand the locations and options serialized for each arena." href="/the-snake/configuration/arena" />
+    <LinkCard title="Other Files" description="Learn how stats.yml and temporary inventory backups are managed." href="/the-snake/configuration/other-files" />
+</CardGrid>
+
+## Placeholders and API
+
+<CardGrid>
+    <LinkCard title="PlaceholderAPI Placeholders" description="Display player statistics, arena state, score, and current player information." href="/the-snake/placeholders/general" />
+    <LinkCard title="Developer API" description="Listen for game lifecycle, input, score, and statistic events." href="/the-snake/api/the-snake-api" />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard title="FAQ" description="Common questions about requirements, arena geometry, controls, storage, and troubleshooting." href="/the-snake/misc/faq" />
+    <LinkCard title="Get The Snake on SpigotMC" description="Open The Snake on SpigotMC for downloads, updates, and purchases." href="https://www.spigotmc.org/resources/the-snake.120508/" target="_blank" rel="noopener noreferrer" />
+</CardGrid>

@@ -1,0 +1,82 @@
+---
+title: Getting Started
+description: Install The Snake on Paper, generate its files, and prepare the first arena.
+---
+
+import { Aside, Badge, Steps } from "@astrojs/starlight/components";
+
+Welcome to **The Snake**. This guide covers the server requirements, installation flow, generated files, permissions, and the shortest path to a playable arena.
+
+---
+
+## Prerequisites
+
+Before installing the plugin, make sure the server meets these requirements:
+
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer.
+* **Server Software:** [Paper](https://papermc.io/) or a compatible Paper fork.
+* [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) <Badge text="Optional" variant="tip" /> : Required for `%snake_...%` placeholders and the internal leaderboard cache.
+* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin such as [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) is recommended for arena administration.
+
+<Aside type="note">
+    The current build uses Paper's player input event for WASD controls. Use Paper or a compatible fork instead of relying on plain Spigot behavior.
+</Aside>
+
+---
+
+## Installation
+
+<Steps>
+    1. Download the latest **The Snake** build from [SpigotMC](https://www.spigotmc.org/resources/the-snake.120508/).
+    2. Stop the server and place `the-snake-x.x.x.jar` in the `plugins/` directory.
+    3. Install PlaceholderAPI if the server will use Snake placeholders in scoreboards, holograms, menus, or chat.
+    4. Start the server and wait for the plugin to finish initialization.
+    5. Join the server and run `/snake` to verify that the root command is registered.
+</Steps>
+
+---
+
+## Generated Files
+
+The first startup creates `/plugins/Snake/` with these main files:
+
+| File | Purpose |
+|:--|:--|
+| `config.yml` | Messages, sounds, placeholder fallbacks, storage selection, saving, and update checks. |
+| `arena.yml` | Arena locations and per-arena game options. |
+| `mysql.yml` | JDBC connection and statistics table settings. |
+| `stats.yml` | Flat-file player statistics when MySQL is not selected. |
+
+The plugin can also create temporary inventory backup data while a player is playing or editing an arena. Do not delete those backups while players are active.
+
+---
+
+## Essential Permissions
+
+| Permission | Purpose | Default |
+|:--|:--|:--|
+| `snake.*` | Grants all declared Snake administration permissions. | Operators |
+| `snake.arena.create` | Allows `/snake create <arena id>`. | Through `snake.*` |
+| `snake.arena.delete` | Allows `/snake delete <arena id>`. | Through `snake.*` |
+| `snake.arena.edit` | Allows `/snake edit <arena id>`. | Through `snake.*` |
+| `snake.tabcompleter` | Shows Snake subcommands and arena IDs in tab completion. | Through `snake.*` |
+
+The player commands `/snake join` and `/snake leave` do not declare separate permission requirements.
+
+---
+
+## Recommended First Setup
+
+<Steps>
+    1. Build a flat vertical or horizontal two-dimensional board.
+    2. Run `/snake create <arena id>` to enter the editor.
+    3. Set the start location and end location.
+    4. Use the board setter to select two opposite corners on the same 2D plane.
+    5. Open **Options** and configure movement, win conditions, and board blocks.
+    6. Use **Save**, then **Stop Editing**.
+    7. Test the arena with `/snake join <arena id>`.
+</Steps>
+
+<Aside type="caution">
+    An arena becomes ready only after all four locations are saved: start, end, first board corner, and second board corner.
+</Aside>
