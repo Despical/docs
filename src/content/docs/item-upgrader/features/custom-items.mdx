@@ -1,0 +1,24 @@
+---
+title: Custom Items
+description: Use Oraxen, ItemsAdder, and EcoItems items in Item Upgrader recipes and menu elements.
+---
+
+## Identifier Formats
+
+```text
+oraxen:<item_id>
+itemsadder:<item_id>
+ecoitems:<item_id>
+```
+
+The prefixes can be used for recipe source and result items. Menu item materials in `messages.yml` also accept them.
+
+## Loading
+
+If one of the supported providers is enabled, Item Upgrader waits `addons.wait-for-addons-to-load` ticks before registering recipes. Until registration completes, `/itemupgrader` returns the configured loading message.
+
+## Troubleshooting
+
+If a provider is missing or an identifier cannot be resolved, Item Upgrader logs a severe message and falls back to stone for that lookup. Check exact case and namespace, confirm the provider loaded successfully, increase the addon delay if necessary, and reload the recipe after the custom items exist.
+
+Only the first detected provider among EcoItems, Oraxen, and ItemsAdder controls the delayed registration message, but recipe item lookups can still use any installed supported provider.
