@@ -1,0 +1,16 @@
+---
+title: LeaveAttemptEvent
+description: Fired when a user begins leaving a TNT Tag arena.
+---
+
+Package: `dev.despical.tnttag.api.events.game`
+
+`LeaveAttemptEvent` exposes `getArena()` and `getUser()`. It is informational and does not implement `Cancellable`.
+
+```java
+@EventHandler
+public void onLeave(LeaveAttemptEvent event) {
+    Player player = event.getUser().getPlayer();
+    // Clean up integration-specific state.
+}
+```
