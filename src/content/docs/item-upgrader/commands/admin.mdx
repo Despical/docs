@@ -1,0 +1,27 @@
+---
+title: Admin Commands
+description: Item Upgrader reload, help, version, item-give, debug, permission, and tab-completion reference.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+| Command | Permission | Description |
+|:--|:--|:--|
+| `/itemupgrader reload` | `itemupgrader.reload` | Reloads configuration, allowed worlds, menu access, and upgrade recipes. |
+| `/itemupgrader help` | `itemupgrader.help` | Lists commands and descriptions. |
+| `/itemupgrader version` | `itemupgrader.version` | Shows plugin, server, Java, JVM, and operating-system details. Player-only. |
+| `/itemupgrader item <player> <recipe> <true if from>` | `itemupgrader.item` | Gives the source or result item defined by a recipe. |
+| `/itemupgrader debug name` | Operator only | Prints the held display name in configuration-friendly legacy format. |
+
+`itemupgrader.tabcompleter` controls suggestions. `itemupgrader.updatenotify` is declared but is not checked by the 1.8.3 startup update logger. The `itemupgrader.*` wildcard includes all declared nodes.
+
+## Item Command Boolean
+
+The current 1.8.3 implementation uses:
+
+- `true` to give the recipe's original `from` item;
+- `false` to give the upgraded `to` item.
+
+<Aside type="caution">
+The command's built-in description reverses this boolean wording in 1.8.3. The behavior above follows the current implementation and should be verified again after upgrading the plugin.
+</Aside>
