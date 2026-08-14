@@ -1,0 +1,64 @@
+---
+title: Getting Started
+description: Install TNT Tag on a Paper server, review generated files, and prepare the first arena.
+---
+
+import { Aside, Badge, Steps } from "@astrojs/starlight/components";
+
+Welcome to TNT Tag! This guide covers the server requirements, installation process, generated files, essential permissions, and the recommended setup order.
+
+## Prerequisites
+
+* **Java Version:** Java 21 or newer.
+* **Server Software:** A compatible Paper server is recommended.
+* **PlaceholderAPI** <Badge text="Optional" variant="tip" />: Required only when TNT Tag placeholders are used by another plugin.
+* **Permissions Plugin** <Badge text="Optional" variant="tip" />: Use a plugin such as LuckPerms to grant staff commands.
+
+## Installation
+
+<Steps>
+1. Download TNT Tag from its official [SpigotMC](https://www.spigotmc.org/resources/117862/) or [BuiltByBit](https://builtbybit.com/resources/tnt-tag.50271/) page.
+2. Place the downloaded `tnt-tag-x.x.x.jar` file in the server's `plugins/` directory.
+3. Restart the server. Do not use a plug-in manager to hot-load TNT Tag.
+4. Confirm that `/plugins/TNTTag/` and the configuration files were generated.
+5. Run `/tnttag version` and then create the first arena.
+</Steps>
+
+## Generated Files
+
+| File | Purpose |
+|:--|:--|
+| `config.yml` | Timers, game rules, effects, spectators, inventory handling, database selection, and global switches. |
+| `messages.yml` | Commands, gameplay messages, titles, bars, scoreboards, signs, state names, and name tags. |
+| `items.yml` | TNT, compasses, lobby items, spectator tools, and the force-start item. |
+| `power-ups.yml` | Potion-effect pickup definitions and spawn behavior. |
+| `rewards.yml` | Commands executed for wins, losses, draws, and completed games. |
+| `mysql.yml` | MySQL credentials and table name. |
+| `bungee.yml` | Network hub and server-list MOTD settings. |
+| `arena.yml` | Automatically stored arena locations, limits, map names, signs, and power-up positions. |
+| `stats.yml` | Flat-file player statistics when MySQL is disabled. |
+
+## Essential Commands
+
+| Command | Permission | Purpose |
+|:--|:--|:--|
+| `/tnttag create <arena>` | `tnttag.admin.create` | Creates an arena. |
+| `/tnttag edit <arena>` | `tnttag.admin.edit` | Opens the arena editor. |
+| `/tnttag join <arena>` | None by default | Joins a ready arena. |
+| `/tnttag leave` | None | Leaves the current arena. |
+| `/tnttag help` | `tnttag.admin.help` | Shows available commands. |
+
+<Aside type="tip">
+The `tnttag.admin.*` wildcard grants the administrative command permissions declared by the plugin. Sign creation and breaking have a separate runtime permission note in the [admin command reference](/tnt-tag/commands/admin#join-sign-permissions).
+</Aside>
+
+## Recommended Setup Order
+
+1. Create an arena with `/tnttag create <arena>`.
+2. Open `/tnttag edit <arena>` and set the lobby, start, and end locations.
+3. Set minimum and maximum players and a display map name.
+4. Add power-up locations and join signs if required.
+5. Save the arena and verify that it reports as ready.
+6. Join with at least the configured minimum number of players and test a complete match.
+
+Continue with the [Arena Setup Guide](/tnt-tag/arena-setup) for each editor option.

@@ -1,0 +1,70 @@
+---
+title: TNT Tag Documentation
+description: TNT Tag is a round-based Minecraft minigame with tag transfers, timed eliminations, deathmatch, spectators, power-ups, statistics, PlaceholderAPI support, Bungee mode, and developer events.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## TNT Tag
+
+**TNT Tag** turns the familiar game of tag into an explosive multiplayer minigame. At the start of each round, selected players receive TNT and must punch another player before the timer reaches zero. Whoever is still tagged when time expires is eliminated.
+
+The plugin manages the complete match lifecycle, including arena setup, multiple tagged players, decreasing round timers, deathmatch, spectators, configurable power-ups, join signs, statistics, leaderboards, rewards, PlaceholderAPI integration, Bungee server mode, and a Bukkit event API.
+
+## Get Started
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install TNT Tag and prepare your server for its first match." href="/tnt-tag/getting-started" />
+    <LinkCard title="Arena Setup" description="Create an arena and configure every required location through the setup menu." href="/tnt-tag/arena-setup" />
+    <LinkCard title="Gameplay Overview" description="Understand tagging, timed eliminations, deathmatch, winners, and match cleanup." href="/tnt-tag/gameplay" />
+</CardGrid>
+
+## Features
+
+<CardGrid>
+    <LinkCard title="Tagging and Rounds" description="Learn how tagged players are selected, how tags transfer, and how round timers shrink." href="/tnt-tag/features/tagging-and-rounds" />
+    <LinkCard title="Deathmatch" description="Configure the final phase, one-tagger threshold, and round teleports." href="/tnt-tag/features/deathmatch" />
+    <LinkCard title="Spectator Mode" description="Configure spectator visibility, effects, teleports, and late joins." href="/tnt-tag/features/spectator-mode" />
+    <LinkCard title="Power-Ups" description="Create temporary potion-effect pickups with configurable locations and chances." href="/tnt-tag/features/power-ups" />
+    <LinkCard title="Join Signs" description="Create arena signs and customize their live state and player count lines." href="/tnt-tag/features/signs" />
+    <LinkCard title="Statistics and Leaderboards" description="Reference every stored statistic and leaderboard command." href="/tnt-tag/features/statistics-and-leaderboards" />
+    <LinkCard title="Bungee Mode" description="Run one arena per game server and return players to a network hub." href="/tnt-tag/features/bungee-mode" />
+</CardGrid>
+
+## Commands
+
+<CardGrid>
+    <LinkCard title="Player Commands" description="Join or leave games and inspect player statistics and rankings." href="/tnt-tag/commands/player" />
+    <LinkCard title="Admin Commands" description="Create, edit, start, stop, reload, and manage TNT Tag arenas." href="/tnt-tag/commands/admin" />
+</CardGrid>
+
+## Configuration Files
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Configure timers, gameplay rules, effects, spectators, inventory handling, and global behavior." href="/tnt-tag/configuration/config" />
+    <LinkCard title="messages.yml" description="Customize commands, game messages, bars, scoreboards, signs, state names, and name tags." href="/tnt-tag/configuration/messages" />
+    <LinkCard title="items.yml" description="Configure TNT, compasses, lobby tools, spectator tools, and admin items." href="/tnt-tag/configuration/items" />
+    <LinkCard title="power-ups.yml" description="Configure every power-up effect, item, level, duration, and spawn chance." href="/tnt-tag/configuration/power-ups" />
+    <LinkCard title="rewards.yml" description="Run player or console commands for wins, losses, draws, and game completion." href="/tnt-tag/configuration/rewards" />
+    <LinkCard title="mysql.yml" description="Connect multiple servers to a shared TNT Tag statistics database." href="/tnt-tag/configuration/mysql" />
+    <LinkCard title="bungee.yml" description="Configure hub routing and server-list MOTD behavior for Bungee mode." href="/tnt-tag/configuration/bungee" />
+    <LinkCard title="arena.yml" description="Understand the locations and limits stored for each arena." href="/tnt-tag/configuration/arena" />
+    <LinkCard title="Other Files" description="Learn how statistics and inventory backups are managed." href="/tnt-tag/configuration/other-files" />
+</CardGrid>
+
+## Placeholders and API
+
+<CardGrid>
+    <LinkCard title="General Placeholders" description="Display global, player, and per-arena TNT Tag data through PlaceholderAPI." href="/tnt-tag/placeholders/general" />
+    <LinkCard title="Leaderboard Placeholders" description="Display ranked player names and values for every statistic." href="/tnt-tag/placeholders/leaderboard" />
+    <LinkCard title="Developer API" description="Listen for joins, leaves, game states, rounds, eliminations, and statistic changes." href="/tnt-tag/api/tnt-tag-api" />
+</CardGrid>
+
+## Miscellaneous
+
+<CardGrid>
+    <LinkCard title="FAQ" description="Common questions about installation, setup, permissions, storage, Bungee mode, and troubleshooting." href="/tnt-tag/misc/faq" />
+    <LinkCard title="Get TNT Tag on SpigotMC" description="Open the official SpigotMC distribution page." href="https://www.spigotmc.org/resources/117862/" target="_blank" rel="noopener noreferrer" />
+    <LinkCard title="Get TNT Tag on BuiltByBit" description="Open the official BuiltByBit distribution page." href="https://builtbybit.com/resources/tnt-tag.50271/" target="_blank" rel="noopener noreferrer" />
+</CardGrid>
