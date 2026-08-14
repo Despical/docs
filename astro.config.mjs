@@ -978,8 +978,9 @@ export default defineConfig({
                             {
                                 label: "Commands",
                                 items: [
-                                    {label: "Player Command", link: "/item-upgrader/commands/player"},
+                                    {label: "Player Commands", link: "/item-upgrader/commands/player"},
                                     {label: "Admin Commands", link: "/item-upgrader/commands/admin"},
+                                    {label: "Debug Commands", link: "/item-upgrader/commands/debug"},
                                 ],
                             },
                             {
@@ -1004,8 +1005,6 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/item-upgrader/misc/faq"},
-                                    {label: "SpigotMC Distribution", link: "https://www.spigotmc.org/resources/116575/", attrs: {target: "_blank"}},
-                                    {label: "BuiltByBit Distribution", link: "https://builtbybit.com/resources/item-upgrader-oraxen-itemsadder.50263/", attrs: {target: "_blank"}},
                                 ],
                             },
                         ],
@@ -1079,11 +1078,6 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/the-snake/misc/faq"},
-                                    {
-                                        label: "SpigotMC Distribution",
-                                        link: "https://www.spigotmc.org/resources/the-snake.120508/",
-                                        attrs: {target: "_blank"},
-                                    },
                                 ],
                             },
                         ],
@@ -1106,6 +1100,7 @@ export default defineConfig({
                                 label: "Commands",
                                 items: [
                                     {label: "Player Commands", link: "/tnt-tag/commands/player"},
+                                    {label: "Arena Commands", link: "/tnt-tag/commands/arena"},
                                     {label: "Admin Commands", link: "/tnt-tag/commands/admin"},
                                 ],
                             },
@@ -1169,8 +1164,6 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/tnt-tag/misc/faq"},
-                                    {label: "SpigotMC Distribution", link: "https://www.spigotmc.org/resources/117862/", attrs: {target: "_blank"}},
-                                    {label: "BuiltByBit Distribution", link: "https://builtbybit.com/resources/tnt-tag.50271/", attrs: {target: "_blank"}},
                                 ],
                             },
                         ],
