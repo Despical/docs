@@ -1,0 +1,36 @@
+---
+title: renderers.yml
+description: Understand the persistent renderer data managed by Particle Text.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`renderers.yml` stores every renderer. Commands and the management menu update this file automatically.
+
+```yaml
+renderers: {}
+```
+
+Each created entry records its text, particle, scale, font, enabled and inverted state, three-axis rotation, and world location.
+
+---
+
+## Recommended Management
+
+Use `/pt create`, `/pt text`, `/pt move`, `/pt font`, `/pt particle`, `/pt rotate`, and the inventory menu whenever possible. These paths validate values before saving them and rebuild the runtime renderer safely.
+
+If you edit `renderers.yml` manually, run:
+
+```bash
+/pt reload
+```
+
+<Aside type="caution" title="World availability">
+A renderer remains saved when its world is unavailable, but it cannot render or be used as a teleport destination until that world is loaded. Particle Text declares common multi-world plugins as soft dependencies so their worlds can initialize first.
+</Aside>
+
+---
+
+## Backups
+
+Back up `renderers.yml` before large manual changes or migrations. Deleting a renderer with `/pt delete` permanently removes its stored entry.
