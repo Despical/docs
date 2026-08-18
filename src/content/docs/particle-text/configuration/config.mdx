@@ -1,0 +1,94 @@
+---
+title: config.yml
+description: Configure Particle Text performance, renderer defaults, menus, sounds, and update checks.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`config.yml` controls global behavior. Run `/pt reload` after editing it.
+
+---
+
+## Performance
+
+```yaml
+performance:
+  render-interval-ticks: 2
+  initial-delay-ticks: 20
+  view-distance: 32.0
+  pixel-step: 1
+  max-points-per-renderer: 1500
+  max-text-length: 128
+  force-particles: false
+  placeholder-refresh-ticks: 100
+```
+
+| Option | Description |
+|:--|:--|
+| `render-interval-ticks` | Delay between shared render passes. |
+| `initial-delay-ticks` | Startup or reload delay before the first pass. |
+| `view-distance` | Maximum visibility radius in blocks. |
+| `pixel-step` | Samples every nth raster pixel. |
+| `max-points-per-renderer` | Maximum cached particle points for one renderer. |
+| `max-text-length` | Maximum accepted command text and resolved placeholder output. |
+| `force-particles` | Forces visibility regardless of the viewer's particle preference. |
+| `placeholder-refresh-ticks` | Interval for resolving dynamic PlaceholderAPI text. |
+
+---
+
+## Renderer Defaults
+
+```yaml
+defaults:
+  particle: FLAME
+  scale: 0.20
+  inverted: false
+  enabled: true
+  font:
+    name: SansSerif
+    style: PLAIN
+    size: 16
+```
+
+These values are copied when `/pt create` makes a new renderer. Existing renderers retain the individual values saved in `renderers.yml`.
+
+`SansSerif` is Java's portable logical fallback. Valid styles are `PLAIN`, `BOLD`, `ITALIC`, and `BOLD_ITALIC`.
+
+---
+
+## Menu
+
+```yaml
+menu:
+  title: '<gradient:#00E5FF:#7C4DFF><bold>Particle Text</bold></gradient> <#37474F>»'
+  rows: 6
+  enabled-material: LIME_DYE
+  disabled-material: GRAY_DYE
+  previous-page-material: ARROW
+  next-page-material: ARROW
+  empty-material: BARRIER
+  decoration-blocks:
+    material: GRAY_STAINED_GLASS_PANE
+  sounds:
+    open: ui.button.click
+    page-change: ui.button.click
+    teleport: entity.enderman.teleport
+    enabled: block.note_block.pling
+    disabled: block.note_block.bass
+```
+
+Menu height accepts `3` through `6` rows. Invalid or air materials fall back to safe defaults. Invalid sound keys also fall back to the defaults shown above.
+
+<Aside type="tip">
+The menu title supports MiniMessage formatting. Reopen the inventory after `/pt reload` to see menu changes.
+</Aside>
+
+---
+
+## Update Checks
+
+```yaml
+updates-enabled: true
+```
+
+When enabled, Particle Text checks for newer releases during startup.
