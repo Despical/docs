@@ -1,0 +1,60 @@
+---
+title: PlaceholderAPI
+description: Use Particle Text placeholders and resolve dynamic placeholders inside renderer text.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+PlaceholderAPI is optional. When installed, Particle Text registers the `particletext` expansion and resolves installed placeholders inside renderer text.
+
+---
+
+## Global Placeholders
+
+| Placeholder | Result |
+|:--|:--|
+| `%particletext_total%` | Total configured renderers. |
+| `%particletext_enabled%` | Number of enabled renderers. |
+| `%particletext_disabled%` | Number of disabled renderers. |
+| `%particletext_nearest_id%` | ID of the nearest renderer to the player. |
+| `%particletext_nearest_text%` | Stored text of the nearest renderer. |
+| `%particletext_nearest_distance%` | Distance to the nearest renderer, formatted to two decimal places. |
+
+Nearest-renderer placeholders return an empty value without player context or when no compatible renderer is available.
+
+---
+
+## Renderer Placeholders
+
+Replace `<id>` with a renderer ID:
+
+| Placeholder | Result |
+|:--|:--|
+| `%particletext_renderer:<id>:text%` | Stored renderer text. |
+| `%particletext_renderer:<id>:particle%` | Bukkit particle name. |
+| `%particletext_renderer:<id>:scale%` | Scale formatted to two decimal places. |
+| `%particletext_renderer:<id>:enabled%` | `true` or `false`. |
+| `%particletext_renderer:<id>:inverted%` | `true` or `false`. |
+| `%particletext_renderer:<id>:world%` | Saved world name. |
+
+Example:
+
+```text
+%particletext_renderer:spawn_title:text%
+```
+
+---
+
+## Dynamic Renderer Text
+
+You may place placeholders from other installed expansions directly inside a renderer:
+
+```bash
+/pt create greeting Welcome, %player_name%!
+```
+
+Particle Text resolves dynamic text every `performance.placeholder-refresh-ticks`. It rebuilds the cached point cloud only when the resolved value changes.
+
+<Aside type="tip" title="Performance">
+Frequently changing placeholders can rebuild point clouds often. Increase `placeholder-refresh-ticks` when second-by-second updates are unnecessary.
+</Aside>
