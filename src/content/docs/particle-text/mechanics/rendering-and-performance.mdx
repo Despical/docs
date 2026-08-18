@@ -1,0 +1,44 @@
+---
+title: Rendering and Performance
+description: Learn how Particle Text builds, caches, filters, and sends particle text.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Particle Text converts each renderer's text into a cached point cloud. A single shared scheduler then sends those points only to eligible nearby players.
+
+---
+
+## Point Cloud Generation
+
+The configured Java AWT font rasterizes text into an image. Eligible foreground pixels become particle points; inverted renderers use background pixels instead. Scale and three-axis rotation are applied before those points are placed in the world.
+
+Point clouds are cached. They are rebuilt when a renderer's visual data changes or when dynamic PlaceholderAPI text resolves to a different value.
+
+---
+
+## Viewer Filtering
+
+Before particles are sent, the renderer checks whether it is enabled, whether its world is available, and whether each viewer is inside `performance.view-distance`. Players outside the configured radius are skipped.
+
+The `performance.force-particles` option controls whether particle packets ignore a player's reduced particle preference. Leave it disabled unless visibility is more important than client-side particle settings.
+
+---
+
+## Performance Controls
+
+| Setting | Effect | Default |
+|:--|:--|:--|
+| `render-interval-ticks` | Ticks between shared render passes. Lower values look smoother but do more work. | `2` |
+| `initial-delay-ticks` | Delay before rendering starts after startup or reload. | `20` |
+| `view-distance` | Maximum renderer visibility radius in blocks. | `32.0` |
+| `pixel-step` | Uses every nth eligible raster pixel. Higher values reduce detail and particles. | `1` |
+| `max-points-per-renderer` | Caps cached points while retaining the overall text shape through even sampling. | `1500` |
+| `max-text-length` | Limits command input and truncated placeholder output. | `128` |
+| `placeholder-refresh-ticks` | Interval between dynamic PlaceholderAPI resolutions. | `100` |
+
+<Aside type="tip" title="Recommended tuning order">
+Increase `pixel-step` first, then reduce `max-points-per-renderer` or `view-distance`. Increase `render-interval-ticks` if you still need to lower server and network work.
+</Aside>
+
+Changes take effect after `/pt reload`.
