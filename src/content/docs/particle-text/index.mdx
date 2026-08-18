@@ -1,0 +1,56 @@
+---
+title: Particle Text
+description: Create persistent, customizable text displays with native Minecraft particles.
+template: splash
+hero:
+  title: Particle Text
+  tagline: Render persistent text with native Minecraft particles.
+  image:
+    file: ../../../assets/particle-text/icon.svg
+  actions:
+    - text: Get Started
+      link: /particle-text/getting-started
+      icon: right-arrow
+      variant: primary
+    - text: View on GitHub
+      link: https://github.com/Despical/ParticleText
+      icon: external
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+**Particle Text** creates persistent text displays from native Minecraft particles. Renderers can be created, positioned, styled, rotated, enabled, and managed without restarting the server.
+
+## Basics
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install Particle Text and verify your first server startup." href="/particle-text/getting-started" />
+    <LinkCard title="Creating Renderers" description="Create, position, style, and manage your first particle text display." href="/particle-text/creating-renderers" />
+</CardGrid>
+
+## Mechanics
+
+<CardGrid>
+    <LinkCard title="Rendering and Performance" description="Understand point clouds, viewer distance, sampling, caching, and update intervals." href="/particle-text/mechanics/rendering-and-performance" />
+</CardGrid>
+
+## Commands
+
+<CardGrid>
+    <LinkCard title="Admin Commands" description="Every command for creating, editing, moving, and inspecting renderers." href="/particle-text/commands/admin" />
+</CardGrid>
+
+## Configuration
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Configure performance limits, renderer defaults, and the management menu." href="/particle-text/configuration/config" />
+    <LinkCard title="messages.yml" description="Customize MiniMessage chat output and menu text." href="/particle-text/configuration/messages" />
+    <LinkCard title="renderers.yml" description="Understand the persistent format used for every particle text renderer." href="/particle-text/configuration/renderers" />
+</CardGrid>
+
+## Integrations
+
+<CardGrid>
+    <LinkCard title="PlaceholderAPI" description="Use Particle Text placeholders and dynamic placeholders inside renderer text." href="/particle-text/placeholders/general" />
+    <LinkCard title="FAQ" description="Find answers to common setup, visibility, font, and performance questions." href="/particle-text/misc/faq" />
+</CardGrid>
