@@ -1,0 +1,195 @@
+---
+title: Admin Commands
+description: Commands for creating, editing, positioning, inspecting, and reloading Particle Text renderers.
+---
+
+All Particle Text management commands use `/pt`. The full `/particletext` alias is also available. Operators receive the administrative permissions by default through `particletext.admin`.
+
+---
+
+## Create Command
+
+Creates a renderer at the executing player's location using the configured defaults.
+
+```bash
+/pt create <id> <text>
+```
+
+**Permission:** `particletext.command.create`  
+**Sender:** Player only
+
+---
+
+## Delete Command
+
+Permanently removes a renderer and its saved data.
+
+```bash
+/pt delete <id>
+```
+
+**Permission:** `particletext.command.delete`
+
+---
+
+## List Command
+
+Lists every configured renderer ID.
+
+```bash
+/pt list
+```
+
+**Permission:** `particletext.command.list`
+
+---
+
+## Menu Command
+
+Opens the interactive renderer management inventory.
+
+```bash
+/pt menu
+```
+
+**Permission:** `particletext.command.menu`  
+**Sender:** Player only
+
+---
+
+## Teleport Commands
+
+Teleports you to a renderer or moves a renderer to your current location.
+
+```bash
+/pt teleport <id>
+/pt tphere <id>
+```
+
+**Permission:** `particletext.command.teleport`  
+**Sender:** Player only
+
+---
+
+## Move Command
+
+Moves a renderer relative to the direction the player is facing. If omitted, the amount is `0.25` blocks.
+
+```bash
+/pt move <id> <forward|backward|left|right|up|down> [amount]
+```
+
+**Permission:** `particletext.command.edit`  
+**Sender:** Player only  
+**Amount range:** `0.01` to `100.0`
+
+---
+
+## Text Command
+
+Changes the displayed text. The configured `performance.max-text-length` limit applies.
+
+```bash
+/pt text <id> <text>
+```
+
+**Permission:** `particletext.command.edit`
+
+---
+
+## Size Command
+
+Changes the world-space scale of the renderer.
+
+```bash
+/pt setsize <id> <scale>
+```
+
+**Permission:** `particletext.command.edit`  
+**Scale range:** Greater than `0` and no more than `10`
+
+---
+
+## Font Command
+
+Changes the Java AWT font family, style, and rasterization size.
+
+```bash
+/pt font <id> <name> <style> <size>
+```
+
+**Permission:** `particletext.command.edit`  
+**Styles:** `PLAIN`, `BOLD`, `ITALIC`, `BOLD_ITALIC`  
+**Size range:** `4` to `128`
+
+---
+
+## Particle Command
+
+Changes the renderer to a supported data-free Bukkit particle.
+
+```bash
+/pt particle <id> <particle>
+```
+
+**Permission:** `particletext.command.edit`
+
+---
+
+## State Commands
+
+Enables or disables a renderer, or switches between glyph and background pixels.
+
+```bash
+/pt enabled <id> <true|false>
+/pt inverted <id> <true|false>
+```
+
+**Permission:** `particletext.command.edit`
+
+---
+
+## Rotate Command
+
+Sets the rotation angle for one axis. Angles are expressed in degrees.
+
+```bash
+/pt rotate <id> <x|y|z> <angle>
+```
+
+**Permission:** `particletext.command.edit`
+
+---
+
+## Reload Command
+
+Reloads cached settings, messages, renderer data, and the render task.
+
+```bash
+/pt reload
+```
+
+**Permission:** `particletext.command.reload`
+
+---
+
+## Help and Version Commands
+
+```bash
+/pt help
+/pt version
+```
+
+**Help permission:** `particletext.command.help`  
+**Version permission:** `particletext.command.version`
+
+The version permission is granted to all players by default. Standard tab completions require `particletext.command.tabcomplete`.
+
+---
+
+## Parent Permissions
+
+| Permission | Access | Default |
+|:--|:--|:--|
+| `particletext.*` | Includes `particletext.admin`. | Operators |
+| `particletext.admin` | Includes every create, edit, menu, reload, help, version, and tab-completion permission. | Operators |
