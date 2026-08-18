@@ -1,0 +1,9 @@
+<svg viewBox="0 0 190 48" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(2 2)">
+        <path d="M8 10H35M21.5 10V37" stroke="#6D28D9" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="6" cy="7" r="3" fill="#0891B2"/><circle cx="40" cy="8" r="2.5" fill="#7C3AED"/>
+        <circle cx="35" cy="18" r="2.7" fill="#06B6D4"/><circle cx="39" cy="28" r="2.2" fill="#8B5CF6"/>
+        <circle cx="32" cy="38" r="2.8" fill="#0891B2"/><circle cx="11" cy="38" r="2.3" fill="#7C3AED"/>
+    </g>
+    <text x="51" y="31" font-family="Poppins,Arial,sans-serif" font-size="22" font-weight="600" fill="#312E81">Particle Text</text>
+</svg>
