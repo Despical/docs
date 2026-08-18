@@ -1,0 +1,41 @@
+---
+title: messages.yml
+description: Customize Particle Text command responses, help lines, and renderer menu text.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`messages.yml` contains user-facing chat and menu text. Values support Adventure MiniMessage formatting, including gradients, hex colors, and text decorations.
+
+---
+
+## Message Formatting
+
+```yaml
+prefix: '<gradient:#00E5FF:#7C4DFF><bold>Particle Text</bold></gradient> <#37474F>»'
+renderer-created: '%prefix% <gray>Created renderer <white>%id%</white>.</gray>'
+```
+
+Keep placeholders such as `%prefix%`, `%id%`, `%label%`, `%version%`, `%particle%`, and `%amount%` intact when they are used by a message.
+
+---
+
+## Help Lines
+
+The `help` list is sent by `/pt help`. `%label%` reflects the command alias used by the sender.
+
+```yaml
+help:
+  - '<dark_gray>• <white>/%label% create <id> <text>'
+  - '<dark_gray>• <white>/%label% menu'
+```
+
+---
+
+## Menu Text
+
+Renderer names, lore, pagination buttons, and empty-menu text are also stored in `messages.yml`. The inventory title itself is configured under `menu.title` in `config.yml`.
+
+<Aside type="caution" title="Apply changes safely">
+Run `/pt reload` after editing this file. Invalid MiniMessage syntax may cause formatting to appear differently than intended.
+</Aside>
