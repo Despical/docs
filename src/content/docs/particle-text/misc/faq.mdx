@@ -1,0 +1,58 @@
+---
+title: Frequently Asked Questions
+description: Troubleshoot Particle Text installation, visibility, fonts, placeholders, and performance.
+---
+
+## Why can I not see a renderer?
+
+Check that the renderer is enabled, its saved world is loaded, and you are inside `performance.view-distance`. If your client reduces particles, test with `performance.force-particles: true` temporarily.
+
+Run `/pt list` to confirm the ID and `/pt teleport <id>` to visit its saved location.
+
+---
+
+## Why does my renderer use the wrong font?
+
+Font availability depends on the Java environment running the server. Use the portable `SansSerif` family or install the desired font on the host, then update the renderer with `/pt font`.
+
+---
+
+## Why is detailed text expensive to render?
+
+Large fonts, inverted mode, a low `pixel-step`, and long text generate more source pixels. Increase `performance.pixel-step`, lower `max-points-per-renderer`, reduce `view-distance`, or increase `render-interval-ticks`.
+
+---
+
+## Why did changing defaults not update existing renderers?
+
+Defaults are copied only when `/pt create` makes a renderer. Existing entries retain their saved font, scale, particle, and state. Use commands or edit `renderers.yml`, then run `/pt reload`.
+
+---
+
+## Why is a PlaceholderAPI value not updating?
+
+Confirm PlaceholderAPI and the required expansion are installed. Dynamic renderer text refreshes according to `performance.placeholder-refresh-ticks`, so changes are not necessarily immediate.
+
+---
+
+## Can I use any Bukkit particle?
+
+No. Particle Text supports particles that do not require additional Bukkit data. Use command tab completion to see valid values for your server version.
+
+---
+
+## Can commands be run from the console?
+
+Commands that depend on a player location or inventory are player-only: `create`, `menu`, `teleport`, `tphere`, and `move`. Data-only commands such as `list`, `delete`, editing commands, `reload`, `help`, and `version` can be used by other permitted senders.
+
+---
+
+## Does Particle Text require PlaceholderAPI?
+
+No. Static particle text works without it. Install PlaceholderAPI only when you need dynamic renderer text or the `%particletext_*%` placeholders.
+
+---
+
+## Where can I report an issue?
+
+Open an issue in the [Particle Text GitHub repository](https://github.com/Despical/ParticleText/issues) and include the plugin version, server version, relevant configuration, and console errors.
