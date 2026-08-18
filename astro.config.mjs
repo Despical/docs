@@ -87,6 +87,11 @@ export default defineConfig({
                 },
                 {
                     icon: "github",
+                    label: "particle-text:GitHub",
+                    href: "https://github.com/Despical/ParticleText",
+                },
+                {
+                    icon: "github",
                     label: "tnt-run:GitHub",
                     href: "https://github.com/Despical/TNTRun",
                 },
@@ -1164,6 +1169,54 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/tnt-tag/misc/faq"},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "Particle Text",
+                        id: "particle-text",
+                        link: "/particle-text/",
+                        icon: "particle-text",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/particle-text/getting-started"},
+                                    {label: "Creating Renderers", link: "/particle-text/creating-renderers"},
+                                ],
+                            },
+                            {
+                                label: "Mechanics",
+                                items: [
+                                    {label: "Rendering and Performance", link: "/particle-text/mechanics/rendering-and-performance"},
+                                ],
+                            },
+                            {
+                                label: "Commands",
+                                items: [
+                                    {label: "Admin Commands", link: "/particle-text/commands/admin"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {label: "config.yml", link: "/particle-text/configuration/config"},
+                                    {label: "messages.yml", link: "/particle-text/configuration/messages"},
+                                    {label: "renderers.yml", link: "/particle-text/configuration/renderers"},
+                                ],
+                            },
+                            {
+                                label: "Placeholders",
+                                items: [
+                                    {label: "PlaceholderAPI", link: "/particle-text/placeholders/general"},
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "FAQ", link: "/particle-text/misc/faq"},
+                                    {label: "Source Code", link: "https://github.com/Despical/ParticleText"},
                                 ],
                             },
                         ],
