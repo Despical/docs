@@ -1,0 +1,75 @@
+---
+title: Creating Renderers
+description: Create, position, style, rotate, and manage Particle Text renderers.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+A renderer combines text, a particle type, font settings, scale, rotation, state, and a world location. New renderers copy the values under `defaults` in `config.yml`.
+
+---
+
+## Create a Renderer
+
+<Steps>
+1. Stand at the location where the text should be anchored.
+2. Run `/pt create <id> <text>`.
+3. Use `/pt teleport <id>` to return to its saved location while adjusting it.
+4. Open `/pt menu` to review all configured renderers.
+</Steps>
+
+```bash
+/pt create rules Read the server rules
+```
+
+Renderer IDs are normalized to lowercase when they are looked up. Choose short, descriptive IDs such as `spawn_title` or `shop-prices`.
+
+---
+
+## Position the Text
+
+Move a renderer directly to your location:
+
+```bash
+/pt tphere rules
+```
+
+Fine-tune it relative to the direction you are facing:
+
+```bash
+/pt move rules up 0.50
+/pt move rules right 0.25
+/pt move rules forward 1.00
+```
+
+The direction can be `forward`, `backward`, `left`, `right`, `up`, or `down`. The optional amount defaults to `0.25` blocks and must be between `0.01` and `100.0`.
+
+---
+
+## Change the Appearance
+
+```bash
+/pt text rules Please read the rules
+/pt particle rules END_ROD
+/pt setsize rules 0.25
+/pt font rules SansSerif BOLD 20
+/pt rotate rules y 15
+```
+
+Font styles are `PLAIN`, `BOLD`, `ITALIC`, and `BOLD_ITALIC`. Font size must be from `4` to `128`, while scale must be greater than `0` and no more than `10`.
+
+<Aside type="caution" title="Particle compatibility">
+Particle Text accepts particles that do not require extra Bukkit data. Tab completion lists the supported values for the current server version.
+</Aside>
+
+---
+
+## Toggle or Remove a Renderer
+
+```bash
+/pt enabled rules false
+/pt inverted rules true
+/pt delete rules
+```
+
+Disabling preserves the renderer in `renderers.yml` but stops rendering it. Inverted mode draws background pixels instead of glyph pixels and can produce substantially more particle points.
