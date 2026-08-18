@@ -1,0 +1,57 @@
+---
+title: Getting Started
+description: Install Particle Text on a modern Paper server and verify the plugin is ready.
+---
+
+import { Aside, Badge, Steps } from "@astrojs/starlight/components";
+
+This guide covers the requirements, installation process, generated files, and first command for **Particle Text**.
+
+---
+
+## Prerequisites
+
+* **Java Version:** Java 25 or newer.
+* **Server Software:** A Paper-compatible Minecraft 26.2 server.
+* **PlaceholderAPI** <Badge text="Optional" variant="tip" />: Resolves placeholders inside renderer text and enables the `%particletext_*%` expansion.
+* **Permissions Plugin** <Badge text="Optional" variant="tip" />: Use a plugin such as LuckPerms to grant administrative commands to non-operators.
+
+---
+
+## Installation
+
+<Steps>
+1. Download the latest `particle-text-x.x.x.jar` release from [GitHub](https://github.com/Despical/ParticleText/releases).
+2. Place the JAR in your server's `plugins/` directory.
+3. Install PlaceholderAPI if you want dynamic renderer text or Particle Text placeholders.
+4. Restart the server. Avoid `/reload`, because a full restart safely initializes the renderer task and integrations.
+5. Run `/pt version` to confirm that Particle Text is enabled.
+</Steps>
+
+---
+
+## Generated Files
+
+The first startup creates `/plugins/ParticleText/` with these files:
+
+| File | Purpose |
+|:--|:--|
+| `config.yml` | Performance limits, renderer defaults, menu appearance, sounds, and update checks. |
+| `messages.yml` | MiniMessage-compatible command responses, help lines, and inventory text. |
+| `renderers.yml` | Persistent text, particle, font, transform, state, and location data for every renderer. |
+
+<Aside type="tip" title="Reloading changes">
+Run `/pt reload` after editing any generated file. The command reloads settings, messages, renderer data, and the shared render task.
+</Aside>
+
+---
+
+## Create Your First Renderer
+
+Stand where the text should appear, then run:
+
+```bash
+/pt create welcome Welcome to the server!
+```
+
+The ID must contain 1 to 32 lowercase letters, numbers, underscores, or hyphens. Continue with the [Creating Renderers guide](/particle-text/creating-renderers) to move and style it.
