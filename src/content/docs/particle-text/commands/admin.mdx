@@ -15,7 +15,7 @@ Creates a renderer at the executing player's location using the configured defau
 /pt create <id> <text>
 ```
 
-**Permission:** `particletext.command.create`  
+**Permission:** `particletext.command.create`
 **Sender:** Player only
 
 ---
@@ -52,7 +52,7 @@ Opens the interactive renderer management inventory.
 /pt menu
 ```
 
-**Permission:** `particletext.command.menu`  
+**Permission:** `particletext.command.menu`
 **Sender:** Player only
 
 ---
@@ -66,7 +66,7 @@ Teleports you to a renderer or moves a renderer to your current location.
 /pt tphere <id>
 ```
 
-**Permission:** `particletext.command.teleport`  
+**Permission:** `particletext.command.teleport`
 **Sender:** Player only
 
 ---
@@ -79,8 +79,8 @@ Moves a renderer relative to the direction the player is facing. If omitted, the
 /pt move <id> <forward|backward|left|right|up|down> [amount]
 ```
 
-**Permission:** `particletext.command.edit`  
-**Sender:** Player only  
+**Permission:** `particletext.command.edit`
+**Sender:** Player only
 **Amount range:** `0.01` to `100.0`
 
 ---
@@ -105,7 +105,7 @@ Changes the world-space scale of the renderer.
 /pt setsize <id> <scale>
 ```
 
-**Permission:** `particletext.command.edit`  
+**Permission:** `particletext.command.edit`
 **Scale range:** Greater than `0` and no more than `10`
 
 ---
@@ -118,8 +118,8 @@ Changes the Java AWT font family, style, and rasterization size.
 /pt font <id> <name> <style> <size>
 ```
 
-**Permission:** `particletext.command.edit`  
-**Styles:** `PLAIN`, `BOLD`, `ITALIC`, `BOLD_ITALIC`  
+**Permission:** `particletext.command.edit`
+**Styles:** `PLAIN`, `BOLD`, `ITALIC`, `BOLD_ITALIC`
 **Size range:** `4` to `128`
 
 ---
@@ -180,7 +180,7 @@ Reloads cached settings, messages, renderer data, and the render task.
 /pt version
 ```
 
-**Help permission:** `particletext.command.help`  
+**Help permission:** `particletext.command.help`
 **Version permission:** `particletext.command.version`
 
 The version permission is granted to all players by default. Standard tab completions require `particletext.command.tabcomplete`.
