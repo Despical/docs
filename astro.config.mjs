@@ -126,6 +126,11 @@ export default defineConfig({
                     href: "https://builtbybit.com/resources/tnt-run.116706/",
                 },
                 {
+                    icon: "external",
+                    label: "tnt-run:Modrinth",
+                    href: "https://modrinth.com/plugin/tnt-run-minigame",
+                },
+                {
                     icon: "github",
                     label: "kotl:GitHub",
                     href: "https://github.com/Despical/KOTL",
