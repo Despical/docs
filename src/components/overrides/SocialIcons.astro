@@ -15,7 +15,7 @@ const links = (config.social || [])
             return true;
 
         if (l.label.startsWith("marketplace:"))
-            return Boolean(project);
+            return Boolean(project) && !freePlugins.has(project);
 
         if (l.label.startsWith("home:"))
             return !project;
@@ -29,10 +29,13 @@ const links = (config.social || [])
             ? "spigotmc"
             : label === "BuiltByBit"
                 ? "builtbybit"
-                : link.icon;
+                : label === "Modrinth"
+                    ? "modrinth"
+                    : link.icon;
 
         return { ...link, label, icon };
     })
+    .filter((link) => !project || !freePlugins.has(project) || freePluginMarketplaces.has(link.label))
     .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
 ---
 
