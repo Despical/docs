@@ -1407,6 +1407,11 @@ export default defineConfig({
                                         link: "/tnt-run/api/tnt-run-api",
                                     },
                                     {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/tnt-run/",
+                                        attrs: {target: "_blank"},
+                                    },
+                                    {
                                         label: "Game Events",
                                         collapsed: true,
                                         items: [
