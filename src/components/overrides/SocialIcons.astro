@@ -6,6 +6,8 @@ const { isPageWithTopic, topics } = Astro.locals.starlightSidebarTopics;
 const currentTopic = isPageWithTopic ? topics.find((t) => t.isCurrent) : null;
 
 const project = currentTopic?.label?.toLowerCase().replace(' ', '-');
+const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text"]);
+const freePluginMarketplaces = new Set(["SpigotMC", "BuiltByBit", "Modrinth"]);
 
 const links = (config.social || [])
     .filter((l) => {
