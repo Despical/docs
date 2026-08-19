@@ -1241,7 +1241,17 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/particle-text/misc/faq"},
+                                    {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/particle-text/",
+                                        attrs: {target: "_blank"},
+                                    },
                                     {label: "Source Code", link: "https://github.com/Despical/ParticleText"},
+                                    {
+                                        label: "Create an Issue",
+                                        link: "https://github.com/Despical/ParticleText/issues/new/choose",
+                                        attrs: {target: "_blank"},
+                                    },
                                 ],
                             },
                         ],
