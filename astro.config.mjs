@@ -946,6 +946,11 @@ export default defineConfig({
                                 items: [
                                     {label: "Whack Me API", link: "/whack-me/api/whack-me-api"},
                                     {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/whack-me/",
+                                        attrs: {target: "_blank"},
+                                    },
+                                    {
                                         label: "Game Events",
                                         collapsed: true,
                                         items: [
