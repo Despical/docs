@@ -1621,6 +1621,11 @@ export default defineConfig({
                                         link: "/kotl/api/kotl-api",
                                     },
                                     {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/kotl/",
+                                        attrs: {target: "_blank"},
+                                    },
+                                    {
                                         label: "Game Events",
                                         collapsed: true,
                                         items: [
