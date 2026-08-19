@@ -91,6 +91,21 @@ export default defineConfig({
                     href: "https://github.com/Despical/ParticleText",
                 },
                 {
+                    icon: "seti:java",
+                    label: "particle-text:Javadoc",
+                    href: "https://javadoc.despical.dev/particle-text/",
+                },
+                {
+                    icon: "external",
+                    label: "particle-text:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/particle-text.110996/",
+                },
+                {
+                    icon: "external",
+                    label: "particle-text:BuiltByBit",
+                    href: "https://builtbybit.com/resources/particle-text.50324/",
+                },
+                {
                     icon: "github",
                     label: "tnt-run:GitHub",
                     href: "https://github.com/Despical/TNTRun",
