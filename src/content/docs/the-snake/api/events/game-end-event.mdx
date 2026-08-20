@@ -13,6 +13,7 @@ description: Event fired after The Snake detects a win or loss and enters its en
 
 | Method | Return Type | Description |
 |:--|:--|:--|
+| `getGame()` | `Game` | Completed game instance with its final score. |
 | `getArena()` | `Arena` | Arena whose round has ended. |
 | `getUser()` | `User` | Player still assigned during the ending delay. |
 
@@ -21,7 +22,7 @@ The player has not yet been returned to the end location. The delay is controlle
 ```java
 @EventHandler
 public void onSnakeEnd(GameEndEvent event) {
-    int score = event.getArena().getScore();
+    int score = event.getGame().getScore();
     getLogger().info(event.getUser().getName() + " finished with " + score);
 }
 ```
