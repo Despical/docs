@@ -1,17 +1,17 @@
 ---
 title: Other Files
-description: Understand The Snake flat-file statistics and temporary inventory backup data.
+description: Understand The Snake flat-file statistics and inventory recovery behavior.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
 
-## stats.yml
+## data/stats.yml
 
-`stats.yml` is used when `database: flat` is selected or when the database selector is absent or invalid.
+`data/stats.yml` is used when `database: flat` is selected or when the database selector is absent or invalid.
 
 Player records are stored below their UUID and include every persistent statistic. The flat-file implementation can load active players, inspect offline players, build the leaderboard cache, and save all currently loaded users.
 
-Do not edit `stats.yml` while the server is running. A later save can overwrite manual changes.
+Do not edit `data/stats.yml` while the server is running. A later save can overwrite manual changes.
 
 ---
 
