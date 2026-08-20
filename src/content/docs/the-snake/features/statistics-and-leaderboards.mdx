@@ -3,8 +3,6 @@ title: Statistics and Leaderboards
 description: Understand The Snake statistics, flat-file and MySQL persistence, autosaving, offline caches, and leaderboard refreshes.
 ---
 
-import { Aside } from "@astrojs/starlight/components";
-
 The Snake tracks six integer statistics for each player:
 
 | Key | Meaning |
@@ -20,7 +18,7 @@ The Snake tracks six integer statistics for each player:
 
 ## Storage Modes
 
-* **Flat file:** Stores values in `stats.yml` under each player's UUID.
+* **Flat file:** Stores values in `data/stats.yml` under each player's UUID.
 * **MySQL:** Creates or updates a table with UUID, name, and one column for every persistent statistic.
 
 MySQL loads and saves through a single background executor. Batch saves run in a transaction and the executor is given up to 10 seconds to finish during shutdown.
@@ -29,16 +27,12 @@ MySQL loads and saves through a single background executor. Batch saves run in a
 
 ## Autosaving
 
-The plugin starts a five-minute asynchronous autosave task. Player data is also saved when a round is cleared and during plugin shutdown.
-
-<Aside type="note">
-    The shipped `statistic-saving-period` setting is present in `config.yml`, but the current autosave scheduler uses a fixed five-minute interval.
-</Aside>
+The plugin starts an asynchronous autosave task using `statistic-saving-period`, which defaults to 300 seconds. Each cycle saves arena data and player data, then refreshes every leaderboard. Player data is also saved when a round is cleared and during plugin shutdown.
 
 ---
 
 ## Leaderboard Cache
 
-When PlaceholderAPI is enabled, the plugin creates an internal leaderboard manager and refreshes all persistent integer leaderboards during autosave. Entries with values of zero are omitted and the remaining entries are sorted from highest to lowest.
+The plugin refreshes all persistent integer leaderboards during autosave and after an active game is cleared. Entries with values of zero are omitted, remaining entries are sorted from highest to lowest, and `leaderboard-size` limits the cached positions.
 
-The current PlaceholderAPI expansion exposes player and arena placeholders only. It does not yet expose ranked leaderboard position placeholders.
+PlaceholderAPI exposes the cached name, UUID, or value for a requested statistic and position. See the [complete placeholder reference](/the-snake/placeholders/general/).
