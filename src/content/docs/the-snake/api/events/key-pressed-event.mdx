@@ -3,7 +3,7 @@ title: KeyPressedEvent
 description: Event fired from Paper player input before The Snake maps movement to a board direction.
 ---
 
-`KeyPressedEvent` is produced from Paper's `PlayerInputEvent`. It represents `W`, `A`, `S`, `D`, or `NO_INPUT` for every observed player input update.
+`KeyPressedEvent` is produced from Paper's `PlayerInputEvent` for players currently assigned to a Snake arena. It represents `W`, `A`, `S`, `D`, or `NO_INPUT`.
 
 ## Technical Overview
 
@@ -16,7 +16,7 @@ description: Event fired from Paper player input before The Snake maps movement 
 | `getCode()` | `KeyCode` | One of `W`, `A`, `S`, `D`, or `NO_INPUT`. |
 | `getPlayer()` | `Player` | Bukkit player whose input changed. |
 
-The event can fire for players outside Snake arenas. The built-in arena listener filters by the assigned user and accepts at most one direction input per movement update.
+The event does not fire for players outside Snake arenas. The active game accepts at most one direction input per movement update.
 
 ```java
 @EventHandler
