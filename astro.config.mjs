@@ -1058,6 +1058,8 @@ export default defineConfig({
                                 items: [
                                     {label: "Player Commands", link: "/the-snake/commands/player"},
                                     {label: "Arena Commands", link: "/the-snake/commands/arena"},
+                                    {label: "Admin Commands", link: "/the-snake/commands/admin"},
+                                    {label: "Debug Commands", link: "/the-snake/commands/debug"},
                                 ],
                             },
                             {
@@ -1065,8 +1067,10 @@ export default defineConfig({
                                 collapsed: true,
                                 items: [
                                     {label: "config.yml", link: "/the-snake/configuration/config"},
+                                    {label: "messages.yml", link: "/the-snake/configuration/messages"},
+                                    {label: "sounds.yml", link: "/the-snake/configuration/sounds"},
                                     {label: "mysql.yml", link: "/the-snake/configuration/mysql"},
-                                    {label: "arena.yml", link: "/the-snake/configuration/arena"},
+                                    {label: "arenas.yml", link: "/the-snake/configuration/arena"},
                                     {label: "Other Files", link: "/the-snake/configuration/other-files"},
                                 ],
                             },
@@ -1099,7 +1103,7 @@ export default defineConfig({
                                             {label: "GameStateChangeEvent", link: "/the-snake/api/events/game-state-change-event"},
                                             {label: "KeyPressedEvent", link: "/the-snake/api/events/key-pressed-event"},
                                             {label: "NewScoreEvent", link: "/the-snake/api/events/new-score-event"},
-                                            {label: "StatisticChangeEvent", link: "/the-snake/api/events/statistic-change-event"},
+                                            {label: "PlayerStatisticChangeEvent", link: "/the-snake/api/events/player-statistic-change-event"},
                                         ],
                                     },
                                 ],
