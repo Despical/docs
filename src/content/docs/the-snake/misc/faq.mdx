@@ -7,7 +7,7 @@ import { Aside } from "@astrojs/starlight/components";
 
 ## Which Java version is required?
 
-The current build uses a Java 21 toolchain. Run the server with **Java 21 or newer**.
+The current build uses a Java 25 toolchain. Run the server with **Java 25 or newer**.
 
 ---
 
@@ -37,7 +37,7 @@ The arena needs valid start, end, first-corner, and second-corner locations. Use
 
 ## How do I make the snake faster?
 
-Lower the arena's **Tick Interval**. The minimum is `1`; the default is `3`. Very low intervals provide less time to react.
+Lower the arena's **Tick Interval**. The minimum is `1`; the default is `6`. Very low intervals provide less time to react.
 
 ---
 
@@ -49,7 +49,7 @@ Disable **Wrap Around** in the arena options. With it enabled, the snake reappea
 
 ## Why is MySQL not being used?
 
-The v1.5.8 runtime reads `database`, while the default config still includes `mysql-enabled`. Add this to `config.yml`:
+Make sure the database selector is set in `config.yml`:
 
 ```yaml
 database: mysql
@@ -59,9 +59,9 @@ Then configure `mysql.yml` and restart the server.
 
 ---
 
-## Why are leaderboard placeholders missing?
+## Why is a leaderboard position empty or stale?
 
-The current PlaceholderAPI expansion implements player and arena placeholders only. It refreshes an internal leaderboard cache but does not expose ranked position placeholders yet.
+Leaderboard positions include positive values only, are limited by `leaderboard-size`, and refresh during autosaves or when an active game is cleared. Check the statistic key and position, then wait for the next configured save cycle if a value changed recently.
 
 ---
 
