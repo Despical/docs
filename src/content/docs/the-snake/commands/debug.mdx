@@ -1,0 +1,37 @@
+---
+title: Debug Commands
+description: Test MiniMessage output and inspect The Snake event timings.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Debug commands are registered only when `debug: true` is set in `config.yml`. Keep debug mode disabled on production servers unless you are actively diagnosing an issue.
+
+---
+
+## Component Command
+
+Renders a supplied MiniMessage string for the executing player. Use `--path` to render a string or list from `messages.yml` instead.
+
+```bash
+/snake debug component <message>
+/snake debug component --path=<message.path>
+```
+
+**Permission:** `snake.debug.component`
+
+---
+
+## Event Timings Dump
+
+Displays the call count, total listener time, and average listener time collected for each The Snake custom event.
+
+```bash
+/snake debug dump
+```
+
+**Permission:** `snake.debug.dump`
+
+<Aside type="note">
+    Set `event-profiling.enabled: true` before collecting a report. Enabling `event-profiling.verbose` also logs every profiled event call and can produce heavy console output.
+</Aside>
