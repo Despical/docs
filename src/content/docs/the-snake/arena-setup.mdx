@@ -5,7 +5,7 @@ description: Create a The Snake arena, select a valid 2D game board, configure o
 
 import { Aside, Steps } from "@astrojs/starlight/components";
 
-The arena editor uses protected inventory items instead of a long command sequence. Creating an arena immediately saves its entry to `arena.yml` and places the creator in edit mode.
+The arena editor uses protected inventory items instead of a long command sequence. Creating an arena registers it; run `/snake edit <arena id>` to enter edit mode and configure it.
 
 ---
 
@@ -26,13 +26,14 @@ The two board corners must share either the same X coordinate or the same Z coor
 
 <Steps>
     1. Run `/snake create <arena id>`.
-    2. Move to the camera position, face the board, and use **Set Start Location**.
-    3. Move to the safe return point and use **Set End Location**.
-    4. Hold **Board Setter** and click the first board corner.
-    5. Click the opposite corner on the same 2D plane.
-    6. Open **Options** and adjust the arena settings.
-    7. Use **Save** to serialize all changed locations and options.
-    8. Use **Stop Editing** to restore the inventory and leave editor mode.
+    2. Run `/snake edit <arena id>`.
+    3. Move to the camera position, face the board, and use **Set Start Location**.
+    4. Move to the safe return point and use **Set End Location**.
+    5. Hold **Board Setter** and click the first board corner.
+    6. Click the opposite corner on the same 2D plane.
+    7. Open **Options** and adjust the arena settings.
+    8. Use **Save** to serialize all changed locations and options.
+    9. Use **Stop Editing** to restore the inventory and leave editor mode.
 </Steps>
 
 ---
@@ -45,7 +46,7 @@ The two board corners must share either the same X coordinate or the same Z coor
 | 2 | Set End Location | Saves the destination used after a round or reconnect recovery. |
 | 5 | Board Setter | Selects the two corners used to calculate every playable cell. |
 | 7 | Options | Opens the arena options and game block menus. |
-| 8 | Save | Writes changed locations and all current options to `arena.yml`. |
+| 8 | Save | Writes changed locations and all current options to `arenas.yml`. |
 | 9 | Stop Editing | Leaves edit mode and restores the saved player inventory. |
 
 The editor items cannot be dropped or moved through normal inventory clicks.
