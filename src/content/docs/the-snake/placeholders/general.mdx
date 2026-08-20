@@ -1,6 +1,6 @@
 ---
 title: PlaceholderAPI Placeholders
-description: Complete list of player and arena placeholders exposed by The Snake.
+description: Complete list of global, player, arena, statistic, and leaderboard placeholders exposed by The Snake.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
@@ -17,12 +17,26 @@ Install [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/
 | `%snake_player_uuid%` | Player UUID. |
 | `%snake_player_arena%` | Current arena ID or `placeholders.not-in-arena`. |
 | `%snake_player_wins%` | Stored wins. |
+| `%snake_player_losses%` | Stored losses. |
 | `%snake_player_win-streak%` | Current win streak. |
 | `%snake_player_games-played%` | Stored games played. |
 | `%snake_player_best-score%` | Highest single-round score. |
 | `%snake_player_total-score%` | Sum of finalized round scores. |
 
 Player placeholders return no value when the requesting integration does not provide a player context.
+
+---
+
+## Global and Statistic Placeholders
+
+| Placeholder | Output |
+|:--|:--|
+| `%snake_arenas_total%` | Number of registered arenas. `%snake_total_arenas%` is an alias. |
+| `%snake_arenas_ready%` | Number of arenas marked ready. |
+| `%snake_online_players%` | Number of occupied arenas. |
+| `%snake_stat:<statistic>%` | The requesting player's value for a statistic key such as `win`, `best_score`, or `games_played`. |
+
+Legacy player-stat aliases remain available for wins, losses, win streak, best score, total score, and games played. Both underscore and hyphen spellings are accepted where applicable.
 
 ---
 
@@ -33,12 +47,40 @@ Replace `<arena-id>` with the exact configured ID:
 | Placeholder | Output |
 |:--|:--|
 | `%snake_arena:<arena-id>:player%` | Current player name or `placeholders.no-player`. |
+| `%snake_arena:<arena-id>:ready%` | Whether the arena is ready. |
 | `%snake_arena:<arena-id>:state%` | Raw lifecycle state. |
 | `%snake_arena:<arena-id>:state_pretty%` | Friendly state text from `config.yml`. |
+| `%snake_arena:<arena-id>:point_blocks%` | Number of available board positions during an active game, otherwise `0`. |
+| `%snake_arena:<arena-id>:timer%` | Reserved timer value; currently `0`. |
 | `%snake_arena:<arena-id>:score%` | Current round score. |
+| `%snake_arena:<arena-id>:record_score%` | Highest cached best score. |
+| `%snake_arena:<arena-id>:record_holder%` | Player holding the highest cached best score. |
+| `%snake_arena:<arena-id>:target_score%` | Configured target score. |
+| `%snake_arena:<arena-id>:tick_interval%` | Configured movement interval. |
+| `%snake_arena:<arena-id>:wrap_around%` | Whether edge wrapping is enabled. |
 
-An unknown arena returns `No arena with the given ID.` and an unknown arena field returns `No placeholder like that.`
+`player_name` is an alias for the arena `player` field. An unknown arena returns `No arena: <arena-id>`; an incomplete or unknown field returns an empty value.
+
+---
+
+## Leaderboard Placeholders
+
+Use a persistent statistic key, a one-based position, and the requested field:
+
+```text
+%snake_leaderboard:<statistic>:<position>:<name|uuid|value>%
+```
+
+Examples:
+
+| Placeholder | Output |
+|:--|:--|
+| `%snake_leaderboard:win:1:name%` | Name at the top of the wins leaderboard. |
+| `%snake_leaderboard:best_score:3:value%` | Third-highest best score. |
+| `%snake_leaderboard:total_score:2:uuid%` | UUID at position two for total score. |
+
+Available statistic keys are `win`, `lose`, `win_streak`, `best_score`, `total_score`, and `games_played`. Missing names use `placeholders.no-name`; missing UUIDs and values use `placeholders.no-value`. The maximum available position is controlled by `leaderboard-size`.
 
 <Aside type="note">
-    The plugin builds internal leaderboards, but the current expansion does not expose ranked name or value placeholders.
+    Leaderboards contain positive values only and are refreshed during autosaves and when a game is cleared. A newly changed value may not appear immediately.
 </Aside>
