@@ -11,9 +11,9 @@ Arena management commands allow administrators to build and maintain the game en
 
 ## Create Command
 
-Administrators with the `snake.arena.create` permission can register a new arena instance and immediately begin editing it.
+Administrators with the `snake.arena.create` permission can register a new arena instance.
 
-Arena IDs must be unique. The command creates the arena's placeholder locations in `arena.yml` before opening the editor.
+Arena IDs must be unique when compared case-insensitively, contain 1-64 characters, and cannot contain spaces or periods. Use `/snake edit <arena_id>` after creation to begin setup.
 
 ```bash
 /snake create <arena_id>
@@ -23,10 +23,10 @@ Arena IDs must be unique. The command creates the arena's placeholder locations 
 
 ## Delete Command
 
-Administrators with the `snake.arena.delete` permission can stop and permanently remove an arena instance from `arena.yml`.
+Administrators with the `snake.arena.delete` permission can permanently remove an arena instance from `arenas.yml`. The first command displays a confirmation prompt. Confirming also stops an active game and safely exits an active editor session.
 
 ```bash
-/snake delete <arena_id>
+/snake delete <arena_id> [--confirm] [--cancel]
 ```
 
 ---
@@ -37,8 +37,20 @@ Administrators with the `snake.arena.edit` permission can load the editor items 
 
 Editing is blocked while another player is editing the same arena. This command is only accessible to players because the editor depends on the sender's position, inventory, and block interactions.
 
+Running the command for the arena you are already editing stops the editor. Editing is also blocked while you are playing, while the arena has an active game, or while you are editing another arena.
+
 ```bash
 /snake edit <arena_id>
+```
+
+---
+
+## List Command
+
+Administrators with `snake.arena.list` can display every registered arena and its readiness state. Ready arena IDs can be clicked to join; incomplete arena IDs can be clicked to edit.
+
+```bash
+/snake list
 ```
 
 <Aside type="tip">
