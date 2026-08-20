@@ -1,0 +1,43 @@
+---
+title: messages.yml
+description: Customize The Snake command, gameplay, title, and action-bar messages with MiniMessage.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`messages.yml` contains user-facing text. Values use [MiniMessage](https://docs.advntr.dev/minimessage/format.html) tags such as `<red>`, gradients, hover text, and clickable commands.
+
+---
+
+## Main Sections
+
+| Section | Purpose |
+|:--|:--|
+| `game` | Command blocking, start/stop reasons, leave reminder, and win, loss, or quit results. |
+| `commands` | Usage, arena management, validation, list, reload, stop, and help feedback. |
+| `subtitles` | Direction arrows and the point-gained subtitle. |
+| `none` | Generic empty value. |
+| `unknown-player` | Generic missing-player value. |
+
+Some entries are YAML lists so they can render multi-line centered panels. Keep list indentation intact when editing them.
+
+---
+
+## Variables
+
+Variables use descriptive percent-delimited names:
+
+| Variable | Example uses |
+|:--|:--|
+| `%id%` | Arena creation, deletion, and editor feedback. |
+| `%arena%` | Admin stop confirmation. |
+| `%label%` | Help, usage, and unrecognized-command output. |
+| `%arguments%` | Unrecognized arguments. |
+| `%score%` | Quit and death results. |
+| `%possible_points%` | Maximum board score. |
+| `%target_score%` | Target-score win result. |
+| `%arenas%` | Interactive arena list. |
+
+<Aside type="tip">
+    Run `/snake reload` after editing this file. Use `/snake debug component --path=<message.path>` while debug mode is enabled to preview an entry in game.
+</Aside>
