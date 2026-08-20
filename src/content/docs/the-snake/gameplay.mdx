@@ -21,6 +21,10 @@ import { Aside, Steps } from "@astrojs/starlight/components";
     7. After the configured end timer, the board and player state are restored and the player is teleported to the end location.
 </Steps>
 
+During a game, the action bar periodically reminds the player that pressing Shift leaves the arena. Dismounting the fixed camera vehicle safely follows the same leave flow.
+
+By default, other commands are blocked while playing and `/snake leave` remains allowed. Administrators can change this policy in `config.yml`.
+
 ---
 
 ## Scoring and Growth
