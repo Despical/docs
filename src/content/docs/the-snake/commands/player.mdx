@@ -11,10 +11,20 @@ All commands use `/snake`. The internal command fallback prefix is `thesnake`.
 
 ## Main Command
 
-The main command validates the root command and reports unrecognized subcommands. When executed without arguments, it does not open a menu.
+The main command shows the installed The Snake version. Administrators with `snake.admin.help` also receive a shortcut to the help command.
 
 ```bash
 /snake
+```
+
+---
+
+## Help Command
+
+Shows the configured command overview. The `snake.command.help` permission is granted to every player by default.
+
+```bash
+/snake help
 ```
 
 ---
