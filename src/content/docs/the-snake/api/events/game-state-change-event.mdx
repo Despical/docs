@@ -3,26 +3,36 @@ title: GameStateChangeEvent
 description: Event fired whenever a The Snake arena changes lifecycle state.
 ---
 
-`GameStateChangeEvent` reports the state before and after every arena transition.
+`GameStateChangeEvent` fires immediately before every game lifecycle transition. The game still reports the old state during listener execution.
 
 ## Technical Overview
 
 * **Package:** `dev.despical.snake.api.event.game`
 * **Parent Class:** `SnakeEvent`
-* **Cancellable:** No
+* **Cancellable:** Yes
 
 | Method | Return Type | Description |
 |:--|:--|:--|
+| `getGame()` | `Game` | Game requesting the transition. |
 | `getArena()` | `Arena` | Arena changing state. |
-| `getOldState()` | `ArenaState` | State saved before the transition. |
-| `getNewState()` | `ArenaState` | Arena's current state after the transition. |
+| `getOldState()` | `GameState` | State assigned before the transition. |
+| `getNewState()` | `GameState` | Requested destination state. |
 | `getUser()` | `User` | Current assigned user, which may be `null` during empty states. |
+| `isCancelled()` | `boolean` | Whether the transition is prevented. |
+| `setCancelled(boolean)` | `void` | Retains the old state when set to `true`. |
 
-Possible states are `INACTIVE`, `WAITING`, `PRE_IN_GAME`, `IN_GAME`, and `ENDING`.
+Possible states are `INACTIVE`, `WAITING`, `IN_GAME`, `ENDING`, and `RESTARTING`.
+
+Cancelling an internal recovery transition such as `RESTARTING` can leave the game occupied. Only cancel a transition if your integration also manages the resulting lifecycle.
 
 ```java
 @EventHandler
 public void onSnakeState(GameStateChangeEvent event) {
+    if (event.getNewState() == GameState.IN_GAME && maintenanceMode) {
+        event.setCancelled(true);
+        return;
+    }
+
     getLogger().info(event.getArena().getId() + ": "
         + event.getOldState() + " -> " + event.getNewState());
 }
