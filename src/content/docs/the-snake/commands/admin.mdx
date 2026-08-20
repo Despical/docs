@@ -1,0 +1,32 @@
+---
+title: Admin Commands
+description: Reload The Snake configuration or stop an active arena game.
+---
+
+Administrative commands manage global runtime behavior and active games. The `snake.admin` parent permission grants every command on this page and all arena-management commands.
+
+---
+
+## Reload Command
+
+Reloads cached `config.yml` options, the in-game command policy, `messages.yml`, `sounds.yml`, and event-profiling settings.
+
+```bash
+/snake reload
+```
+
+**Permission:** `snake.admin.reload`
+
+---
+
+## Stop Command
+
+Stops an active game. A player may omit the arena ID to target the arena they are currently playing; the console must provide an arena ID.
+
+```bash
+/snake stop [arena_id]
+```
+
+**Permission:** `snake.admin.stop`
+
+The affected player is notified, their inventory is restored, and the arena returns to its waiting state.
