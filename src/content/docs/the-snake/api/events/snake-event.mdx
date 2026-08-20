@@ -3,7 +3,7 @@ title: SnakeEvent
 description: Base class for all public Bukkit events exposed by The Snake.
 ---
 
-`SnakeEvent` extends Bukkit's `Event` class and is the common parent of every public event in the plugin.
+`SnakeEvent` extends Bukkit's `Event` class and is the common marker parent of every public event in the plugin. Each concrete event owns an independent Bukkit `HandlerList`.
 
 ## Technical Overview
 
@@ -14,13 +14,4 @@ description: Base class for all public Bukkit events exposed by The Snake.
 
 The base class contains no shared arena or player accessor because `KeyPressedEvent` and statistic-related events have different contexts. Use the methods on each concrete event.
 
-## Listener Example
-
-```java
-@EventHandler
-public void onAnySnakeEvent(SnakeEvent event) {
-    getLogger().info("Snake event: " + event.getEventName());
-}
-```
-
-Prefer concrete event listeners when you need arena, player, state, or score data.
+Do not register `SnakeEvent` itself as a catch-all Bukkit listener. Register the concrete events needed by your integration. For generic discovery tooling, use `EventRegistry.getRegisteredTypes()` and resolve the class for each `EventType`.
