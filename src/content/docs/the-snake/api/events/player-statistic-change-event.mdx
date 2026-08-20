@@ -1,0 +1,35 @@
+---
+title: PlayerStatisticChangeEvent
+description: Cancellable event fired before The Snake stores a changed player statistic.
+---
+
+`PlayerStatisticChangeEvent<T>` fires before a runtime statistic update is written. A listener may inspect the statistic definition and old value, replace the proposed value, or cancel the update.
+
+Statistics loaded from persistent storage do not fire this event.
+
+## Technical Overview
+
+* **Package:** `dev.despical.snake.api.event.player`
+* **Parent Class:** `SnakeEvent`
+* **Cancellable:** Yes
+
+| Method | Return Type | Description |
+|:--|:--|:--|
+| `getPlayer()` | `Player` | Bukkit player whose statistic is changing. |
+| `getStatistic()` | `StatisticType<T>` | Statistic definition being updated. |
+| `getOldValue()` | `T` | Value stored before this update. |
+| `getNewValue()` | `T` | Value that will be stored if the event continues. |
+| `setNewValue(T)` | `void` | Replaces the value that will be stored. |
+| `isCancelled()` | `boolean` | Whether the update is rejected. |
+| `setCancelled(boolean)` | `void` | Rejects or restores the requested update. |
+
+```java
+@EventHandler
+public void onSnakeStatistic(PlayerStatisticChangeEvent<Integer> event) {
+    if (event.getStatistic() == Statistics.TOTAL_SCORE) {
+        event.setNewValue(Math.max(0, event.getNewValue()));
+    }
+}
+```
+
+Common uses include applying multipliers, clamping values, rejecting changes, and mirroring updates to another service.
