@@ -1,15 +1,15 @@
 ---
-title: arena.yml
+title: arenas.yml
 description: Reference the locations and per-arena options serialized by The Snake.
 ---
 
-`arena.yml` is the persistent store for arena geometry and per-arena gameplay options. The supported workflow is to use `/snake create` and `/snake edit` instead of editing serialized locations manually.
+`arenas.yml` is the persistent store for arena geometry and per-arena gameplay options. The supported workflow is to use `/snake create` and `/snake edit` instead of editing serialized locations manually.
 
 ---
 
 ## Arena Structure
 
-Each arena is stored below `arenas.<id>` with four locations:
+Each arena ID is a top-level section with four locations:
 
 | Key | Purpose |
 |:--|:--|
@@ -26,9 +26,10 @@ All four must resolve to non-default locations before the arena becomes ready.
 
 | Key | Type | Default |
 |:--|:--|:--|
+| `ready` | Boolean | `false` |
 | `endTimer` | Integer | `100` |
 | `targetScore` | Integer | `0` |
-| `tickInterval` | Integer | `3`, minimum `1` |
+| `tickInterval` | Integer | `6`, minimum `1` in the editor |
 | `headMoveOpposite` | Boolean | `false` |
 | `wrapAround` | Boolean | `true` |
 | `snakeHead` | Material name | `WHITE_WOOL` |
@@ -41,4 +42,4 @@ All four must resolve to non-default locations before the arena becomes ready.
 
 At startup, the plugin reads every ID, deserializes all four locations, loads the options, marks complete arenas ready, and starts each ready arena in the waiting state.
 
-Unknown or incomplete arenas remain unavailable to `/snake join` until fixed and saved through the editor.
+Invalid IDs, duplicate IDs that differ only by letter case, and incomplete arenas marked ready are skipped or disabled with a console warning. Unknown or incomplete arenas remain unavailable to `/snake join` until fixed and saved through the editor.
