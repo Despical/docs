@@ -13,9 +13,9 @@ Welcome to **The Snake**. This guide covers the server requirements, installatio
 
 Before installing the plugin, make sure the server meets these requirements:
 
-* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer.
+* **Java Version:** [Java 25](https://www.oracle.com/java/technologies/downloads/) or newer.
 * **Server Software:** [Paper](https://papermc.io/) or a compatible Paper fork.
-* [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) <Badge text="Optional" variant="tip" /> : Required for `%snake_...%` placeholders and the internal leaderboard cache.
+* [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) <Badge text="Optional" variant="tip" /> : Required to expose `%snake_...%` placeholders to other plugins.
 * **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin such as [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) is recommended for arena administration.
 
 <Aside type="note">
@@ -42,10 +42,12 @@ The first startup creates `/plugins/Snake/` with these main files:
 
 | File | Purpose |
 |:--|:--|
-| `config.yml` | Messages, sounds, placeholder fallbacks, storage selection, saving, and update checks. |
-| `arena.yml` | Arena locations and per-arena game options. |
+| `config.yml` | Storage, autosaving, command restrictions, placeholder fallbacks, debugging, and update checks. |
+| `arenas.yml` | Arena locations and per-arena game options. |
+| `messages.yml` | MiniMessage-formatted command, gameplay, title, and action-bar text. |
+| `sounds.yml` | Gameplay sound names, enabled states, volume, and pitch. |
 | `mysql.yml` | JDBC connection and statistics table settings. |
-| `stats.yml` | Flat-file player statistics when MySQL is not selected. |
+| `data/stats.yml` | Flat-file player statistics when MySQL is not selected. |
 
 The plugin can also create temporary inventory backup data while a player is playing or editing an arena. Do not delete those backups while players are active.
 
@@ -59,7 +61,10 @@ The plugin can also create temporary inventory backup data while a player is pla
 | `snake.arena.create` | Allows `/snake create <arena id>`. | Through `snake.*` |
 | `snake.arena.delete` | Allows `/snake delete <arena id>`. | Through `snake.*` |
 | `snake.arena.edit` | Allows `/snake edit <arena id>`. | Through `snake.*` |
-| `snake.tabcompleter` | Shows Snake subcommands and arena IDs in tab completion. | Through `snake.*` |
+| `snake.arena.list` | Allows `/snake list`. | Through `snake.*` |
+| `snake.admin.reload` | Allows `/snake reload`. | Through `snake.*` |
+| `snake.admin.stop` | Allows `/snake stop [arena]`. | Through `snake.*` |
+| `snake.command.tabcompleter` | Shows standard subcommands and arena IDs in tab completion. | Through `snake.*` |
 
 The player commands `/snake join` and `/snake leave` do not declare separate permission requirements.
 
@@ -69,7 +74,7 @@ The player commands `/snake join` and `/snake leave` do not declare separate per
 
 <Steps>
     1. Build a flat vertical or horizontal two-dimensional board.
-    2. Run `/snake create <arena id>` to enter the editor.
+    2. Run `/snake create <arena id>`, then `/snake edit <arena id>` to enter the editor.
     3. Set the start location and end location.
     4. Use the board setter to select two opposite corners on the same 2D plane.
     5. Open **Options** and configure movement, win conditions, and board blocks.
