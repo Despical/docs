@@ -5,7 +5,7 @@ description: Integrate with The Snake through its Bukkit events, arena objects, 
 
 import { Aside, CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-The Snake exposes Bukkit events for round lifecycle changes, player input, and score updates. Event classes live under `dev.despical.snake.api.event` and are dispatched on the primary server thread.
+The Snake exposes Bukkit events for round lifecycle changes, player input, score updates, and mutable statistic changes. Event classes live under `dev.despical.snake.api.event` and are dispatched synchronously on the primary server thread.
 
 <Aside type="note">
     The plugin is distributed as a premium resource. Compile integrations against a legitimately obtained plugin JAR and declare The Snake as a dependency or soft dependency in your own plugin metadata.
@@ -17,12 +17,12 @@ The Snake exposes Bukkit events for round lifecycle changes, player input, and s
 
 <CardGrid>
     <LinkCard title="SnakeEvent" description="Base event type shared by every public Snake event." href="/the-snake/api/events/snake-event" />
-    <LinkCard title="GameStartEvent" description="Fires when a waiting arena accepts its player and begins round initialization." href="/the-snake/api/events/game-start-event" />
+    <LinkCard title="GameStartEvent" description="Fires after the board, first segment, direction, and apple are prepared." href="/the-snake/api/events/game-start-event" />
     <LinkCard title="GameEndEvent" description="Fires after a win or loss is detected and the arena enters its ending delay." href="/the-snake/api/events/game-end-event" />
-    <LinkCard title="GameStateChangeEvent" description="Reports every transition between inactive, waiting, starting, active, and ending states." href="/the-snake/api/events/game-state-change-event" />
+    <LinkCard title="GameStateChangeEvent" description="Reports and can cancel every requested lifecycle transition." href="/the-snake/api/events/game-state-change-event" />
     <LinkCard title="KeyPressedEvent" description="Reports the current W, A, S, D, or no-input state from Paper player input." href="/the-snake/api/events/key-pressed-event" />
     <LinkCard title="NewScoreEvent" description="Fires after an apple is collected and the round score increases." href="/the-snake/api/events/new-score-event" />
-    <LinkCard title="StatisticChangeEvent" description="Public statistic event class and its current dispatch limitation." href="/the-snake/api/events/statistic-change-event" />
+    <LinkCard title="PlayerStatisticChangeEvent" description="Inspect, replace, or cancel a player statistic update before storage." href="/the-snake/api/events/player-statistic-change-event" />
 </CardGrid>
 
 ---
@@ -53,7 +53,11 @@ Use `depend` instead if your plugin cannot function without The Snake.
 ## Event Guarantees
 
 * Events are synchronous Bukkit events.
-* None of the current public event classes implements `Cancellable`.
-* `GameStartEvent` fires before the board is snapshotted and before active movement starts.
+* `GameStateChangeEvent` and `PlayerStatisticChangeEvent` implement `Cancellable`; the other concrete events are informational.
+* `GameStartEvent` fires after the board, first segment, initial direction, and first apple are prepared.
 * `GameEndEvent` fires after the result is identified and its message is sent, but before the ending timer returns the player.
 * `NewScoreEvent` sees the already incremented score.
+
+## Event Discovery
+
+`EventType` enumerates the six registered event types. `EventRegistry.getRegisteredTypes()` returns an unmodifiable set, while `getEventClass(type)` and `matches(type, event)` support generic integration and diagnostic tooling. Normal Bukkit listeners should still register against concrete event classes.
