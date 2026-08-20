@@ -32,23 +32,27 @@ Each arena is a separate single-player board with its own movement speed, win co
 
 <CardGrid>
     <LinkCard title="Player Commands" description="Join or leave an arena with the player-facing command set." href="/the-snake/commands/player" />
-    <LinkCard title="Arena Commands" description="Create, edit, and delete Snake arenas with the exact permissions required." href="/the-snake/commands/arena" />
+    <LinkCard title="Arena Commands" description="Create, list, edit, and safely delete Snake arenas." href="/the-snake/commands/arena" />
+    <LinkCard title="Admin Commands" description="Reload configuration files or stop an active game." href="/the-snake/commands/admin" />
+    <LinkCard title="Debug Commands" description="Preview MiniMessage output and inspect custom-event timings." href="/the-snake/commands/debug" />
 </CardGrid>
 
 ## Configuration Files
 
 <CardGrid>
-    <LinkCard title="config.yml" description="Configure messages, sounds, placeholder fallbacks, storage, saving, and update checks." href="/the-snake/configuration/config" />
+    <LinkCard title="config.yml" description="Configure storage, autosaving, command rules, placeholders, updates, and diagnostics." href="/the-snake/configuration/config" />
+    <LinkCard title="messages.yml" description="Customize MiniMessage-formatted command, gameplay, title, and action-bar text." href="/the-snake/configuration/messages" />
+    <LinkCard title="sounds.yml" description="Configure gameplay sounds, enabled states, volume, and pitch." href="/the-snake/configuration/sounds" />
     <LinkCard title="mysql.yml" description="Configure the JDBC connection and statistics table used by MySQL storage." href="/the-snake/configuration/mysql" />
-    <LinkCard title="arena.yml" description="Understand the locations and options serialized for each arena." href="/the-snake/configuration/arena" />
-    <LinkCard title="Other Files" description="Learn how stats.yml and temporary inventory backups are managed." href="/the-snake/configuration/other-files" />
+    <LinkCard title="arenas.yml" description="Understand the locations and options serialized for each arena." href="/the-snake/configuration/arena" />
+    <LinkCard title="Other Files" description="Learn how data/stats.yml and inventory recovery are managed." href="/the-snake/configuration/other-files" />
 </CardGrid>
 
 ## Placeholders and API
 
 <CardGrid>
-    <LinkCard title="PlaceholderAPI Placeholders" description="Display player statistics, arena state, score, and current player information." href="/the-snake/placeholders/general" />
-    <LinkCard title="Developer API" description="Listen for game lifecycle, input, score, and statistic events." href="/the-snake/api/the-snake-api" />
+    <LinkCard title="PlaceholderAPI Placeholders" description="Display global totals, player statistics, arena state, score, options, and ranked leaders." href="/the-snake/placeholders/general" />
+    <LinkCard title="Developer API" description="Listen for lifecycle, input, score, and cancellable statistic events." href="/the-snake/api/the-snake-api" />
 </CardGrid>
 
 ## Miscellaneous
