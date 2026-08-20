@@ -3,9 +3,9 @@ title: mysql.yml
 description: Configure MySQL statistics storage for The Snake, including JDBC, credentials, table creation, and startup checks.
 ---
 
-import { Aside, Steps } from "@astrojs/starlight/components";
+import { Steps } from "@astrojs/starlight/components";
 
-MySQL storage lets multiple server processes point at one statistics table. Arena definitions remain local in `arena.yml`.
+MySQL storage lets multiple server processes point at one statistics table. Arena definitions remain local in `arenas.yml`.
 
 ---
 
@@ -18,12 +18,6 @@ MySQL storage lets multiple server processes point at one statistics table. Aren
     4. Stop and start the server.
     5. Confirm that the configured table was created and no connection warning appears.
 </Steps>
-
-<Aside type="caution">
-    The shipped `mysql-enabled` key is not the selector read by the v1.5.8 runtime. Use `database: mysql` in `config.yml`.
-</Aside>
-
----
 
 ## Connection Settings
 
