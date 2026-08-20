@@ -1,0 +1,18 @@
+---
+title: sounds.yml
+description: Configure The Snake gameplay sound effects, volume, and pitch.
+---
+
+`sounds.yml` keeps gameplay audio separate from global options. Each entry supports `enabled`, `sound`, `volume`, and `pitch`.
+
+| Entry | Default sound | Trigger |
+|:--|:--|:--|
+| `fail` | `ENTITY_ENDER_DRAGON_GROWL` | A body collision or non-wrapping border loss. |
+| `direction-change` | `BLOCK_NOTE_BLOCK_PLING` | An accepted direction change. |
+| `tick` | `BLOCK_NOTE_BLOCK_BASS` | Each configured snake movement interval. |
+| `point` | `ENTITY_PLAYER_LEVELUP` | Apple collection. |
+| `win` | `NONE`, disabled | A completed win condition. |
+
+Set `enabled: false`, leave the sound blank, or use `NONE` to suppress an entry. Invalid sound names are skipped with a console warning. Names are resolved against the current server sound registry.
+
+Run `/snake reload` after editing the file.
