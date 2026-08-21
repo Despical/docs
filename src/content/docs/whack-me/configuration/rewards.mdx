@@ -1,0 +1,108 @@
+---
+title: rewards.yml
+description: Run configurable console or player commands when a Whack Me game starts, ends, is left early, or a point block is hit.
+---
+
+`rewards.yml` lets you connect Whack Me gameplay events to commands from other plugins or Minecraft itself. You can award currency, experience, effects, permissions, or any other result exposed through a command.
+
+The file is created automatically when it is missing. Set `enabled: false` to disable every reward trigger without removing your configured commands.
+
+---
+
+## Command Execution
+
+Commands run as the console by default. Prefix a command with `p:` to make the player run it instead. The prefix is case-insensitive, and the leading `/` before a command is optional.
+
+```yaml
+game-end:
+  - "eco give %player% %score%"
+  - "p:msg Admin <#00E676>I finished %arena% with %score% points!"
+```
+
+The first command is dispatched by the console. The second is performed by the player whose game triggered the reward.
+
+MiniMessage-style hex colors such as `<#55FF55>` are supported. Whether a receiving command displays those colors depends on the plugin that handles the command.
+
+---
+
+## Reward Triggers
+
+| Configuration key | When it runs | Values available at that moment |
+|:--|:--|:--|
+| `game-join` | After the player successfully joins and the game enters its active state. | Run score and streak statistics have just been reset, so they start at `0`. |
+| `game-quit` | When the player leaves early through a command, kick, or disconnect. | Contains the values reached before leaving. It does not run after a normal timer completion. |
+| `game-end` | When the timer expires and the round finishes normally. | Contains the final run values before temporary statistics are reset. |
+| `green-block-step` | After a green block awards its point and updates streak statistics. | `%score%`, `%hit-streak%`, and the hit counters include the successful hit. |
+| `red-block-step` | After a red block applies its penalty and resets the current streak. | `%score%` contains the penalized value, which cannot be lower than `0`. |
+| `gray-block-step` | After an already-hit gray block is struck. | The neutral hit does not change the score, and `%block-type%` is `GRAY_BLOCK`. |
+
+`game-quit` and `game-end` represent different outcomes. Configure both when you want commands to run for early departures as well as completed rounds.
+
+---
+
+## Reward Placeholders
+
+These placeholders are replaced in every configured reward command:
+
+| Placeholder | Value |
+|:--|:--|
+| `%player%` | Player name. |
+| `%uuid%` | Player UUID. |
+| `%arena%` | Arena ID. |
+| `%timer%` | Remaining game time in seconds. |
+| `%score%` | Current score for this run. |
+| `%hit-streak%` | Current consecutive correct-hit streak. |
+| `%max-streak%` | Highest correct-hit streak reached in this run. |
+| `%green-blocks%` | Number of green blocks hit in this run. |
+| `%red-blocks%` | Number of red blocks hit in this run. |
+| `%block-type%` | `GREEN_BLOCK`, `RED_BLOCK`, or `GRAY_BLOCK` for a block trigger; otherwise `NONE`. |
+
+Use the placeholder names exactly as shown. Reward placeholders use hyphens, such as `%hit-streak%`, rather than the underscore-based names used by some messages and PlaceholderAPI expansions.
+
+---
+
+## Complete Example
+
+```yaml
+enabled: true
+
+game-join:
+  - "say <#00E676>%player% joined Whack Me arena %arena%!"
+  - "p:me entered arena %arena%."
+
+game-quit:
+  - "say <#FFCA28>%player% left %arena% with %score% points."
+
+game-end:
+  - "eco give %player% %score%"
+  - "p:msg Admin <#00E676>I finished %arena% with %score% points!"
+
+green-block-step:
+  - "xp add %player% 1 points"
+  - "say <#00E676>%player% reached a %hit-streak% hit streak!"
+
+red-block-step:
+  - "effect give %player% slowness 2 0 true"
+  - "p:say <#FF5252>My score dropped to %score%!"
+
+gray-block-step:
+  - "playsound minecraft:block.note_block.hat player %player%"
+```
+
+Remove a trigger's commands or leave its list empty when no reward should run for that event:
+
+```yaml
+gray-block-step: []
+```
+
+---
+
+## Applying Changes
+
+Save `rewards.yml`, then reload Whack Me:
+
+```bash
+/wm reload
+```
+
+The reload command refreshes the reward configuration, so a server restart is not required.
