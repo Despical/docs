@@ -1,0 +1,109 @@
+---
+title: rewards.yml
+description: Run configurable console or player commands when players enter or leave KOTL arenas, claim the crown, kill an opponent, or die.
+---
+
+`rewards.yml` connects King of the Ladder gameplay events to commands from Minecraft or other plugins. Use it to award currency, experience, effects, permissions, or any other result exposed through a command.
+
+Set `enabled: false` to disable every reward trigger without removing your configured command lists.
+
+---
+
+## Command Execution
+
+Commands run as the console by default. Prefix a command with `p:` to make the rewarded player run it instead. The prefix is case-insensitive, and the leading `/` before a command is optional.
+
+```yaml
+become-king:
+  - "eco give %player% 10"
+  - "p:msg Admin <#FFD740>I became the king of %arena%!"
+```
+
+The first command is dispatched by the console. The second is performed by the player who claimed the crown.
+
+Player commands still require the player's permission and pass through the server's command restrictions. If KOTL blocks commands during gameplay, add the required player command to `command-settings.allowed-commands` or run it from the console instead.
+
+MiniMessage-style hex colors such as `<#55FF55>` are supported. Whether the color is displayed depends on the plugin that handles the resulting command.
+
+---
+
+## Reward Triggers
+
+| Configuration key | When it runs | Values available at that moment |
+|:--|:--|:--|
+| `game-join` | After a player successfully enters an arena and is added to its game. | `%player-count%` includes the joining player. |
+| `game-quit` | Before a player is removed after crossing the game-area boundary, being kicked, or disconnecting. | `%reason%` is `AREA_EXIT`, `KICK`, or `DISCONNECT`; `%player-count%` still includes the leaving player. |
+| `become-king` | After a successful plate capture updates the current king, total score, tours played, arena score, and arena record. | `%king%` is the rewarded player and `%previous-king%` contains the former king or `NONE`. |
+| `player-kill` | After the killer's total kill statistic is incremented. | `%target%` and `%target-uuid%` identify the defeated player. |
+| `player-death` | During respawn handling, after the dead player's death statistic is incremented. | The player has already left the arena with the `DEATH` reason. This does not also run `game-quit`. |
+
+`game-quit` deliberately does not run for deaths, administrative game stops, arena deletion or disabling, server reloads, or server shutdowns.
+
+---
+
+## Reward Placeholders
+
+These placeholders are replaced in every configured reward command:
+
+| Placeholder | Value |
+|:--|:--|
+| `%player%` | Rewarded player name. |
+| `%uuid%` | Rewarded player UUID. |
+| `%arena%` | Arena ID. |
+| `%king%` | Current king name, or `NONE` when the arena has no king. |
+| `%score%` | Player's persistent total crown score. |
+| `%kills%` | Player's persistent total kills. |
+| `%deaths%` | Player's persistent total deaths. |
+| `%tours-played%` | Player's persistent total tours played. |
+| `%arena-score%` | Player's crown score in the current arena. |
+| `%player-count%` | Number of players currently tracked in the arena. |
+| `%previous-king%` | Previous king for `become-king`; otherwise `NONE`. |
+| `%target%` | Defeated player name for `player-kill`; otherwise `NONE`. |
+| `%target-uuid%` | Defeated player UUID for `player-kill`; otherwise `NONE`. |
+| `%reason%` | `AREA_EXIT`, `KICK`, or `DISCONNECT` for `game-quit`; otherwise `NONE`. |
+
+Use the placeholder names exactly as shown. Reward placeholders use hyphens, such as `%arena-score%`, rather than the underscore-based names used by some messages and PlaceholderAPI expansions.
+
+---
+
+## Complete Example
+
+```yaml
+enabled: true
+
+game-join:
+  - "say <#00E676>%player% joined KOTL arena %arena%!"
+  - "p:me entered arena %arena%."
+
+game-quit:
+  - "say <#FFCA28>%player% left %arena% with %arena-score% arena points."
+
+become-king:
+  - "eco give %player% 10"
+  - "say <#FFD740>%player% became the king of %arena%!"
+
+player-kill:
+  - "eco give %player% 5"
+  - "p:msg Admin <#00E676>I defeated %target% in %arena%."
+
+player-death:
+  - "effect give %player% resistance 3 0 true"
+```
+
+Remove a trigger's commands or leave its list empty when no reward should run for that event:
+
+```yaml
+player-death: []
+```
+
+---
+
+## Applying Changes
+
+Save `rewards.yml`, then reload KOTL:
+
+```bash
+/kotl reload
+```
+
+The reload command refreshes the reward configuration, so a server restart is not required.
