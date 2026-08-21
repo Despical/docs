@@ -1564,6 +1564,10 @@ export default defineConfig({
                                         link: "/kotl/configuration/items",
                                     },
                                     {
+                                        label: "rewards.yml",
+                                        link: "/kotl/configuration/rewards",
+                                    },
+                                    {
                                         label: "mysql.yml",
                                         link: "/kotl/configuration/mysql",
                                     },
