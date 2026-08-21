@@ -1,0 +1,97 @@
+---
+title: rewards.yml
+description: Run configurable console or player commands when a Snake game starts, is left early, ends in a win or death, or an apple is collected.
+---
+
+`rewards.yml` connects The Snake gameplay events to commands from Minecraft or other plugins. Use it to award currency, experience, effects, permissions, or any other result exposed through a command.
+
+The file is created automatically when it is missing. Set `enabled: false` to disable every reward trigger without removing your configured command lists.
+
+---
+
+## Command Execution
+
+Commands run as the console by default. Prefix a command with `p:` to make the player run it instead. The prefix is case-insensitive, and the leading `/` before a command is optional.
+
+```yaml
+game-end:
+  - "eco give %player% %score%"
+  - "p:msg Admin <#00E676>I finished %arena% with %score% points!"
+```
+
+The first command is dispatched by the console. The second is performed by the player whose game triggered the reward.
+
+Player commands still require the player's permission and pass through the server's command restrictions. If The Snake blocks commands during gameplay, add the required player command to `command-settings.allowed-commands` or run it from the console instead.
+
+MiniMessage-style hex colors such as `<#55FF55>` are supported. Whether the color is displayed depends on the plugin that handles the resulting command.
+
+---
+
+## Reward Triggers
+
+| Configuration key | When it runs | Values available at that moment |
+|:--|:--|:--|
+| `game-join` | After the player successfully joins and the game enters its active state. | The run has just been initialized, so `%score%` starts at `0`. |
+| `game-quit` | When the player leaves before the game enters its normal ending state, including a leave command or disconnect. | Contains the score reached before player restoration and game reset. It does not run after a win or death. |
+| `game-end` | After the player wins or dies and the round enters its ending state. | Contains the final score before the player and game are reset. Persistent result statistics have already been updated. |
+| `apple-step` | Immediately after an apple increases the score and a new apple position is selected. | `%score%` contains the newly awarded score. |
+
+When an apple reaches the target score or fills the board, `apple-step` runs first and `game-end` follows during the same game update.
+
+---
+
+## Reward Placeholders
+
+These placeholders are replaced in every configured reward command:
+
+| Placeholder | Value |
+|:--|:--|
+| `%player%` | Player name. |
+| `%uuid%` | Player UUID. |
+| `%arena%` | Arena ID. |
+| `%score%` | Current score for this run. |
+| `%possible-points%` | Total number of playable positions available on the board. |
+| `%target-score%` | Arena score required for victory. A value of `0` means the player must fill every possible board position. |
+
+Use the placeholder names exactly as shown. Reward placeholders use hyphens, such as `%possible-points%`, rather than the underscore-based names used by messages and PlaceholderAPI expansions.
+
+---
+
+## Complete Example
+
+```yaml
+enabled: true
+
+game-join:
+  - "say <#00E676>%player% joined The Snake arena %arena%!"
+  - "p:me entered arena %arena%."
+
+game-quit:
+  - "say <#FFCA28>%player% left %arena% with %score% points."
+
+game-end:
+  - "eco give %player% %score%"
+  - "p:msg Admin <#00E676>I finished %arena% with %score% points!"
+
+apple-step:
+  - "xp add %player% 1 points"
+  - "say <#00E676>%player% reached %score% points!"
+```
+
+Remove a trigger's commands or leave its list empty when no reward should run for that event:
+
+```yaml
+apple-step: []
+```
+
+---
+
+## Applying Changes
+
+Save `rewards.yml`, then reload The Snake:
+
+```bash
+/snake reload
+```
+
+The reload command refreshes the reward configuration, so a server restart is not required.
