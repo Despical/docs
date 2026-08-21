@@ -1070,6 +1070,7 @@ export default defineConfig({
                                     {label: "config.yml", link: "/the-snake/configuration/config"},
                                     {label: "messages.yml", link: "/the-snake/configuration/messages"},
                                     {label: "sounds.yml", link: "/the-snake/configuration/sounds"},
+                                    {label: "rewards.yml", link: "/the-snake/configuration/rewards"},
                                     {label: "mysql.yml", link: "/the-snake/configuration/mysql"},
                                     {label: "arenas.yml", link: "/the-snake/configuration/arena"},
                                     {label: "Other Files", link: "/the-snake/configuration/other-files"},
