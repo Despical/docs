@@ -908,6 +908,7 @@ export default defineConfig({
                                     {label: "bossbar.yml", link: "/whack-me/configuration/bossbar"},
                                     {label: "signs.yml", link: "/whack-me/configuration/signs"},
                                     {label: "sounds.yml", link: "/whack-me/configuration/sounds"},
+                                    {label: "rewards.yml", link: "/whack-me/configuration/rewards"},
                                     {label: "mysql.yml", link: "/whack-me/configuration/mysql"},
                                     {
                                         label: "GUI Menus",
