@@ -31,6 +31,7 @@ spigot:
 scan:
   interval-minutes: 60
   notify-existing-on-first-run: false
+  notify-free-purchases: false
   state-file: "data/seen-sales.json"
 ```
 
@@ -84,7 +85,10 @@ spigot:
 | :--- | :---: | :--- |
 | `scan.interval-minutes` | `Long` | Delay between continuous scans. |
 | `scan.notify-existing-on-first-run` | `Boolean` | Whether the first scan should send notifications for already-existing buyers. |
+| `scan.notify-free-purchases` | `Boolean` | Whether purchases whose price is `0.00` should send a Discord notification. Defaults to `false`. |
 | `scan.state-file` | `String` | Path to the JSON file that stores seen buyers. Relative paths are resolved from the working directory. |
+
+When `scan.notify-free-purchases` is `false`, free purchases are still stored in the state file but are not sent to Discord. This prevents repeated processing while keeping future paid purchases from the same buyer eligible for notification.
 
 ## First-Run Behavior
 
