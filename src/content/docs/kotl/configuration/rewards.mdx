@@ -1,9 +1,9 @@
 ---
 title: rewards.yml
-description: Run configurable console or player commands when players enter or leave KOTL arenas, claim the crown, kill an opponent, or die.
+description: Run configurable commands and broadcasts when players enter or leave KOTL arenas, claim the crown, kill an opponent, or die.
 ---
 
-`rewards.yml` connects King of the Ladder gameplay events to commands from Minecraft or other plugins. Use it to award currency, experience, effects, permissions, or any other result exposed through a command.
+`rewards.yml` connects King of the Ladder gameplay events to commands and chat broadcasts. Use it to award currency, experience, effects, permissions, announce arena events, or trigger any other result exposed through a command.
 
 Set `enabled: false` to disable every reward trigger without removing your configured command lists.
 
@@ -24,6 +24,20 @@ The first command is dispatched by the console. The second is performed by the p
 Player commands still require the player's permission and pass through the server's command restrictions. If KOTL blocks commands during gameplay, add the required player command to `command-settings.allowed-commands` or run it from the console instead.
 
 MiniMessage-style hex colors such as `<#55FF55>` are supported. Whether the color is displayed depends on the plugin that handles the resulting command.
+
+---
+
+## Broadcasts
+
+Prefix a line with `broadcast:` to send a MiniMessage-formatted message only to players in the current arena. Use `broadcast_server:` to send the message to every online player through Paper's component-based `Bukkit.broadcast(...)` API. Both actions support every reward placeholder and hex colors without converting the message to legacy formatting.
+
+```yaml
+become-king:
+  - "broadcast:<#FFD740>%player% is now the king of %arena%!"
+  - "broadcast_server:<#FFD740>%player% became king in %arena%!"
+```
+
+The arena broadcast reaches the players currently tracked in that game. The server broadcast reaches all online players, including players outside KOTL arenas.
 
 ---
 
@@ -74,6 +88,7 @@ enabled: true
 game-join:
   - "say <#00E676>%player% joined KOTL arena %arena%!"
   - "p:me entered arena %arena%."
+  - "broadcast:<#00E676>%player% joined the %arena% arena!"
 
 game-quit:
   - "say <#FFCA28>%player% left %arena% with %arena-score% arena points."
@@ -81,6 +96,8 @@ game-quit:
 become-king:
   - "eco give %player% 10"
   - "say <#FFD740>%player% became the king of %arena%!"
+  - "broadcast:<#FFD740>%player% is now the king of %arena%!"
+  - "broadcast_server:<#FFD740>%player% became king in %arena%!"
 
 player-kill:
   - "eco give %player% 5"
