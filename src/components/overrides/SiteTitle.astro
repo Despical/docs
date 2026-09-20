@@ -103,9 +103,7 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
                 alt={isSourceAccess ? "" : "Logo (Dark)"}
                 src={current.dark}
         />
-        <span class:list={["notranslate", !isSourceAccess && "sr-only"]} translate="no">
-            {isSourceAccess ? "Source Access" : siteTitle}
-        </span>
+        <span class="sr-only notranslate" translate="no">{isSourceAccess ? "Source Access" : siteTitle}</span>
     </a>
 )}
 
