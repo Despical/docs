@@ -3,11 +3,10 @@ import MobileMenuToggle from "@astrojs/starlight/components/MobileMenuToggle.ast
 import TopicsDropdown from "./TopicsDropdown.astro";
 
 const { hasSidebar } = Astro.locals.starlightRoute;
-const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
-const showSidebar = hasSidebar && normalizedPath !== "/source-access";
+const showSidebar = hasSidebar;
 ---
 
-<div class:list={["page sl-flex", !showSidebar && "page--without-sidebar", normalizedPath === "/source-access" && "page--source-access"]}>
+<div class:list={["page sl-flex", !showSidebar && "page--without-sidebar"]}>
     <header class="header"><slot name="header" /></header>
     {
         showSidebar && (
@@ -151,10 +150,6 @@ const showSidebar = hasSidebar && normalizedPath !== "/source-access";
         padding-inline-start: var(--sl-nav-pad-x);
     }
 
-    .page--source-access {
-        --sl-content-width: 70rem;
-    }
-
     .back-to-top {
         position: fixed;
         z-index: calc(var(--sl-z-index-navbar) - 1);
@@ -224,10 +219,6 @@ const showSidebar = hasSidebar && normalizedPath !== "/source-access";
     }
 
     @media (min-width: 50rem) {
-        .page--source-access .main-frame {
-            padding-inline-start: var(--sl-sidebar-width);
-        }
-
         :global([data-has-sidebar]) .header {
             padding-inline-start: var(--sl-nav-pad-x);
         }

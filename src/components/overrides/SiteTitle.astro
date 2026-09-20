@@ -48,6 +48,9 @@ import itemUpgraderDark from "../../assets/item-upgrader/icon-dark.svg";
 import particleTextLight from "../../assets/particle-text/icon-light.svg";
 import particleTextDark from "../../assets/particle-text/icon-dark.svg";
 
+import sourceAccessLight from "../../assets/source-access/icon-light.svg";
+import sourceAccessDark from "../../assets/source-access/icon-dark.svg";
+
 const LOGO_MAP = {
     default: { light: despicalLight, dark: despicalDark, circle: true },
     "/easter-eggs": { light: easterLight, dark: easterDark, circle: false },
@@ -65,11 +68,13 @@ const LOGO_MAP = {
     "/tnt-tag": { light: tntTagLight, dark: tntTagDark, circle: false },
     "/item-upgrader": { light: itemUpgraderLight, dark: itemUpgraderDark, circle: false },
     "/particle-text": { light: particleTextLight, dark: particleTextDark, circle: false },
+    "/source-access": { light: sourceAccessLight, dark: sourceAccessDark, circle: false },
 };
 
 const { pathname } = Astro.url;
 const normalizedPath = pathname.replace(/\/+$/, "");
-const hideSiteTitle = normalizedPath === "" || normalizedPath === "/source-access";
+const isSourceAccess = normalizedPath === "/source-access";
+const hideSiteTitle = normalizedPath === "";
 let current = LOGO_MAP.default;
 
 for (const key of Object.keys(LOGO_MAP)) {
@@ -88,17 +93,19 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
                 width="96"
                 height="96"
                 class:list={["light:sl-hidden print:hidden", current.circle ? "circle-logo" : ""]}
-                alt="Logo (Light)"
+                alt={isSourceAccess ? "" : "Logo (Light)"}
                 src={current.light}
         />
         <Image
                 width="96"
                 height="96"
                 class:list={["dark:sl-hidden print:block", current.circle ? "circle-logo" : ""]}
-                alt="Logo (Dark)"
+                alt={isSourceAccess ? "" : "Logo (Dark)"}
                 src={current.dark}
         />
-        <span class="sr-only notranslate" translate="no">{siteTitle}</span>
+        <span class:list={["notranslate", !isSourceAccess && "sr-only"]} translate="no">
+            {isSourceAccess ? "Source Access" : siteTitle}
+        </span>
     </a>
 )}
 
