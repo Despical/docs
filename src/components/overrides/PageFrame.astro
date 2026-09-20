@@ -224,6 +224,10 @@ const showSidebar = hasSidebar && normalizedPath !== "/source-access";
     }
 
     @media (min-width: 50rem) {
+        .page--source-access .main-frame {
+            padding-inline-start: var(--sl-sidebar-width);
+        }
+
         :global([data-has-sidebar]) .header {
             padding-inline-start: var(--sl-nav-pad-x);
         }
