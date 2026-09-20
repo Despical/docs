@@ -1,0 +1,27 @@
+---
+import MobileMenuFooter from "virtual:starlight/components/MobileMenuFooter";
+import SidebarSublist from "@astrojs/starlight/components/SidebarSublist.astro";
+
+const sidebar = [
+    {
+        type: "group",
+        label: "Source Access",
+        collapsed: false,
+        entries: [
+            {
+                type: "link",
+                label: "Guide",
+                href: "/source-access/",
+                isCurrent: true,
+                attrs: {},
+            },
+        ],
+    },
+];
+---
+
+<SidebarSublist sublist={sidebar} />
+
+<div class="md:sl-hidden">
+    <MobileMenuFooter />
+</div>

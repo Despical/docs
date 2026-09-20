@@ -1,9 +1,12 @@
 ---
 import MobileMenuToggle from "@astrojs/starlight/components/MobileMenuToggle.astro";
 import TopicsDropdown from "./TopicsDropdown.astro";
+import SourceAccessSidebar from "../SourceAccessSidebar.astro";
 
 const { hasSidebar } = Astro.locals.starlightRoute;
 const showSidebar = hasSidebar;
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
+const isSourceAccess = normalizedPath === "/source-access";
 ---
 
 <div class:list={["page sl-flex", !showSidebar && "page--without-sidebar"]}>
@@ -13,13 +16,13 @@ const showSidebar = hasSidebar;
             <nav class="sidebar print:hidden" aria-label={Astro.locals.t("sidebarNav.accessibleLabel")}>
                 <MobileMenuToggle />
                 <div id="starlight__sidebar" class="sidebar-pane">
-                    {Astro.locals.starlightSidebarTopics.isPageWithTopic && (
+                    {!isSourceAccess && Astro.locals.starlightSidebarTopics.isPageWithTopic && (
                         <div class="dropdown-wrapper">
                             <TopicsDropdown />
                         </div>
                     )}
                     <div class="sidebar-content sl-flex">
-                        <slot name="sidebar" />
+                        {isSourceAccess ? <SourceAccessSidebar /> : <slot name="sidebar" />}
                     </div>
                 </div>
             </nav>
