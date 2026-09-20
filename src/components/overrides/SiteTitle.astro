@@ -69,8 +69,7 @@ const LOGO_MAP = {
 
 const { pathname } = Astro.url;
 const normalizedPath = pathname.replace(/\/+$/, "");
-const isSourceAccess = normalizedPath === "/source-access";
-const hideSiteTitle = normalizedPath === "";
+const hideSiteTitle = normalizedPath === "" || normalizedPath === "/source-access";
 let current = LOGO_MAP.default;
 
 for (const key of Object.keys(LOGO_MAP)) {
@@ -83,11 +82,7 @@ for (const key of Object.keys(LOGO_MAP)) {
 const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
 ---
 
-{isSourceAccess ? (
-    <a href="/" class="site-title source-access-home" aria-label="Back to Despical Docs home">
-        <img src="/favicon.svg" width="96" height="96" alt="" />
-    </a>
-) : !hideSiteTitle && (
+{!hideSiteTitle && (
     <a href={siteTitleHref} class="site-title sl-flex">
         <Image
                 width="96"
@@ -130,25 +125,4 @@ const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
         border-radius: 50%;
     }
 
-    .source-access-home {
-        display: grid;
-        width: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
-        height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
-        place-items: center;
-        padding: 0.48rem;
-        border: 1px solid var(--sl-color-gray-5);
-        border-radius: 50%;
-        background: var(--sl-color-gray-6);
-        transition: border-color 160ms ease, background-color 160ms ease;
-    }
-
-    .source-access-home:hover {
-        border-color: var(--sl-color-text-accent);
-        background: var(--sl-color-gray-5);
-    }
-
-    .source-access-home img {
-        width: 100%;
-        height: 100%;
-    }
 </style>

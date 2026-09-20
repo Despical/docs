@@ -9,9 +9,11 @@ import ThemeSelect from "virtual:starlight/components/ThemeSelect";
 
 const shouldRenderSearch =
     config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
+const isSourceAccess = normalizedPath === "/source-access";
 ---
 
-<div class="header">
+<div class:list={["header", isSourceAccess && "source-access-header"]}>
     <div class="title-wrapper sl-flex">
         <SiteTitle />
     </div>
@@ -118,6 +120,34 @@ const shouldRenderSearch =
 
             .right-group {
                 grid-column: 3;
+            }
+
+            .source-access-header {
+                grid-template-columns: 1fr auto;
+            }
+
+            .source-access-header .title-wrapper {
+                display: none;
+            }
+
+            .source-access-header .search-wrapper {
+                grid-column: 1;
+            }
+
+            .source-access-header .right-group {
+                grid-column: 2;
+            }
+        }
+
+        @media (min-width: 72rem) {
+            .source-access-header {
+                padding-inline-start: max(
+                    0rem,
+                    calc(
+                        (100% - var(--sl-content-width) - var(--sl-sidebar-width)) / 2 -
+                            var(--sl-nav-pad-x)
+                    )
+                );
             }
         }
     }
