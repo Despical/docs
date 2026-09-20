@@ -1,0 +1,133 @@
+---
+import IconCustom from "./IconCustom.astro";
+---
+
+<section class="hub-feature" aria-labelledby="hub-feature-title">
+    <a href="https://hub.despical.dev" target="_blank" rel="noopener noreferrer" class="hub-feature__link not-content">
+        <div class="hub-feature__icon" aria-hidden="true">
+            <IconCustom name="plugin-hub" class="icon" size="1.6rem" />
+        </div>
+
+        <div class="hub-feature__content">
+            <h2 id="hub-feature-title">Despical's Plugin Hub</h2>
+            <p>Access the source and early updates for every premium plugin you own, then manage licenses, linked accounts, and your complete purchase history.</p>
+        </div>
+
+        <span class="hub-feature__action">
+            Open Hub
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
+        </span>
+    </a>
+</section>
+
+<style>
+    .hub-feature {
+        margin-block: 1rem 0;
+    }
+
+    .hub-feature__link {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.8rem 1rem;
+        border-inline-start: 3px solid #3b82f6;
+        border-radius: 0 0.45rem 0.45rem 0;
+        color: var(--sl-color-white);
+        background: linear-gradient(90deg, rgb(37 99 235 / 14%), transparent 82%);
+        text-decoration: none;
+        transition: background-color 160ms ease;
+    }
+
+    .hub-feature__link:hover {
+        background-color: rgb(37 99 235 / 8%);
+    }
+
+    .hub-feature__link:focus-visible {
+        outline: 3px solid var(--sl-color-accent-high);
+        outline-offset: 3px;
+    }
+
+    .hub-feature__icon {
+        display: grid;
+        width: 2.35rem;
+        height: 2.35rem;
+        place-items: center;
+    }
+
+    .hub-feature h2 {
+        margin: 0;
+        color: var(--sl-color-white);
+        font-size: var(--sl-text-base);
+    }
+
+    .hub-feature__content {
+        max-width: 42rem;
+    }
+
+    .hub-feature p {
+        margin: 0.15rem 0 0;
+        color: var(--sl-color-gray-2);
+        font-size: var(--sl-text-sm);
+        line-height: 1.45;
+    }
+
+    .hub-feature__action {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--sl-color-accent-high);
+        font-size: var(--sl-text-sm);
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .hub-feature__action svg {
+        width: 1.1rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 180ms ease;
+    }
+
+    .hub-feature__link:hover .hub-feature__action svg {
+        transform: translateX(0.18rem);
+    }
+
+    :root[data-theme="light"] .hub-feature__link {
+        color: var(--sl-color-gray-1);
+        background: linear-gradient(90deg, rgb(37 99 235 / 11%), transparent 82%);
+    }
+
+    @media (max-width: 40rem) {
+        .hub-feature__link {
+            grid-template-columns: auto minmax(0, 1fr);
+            padding: 0.75rem 0.85rem;
+        }
+
+        .hub-feature p {
+            display: -webkit-box;
+            overflow: hidden;
+            font-size: var(--sl-text-xs);
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+
+        .hub-feature__action {
+            grid-column: 1 / -1;
+            justify-self: end;
+            margin-top: -0.25rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hub-feature__link,
+        .hub-feature__action svg {
+            transition: none;
+        }
+    }
+</style>

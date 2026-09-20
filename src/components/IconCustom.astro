@@ -26,6 +26,7 @@ import itemUpgrader from "../assets/item-upgrader/icon.svg";
 import spigotMc from "../assets/marketplaces/spigotmc.svg";
 import builtByBit from "../assets/marketplaces/builtbybit.svg";
 import modrinth from "../assets/marketplaces/modrinth.svg";
+import pluginHub from "../assets/plugin-hub/icon.svg";
 
 const ICONS: Record<string, any> = {
     "easter-eggs": easterEggs,
@@ -46,6 +47,7 @@ const ICONS: Record<string, any> = {
     "spigotmc": spigotMc,
     "builtbybit": builtByBit,
     "modrinth": modrinth,
+    "plugin-hub": pluginHub,
 };
 
 const { name, size, class: cls } = Astro.props;
@@ -55,5 +57,5 @@ const style = size ? `width:${size};height:${size};` : "";
 
 {src
     ? <Image src={src} alt={name} class={cls} style={style} />
-    : <Icon name={name as any} class={cls} />
+    : <Icon name={name as any} class={cls} size={size} />
     }
