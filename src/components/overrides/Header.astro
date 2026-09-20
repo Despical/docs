@@ -1,0 +1,123 @@
+---
+import config from "virtual:starlight/user-config";
+
+import LanguageSelect from "virtual:starlight/components/LanguageSelect";
+import Search from "virtual:starlight/components/Search";
+import SiteTitle from "virtual:starlight/components/SiteTitle";
+import SocialIcons from "virtual:starlight/components/SocialIcons";
+import ThemeSelect from "virtual:starlight/components/ThemeSelect";
+
+const shouldRenderSearch =
+    config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
+---
+
+<div class="header">
+    <div class="title-wrapper sl-flex">
+        <SiteTitle />
+    </div>
+    <div class="search-wrapper sl-flex print:hidden">
+        {shouldRenderSearch && <Search />}
+    </div>
+    <div class="right-group sl-flex print:hidden">
+        <div class="social-icons sl-hidden md:sl-flex">
+            <SocialIcons />
+        </div>
+        <ThemeSelect />
+        <div class="language-select sl-hidden md:sl-block">
+            <LanguageSelect />
+        </div>
+    </div>
+</div>
+
+<style>
+    @layer starlight.core {
+        .header {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: var(--sl-nav-gap);
+            height: 100%;
+        }
+
+        .title-wrapper {
+            grid-column: 2;
+            grid-row: 1;
+            overflow: clip;
+            padding: 0.25rem;
+            margin: -0.25rem;
+            min-width: 0;
+        }
+
+        .search-wrapper {
+            grid-column: 1;
+            grid-row: 1;
+            justify-self: start;
+        }
+
+        .right-group {
+            grid-column: 3;
+            grid-row: 1;
+            justify-self: end;
+        }
+
+        .right-group,
+        .social-icons {
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .social-icons::after {
+            content: "";
+            height: 2rem;
+            border-inline-end: 1px solid var(--sl-color-gray-5);
+        }
+
+        @media (min-width: 50rem) {
+            :global(:root[data-has-sidebar]) {
+                --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+            }
+
+            :global(:root:not([data-has-toc])) {
+                --__toc-width: 0rem;
+            }
+
+            .header {
+                --__sidebar-width: max(0rem, var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x));
+                --__main-column-fr: calc(
+                    (
+                            100% + var(--__sidebar-pad, 0rem) - var(--__toc-width, var(--sl-sidebar-width)) -
+                                (2 * var(--__toc-width, var(--sl-nav-pad-x))) - var(--sl-content-inline-start, 0rem) -
+                                var(--sl-content-width)
+                        ) / 2
+                );
+                grid-template-columns:
+                    minmax(
+                        calc(var(--__sidebar-width) + max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))),
+                        auto
+                    )
+                    1fr
+                    auto;
+                align-content: center;
+            }
+
+            .title-wrapper,
+            .search-wrapper,
+            .right-group {
+                grid-row: auto;
+                justify-self: stretch;
+            }
+
+            .title-wrapper {
+                grid-column: 1;
+            }
+
+            .search-wrapper {
+                grid-column: 2;
+            }
+
+            .right-group {
+                grid-column: 3;
+            }
+        }
+    }
+</style>

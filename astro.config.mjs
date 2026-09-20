@@ -241,6 +241,7 @@ export default defineConfig({
             ],
             components: {
                 Head: "./src/components/overrides/Head.astro",
+                Header: "./src/components/overrides/Header.astro",
                 SiteTitle: "./src/components/overrides/SiteTitle.astro",
                 PageFrame: "./src/components/overrides/PageFrame.astro",
                 Footer: "./src/components/overrides/Footer.astro",
