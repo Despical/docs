@@ -22,6 +22,28 @@ const projectNames: Record<string, string> = {
     'whack-me': 'Whack Me',
 };
 
+const projectName = projectNames[segments[0]];
+const pageTitle = projectName && segments.length > 1
+    ? `${entry.data.title} | ${projectName}`
+    : undefined;
+
+const resolvedHead = head.map((item) => {
+    if (!pageTitle) return item;
+
+    if (item.tag === 'title') {
+        return { ...item, content: pageTitle };
+    }
+
+    if (
+        item.tag === 'meta' &&
+        (item.attrs?.property === 'og:title' || item.attrs?.name === 'twitter:title')
+    ) {
+        return { ...item, attrs: { ...item.attrs, content: pageTitle } };
+    }
+
+    return item;
+});
+
 const schemas: Record<string, unknown>[] = [];
 
 if (segments.length === 0) {
@@ -45,7 +67,6 @@ if (segments.length > 0) {
         },
     ];
 
-    const projectName = projectNames[segments[0]];
     if (projectName && segments.length > 1) {
         breadcrumbItems.push({
             '@type': 'ListItem',
@@ -70,7 +91,7 @@ if (segments.length > 0) {
 }
 ---
 
-{head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+{resolvedHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
 {segments.length === 0 && (
     <link
         rel="preload"
