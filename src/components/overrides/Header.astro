@@ -9,16 +9,12 @@ import ThemeSelect from "virtual:starlight/components/ThemeSelect";
 
 const shouldRenderSearch =
     config.pagefind || config.components.Search !== "@astrojs/starlight/components/Search.astro";
-const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
-const isSourceAccess = normalizedPath === "/source-access";
 ---
 
-<div class:list={["header", isSourceAccess && "source-access-header"]}>
-    {!isSourceAccess && (
-        <div class="title-wrapper sl-flex">
-            <SiteTitle />
-        </div>
-    )}
+<div class="header">
+    <div class="title-wrapper sl-flex">
+        <SiteTitle />
+    </div>
     <div class="search-wrapper sl-flex print:hidden">
         {shouldRenderSearch && <Search />}
     </div>
@@ -124,32 +120,6 @@ const isSourceAccess = normalizedPath === "/source-access";
                 grid-column: 3;
             }
 
-            .source-access-header {
-                display: flex;
-                align-items: center;
-                padding-inline-start: calc(
-                    var(--sl-sidebar-width) + var(--sl-content-pad-x) - var(--sl-nav-pad-x)
-                );
-            }
-
-            .source-access-header .search-wrapper {
-                flex: 1;
-            }
-
-            .source-access-header .right-group {
-                flex: none;
-            }
-        }
-
-        @media (min-width: 72rem) {
-            .source-access-header {
-                padding-inline-start: max(
-                    var(--sl-sidebar-width),
-                    calc(
-                        (100% - var(--sl-content-width)) / 2 - var(--sl-nav-pad-x)
-                    )
-                );
-            }
         }
     }
 </style>
