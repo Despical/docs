@@ -1,0 +1,76 @@
+---
+const { head, entry } = Astro.locals.starlightRoute;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://docs.despical.dev');
+const normalizedPath = Astro.url.pathname.replace(/^\/+|\/+$/g, '');
+const segments = normalizedPath ? normalizedPath.split('/') : [];
+
+const projectNames: Record<string, string> = {
+    'advanced-parkour': 'Advanced Parkour',
+    'carousel': 'Carousel',
+    'command-framework': 'Command Framework',
+    'easter-eggs': 'Easter Eggs',
+    'eat-everything': 'Eat Everything',
+    'item-upgrader': 'Item Upgrader',
+    'kotl': 'King of the Ladder',
+    'particle-text': 'Particle Text',
+    'santa-says': 'Santa Says',
+    'spigot-webhook': 'Spigot Sales Webhook',
+    'the-snake': 'The Snake',
+    'tnt-run': 'TNT Run',
+    'tnt-tag': 'TNT Tag',
+    'warden-party': 'Warden Party',
+    'whack-me': 'Whack Me',
+};
+
+const schemas: Record<string, unknown>[] = [];
+
+if (segments.length === 0) {
+    schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Despical Docs',
+        alternateName: ['Despical Documentation', 'docs.despical.dev'],
+        url: canonicalUrl.href,
+        description: entry.data.description,
+    });
+}
+
+if (segments.length > 0) {
+    const breadcrumbItems: Record<string, unknown>[] = [
+        {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Despical Docs',
+            item: 'https://docs.despical.dev/',
+        },
+    ];
+
+    const projectName = projectNames[segments[0]];
+    if (projectName && segments.length > 1) {
+        breadcrumbItems.push({
+            '@type': 'ListItem',
+            position: 2,
+            name: `${projectName} Documentation`,
+            item: `https://docs.despical.dev/${segments[0]}/`,
+        });
+    }
+
+    breadcrumbItems.push({
+        '@type': 'ListItem',
+        position: breadcrumbItems.length + 1,
+        name: entry.data.title,
+        item: canonicalUrl.href,
+    });
+
+    schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbItems,
+    });
+}
+---
+
+{head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+{schemas.map((schema) => (
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
