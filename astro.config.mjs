@@ -240,6 +240,7 @@ export default defineConfig({
                 "./src/styles/custom.css",
             ],
             components: {
+                Head: "./src/components/overrides/Head.astro",
                 SiteTitle: "./src/components/overrides/SiteTitle.astro",
                 PageFrame: "./src/components/overrides/PageFrame.astro",
                 Footer: "./src/components/overrides/Footer.astro",
@@ -349,8 +350,8 @@ export default defineConfig({
                                         link: "/easter-eggs/misc/faq",
                                     },
                                     {
-                                        label: "Source Code",
-                                        link: "/easter-eggs/misc/source-code",
+                                        label: "Source Access",
+                                        link: "/source-access",
                                     },
                                 ],
                             },
@@ -441,8 +442,8 @@ export default defineConfig({
                                         link: "/carousel/misc/faq",
                                     },
                                     {
-                                        label: "Source Code",
-                                        link: "/carousel/misc/source-code",
+                                        label: "Source Access",
+                                        link: "/source-access",
                                     },
                                 ],
                             },
@@ -695,8 +696,8 @@ export default defineConfig({
                                         link: "/santa-says/misc/faq",
                                     },
                                     {
-                                        label: "Source Code",
-                                        link: "/santa-says/misc/source-code",
+                                        label: "Source Access",
+                                        link: "/source-access",
                                     },
                                 ],
                             },
@@ -868,8 +869,8 @@ export default defineConfig({
                                         link: "/advanced-parkour/misc/faq",
                                     },
                                     {
-                                        label: "Source Code",
-                                        link: "/advanced-parkour/misc/source-code",
+                                        label: "Source Access",
+                                        link: "/source-access",
                                     },
                                 ],
                             },
@@ -1036,6 +1037,7 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/item-upgrader/misc/faq"},
+                                    {label: "Source Access", link: "/source-access"},
                                 ],
                             },
                         ],
@@ -1114,6 +1116,7 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/the-snake/misc/faq"},
+                                    {label: "Source Access", link: "/source-access"},
                                 ],
                             },
                         ],
@@ -1200,6 +1203,7 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/tnt-tag/misc/faq"},
+                                    {label: "Source Access", link: "/source-access"},
                                 ],
                             },
                         ],
@@ -1775,6 +1779,10 @@ export default defineConfig({
                                         label: "FAQ",
                                         link: "/warden-party/misc/faq",
                                     },
+                                    {
+                                        label: "Source Access",
+                                        link: "/source-access",
+                                    },
                                 ],
                             },
                         ],
@@ -1840,8 +1848,8 @@ export default defineConfig({
                                         link: "/eat-everything/misc/faq",
                                     },
                                     {
-                                        label: "Source Code",
-                                        link: "/eat-everything/misc/source-code",
+                                        label: "Source Access",
+                                        link: "/source-access",
                                     },
                                 ],
                             },
@@ -1988,9 +1996,10 @@ export default defineConfig({
                         ]
                     }
                 ], {
+                    exclude: ["/source-access"],
                     topics: {
-                        "tnt-run": ["/tnt-run/misc/source-code", "/tnt-run/configuration/menus"],
-                        "kotl": ["/kotl/misc/source-code", "/kotl/configuration/menus"],
+                        "tnt-run": ["/tnt-run/configuration/menus"],
+                        "kotl": ["/kotl/configuration/menus"],
                         "whack-me": ["/whack-me/configuration/menus"],
                     },
                 })
