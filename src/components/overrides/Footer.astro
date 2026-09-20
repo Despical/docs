@@ -12,7 +12,7 @@ import { Icon } from "@astrojs/starlight/components";
     </p>
     <p class="footer-item">
         <br/> Built with <Icon name="starlight" class="icon" />
-        <a href="https://starlight.astro.build/" target="_blank">Starlight</a>
+        <a href="https://starlight.astro.build/" target="_blank" rel="noreferrer">Starlight</a>
     </p>
 
 </div>
@@ -25,8 +25,11 @@ import { Icon } from "@astrojs/starlight/components";
         margin-bottom: 0.25rem;
     }
 
-    .footer-item a:not(:hover) {
-        text-decoration: none;
+    .footer-item a {
+        color: var(--sl-color-white);
+        text-decoration: underline;
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.2em;
     }
 
     .icon {
