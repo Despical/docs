@@ -14,9 +14,11 @@ const isSourceAccess = normalizedPath === "/source-access";
 ---
 
 <div class:list={["header", isSourceAccess && "source-access-header"]}>
-    <div class="title-wrapper sl-flex">
-        <SiteTitle />
-    </div>
+    {!isSourceAccess && (
+        <div class="title-wrapper sl-flex">
+            <SiteTitle />
+        </div>
+    )}
     <div class="search-wrapper sl-flex print:hidden">
         {shouldRenderSearch && <Search />}
     </div>
@@ -123,29 +125,28 @@ const isSourceAccess = normalizedPath === "/source-access";
             }
 
             .source-access-header {
-                grid-template-columns: 1fr auto;
-            }
-
-            .source-access-header .title-wrapper {
-                display: none;
+                display: flex;
+                align-items: center;
+                padding-inline-start: calc(
+                    var(--sl-sidebar-width) + var(--sl-content-pad-x) - var(--sl-nav-pad-x)
+                );
             }
 
             .source-access-header .search-wrapper {
-                grid-column: 1;
+                flex: 1;
             }
 
             .source-access-header .right-group {
-                grid-column: 2;
+                flex: none;
             }
         }
 
         @media (min-width: 72rem) {
             .source-access-header {
                 padding-inline-start: max(
-                    0rem,
+                    var(--sl-sidebar-width),
                     calc(
-                        (100% - var(--sl-content-width) - var(--sl-sidebar-width)) / 2 -
-                            var(--sl-nav-pad-x)
+                        (100% - var(--sl-content-width)) / 2 - var(--sl-nav-pad-x)
                     )
                 );
             }
