@@ -1,0 +1,121 @@
+---
+import { Icon } from '@astrojs/starlight/components';
+
+const benefits = [
+    {
+        title: 'Private GitHub Access',
+        icon: 'github',
+        tone: 'amber',
+        description: "Eligible purchases give your connected GitHub account read access to the plugin's private repository. Follow commits, inspect changes, and pull available source updates without sharing credentials.",
+        href: null,
+    },
+    {
+        title: 'Early Updates & Documentation',
+        icon: 'document',
+        tone: 'purple',
+        description: 'Keep release information, source changes, and available project documentation close together, making it easier to review an update before deploying it to your server.',
+        href: null,
+    },
+    {
+        title: 'Verified Plugin Library',
+        icon: 'star',
+        tone: 'green',
+        description: 'Keep recognized premium purchases in one account. The Hub Source Access page shows which plugins are eligible, which GitHub account is connected, and the current review status.',
+        href: null,
+    },
+    {
+        title: 'Marketplace Verification Support',
+        icon: 'pencil',
+        tone: 'pink',
+        description: 'Spigot purchases are checked through your linked account. If you purchased a premium plugin on BuiltByBit, open a Hub ticket so the purchase and source-access eligibility can be reviewed manually.',
+        href: 'https://hub.despical.dev/tickets',
+    },
+] as const;
+---
+
+<div class="benefits not-content">
+    {benefits.map(({ title, icon, tone, description, href }) => (
+        <article class="benefit">
+            <div class="benefit__heading">
+                <span class:list={["benefit__icon", `benefit__icon--${tone}`]} aria-hidden="true">
+                    <Icon name={icon} />
+                </span>
+                <h3>{title}</h3>
+            </div>
+            <p>
+                {description}
+                {href && <> <a href={href} target="_blank" rel="noopener noreferrer">Open a support ticket.</a></>}
+            </p>
+        </article>
+    ))}
+</div>
+
+<style>
+    .benefits {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+        margin-block: 1.25rem;
+    }
+
+    .benefit {
+        padding: 2rem 2.15rem;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 0.15rem;
+        background: color-mix(in srgb, var(--sl-color-gray-6) 32%, transparent);
+    }
+
+    .benefit__heading {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+    }
+
+    .benefit__heading h3 {
+        margin: 0;
+        color: var(--sl-color-white);
+        font-size: clamp(1.35rem, 2vw, 1.5rem);
+        line-height: 1.3;
+    }
+
+    .benefit__icon {
+        display: grid;
+        flex: 0 0 auto;
+        width: 2rem;
+        height: 2rem;
+        place-items: center;
+        border: 1px solid currentColor;
+        border-radius: 0.3rem;
+    }
+
+    .benefit__icon :global(svg) {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .benefit__icon--amber { color: #fbbf24; background: rgb(251 191 36 / 14%); }
+    .benefit__icon--purple { color: #c084fc; background: rgb(192 132 252 / 14%); }
+    .benefit__icon--green { color: #86efac; background: rgb(134 239 172 / 13%); }
+    .benefit__icon--pink { color: #f472b6; background: rgb(244 114 182 / 13%); }
+
+    .benefit p {
+        margin: 1.15rem 0 0;
+        color: var(--sl-color-gray-2);
+        font-size: 1.0625rem;
+        line-height: 1.7;
+    }
+
+    .benefit a {
+        font-weight: 600;
+    }
+
+    @media (max-width: 46rem) {
+        .benefits {
+            grid-template-columns: 1fr;
+        }
+
+        .benefit {
+            padding: 1.5rem;
+        }
+    }
+</style>
