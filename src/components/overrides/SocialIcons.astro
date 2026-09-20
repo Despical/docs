@@ -4,13 +4,19 @@ import IconCustom from ".././IconCustom.astro";
 
 const { isPageWithTopic, topics } = Astro.locals.starlightSidebarTopics;
 const currentTopic = isPageWithTopic ? topics.find((t) => t.isCurrent) : null;
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
+const isSourceAccess = normalizedPath === "/source-access";
 
 const project = currentTopic?.label?.toLowerCase().replace(' ', '-');
 const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text"]);
 const freePluginMarketplaces = new Set(["SpigotMC", "BuiltByBit", "Modrinth"]);
+const brandLabels = new Set(["github", "javadoc", "discord", "patreon", "spigotmc", "builtbybit", "modrinth"]);
 
 const links = (config.social || [])
     .filter((l) => {
+        if (isSourceAccess)
+            return l.label.startsWith("home:");
+
         if (project && l.label.startsWith(`${project}:`))
             return true;
 
@@ -33,7 +39,10 @@ const links = (config.social || [])
                     ? "modrinth"
                     : link.icon;
 
-        return { ...link, label, icon };
+        const normalizedLabel = label.toLowerCase();
+        const brand = brandLabels.has(normalizedLabel) ? normalizedLabel : null;
+
+        return { ...link, label, icon, brand };
     })
     .filter((link) => !project || !freePlugins.has(project) || freePluginMarketplaces.has(link.label))
     .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
@@ -42,8 +51,8 @@ const links = (config.social || [])
 {
     links.length > 0 && (
     <>
-        {links.map(({ label, href, icon }) => (
-            <a {href} rel="me" class="sl-flex">
+        {links.map(({ label, href, icon, brand }) => (
+            <a {href} rel="me" class:list={["sl-flex", brand && "brand-link", brand && `brand-${brand}`]}>
                 <span class="sr-only">{label}</span>
                 <IconCustom name={icon} class="icon" size="20px" />
             </a>
@@ -60,5 +69,29 @@ const links = (config.social || [])
     }
     a:hover {
         opacity: 0.66;
+    }
+    a.brand-github {
+        color: #f0f6fc;
+    }
+    a.brand-javadoc {
+        color: #e76f00;
+    }
+    a.brand-discord {
+        color: #5865f2;
+    }
+    a.brand-patreon {
+        color: #ff424d;
+    }
+    a.brand-spigotmc {
+        color: #ed8106;
+    }
+    a.brand-builtbybit {
+        color: #2d87c3;
+    }
+    a.brand-modrinth {
+        color: #1bd96a;
+    }
+    :root[data-theme="light"] a.brand-github {
+        color: #181717;
     }
 </style>
