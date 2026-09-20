@@ -3,12 +3,14 @@ import MobileMenuToggle from "@astrojs/starlight/components/MobileMenuToggle.ast
 import TopicsDropdown from "./TopicsDropdown.astro";
 
 const { hasSidebar } = Astro.locals.starlightRoute;
+const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
+const showSidebar = hasSidebar && normalizedPath !== "/source-access";
 ---
 
-<div class="page sl-flex">
+<div class:list={["page sl-flex", !showSidebar && "page--without-sidebar", normalizedPath === "/source-access" && "page--source-access"]}>
     <header class="header"><slot name="header" /></header>
     {
-        hasSidebar && (
+        showSidebar && (
             <nav class="sidebar print:hidden" aria-label={Astro.locals.t("sidebarNav.accessibleLabel")}>
                 <MobileMenuToggle />
                 <div id="starlight__sidebar" class="sidebar-pane">
@@ -25,6 +27,11 @@ const { hasSidebar } = Astro.locals.starlightRoute;
         )
     }
     <div class="main-frame"><slot /></div>
+    <button class="back-to-top" type="button" aria-label="Back to top" title="Back to top" data-back-to-top>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 19V5m-6 6 6-6 6 6" />
+        </svg>
+    </button>
 </div>
 
 <script>
@@ -32,6 +39,20 @@ const { hasSidebar } = Astro.locals.starlightRoute;
         document
             .querySelector(`#starlight__sidebar a[aria-current="page"]`)
             ?.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        const backToTop = document.querySelector<HTMLButtonElement>("[data-back-to-top]");
+        if (!backToTop) return;
+
+        const updateBackToTop = () => {
+            backToTop.classList.toggle("is-visible", window.scrollY > 480);
+        };
+
+        window.addEventListener("scroll", updateBackToTop, { passive: true });
+        backToTop.addEventListener("click", () => {
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+        });
+        updateBackToTop();
     });
 </script>
 
@@ -120,6 +141,86 @@ const { hasSidebar } = Astro.locals.starlightRoute;
     .main-frame {
         padding-top: calc(var(--sl-nav-height) + var(--sl-mobile-toc-height));
         padding-inline-start: var(--sl-content-inline-start);
+    }
+
+    .page--without-sidebar .main-frame {
+        padding-inline-start: 0;
+    }
+
+    .page--without-sidebar .header {
+        padding-inline-start: var(--sl-nav-pad-x);
+    }
+
+    .page--source-access {
+        --sl-content-width: 70rem;
+    }
+
+    .back-to-top {
+        position: fixed;
+        z-index: calc(var(--sl-z-index-navbar) - 1);
+        inset-inline-end: max(1rem, env(safe-area-inset-right));
+        inset-block-end: max(1rem, env(safe-area-inset-bottom));
+        display: grid;
+        width: 2.85rem;
+        height: 2.85rem;
+        place-items: center;
+        border: 0;
+        border-radius: 999px;
+        color: #fff;
+        background: var(--sl-color-accent);
+        box-shadow: 0 10px 28px color-mix(in srgb, var(--sl-color-accent) 36%, transparent);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(0.75rem) scale(0.92);
+        transition: opacity 180ms ease, transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+        cursor: pointer;
+    }
+
+    .back-to-top.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0) scale(1);
+    }
+
+    .back-to-top:hover {
+        background: var(--sl-color-accent-high);
+        transform: translateY(-0.2rem) scale(1);
+    }
+
+    .back-to-top:focus-visible {
+        outline: 3px solid color-mix(in srgb, var(--sl-color-accent-high) 72%, white);
+        outline-offset: 3px;
+    }
+
+    .back-to-top svg {
+        width: 1.35rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: transform 180ms ease;
+    }
+
+    .back-to-top:hover svg {
+        transform: translateY(-0.15rem);
+    }
+
+    :root[data-theme="light"] .back-to-top {
+        color: #fff;
+        background: var(--sl-color-accent-high);
+        box-shadow: 0 10px 26px rgb(30 58 138 / 16%);
+    }
+
+    :root[data-theme="light"] .back-to-top:hover {
+        background: var(--sl-color-accent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .back-to-top,
+        .back-to-top svg {
+            transition: none;
+        }
     }
 
     @media (min-width: 50rem) {
