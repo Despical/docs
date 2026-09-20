@@ -71,6 +71,15 @@ if (segments.length > 0) {
 ---
 
 {head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+{segments.length === 0 && (
+    <link
+        rel="preload"
+        href="/images/home-hero-voxel-world.webp"
+        as="image"
+        type="image/webp"
+        fetchpriority="high"
+    />
+)}
 {schemas.map((schema) => (
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 ))}

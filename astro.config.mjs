@@ -2017,6 +2017,7 @@ export default defineConfig({
                     tag: 'script',
                     attrs: {
                         src: `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
+                        async: true,
                     },
                 },
                 {
