@@ -3,6 +3,8 @@ title: Previews and Route Guides
 description: Use personal MazeEngine display previews and adaptive route arrows, understand session lifetimes, and tune visual performance.
 ---
 
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
 ## Private Previews
 
 ```text
@@ -11,13 +13,21 @@ description: Use personal MazeEngine display previews and adaptive route arrows,
 
 A preview renders the planned maze with block display entities visible to the requesting player. It does not replace world blocks, capture a snapshot, or create a saved maze record. You can move around and through its display geometry to inspect the theme, dimensions, and layout.
 
+<GameScreenshot src="/images/mazeengine/gameplay/private-preview.webp" alt="An in-game private preview showing a complete stone-brick maze with mossy walls and inset corridor lights" crop={[350, 280, 1220, 670]} />
+
+This preview shows the planned geometry from above. See the [in-game gallery](/maze-engine/gallery/#previews-and-chat) for more captured views.
+
 Preview accepts the same options as creation, including selections, geometry, complexity, and seeds. It must target your current world and obey cell, volume, chunk, world-border, and overlap limits. The preview region check allows the viewer to stand inside the volume.
 
 Each player has at most one active preview. A new preview replaces that player's previous session. The global simultaneous-session cap defaults to 8.
 
 ## Build the Shown Specification
 
-The chat panel provides **Create** and **Close** buttons. Creation is available when you have `mazeengine.create`. After moving outside the volume, choose Create or submit the matching name without new options:
+The chat panel provides **Create** and **Close** buttons. Creation is available when you have `mazeengine.create`.
+
+<GameScreenshot src="/images/mazeengine/gameplay/preview-panel.webp" alt="The active Maze Preview chat panel listing its theme and dimensions, with Create and Close buttons beneath the summary" crop={[4, 775, 659, 225]} />
+
+After moving outside the volume, choose Create or submit the matching name without new options:
 
 ```text
 /maze create garden

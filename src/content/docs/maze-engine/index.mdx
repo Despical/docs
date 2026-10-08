@@ -4,13 +4,17 @@ description: Generate deterministic Minecraft mazes with configurable themes, pr
 tableOfContents: false
 ---
 
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
 import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 ## MazeEngine
 
 **MazeEngine** builds persistent mazes directly in your Minecraft world. Choose a theme, preview its layout, and create a maze with a reproducible seed. Manage the finished structure through interactive chat panels, guide players to its exit, rebuild it, or restore the terrain captured before construction.
 
-<img src="/images/mazeengine/social-preview.png" alt="MazeEngine project artwork with a mint maze route and dark teal background" width="1280" height="640" />
+<GameScreenshot src="/images/mazeengine/gameplay/hedge-overview.webp" alt="A generated Hedge maze seen from above, with flowering foliage walls, grass paths, and inset floor lights" crop={[245, 270, 1430, 740]} />
+
+Explore the [in-game gallery](/maze-engine/gallery/) for theme examples and the plugin's preview and chat interfaces.
 
 MazeEngine supports **Paper for Minecraft 1.21.11 and later** and requires **Java 25**. WorldEdit or FastAsyncWorldEdit, WorldGuard, and PlaceholderAPI are optional integrations.
 
@@ -18,6 +22,7 @@ MazeEngine supports **Paper for Minecraft 1.21.11 and later** and requires **Jav
 
 <CardGrid>
     <LinkCard title="Getting Started" description="Install the plugin, check requirements, and build your first maze." href="/maze-engine/getting-started/" />
+    <LinkCard title="Core Concepts" description="Understand the terms in in-game help: cells, seeds, presets, placement, and snapshots." href="/maze-engine/concepts/" />
     <LinkCard title="Creating Mazes" description="Choose cell dimensions, world coordinates, placement rules, and WorldEdit selections." href="/maze-engine/creating-mazes/" />
     <LinkCard title="Previews and Route Guides" description="Inspect a private visual preview and follow a personal route to the exit." href="/maze-engine/previews-and-guides/" />
 </CardGrid>
@@ -29,6 +34,7 @@ The plugin includes **30 editable presets**, from open hedge gardens and desert 
 <CardGrid>
     <LinkCard title="Preset Reference" description="Create custom themes with weighted palettes, roofs, lighting, caps, and wall inlays." href="/maze-engine/presets/" />
     <LinkCard title="Generation and Geometry" description="Understand deterministic seeds, perfect and braided graphs, physical size, and complexity." href="/maze-engine/generation/" />
+    <LinkCard title="In-Game Gallery" description="See real Minecraft screenshots of themed mazes, previews, and chat controls." href="/maze-engine/gallery/" />
 </CardGrid>
 
 ## Server Administration

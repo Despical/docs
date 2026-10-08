@@ -1,0 +1,66 @@
+---
+title: Core Concepts
+description: Understand the terms in MazeEngine's in-game help, from cells and seeds to placement modes, previews, and terrain snapshots.
+---
+
+The in-game `/maze help concepts` menu introduces the terms used by commands and chat panels. This page explains those same ideas with examples. For command syntax, see the [command reference](/maze-engine/commands/).
+
+## Cells and Blocks
+
+A **cell** is one position in the maze's logical grid. The width and depth supplied to `/maze create` count cells, not Minecraft blocks. Walls and paths expand that grid into the structure you see in the world.
+
+For either horizontal axis, the block span is:
+
+```text
+cells × (path width + wall thickness) + wall thickness
+```
+
+A 15 × 15 maze with paths 3 blocks wide and walls 1 block thick occupies **61 × 61 blocks**. Increasing path width makes the same logical maze larger without adding cells. The chat panel displays both cell dimensions and the physical block dimensions.
+
+## Geometry
+
+**Path width** controls the walkable space inside each corridor. **Wall thickness** controls the barriers between corridors and around the boundary. **Wall height** controls how far those barriers rise above the floor; a preset can also add a ceiling.
+
+Presets supply geometry defaults. Creation and preview commands can override them with `--path-width`, `--wall-thickness`, and `--wall-height`. See [generation and geometry](/maze-engine/generation/) for sizing and limits.
+
+## Presets and Difficulty
+
+A **preset** is an editable YAML theme. It combines geometry, block palettes, decorations, generation settings, and the information shown in chat. Select one with `--preset hedge`, for example, or browse the available themes with `/maze presets`.
+
+**Easy**, **Medium**, and **Hard** are configured descriptions of the intended challenge. Changing that label alone does not reshape a maze. Saved mazes retain the settings used when they were created, so editing a preset does not silently update existing structures. See the [preset reference](/maze-engine/presets/) and [in-game gallery](/maze-engine/gallery/).
+
+## Seeds and Complexity
+
+A **seed** is the number that starts the generator's deterministic random sequence. Reusing the same seed, dimensions, and generation settings reproduces the same layout. Omitting `--seed` lets MazeEngine choose one; inspect the saved maze to reuse it later. Changing geometry or theme settings can change the resulting structure even when the seed stays the same.
+
+**Complexity** is a value from `0` to `1` that adjusts generation biases. Higher values favor longer, more winding branches. It affects layout choices rather than wall height, corridor width, or the block palette. Use `--complexity 0.7`, for example, to override the preset's generation biases.
+
+## Perfect and Braided Mazes
+
+A **perfect** maze has one route between any two cells. A **braided** maze adds connections to the initial layout, creating loops and alternative routes. Both start with MazeEngine's configurable Growing Tree generator; the [generation page](/maze-engine/generation/#how-the-generator-builds-a-maze) explains its decisions and the braiding pass.
+
+The personal **route guide** uses breadth-first search to find a shortest route from your current cell to the exit. Its arrows adapt as you move and are visible only to you. They do not modify world blocks. See [route guides](/maze-engine/previews-and-guides/#personal-route-guide).
+
+## Origin and Selections
+
+The **origin** is the structure's floor-level starting coordinate. By default, a player's maze begins 3 blocks east and 3 blocks south of their position, with its floor 1 block below their feet. Supply `--x`, `--y`, and `--z` together to choose an explicit origin. Console creation also needs `--world`.
+
+A **WorldEdit selection** supplies a cuboid that the maze must fit inside. With `--selection`, MazeEngine calculates the largest logical grid that fits the selected area and checks the available height. Do not combine a selection with explicit dimensions or coordinate options. See [creating mazes](/maze-engine/creating-mazes/) for examples.
+
+## Placement Modes
+
+Placement controls how construction treats existing blocks:
+
+| Mode | Effect |
+| --- | --- |
+| `CLEAR` | Replaces the target volume with the maze and its corridor space |
+| `SAFE` | Requires air above the floor; the floor may contain air or configured replaceable blocks |
+| `REPLACE` | Allows air or configured replaceable blocks throughout the volume |
+
+These policies do not bypass region permissions or overlap checks. Players must leave the construction volume before an operation can edit it.
+
+## Previews and Snapshots
+
+A **preview** is a temporary personal display of a proposed maze. It creates neither world blocks nor a saved maze record. Once planning finishes, its **Create** button submits the retained specification for construction; **Close** removes the display. Leave the target volume before creating it. See [private previews](/maze-engine/previews-and-guides/#private-previews).
+
+A **snapshot** preserves the original terrain, including block data, through WorldEdit or FastAsyncWorldEdit. Request it with `--snapshot` when creating a maze if you want the option to restore that terrain later. Regeneration keeps the original snapshot baseline. A snapshot is separate from the saved maze layout and is not automatically created by a preview. See [operations and recovery](/maze-engine/operations-and-recovery/) for removal and restoration policies.
