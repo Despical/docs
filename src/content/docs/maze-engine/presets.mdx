@@ -3,6 +3,8 @@ title: Presets
 description: Customize MazeEngine themes with YAML geometry, metadata, weighted block palettes, patterns, roofs, lighting, caps, and wall inlays.
 ---
 
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
 ## Preset Files
 
 Each file in `plugins/MazeEngine/presets/` defines one theme. The lowercase filename without `.yml` is its identifier, for example `hedge.yml` becomes `--preset hedge`. The `default.yml` preset is required.
@@ -25,6 +27,12 @@ The 30 bundled identifiers are:
 | `graveyard` | `candy` | `abyss` |
 
 Bundled files are installed when absent and are not overwritten on startup. To create a custom theme, copy a preset to a new valid filename, edit it, and run `/maze reload`. Use block types available on the server version where that preset will be loaded.
+
+## In-Game Examples
+
+<GameScreenshot src="/images/mazeengine/gameplay/sakura-overview.webp" alt="The Sakura preset built in Minecraft, with wide pink and white passages, cherry-colored walls, and blossom caps" crop={[335, 290, 1260, 690]} />
+
+Sakura combines cherry wood, blossom caps, and pink or white floors with wide paths. Hedge uses leaf walls and a garden floor; browse the [in-game gallery](/maze-engine/gallery/#themes) for the captured theme views.
 
 ## Complete Custom Example
 

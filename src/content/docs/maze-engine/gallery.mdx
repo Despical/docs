@@ -1,0 +1,56 @@
+---
+title: In-Game Gallery
+description: Real Minecraft screenshots of MazeEngine themes, private previews, and interactive chat panels.
+---
+
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
+These screenshots were captured in Minecraft with MazeEngine running on a Paper server. Use them to compare the appearance of themes and see the controls described throughout this documentation. Images are framed around the maze or chat panel. Select an image to open the original full screenshot.
+
+## Themes
+
+### Hedge
+
+<GameScreenshot src="/images/mazeengine/gameplay/hedge-overview.webp" alt="A generated Hedge maze viewed from above, with flowering foliage walls, grass corridors, and inset floor lights" crop={[245, 270, 1430, 740]} />
+
+An open garden maze with flowering foliage walls and grass corridors. The overhead view shows how the theme's wall blocks, caps, and floor lighting work together.
+
+<GameScreenshot src="/images/mazeengine/gameplay/hedge-top.webp" alt="A top-down view of the Hedge maze showing its connected corridors and colored boundary markers" crop={[520, 100, 880, 880]} />
+
+From directly above, the passages and outer entrance and exit markers are easier to inspect. Cell dimensions describe the logical layout; the preset expands it into the visible walls and corridors.
+
+<GameScreenshot src="/images/mazeengine/gameplay/hedge-interior.webp" alt="Inside a Hedge maze corridor, surrounded by tall leaf walls and flowering caps beneath an open sky" crop={[0, 0, 1920, 1080]} />
+
+At corridor level, the leaf walls enclose the path while the open roof leaves the sky visible. Path width and wall height can be changed for future mazes through preset geometry or creation options.
+
+### Sakura
+
+<GameScreenshot src="/images/mazeengine/gameplay/sakura-overview.webp" alt="A Sakura maze viewed from above, with broad pink and white paths, cherry-colored walls, and blossom caps" crop={[335, 290, 1260, 690]} />
+
+Sakura pairs broad pink and white passages with cherry wood and blossom caps. Its bundled settings use a braided layout, which can add connections between passages after the initial maze is generated.
+
+### Frost
+
+<GameScreenshot src="/images/mazeengine/gameplay/frost-overview.webp" alt="A Frost maze seen from above, with icy blue walls, pale quartz and ice paths, and inset sea lanterns" crop={[355, 280, 1220, 670]} />
+
+Frost combines packed and blue ice walls with a pale quartz and ice floor. Inset sea lanterns illuminate its passages, and emerald and gold blocks mark its boundary portals.
+
+Choose a bundled theme with `--preset`, or edit its YAML file to create your own appearance. See [presets](/maze-engine/presets/) for palettes and decorations, and [generation and geometry](/maze-engine/generation/) for cells, footprints, and seed behavior.
+
+## Previews and Chat
+
+### Private Preview
+
+<GameScreenshot src="/images/mazeengine/gameplay/private-preview.webp" alt="A private preview of a stone-brick maze viewed from above, showing mossy walls, passage geometry, and floor lights" crop={[350, 280, 1220, 670]} />
+
+A preview displays the planned geometry to its viewer without replacing world blocks or saving a maze record. Move around it to inspect the layout, then use the preview panel to create the retained specification. See [private previews](/maze-engine/previews-and-guides/#private-previews) for confirmation rules and session limits.
+
+### Preview Panel
+
+<GameScreenshot src="/images/mazeengine/gameplay/preview-panel.webp" alt="Minecraft chat showing the active Maze Preview panel with theme, cell and block dimensions, and Create and Close buttons" crop={[4, 775, 659, 225]} />
+
+The **Maze Preview** panel summarizes the planned theme and geometry. **Create** submits that retained specification after construction checks pass; **Close** ends the preview.
+
+## Screenshot Settings
+
+Some screenshots use [Complementary Reimagined](https://www.complementary.dev/reimagined/), an optional client shader that MazeEngine does not require.

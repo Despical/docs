@@ -1,0 +1,39 @@
+---
+interface Props {
+    src: string;
+    alt: string;
+    crop: [number, number, number, number];
+}
+
+const { src, alt, crop } = Astro.props;
+const [left, top, width, height] = crop;
+---
+
+<a class="game-screenshot" href={src} target="_blank" rel="noopener noreferrer" aria-label={`${alt}. Open the original screenshot in a new tab.`}>
+    <svg viewBox={`${left} ${top} ${width} ${height}`} width={width} height={height} role="img" aria-label={alt}>
+        <image href={src} width="1920" height="1080" />
+    </svg>
+</a>
+
+<style>
+    .game-screenshot {
+        display: block;
+        overflow: hidden;
+        margin-block: 1.5rem;
+        border: 1px solid var(--sl-color-gray-5);
+        border-radius: 0.625rem;
+        line-height: 0;
+    }
+
+    .game-screenshot svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .game-screenshot:focus-visible {
+        outline: 2px solid var(--sl-color-text-accent);
+        outline-offset: 4px;
+    }
+</style>

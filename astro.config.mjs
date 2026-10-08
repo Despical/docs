@@ -1224,7 +1224,9 @@ export default defineConfig({
                                 label: "Basics",
                                 items: [
                                     {label: "Getting Started", link: "/maze-engine/getting-started/"},
+                                    {label: "Core Concepts", link: "/maze-engine/concepts/"},
                                     {label: "Creating Mazes", link: "/maze-engine/creating-mazes/"},
+                                    {label: "In-Game Gallery", link: "/maze-engine/gallery/"},
                                     {label: "Previews and Route Guides", link: "/maze-engine/previews-and-guides/"},
                                 ],
                             },
