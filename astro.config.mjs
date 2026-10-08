@@ -26,6 +26,11 @@ export default defineConfig({
                 {icon: 'discord', label: 'home:Discord', href: 'https://discord.gg/uXVU8jmtpU'},
                 {icon: 'patreon', label: 'home:Patreon', href: 'https://patreon.com/despical'},
                 {
+                    icon: "github",
+                    label: "mazeengine:GitHub",
+                    href: "https://github.com/Despical/MazeEngine",
+                },
+                {
                     icon: "external",
                     label: "advanced-parkour:SpigotMC",
                     href: "https://www.spigotmc.org/resources/advanced-parkour.133887/",
@@ -1205,6 +1210,61 @@ export default defineConfig({
                                 items: [
                                     {label: "FAQ", link: "/tnt-tag/misc/faq"},
                                     {label: "Source Access", link: "/source-access"},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "MazeEngine",
+                        id: "maze-engine",
+                        link: "/maze-engine/",
+                        icon: "maze-engine",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/maze-engine/getting-started/"},
+                                    {label: "Creating Mazes", link: "/maze-engine/creating-mazes/"},
+                                    {label: "Previews and Route Guides", link: "/maze-engine/previews-and-guides/"},
+                                ],
+                            },
+                            {
+                                label: "Themes and Generation",
+                                items: [
+                                    {label: "Presets", link: "/maze-engine/presets/"},
+                                    {label: "Generation and Geometry", link: "/maze-engine/generation/"},
+                                ],
+                            },
+                            {
+                                label: "Administration",
+                                items: [
+                                    {label: "Commands", link: "/maze-engine/commands/"},
+                                    {label: "Permissions", link: "/maze-engine/permissions/"},
+                                    {label: "Operations and Recovery", link: "/maze-engine/operations-and-recovery/"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {label: "config.yml", link: "/maze-engine/configuration/config/"},
+                                    {label: "messages.yml", link: "/maze-engine/configuration/messages/"},
+                                    {label: "Integrations", link: "/maze-engine/integrations/"},
+                                    {label: "PlaceholderAPI", link: "/maze-engine/placeholders/"},
+                                ],
+                            },
+                            {
+                                label: "Developer API",
+                                items: [
+                                    {label: "Getting Started", link: "/maze-engine/api/getting-started/"},
+                                    {label: "Operations and Events", link: "/maze-engine/api/operations-and-events/"},
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "Troubleshooting", link: "/maze-engine/misc/faq/"},
+                                    {label: "Source Code", link: "https://github.com/Despical/MazeEngine"},
+                                    {label: "Issue Tracker", link: "https://github.com/Despical/MazeEngine/issues"},
                                 ],
                             },
                         ],

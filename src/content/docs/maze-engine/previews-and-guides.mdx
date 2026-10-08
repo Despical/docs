@@ -1,0 +1,79 @@
+---
+title: Previews and Route Guides
+description: Use personal MazeEngine display previews and adaptive route arrows, understand session lifetimes, and tune visual performance.
+---
+
+## Private Previews
+
+```text
+/maze preview garden 15 15 --preset hedge --seed 2026
+```
+
+A preview renders the planned maze with block display entities visible to the requesting player. It does not replace world blocks, capture a snapshot, or create a saved maze record. You can move around and through its display geometry to inspect the theme, dimensions, and layout.
+
+Preview accepts the same options as creation, including selections, geometry, complexity, and seeds. It must target your current world and obey cell, volume, chunk, world-border, and overlap limits. The preview region check allows the viewer to stand inside the volume.
+
+Each player has at most one active preview. A new preview replaces that player's previous session. The global simultaneous-session cap defaults to 8.
+
+## Build the Shown Specification
+
+The chat panel provides **Create** and **Close** buttons. Creation is available when you have `mazeengine.create`. After moving outside the volume, choose Create or submit the matching name without new options:
+
+```text
+/maze create garden
+```
+
+This uses the retained origin, dimensions, seed, and preset. The preview must have finished planning and still be within its lifetime. Creation rechecks the real operation rules, including player exclusion and terrain or WorldGuard permissions.
+
+When no active matching preview exists, `/maze create garden` creates an ordinary maze with the current default dimensions and preset. Check the panel before confirming a specification you want to retain.
+
+## Close and Expiry
+
+```text
+/maze preview stop
+```
+
+The default preview lifetime is **300 seconds**. Expiry, disconnecting, changing worlds, or closing the session removes its displays and releases resources. Preview buttons are tied to a session token so an old Create or Close button cannot act on a replacement preview.
+
+The action bar distinguishes planning, display loading, and a fully displayed preview. A preview's entity spawn progress is separate from real maze construction progress.
+
+## Personal Route Guide
+
+Teleport to a ready maze's world and enable its guide:
+
+```text
+/maze tp garden
+/maze solve garden
+```
+
+The guide draws personal arrows above the maze floor toward the exit. It uses the saved graph and your current cell, adapting as you move. You do not have to remain on the original entrance-to-exit route: it chooses a route onward from your current reachable cell.
+
+The action bar shows remaining cell steps or asks you to enter the maze when outside its corridor area. Arrows are positioned inside walkable space and hidden when their geometry would cross walls. The default look-ahead is 7 cell transitions.
+
+```text
+/maze solve garden stop
+```
+
+The guide's Close button ends that session. It also expires after **600 seconds** by default, ends when you disconnect or change worlds, and ends if its maze becomes unavailable, busy, or changes graph. Opening another guide replaces your previous guide.
+
+## Visual Settings
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `visuals.spawns-per-tick` | 100 | Shared maximum new preview displays per tick |
+| `visuals.view-range` | 8.0 | Display view-range multiplier; 1.0 corresponds to 64 client blocks |
+| `visuals.brightness.block`, `.sky` | 15 | Display lighting overrides |
+| `visuals.action-bar` | `true` | Preview loading and guide-distance text |
+| `visuals.preview.duration-seconds` | 300 | Preview and button lifetime |
+| `visuals.preview.max-sessions` | 8 | Concurrent preview cap |
+| `visuals.preview.max-displays` | 12000 | Display cap before preview geometry is simplified |
+| `visuals.guide.duration-seconds` | 600 | Guide and Close-button lifetime |
+| `visuals.guide.look-ahead` | 7 | Route transitions drawn ahead |
+
+Guide block data, elevation, arrow width, and thickness are configurable. See [config.yml](/maze-engine/configuration/config/#route-guide) for ranges.
+
+Large previews may use simplified display geometry to respect the cap; the generated physical maze still uses the complete saved specification. Client entity range and rendering settings can affect visibility even when the server-side display view range is high.
+
+## Reload Behavior
+
+Reload updates view range and brightness for existing displays and refreshes guide geometry using current global visual settings. Turning the action bar off clears it. Session expiration timestamps are established when a session is created, so changing the configured duration does not extend an already-issued session or its buttons.

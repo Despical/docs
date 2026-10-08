@@ -1,0 +1,167 @@
+---
+title: API Operations and Events
+description: Submit MazeEngine requests, sample progress, handle asynchronous results, cancel exact operations, and listen for completed or failed lifecycle events.
+---
+
+## Submit Creation
+
+Build a named request with value objects and optional overrides:
+
+```java
+import dev.despical.mazeengine.api.model.CellSize;
+import dev.despical.mazeengine.api.model.MazeLocation;
+import dev.despical.mazeengine.api.operation.MazeOperation;
+import dev.despical.mazeengine.api.request.CreateMazeRequest;
+
+var request = CreateMazeRequest.builder(
+        "garden",
+        new MazeLocation(world.getUID(), 100, 64, 100),
+        new CellSize(15, 15)
+    )
+    .preset("hedge")
+    .seed(2026L)
+    .placement(CreateMazeRequest.Placement.SAFE)
+    .build();
+
+MazeOperation operation = api.operations().create(actor, request);
+```
+
+The origin is the minimum corner at floor level. `CellSize` requires width and depth of at least 2; the final request must also satisfy configured cell, volume, chunk, and world constraints.
+
+Builder overrides include `seed`, `geometry`, `complexity`, `roof`, `snapshot`, and `placement`. Omitted values inherit the selected current preset; an omitted seed is generated on submission. For example:
+
+```java
+import dev.despical.mazeengine.api.model.MazeGeometry;
+
+var wideRequest = CreateMazeRequest.builder(
+        "wide-garden",
+        new MazeLocation(world.getUID(), 200, 64, 100),
+        new CellSize(11, 11)
+    )
+    .preset("hedge")
+    .geometry(new MazeGeometry(4, 2, 4))
+    .complexity(0.8)
+    .roof(false)
+    .snapshot(true)
+    .build();
+```
+
+Snapshot capture requires WorldEdit or FAWE. A player actor becomes the maze owner; a non-player actor stores the zero owner UUID. API requests apply normal `mazeengine.use`, action, ownership, reservation, and safety checks rather than bypassing them.
+
+## Rebuild, Repair, and Remove
+
+```java
+import dev.despical.mazeengine.api.MazeOperations;
+import dev.despical.mazeengine.api.model.MazeId;
+
+MazeId id = new MazeId("garden");
+MazeOperation rebuild = api.operations().regenerate(actor, id, 12345L);
+```
+
+Submit each action separately after any conflicting operation ends:
+
+```java
+MazeOperation repair = api.operations().repair(actor, new MazeId("garden"));
+```
+
+```java
+MazeOperation removal = api.operations().delete(
+    actor,
+    new MazeId("garden"),
+    MazeOperations.RemovalMode.AUTO
+);
+```
+
+| Removal mode | Policy |
+| --- | --- |
+| `AUTO` | Restore a recorded original snapshot; otherwise clear |
+| `RESTORE` | Require a complete snapshot and restoration integration |
+| `CLEAR` | Clear the full volume to air, even if a snapshot exists |
+
+The API submits removal immediately. Provide a concrete confirmation in your own player-facing UI before calling it. Successful removal returns a snapshot with status `DELETED`; the identifier is then absent from the registry.
+
+Regeneration uses the saved preset and dimensions and retains the original snapshot. Repair keeps topology and skips planned air positions. See [operations and recovery](/maze-engine/operations-and-recovery/) for their terrain effects.
+
+## Validation Versus Accepted Failure
+
+Validation before submission throws directly and returns no handle. Examples include missing permissions, invalid worlds or geometry, unavailable presets, conflicting reservations, and action-specific snapshot requirements.
+
+Once accepted, later planning, preflight, WorldGuard, storage, or block-work failures complete the handle exceptionally. An accepted handle means the request was submitted; terrain work can still fail.
+
+```java
+try {
+    MazeOperation accepted = api.operations().create(actor, request);
+    accepted.completion().whenComplete((result, error) -> {
+        if (error != null) {
+            getLogger().warning("Maze operation failed: " + error.getMessage());
+        } else {
+            getLogger().info("Completed " + result.kind() + ": " + result.maze().id());
+        }
+    });
+} catch (IllegalArgumentException validation) {
+    actor.sendMessage(validation.getMessage());
+}
+```
+
+This snippet assumes it runs inside your `JavaPlugin` on the server thread. If the callback will access Bukkit entities or world state, schedule that work explicitly through your plugin's server scheduler. Do not block the server thread waiting for the stage.
+
+## Operation Identity and Progress
+
+| Method | Returns |
+| --- | --- |
+| `id()` | Unique UUID for this accepted operation |
+| `mazeId()` | Normalized target identifier, even before a record exists |
+| `kind()` | `CREATE`, `REGENERATE`, `REPAIR`, or `DELETE` |
+| `progress()` | Immutable current state, diagnostic stage, and estimated percentage |
+| `completion()` | Read-only `CompletionStage<OperationResult>` |
+| `cancel(actor)` | Whether cancellation was requested for this exact active operation |
+
+Sample `progress()` on the server thread. Lifecycle states are `RUNNING`, `COMPLETED`, `FAILED`, and `CANCELLED`. Use the state for terminal decisions: stage strings are diagnostic labels and percentages are estimates. Completed operations report 100; failed and cancelled terminal samples report 0.
+
+The handle retains its terminal state after another request reuses the name. Never replace operation identity with name-only tracking if your UI must refer to the exact request.
+
+## Cancellation
+
+```java
+boolean requested = operation.cancel(actor);
+```
+
+The actor needs cancellation and ownership or management rights. An ended handle returns false and cannot cancel newer work with the same name. Cancelling a future derived from `completion()` does not cancel world work; use the handle method.
+
+Cancellation completes exceptionally with `CancellationException`. It does not guarantee rollback and may leave a failed record or changed terrain needing recovery. A request already finishing its commit can complete successfully.
+
+## Lifecycle Events
+
+Both command and API world operations publish synchronous, non-cancellable events on the server thread:
+
+| Event | Exposes | When it fires |
+| --- | --- | --- |
+| `MazeOperationCompletedEvent` | `result()` with operation identity, kind, final maze, and timestamp | After world work, final persistence, and reservation release |
+| `MazeOperationFailedEvent` | `operationId()`, `mazeId()`, `kind()`, optional `maze()`, and `cause()` | After an accepted operation ends exceptionally |
+
+```java
+import dev.despical.mazeengine.api.event.MazeOperationCompletedEvent;
+import dev.despical.mazeengine.api.event.MazeOperationFailedEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public final class MazeEvents implements Listener {
+    @EventHandler
+    public void completed(MazeOperationCompletedEvent event) {
+        var result = event.result();
+        var finalMaze = result.maze();
+        // Refresh menus or record a completed result by result.operationId().
+    }
+
+    @EventHandler
+    public void failed(MazeOperationFailedEvent event) {
+        var name = event.mazeId().value();
+        var cause = event.cause();
+        // event.maze() can be empty when planning failed before a record existed.
+    }
+}
+```
+
+Register the listener through your plugin's `PluginManager`. These events report outcomes; they are not preflight hooks or cancellation vetoes. A successful result does not mean that a player was teleported.
+
+The optional failed snapshot is the last known immutable description. It does not guarantee that a live record remains in the registry. For deletion success, the retained snapshot has `DELETED` status even though lookup now returns empty.

@@ -1,0 +1,80 @@
+---
+title: Generation and Geometry
+description: Understand MazeEngine cells, physical block dimensions, reproducible seeds, perfect and braided topology, and generation biases.
+---
+
+## Logical Cells and Physical Blocks
+
+A cell is one logical corridor position in the maze graph. Width and depth in commands count cells. A preset's corridor width and wall thickness expand those cells into a physical structure.
+
+```text
+physical width = cell width × (path width + wall thickness) + wall thickness
+physical depth = cell depth × (path width + wall thickness) + wall thickness
+physical height = 1 floor layer + wall height + (roof ? 1 : 0)
+```
+
+With 21×21 cells, paths 3 blocks wide, walls 1 block thick, wall height 4, and no roof, the maze occupies **85×5×85 blocks**. Adding a roof makes its height 6. The saved bounds are inclusive and include floor, walls, passages, and ceiling where present.
+
+An origin at X 100, Y 64, Z 200 for that open maze covers X 100–184, Y 64–68, and Z 200–284. Corridor space starts above the floor.
+
+## Deterministic Seeds
+
+The same seed, cell dimensions, and generation settings reproduce the same topology. The seed and saved preset also determine palette choices and decoration positions. A seed by itself is insufficient to reproduce a maze if the geometry or generation settings differ.
+
+```text
+/maze create first 15 15 --preset default --seed 42
+/maze create second 15 15 --preset default --seed 42 --x 200 --y 64 --z 200
+```
+
+When no seed is supplied, MazeEngine chooses a signed long seed and stores it with the record. `/maze info` exposes it for later reuse.
+
+Regeneration with the existing seed reuses the persisted graph. A different seed creates replacement topology using the saved preset and existing cell dimensions. Preview confirmation retains the preview's specification, so the generated maze follows the shown layout.
+
+## Perfect and Braided Mazes
+
+| Algorithm | Graph behavior |
+| --- | --- |
+| `PERFECT` | A connected graph with exactly one route between any two cells |
+| `BRAIDED` | A connected graph that may gain additional connections at dead ends, creating loops |
+
+`PERFECT` requires `advanced.braid-chance` to be 0. `BRAIDED` permits a 0–1 braid chance and defaults to 0.3 when it is omitted. A braided configuration can still retain some dead ends; the chance is applied to eligible dead ends during generation.
+
+The entrance is selected on the outer boundary. The exit is chosen from boundary cells farthest from that entrance in graph distance. The graph always connects the cells; routes are measured through saved topology rather than live player changes.
+
+## Generation Controls
+
+All generation values must be finite and between 0 and 1.
+
+| Key | Meaning |
+| --- | --- |
+| `complexity` | High-level control used to derive normal branching and turning biases |
+| `advanced.branching` | Likelihood of choosing another frontier cell rather than extending the newest branch |
+| `advanced.turn-bias` | Bias toward changing direction relative to the arrival direction |
+| `advanced.horizontal-bias` | Bias toward east/west movement; 0.5 balances X and Z |
+| `advanced.braid-chance` | Chance of connecting an eligible dead end in `BRAIDED` mode |
+
+When advanced values are omitted, branching is `0.65 × (1 − complexity)`, turning is `0.2 + 0.7 × complexity`, and horizontal bias is 0.5. Higher complexity tends to favor extended, winding branches. This is a generation preference rather than a guaranteed route length or difficulty score.
+
+```yaml
+algorithm: BRAIDED
+complexity: 0.8
+advanced:
+  branching: 0.15
+  turn-bias: 0.75
+  horizontal-bias: 0.5
+  braid-chance: 0.4
+```
+
+Advanced entries override only the values supplied in YAML. A command `--complexity` override discards the preset's advanced section and derives the standard values for that new request.
+
+## Graph Statistics
+
+The info panel and public snapshots expose route length and dead-end count. Route length is the number of cell transitions from entrance to exit, so a route containing 12 cells has length 11. Dead ends are cells with one open graph connection.
+
+A guide or API route can navigate the saved graph even when someone has manually changed live blocks. Repair restores the structural plan; it does not update graph connectivity to match external edits.
+
+## Limits and Cost
+
+Cell count affects topology and route-search work. Physical volume affects preflight, snapshots, and block processing. Chunk count affects chunk acquisition and leases. Increasing path width, wall thickness, or roof height can greatly increase world work even when the logical grid stays the same.
+
+The [configuration reference](/maze-engine/configuration/config/) explains the separate cell, volume, chunk, concurrency, time, and block budgets. Preview display simplification can reduce visual entity count while leaving the actual construction dimensions unchanged.

@@ -1,0 +1,60 @@
+---
+title: PlaceholderAPI
+description: Full MazeEngine placeholder tables for global totals, ownership, named mazes, current player locations, progress, geometry, and graph statistics.
+---
+
+## Enable the Expansion
+
+Install [PlaceholderAPI](https://wiki.placeholderapi.com/) and restart the server. MazeEngine registers its expansion automatically. Use these expressions in a PlaceholderAPI-aware plugin; no eCloud download is required.
+
+Values are cached and refreshed every 10 ticks. Identifiers and fields are case-insensitive. Counts include saved records even when busy or failed; a newly accepted creation still planning its graph has no saved record yet.
+
+## Global and Ownership Values
+
+| Placeholder | Value |
+| --- | --- |
+| `%mazeengine_count%` | Number of currently held saved maze records |
+| `%mazeengine_preset_count%` | Number of currently configured presets |
+| `%mazeengine_active_operations%` | Active operations, including planning and spawn-point persistence |
+| `%mazeengine_owned_count%` | Records owned by the supplied player's UUID; 0 without a player |
+
+## Named and Current Maze Values
+
+Replace `garden` with a saved maze identifier. Current-maze expressions select the saved volume containing the online player's world position, including its Y coordinate. Being above the roof or below the floor is outside that volume.
+
+| Named maze placeholder | Current maze placeholder | Value |
+| --- | --- | --- |
+| `%mazeengine_maze_garden_name%` | `%mazeengine_current_name%` | Normalized identifier |
+| `%mazeengine_maze_garden_theme%` | `%mazeengine_current_theme%` | Saved preset's display name |
+| `%mazeengine_maze_garden_difficulty%` | `%mazeengine_current_difficulty%` | `Easy`, `Medium`, or `Hard` metadata label |
+| `%mazeengine_maze_garden_seed%` | `%mazeengine_current_seed%` | Signed deterministic seed |
+| `%mazeengine_maze_garden_status%` | `%mazeengine_current_status%` | Record status such as `Ready` or `Failed` |
+| `%mazeengine_maze_garden_cells_width%` | `%mazeengine_current_cells_width%` | Logical width in cells |
+| `%mazeengine_maze_garden_cells_depth%` | `%mazeengine_current_cells_depth%` | Logical depth in cells |
+| `%mazeengine_maze_garden_path_width%` | `%mazeengine_current_path_width%` | Corridor width in blocks |
+| `%mazeengine_maze_garden_wall_thickness%` | `%mazeengine_current_wall_thickness%` | Wall thickness in blocks |
+| `%mazeengine_maze_garden_wall_height%` | `%mazeengine_current_wall_height%` | Wall height above the floor |
+| `%mazeengine_maze_garden_roof%` | `%mazeengine_current_roof%` | `true` or `false` |
+| `%mazeengine_maze_garden_route_length%` | `%mazeengine_current_route_length%` | Entrance-to-exit cell transitions |
+| `%mazeengine_maze_garden_dead_ends%` | `%mazeengine_current_dead_ends%` | Saved graph's dead-end count |
+| `%mazeengine_maze_garden_progress%` | `%mazeengine_current_progress%` | Active percentage; idle ready record is 100, other idle states are 0 |
+| `%mazeengine_maze_garden_snapshot%` | `%mazeengine_current_snapshot%` | Whether the record indicates a captured original snapshot |
+
+The theme and geometry refer to the maze's frozen preset, rather than the current file used for future creation. Snapshot `true` indicates the record's capture state; it does not verify that a file remains present on disk at every placeholder request.
+
+## Missing Values
+
+Recognized named fields for a missing maze return empty text. Recognized current fields return empty text when the supplied player has no matching current saved volume. Unknown fields return `null` to PlaceholderAPI as unsupported expressions.
+
+`current_*` uses the online-location cache. Offline player lookups do not discover an offline position. `owned_count` uses the supplied UUID and therefore does not depend on the player standing in a maze.
+
+## Test an Expression
+
+```text
+/papi parse me %mazeengine_count%
+/papi parse me %mazeengine_owned_count%
+/papi parse me %mazeengine_maze_garden_status%
+/papi parse me %mazeengine_current_route_length%
+```
+
+If a consuming plugin shows the expression unchanged, confirm its own PlaceholderAPI support, check MazeEngine's expansion registration log, and verify the field spelling. If the value is empty, check that the named record exists or that the player is inside the saved bounds.

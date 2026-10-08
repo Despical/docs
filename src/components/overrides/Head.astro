@@ -12,6 +12,7 @@ const projectNames: Record<string, string> = {
     'eat-everything': 'Eat Everything',
     'item-upgrader': 'Item Upgrader',
     'kotl': 'King of the Ladder',
+    'maze-engine': 'MazeEngine',
     'particle-text': 'Particle Text',
     'santa-says': 'Santa Says',
     'spigot-webhook': 'Spigot Sales Webhook',
@@ -28,6 +29,10 @@ const pageTitle = projectName && segments.length > 1
     : undefined;
 
 const resolvedHead = head.map((item) => {
+    if (segments[0] === 'maze-engine' && item.tag === 'meta' && item.attrs?.name === 'twitter:card') {
+        return { ...item, attrs: { ...item.attrs, content: 'summary_large_image' } };
+    }
+
     if (!pageTitle) return item;
 
     if (item.tag === 'title') {
@@ -92,6 +97,15 @@ if (segments.length > 0) {
 ---
 
 {resolvedHead.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+{segments[0] === 'maze-engine' && (
+    <>
+        <meta property="og:image" content="https://docs.despical.dev/images/mazeengine/social-preview.png" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="640" />
+        <meta property="og:image:alt" content="MazeEngine maze icon and project artwork" />
+        <meta name="twitter:image" content="https://docs.despical.dev/images/mazeengine/social-preview.png" />
+    </>
+)}
 {segments.length === 0 && (
     <link
         rel="preload"

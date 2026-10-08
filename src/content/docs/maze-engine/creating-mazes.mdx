@@ -1,0 +1,85 @@
+---
+title: Creating Mazes
+description: Resolve MazeEngine cell dimensions, origins, world selection, placement modes, terrain snapshots, and WorldEdit cuboids.
+---
+
+## Name, Cells, and Origin
+
+```text
+/maze create <name> [width depth] [options]
+```
+
+Names are case-insensitive and saved in lowercase. Use 1–48 letters `a-z`, digits, underscores, or hyphens. Filesystem device names such as `con`, `nul`, `com1`, and `lpt1` are rejected. Preview names also cannot be `stop`.
+
+Width and depth count logical cells. Both must be at least 2. Supply both dimensions or omit both; an omitted pair uses `defaults.cells` for each dimension. The configured cell, volume, and chunk limits must all permit the result.
+
+The origin is the minimum X/Z corner at **floor level**. For a player in the target world, omitted coordinates use block X + 3, block Y − 1, and block Z + 3. Explicit coordinates require all three values:
+
+```text
+/maze create plaza 15 11 --preset copper --world world --x 200 --y 64 --z -120
+```
+
+The world must already be loaded. Console requests require `--world`, `--x`, `--y`, and `--z`. A player targeting a different world also needs explicit coordinates.
+
+## Choose Placement Rules
+
+All three policies produce the same final block plan. They differ in which existing materials the preflight permits.
+
+| Mode | Existing terrain permitted during creation |
+| --- | --- |
+| `CLEAR` | Any material inside the volume, subject to region and integration checks |
+| `SAFE` | Air above the floor; at floor level, air or `placement.replaceable` materials |
+| `REPLACE` | Air or `placement.replaceable` materials throughout the volume |
+
+```text
+/maze create garden 15 15 --preset hedge --mode SAFE
+/maze create buried 15 15 --preset dungeon --mode REPLACE --snapshot
+```
+
+`REPLACE` can carve through permitted stone or dirt. It rejects an unlisted material rather than overwriting it. `CLEAR` does not consult the replaceable list. None of these policies bypass player exclusion, maze overlap checks, limits, world height, the world border, or WorldGuard authorization.
+
+## Capture Original Terrain
+
+`--snapshot` requests an original-terrain snapshot before the first block mutation:
+
+```text
+/maze create reversible 15 15 --preset default --snapshot
+```
+
+WorldEdit or FAWE must be available. The snapshot covers the full physical maze volume, including floor and roof where present. Regeneration retains that original snapshot rather than capturing the already-built maze.
+
+The command flag can enable snapshot capture for a preset that normally disables it. To control the default, edit the preset's `snapshot` property. The command has no `--no-snapshot` flag.
+
+## Fit a WorldEdit Selection
+
+1. Make a **cuboid** selection with WorldEdit or FAWE.
+2. Ensure it is tall enough for the preset's floor, walls, and optional roof.
+3. Move outside the selected maze area before creation.
+4. Submit the selection without explicit cell dimensions or origin options.
+
+```text
+/maze preview selected --selection --preset dungeon --seed 987654
+/maze create selected
+```
+
+MazeEngine finds the largest whole-cell grid fitting the selection's X/Z span and centers it horizontally. The floor starts at the selection's minimum Y. Any unused horizontal margin remains outside the maze; the result does not necessarily fill every selected block.
+
+Selection requests require a player and cannot be combined with explicit dimensions, `--world`, or coordinate options. A selection unable to fit at least 2×2 cells is rejected.
+
+## Override a Preset
+
+Creation and preview accept `--path-width`, `--wall-thickness`, `--wall-height`, and `--complexity`:
+
+```text
+/maze preview narrow 17 13 --preset dungeon --path-width 2 --wall-height 5 --complexity 0.9
+```
+
+Geometry changes physical size. Complexity replaces the preset's advanced generation overrides with values derived from the supplied complexity while retaining the selected algorithm. A `BRAIDED` preset then uses its derived braid default. Roofs, palettes, decorations, algorithm selection, and custom difficulty labels belong in the preset YAML.
+
+## Validation and Progress
+
+A creation request reserves its name and region while topology is planned. MazeEngine then saves preparation state, acquires chunks, checks the volume, captures any snapshot, saves the mutation journal, and writes blocks under the shared per-tick budget.
+
+No player may occupy the volume when editing begins. A private preview can be viewed from inside its volume, but its eventual build still performs creation checks. A visible preview therefore describes the layout and does not guarantee that current terrain or WorldGuard rules permit construction.
+
+Use `/maze info <name>` and the configured progress boss bar to inspect the operation. If it fails or is cancelled after terrain changes begin, follow [recovery guidance](/maze-engine/operations-and-recovery/).
