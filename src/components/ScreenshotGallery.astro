@@ -3,6 +3,7 @@ import GameScreenshot from './GameScreenshot.astro';
 
 interface Props {
     label: string;
+    showTitles?: boolean;
     images: {
         src: string;
         alt: string;
@@ -11,7 +12,7 @@ interface Props {
     }[];
 }
 
-const { label, images } = Astro.props;
+const { label, images, showTitles = true } = Astro.props;
 ---
 
 <screenshot-gallery role="region" aria-roledescription="carousel" aria-label={label}>
@@ -32,7 +33,7 @@ const { label, images } = Astro.props;
         </button>
     </div>
     <div class="gallery-caption" aria-live="polite" aria-atomic="true">
-        <span class="gallery-title">{images[0]?.title}</span>
+        <span class="gallery-title" hidden={!showTitles}>{images[0]?.title}</span>
         <span class="gallery-count">1 / {images.length}</span>
     </div>
 </screenshot-gallery>
@@ -155,6 +156,7 @@ const { label, images } = Astro.props;
     }
 
     .gallery-count {
+        margin-inline-start: auto;
         white-space: nowrap;
         font-variant-numeric: tabular-nums;
     }

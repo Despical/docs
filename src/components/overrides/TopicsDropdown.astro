@@ -11,6 +11,8 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
     <button
         id="starlight-sidebar-topics-dropdown-button"
         class="starlight-sidebar-topics-dropdown-button"
+        aria-expanded="false"
+        aria-controls="starlight-sidebar-topics-dropdown-menu"
     >
         {
             currentTopic.icon && (
@@ -200,6 +202,11 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         min-width: 200px;
         padding: 0.5rem;
+        box-sizing: border-box;
+        max-height: calc(5 * 2.5rem + 1rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
         border-radius: 0.25rem;
         z-index: 1000000;
     }
@@ -210,6 +217,8 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
 
     .starlight-sidebar-topics-dropdown-item {
         display: flex;
+        box-sizing: border-box;
+        height: 2.5rem;
         align-items: center;
         padding: 0.3em;
         color: var(--sl-color-white);
@@ -266,6 +275,7 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
     if (dropdownButton && dropdownMenu) {
         dropdownButton.addEventListener("click", () => {
             dropdownMenu.hidden = !dropdownMenu.hidden;
+            dropdownButton.setAttribute("aria-expanded", String(!dropdownMenu.hidden));
         });
 
         function closeDropdown(event) {
@@ -273,9 +283,17 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
                 dropdownButton && !dropdownButton.contains(event.target)
             ) {
                 dropdownMenu.hidden = true;
+                dropdownButton.setAttribute("aria-expanded", "false");
             }
         }
 
         document.addEventListener("click", closeDropdown);
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && !dropdownMenu.hidden) {
+                dropdownMenu.hidden = true;
+                dropdownButton.setAttribute("aria-expanded", "false");
+                dropdownButton.focus();
+            }
+        });
     }
 </script>
