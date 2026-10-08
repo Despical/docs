@@ -2,6 +2,7 @@
 import MobileMenuToggle from "@astrojs/starlight/components/MobileMenuToggle.astro";
 import TopicsDropdown from "./TopicsDropdown.astro";
 import SourceAccessSidebar from "../SourceAccessSidebar.astro";
+import ImageZoomBounds from "../ImageZoomBounds.astro";
 
 const { hasSidebar } = Astro.locals.starlightRoute;
 const showSidebar = hasSidebar;
@@ -35,6 +36,8 @@ const isSourceAccess = normalizedPath === "/source-access";
         </svg>
     </button>
 </div>
+
+<ImageZoomBounds />
 
 <script>
     window.addEventListener("load", () => {
