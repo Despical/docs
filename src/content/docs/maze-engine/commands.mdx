@@ -3,7 +3,8 @@ title: Commands
 description: Complete MazeEngine command and option reference with examples for building, previewing, managing, guiding, and restoring mazes.
 ---
 
-import GameScreenshot from "../../../components/GameScreenshot.astro";
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { commandHelpScreenshots } from "../../../data/mazeengine-screenshots";
 
 The [core concepts guide](/maze-engine/concepts/) expands the explanations shown by `/maze help concepts`, including cells, seeds, placement, and snapshots.
 
@@ -104,14 +105,7 @@ Normal deletion opens a confirmation that lasts 60 seconds. Its token is tied to
 
 `/maze help` opens this command browser. Hover for details, click a command to fill the input, or use Next for management commands.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-help.webp" alt="The in-game command browser with build, preview, navigation, and guide commands" crop={[4, 640, 656, 360]} />
-
-<details>
-<summary>Management commands on the second page</summary>
-
-<GameScreenshot src="/images/mazeengine/gameplay/chat-help-management.webp" alt="The second command-help page showing management and configuration actions" crop={[4, 640, 656, 360]} />
-
-</details>
+<ScreenshotGallery label="Command help pages" images={commandHelpScreenshots} />
 
 ## Chat Actions
 
