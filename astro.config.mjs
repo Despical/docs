@@ -1263,8 +1263,16 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "Troubleshooting", link: "/maze-engine/misc/faq/"},
-                                    {label: "Source Code", link: "https://github.com/Despical/MazeEngine"},
-                                    {label: "Issue Tracker", link: "https://github.com/Despical/MazeEngine/issues"},
+                                    {
+                                        label: "Source Code",
+                                        link: "https://github.com/Despical/MazeEngine",
+                                        attrs: {target: "_blank", rel: "noopener noreferrer"},
+                                    },
+                                    {
+                                        label: "Issue Tracker",
+                                        link: "https://github.com/Despical/MazeEngine/issues",
+                                        attrs: {target: "_blank", rel: "noopener noreferrer"},
+                                    },
                                 ],
                             },
                         ],
