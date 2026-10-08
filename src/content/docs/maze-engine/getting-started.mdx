@@ -7,33 +7,29 @@ description: Install MazeEngine on Paper with Java 25, configure optional integr
 
 | Component | Requirement |
 | --- | --- |
-| Server | Paper for Minecraft **1.21.11 and later**, including **26.x** |
-| Java | **Java 25** |
-| WorldEdit / FAWE | Optional; required for cuboid selections and original-terrain snapshots |
-| WorldGuard | Optional; applies build authorization to MazeEngine world edits |
-| PlaceholderAPI | Optional; registers the `mazeengine` expansion automatically |
+| [Paper](https://papermc.io/downloads/paper) | Minecraft **1.21.11 and later** |
+| [Java](https://adoptium.net/temurin/releases/?version=25) | **Java 25** |
+| [WorldEdit](https://enginehub.org/worldedit) / [FAWE](https://github.com/IntellectualSites/FastAsyncWorldEdit) | Optional; required for cuboid selections and original-terrain snapshots |
+| [WorldGuard](https://enginehub.org/worldguard) | Optional; applies build authorization to MazeEngine world edits |
+| [PlaceholderAPI](https://wiki.placeholderapi.com/) | Optional; registers the `mazeengine` expansion automatically |
 
 Use integration builds compatible with your chosen server version. The basic generator, chat interface, previews, and route guides work without these integrations.
 
-## Build the Plugin
+## Build from Source
 
-Clone the repository and build it with a Java 25 JDK:
+With a Java 25 JDK installed:
+
+1. Clone the [repository](https://github.com/Despical/MazeEngine) with `git clone https://github.com/Despical/MazeEngine.git`.
+2. Open the project directory with `cd MazeEngine`.
+3. Build using the included Gradle wrapper:
 
 ```bash
-git clone https://github.com/Despical/MazeEngine.git
-cd MazeEngine
 ./gradlew clean build
 ```
 
-On Windows PowerShell, run `./gradlew.bat clean build` for the final command. The Gradle wrapper is included. Successful builds place the plugin artifacts in `build/libs/`.
+On Windows PowerShell, use `./gradlew.bat clean build`. The plugin JAR is generated in `build/libs/`.
 
-API Javadocs are optional and can be generated separately:
-
-```bash
-./gradlew apiJavadoc
-```
-
-The HTML output is `build/docs/api/`. It is not required to install or run the plugin.
+**Optional API Javadocs:** run `./gradlew apiJavadoc` separately to generate HTML in `build/docs/api/`.
 
 ## Install
 

@@ -32,7 +32,9 @@ Regeneration with the existing seed reuses the persisted graph. A different seed
 
 ## Perfect and Braided Mazes
 
-| Algorithm | Graph behavior |
+The preset key `algorithm` selects the topology mode below. Both modes use the same Growing Tree-style generator; `BRAIDED` adds a pass after the initial tree is built.
+
+| Mode | Graph behavior |
 | --- | --- |
 | `PERFECT` | A connected graph with exactly one route between any two cells |
 | `BRAIDED` | A connected graph that may gain additional connections at dead ends, creating loops |
@@ -41,6 +43,38 @@ Regeneration with the existing seed reuses the persisted graph. A different seed
 
 The entrance is selected on the outer boundary. The exit is chosen from boundary cells farthest from that entrance in graph distance. The graph always connects the cells; routes are measured through saved topology rather than live player changes.
 
+## How the Generator Builds a Maze
+
+MazeEngine grows a connected graph from one seeded random starting cell. The implementation keeps an active frontier of visited cells that may still have unvisited neighbors. Its selection rule combines continuing the newest branch with returning to a random active cell.
+
+1. **Pick an active cell.** With probability `branching`, choose uniformly from the active frontier; otherwise choose its newest active cell. A random choice can also select that newest cell.
+2. **Find an unvisited neighbor.** Inspect the four cardinal directions. Ignore directions outside the grid and neighbors already visited.
+3. **Apply direction preferences.** Each remaining direction receives a weight from its turning and horizontal-axis preferences. A seeded weighted choice selects the next neighbor.
+4. **Carve a reciprocal passage.** Open the selected direction in the current cell and the opposite direction in its neighbor, mark that neighbor visited, and add it as the newest active cell.
+5. **Retire exhausted cells.** When a selected cell has no unvisited neighbor, remove it from the frontier. Continue until the frontier is empty.
+
+Every initial carving reaches a previously unvisited cell. Consequently, the initial result connects the whole grid without adding loops: it is the perfect-maze tree. Favoring the newest active cell tends to extend a current branch; choosing random active cells more often spreads growth among available branches. These preferences affect the shape rather than enforcing a particular route length.
+
+### Weighted Turning and Axis Bias
+
+For a candidate direction, the turning preference is `1 − turn-bias` when continuing in the cell's arrival direction, and `turn-bias` when taking another direction. The axis preference is `horizontal-bias` for east/west and `1 − horizontal-bias` for north/south.
+
+The candidate weight is `(0.02 + turning preference) × (0.02 + axis preference)`. The small positive offsets keep an available direction eligible even at extreme bias values. These weights guide the choice among currently unvisited neighbors; they do not carve through already visited cells during tree growth.
+
+### Optional Braiding Pass
+
+In `BRAIDED` mode, the completed tree receives an additional pass over cells that currently have exactly one open connection. For each such dead end, `braid-chance` decides whether to attempt another connection. The generator shuffles the four directions and opens the first closed passage leading to an in-grid neighbor.
+
+That neighbor is already part of the connected maze, so the extra passage creates a loop and can remove dead ends. Some cells cease to be dead ends when an earlier braid reaches them; others are skipped by the configured chance. This pass does not guarantee that every dead end disappears.
+
+### Entrance, Exit, and Route Search
+
+After tree growth and any braiding, the generator chooses a seeded random boundary entrance. A breadth-first search computes shortest graph distances from its cell. The exit uses a different boundary cell with the greatest distance from that chosen entrance; this does not claim to find the globally longest pair of cells.
+
+Route queries also use breadth-first distances, starting at the target cell. The route then follows open connections whose distance decreases by one at each transition. This gives a shortest cell route in either topology mode. The guide reuses distances from the exit to choose an onward route as the player's cell changes.
+
+See the implementation in [MazeGenerator](https://github.com/Despical/MazeEngine/blob/main/src/main/java/dev/despical/mazeengine/core/MazeGenerator.java) and [MazeLayout](https://github.com/Despical/MazeEngine/blob/main/src/main/java/dev/despical/mazeengine/core/MazeLayout.java) for the exact selection and search behavior.
+
 ## Generation Controls
 
 All generation values must be finite and between 0 and 1.
@@ -48,7 +82,7 @@ All generation values must be finite and between 0 and 1.
 | Key | Meaning |
 | --- | --- |
 | `complexity` | High-level control used to derive normal branching and turning biases |
-| `advanced.branching` | Likelihood of choosing another frontier cell rather than extending the newest branch |
+| `advanced.branching` | Probability of choosing a uniformly random active cell instead of forcing the newest active cell |
 | `advanced.turn-bias` | Bias toward changing direction relative to the arrival direction |
 | `advanced.horizontal-bias` | Bias toward east/west movement; 0.5 balances X and Z |
 | `advanced.braid-chance` | Chance of connecting an eligible dead end in `BRAIDED` mode |
