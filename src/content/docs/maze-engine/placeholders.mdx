@@ -1,11 +1,11 @@
 ---
 title: PlaceholderAPI
-description: Full MazeEngine placeholder tables for global totals, ownership, named mazes, current player locations, progress, geometry, and graph statistics.
+description: Full Maze Engine placeholder tables for global totals, ownership, named mazes, current player locations, progress, geometry, and graph statistics.
 ---
 
 ## Enable the Expansion
 
-Install [PlaceholderAPI](https://wiki.placeholderapi.com/) and restart the server. MazeEngine registers its expansion automatically. Use these expressions in a PlaceholderAPI-aware plugin; no eCloud download is required.
+Install [PlaceholderAPI](https://wiki.placeholderapi.com/) and restart the server. Maze Engine registers its expansion automatically. Use these expressions in a PlaceholderAPI-aware plugin; no eCloud download is required.
 
 Values are cached and refreshed every 10 ticks. Identifiers and fields are case-insensitive. Counts include saved records even when busy or failed; a newly accepted creation still planning its graph has no saved record yet.
 
@@ -57,4 +57,4 @@ Recognized named fields for a missing maze return empty text. Recognized current
 /papi parse me %mazeengine_current_route_length%
 ```
 
-If a consuming plugin shows the expression unchanged, confirm its own PlaceholderAPI support, check MazeEngine's expansion registration log, and verify the field spelling. If the value is empty, check that the named record exists or that the player is inside the saved bounds.
+If a consuming plugin shows the expression unchanged, confirm its own PlaceholderAPI support, check Maze Engine's expansion registration log, and verify the field spelling. If the value is empty, check that the named record exists or that the player is inside the saved bounds.

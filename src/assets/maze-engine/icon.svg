@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
-  <title>MazeEngine</title>
+  <title>Maze Engine</title>
   <desc>A mint route weaving through a dark teal square maze.</desc>
   <defs>
     <linearGradient id="background" x1="12" y1="8" x2="116" y2="120" gradientUnits="userSpaceOnUse">

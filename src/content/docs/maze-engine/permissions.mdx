@@ -1,6 +1,6 @@
 ---
 title: Permissions
-description: Grant MazeEngine command permissions, distinguish ownership from administration, and understand terrain and WorldGuard bypass rules.
+description: Grant Maze Engine command permissions, distinguish ownership from administration, and understand terrain and WorldGuard bypass rules.
 ---
 
 ## Permission Nodes
@@ -9,7 +9,7 @@ Every node below defaults to **operator**. `mazeengine.admin` grants all listed 
 
 | Permission | Grants |
 | --- | --- |
-| `mazeengine.admin` | Full MazeEngine administration |
+| `mazeengine.admin` | Full Maze Engine administration |
 | `mazeengine.use` | Access to the main command and help; required alongside action permissions |
 | `mazeengine.create` | Create mazes and build previews |
 | `mazeengine.list` | List saved maze records |
@@ -38,7 +38,7 @@ Giving someone `mazeengine.delete` alone does not permit them to remove every pl
 
 `mazeengine.bypass` permits normal player block and bucket edits in an idle maze when terrain protection is enabled. It does not permit entry or editing during an active world operation and does not disable the plugin's size, overlap, player-safety, or WorldGuard checks.
 
-WorldGuard uses its own build permissions and session bypass. MazeEngine's bypass node does not grant a WorldGuard bypass. See [integrations](/maze-engine/integrations/#worldguard) for the authorization behavior.
+WorldGuard uses its own build permissions and session bypass. Maze Engine's bypass node does not grant a WorldGuard bypass. See [integrations](/maze-engine/integrations/#worldguard) for the authorization behavior.
 
 ## Example Roles
 

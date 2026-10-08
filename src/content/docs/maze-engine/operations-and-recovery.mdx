@@ -1,6 +1,6 @@
 ---
 title: Operations and Recovery
-description: Understand MazeEngine journals, saved records, snapshot restoration, regeneration versus repair, cancellation, failure states, and backup recovery.
+description: Understand Maze Engine journals, saved records, snapshot restoration, regeneration versus repair, cancellation, failure states, and backup recovery.
 ---
 
 import GameScreenshot from "../../../components/GameScreenshot.astro";
@@ -19,7 +19,7 @@ The example has no terrain snapshot. Check this field before relying on restorat
 
 ## Operation Lifecycle
 
-MazeEngine tracks creation, regeneration, repair, and deletion by name and operation identity. An accepted request may first be planning its graph before a saved record exists. World work then advances in bounded stages on the server thread, with serial storage work on a separate executor.
+Maze Engine tracks creation, regeneration, repair, and deletion by name and operation identity. An accepted request may first be planning its graph before a saved record exists. World work then advances in bounded stages on the server thread, with serial storage work on a separate executor.
 
 | Record status | Meaning |
 | --- | --- |
@@ -107,6 +107,6 @@ Do not delete a record file merely to make an error disappear: it also removes t
 
 ## Backups and Moving Servers
 
-Back up the **world data and the complete MazeEngine data folder together** with the server stopped. Keep records and their matching snapshots paired. Copying only preset templates cannot recover a saved graph or original terrain.
+Back up the **world data and the complete Maze Engine data folder together** with the server stopped. Keep records and their matching snapshots paired. Copying only preset templates cannot recover a saved graph or original terrain.
 
 Records identify worlds by UUID and retain their world names for display. A newly created world with the same name is not necessarily the saved world. Preserve the actual world identity when moving a server or restore the matching backup.

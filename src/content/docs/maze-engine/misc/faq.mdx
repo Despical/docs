@@ -1,11 +1,11 @@
 ---
 title: Troubleshooting
-description: Diagnose MazeEngine installation, dimensions, placement, previews, permissions, WorldGuard failures, snapshot recovery, placeholders, and teleport safety.
+description: Diagnose Maze Engine installation, dimensions, placement, previews, permissions, WorldGuard failures, snapshot recovery, placeholders, and teleport safety.
 ---
 
 ## What server versions are supported?
 
-MazeEngine targets Paper for Minecraft **1.21.11 and later**, using **Java 25**. Install `mazeengine-1.0.0.jar` for every supported server version. Confirm the server process actually uses Java 25; changing an IDE JDK does not change the executable in your server startup script.
+Maze Engine targets Paper for Minecraft **1.21.11 and later**, using **Java 25**. Install `mazeengine-1.0.0.jar` for every supported server version. Confirm the server process actually uses Java 25; changing an IDE JDK does not change the executable in your server startup script.
 
 Optional integration versions must also support your chosen server. Check the startup log for the enabled plugins and the actual failure cause rather than assuming any older WorldEdit build is compatible with a new Minecraft release.
 
@@ -23,7 +23,7 @@ World edits require the affected volume to be empty of players. Move everyone ou
 
 ## Why does WorldGuard reject an operator?
 
-MazeEngine checks placement and breaking for the actor through WorldGuard. The MazeEngine admin or protection-bypass node does not grant WorldGuard authorization. Review the region's permissions, flags, and WorldGuard's own session bypass. Console is treated as an administrative actor.
+Maze Engine checks placement and breaking for the actor through WorldGuard. The Maze Engine admin or protection-bypass node does not grant WorldGuard authorization. Review the region's permissions, flags, and WorldGuard's own session bypass. Console is treated as an administrative actor.
 
 ## Why does a preview look simplified or load gradually?
 
@@ -41,11 +41,11 @@ A saved maze retains its full original preset and graph. Reload affects future r
 
 Cancellation stops work when possible and preserves recovery metadata where mutation occurred. It is not guaranteed to roll back applied blocks. Inspect the failed record, then regenerate, repair, restore from the original snapshot, or clear according to the intended terrain result.
 
-## The snapshot file is missing. Can MazeEngine restore it?
+## The snapshot file is missing. Can Maze Engine restore it?
 
 Original terrain cannot be recreated from the generated maze or graph. Recover the matching `snapshots/<name>.schem` from a backup. A recorded but missing snapshot causes restoration and relevant regeneration checks to fail. Explicit clearing removes the volume and should only be chosen when that is the intended result.
 
-## MazeEngine will not enable after a saved-record error
+## Maze Engine will not enable after a saved-record error
 
 The repository validates records before registering the running services. Malformed YAML, an unsupported schema, invalid graph, filename mismatch, or overlapping records can stop startup. Back up the world and data, then restore or correct the named record. Deleting metadata without handling its world region removes tracking and protection of that terrain.
 
@@ -63,4 +63,4 @@ The complete configuration, messages, and presets must validate. Check the exact
 
 ## How do I report a useful issue?
 
-Use [MazeEngine's issue tracker](https://github.com/Despical/MazeEngine/issues). Include plugin and Paper versions, Java version, optional integration versions, the exact command, relevant preset/configuration, seed, and the complete error stack. Explain whether the failure happened before editing, during world work, or after an interrupted restart, and whether the snapshot and record files exist.
+Use [Maze Engine's issue tracker](https://github.com/Despical/MazeEngine/issues). Include plugin and Paper versions, Java version, optional integration versions, the exact command, relevant preset/configuration, seed, and the complete error stack. Explain whether the failure happened before editing, during world work, or after an interrupted restart, and whether the snapshot and record files exist.

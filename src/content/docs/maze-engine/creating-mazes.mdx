@@ -1,6 +1,6 @@
 ---
 title: Creating Mazes
-description: Resolve MazeEngine cell dimensions, origins, world selection, placement modes, terrain snapshots, and WorldEdit cuboids.
+description: Resolve Maze Engine cell dimensions, origins, world selection, placement modes, terrain snapshots, and WorldEdit cuboids.
 ---
 
 ## Name, Cells, and Origin
@@ -62,7 +62,7 @@ The command flag can enable snapshot capture for a preset that normally disables
 /maze create selected
 ```
 
-MazeEngine finds the largest whole-cell grid fitting the selection's X/Z span and centers it horizontally. The floor starts at the selection's minimum Y. Any unused horizontal margin remains outside the maze; the result does not necessarily fill every selected block.
+Maze Engine finds the largest whole-cell grid fitting the selection's X/Z span and centers it horizontally. The floor starts at the selection's minimum Y. Any unused horizontal margin remains outside the maze; the result does not necessarily fill every selected block.
 
 Selection requests require a player and cannot be combined with explicit dimensions, `--world`, or coordinate options. A selection unable to fit at least 2×2 cells is rejected.
 
@@ -78,7 +78,7 @@ Geometry changes physical size. Complexity replaces the preset's advanced genera
 
 ## Validation and Progress
 
-A creation request reserves its name and region while topology is planned. MazeEngine then saves preparation state, acquires chunks, checks the volume, captures any snapshot, saves the mutation journal, and writes blocks under the shared per-tick budget.
+A creation request reserves its name and region while topology is planned. Maze Engine then saves preparation state, acquires chunks, checks the volume, captures any snapshot, saves the mutation journal, and writes blocks under the shared per-tick budget.
 
 No player may occupy the volume when editing begins. A private preview can be viewed from inside its volume, but its eventual build still performs creation checks. A visible preview therefore describes the layout and does not guarantee that current terrain or WorldGuard rules permit construction.
 

@@ -1,6 +1,6 @@
 ---
 title: Generation and Geometry
-description: Understand MazeEngine cells, physical block dimensions, reproducible seeds, perfect and braided topology, and generation biases.
+description: Understand Maze Engine cells, physical block dimensions, reproducible seeds, perfect and braided topology, and generation biases.
 ---
 
 ## Logical Cells and Physical Blocks
@@ -26,7 +26,7 @@ The same seed, cell dimensions, and generation settings reproduce the same topol
 /maze create second 15 15 --preset default --seed 42 --x 200 --y 64 --z 200
 ```
 
-When no seed is supplied, MazeEngine chooses a signed long seed and stores it with the record. `/maze info` exposes it for later reuse.
+When no seed is supplied, Maze Engine chooses a signed long seed and stores it with the record. `/maze info` exposes it for later reuse.
 
 Regeneration with the existing seed reuses the persisted graph. A different seed creates replacement topology using the saved preset and existing cell dimensions. Preview confirmation retains the preview's specification, so the generated maze follows the shown layout.
 
@@ -45,7 +45,7 @@ The entrance is selected on the outer boundary. The exit is chosen from boundary
 
 ## How the Generator Builds a Maze
 
-MazeEngine grows a connected graph from one seeded random starting cell. The implementation keeps an active frontier of visited cells that may still have unvisited neighbors. Its selection rule combines continuing the newest branch with returning to a random active cell.
+Maze Engine grows a connected graph from one seeded random starting cell. The implementation keeps an active frontier of visited cells that may still have unvisited neighbors. Its selection rule combines continuing the newest branch with returning to a random active cell.
 
 1. **Pick an active cell.** With probability `branching`, choose uniformly from the active frontier; otherwise choose its newest active cell. A random choice can also select that newest cell.
 2. **Find an unvisited neighbor.** Inspect the four cardinal directions. Ignore directions outside the grid and neighbors already visited.

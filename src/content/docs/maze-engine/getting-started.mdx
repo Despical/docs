@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-description: Install MazeEngine on Paper with Java 25, configure optional integrations, and create your first persistent maze.
+description: Install Maze Engine on Paper with Java 25, configure optional integrations, and create your first persistent maze.
 ---
 
 ## Requirements
@@ -10,7 +10,7 @@ description: Install MazeEngine on Paper with Java 25, configure optional integr
 | [Paper](https://papermc.io/downloads/paper) | Minecraft **1.21.11 and later** |
 | [Java](https://adoptium.net/temurin/releases/?version=25) | **Java 25** |
 | [WorldEdit](https://enginehub.org/worldedit) / [FAWE](https://github.com/IntellectualSites/FastAsyncWorldEdit) | Optional; required for cuboid selections and original-terrain snapshots |
-| [WorldGuard](https://enginehub.org/worldguard) | Optional; applies build authorization to MazeEngine world edits |
+| [WorldGuard](https://enginehub.org/worldguard) | Optional; applies build authorization to Maze Engine world edits |
 | [PlaceholderAPI](https://wiki.placeholderapi.com/) | Optional; registers the `mazeengine` expansion automatically |
 
 Use integration builds compatible with your chosen server version. The basic generator, chat interface, previews, and route guides work without these integrations.
@@ -35,10 +35,10 @@ On Windows PowerShell, use `./gradlew.bat clean build`. The plugin JAR is genera
 
 Use `build/libs/mazeengine-1.0.0.jar` for every supported server version and run the server with Java 25.
 
-1. Build the [MazeEngine repository](https://github.com/Despical/MazeEngine) using the instructions above and select `mazeengine-1.0.0.jar` from `build/libs/`.
+1. Build the [Maze Engine repository](https://github.com/Despical/MazeEngine) using the instructions above and select `mazeengine-1.0.0.jar` from `build/libs/`.
 2. Stop the server and place the plugin JAR in its `plugins` directory.
 3. Install any optional integrations you intend to use.
-4. Start the server with Java 25 and check the console for a successful MazeEngine startup.
+4. Start the server with Java 25 and check the console for a successful Maze Engine startup.
 5. Run `/maze help` as an operator or an account with the relevant [permissions](/maze-engine/permissions/).
 
 The first startup creates `plugins/MazeEngine/config.yml`, `messages.yml`, and the bundled preset files. Existing configuration files are retained. Saved maze records and optional snapshots are stored under the same plugin data directory.
