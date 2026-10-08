@@ -1,0 +1,165 @@
+---
+title: config.yml
+description: Configure MazeEngine operation budgets, cell and volume limits, terrain and mob protection, replacement materials, progress bars, and display sessions.
+---
+
+## Loading and Reloading
+
+The file is `plugins/MazeEngine/config.yml`. Edit it and use `/maze reload` to publish a validated replacement along with messages and presets. An invalid key, type, or range rejects loading; after a failed reload, the previous settings remain active.
+
+Existing mazes keep their saved graph and preset. Global budgets, protection, messages, and display settings are read from the current configuration. Changes to existing preset files therefore affect new construction rather than rewriting saved mazes.
+
+## Performance
+
+```yaml
+performance:
+  blocks-per-tick: 3000
+  millis-per-tick: 4.0
+  max-concurrent: 1
+```
+
+| Key | Default | Accepted range | Purpose |
+| --- | --- | --- | --- |
+| `blocks-per-tick` | 3000 | 1–100000 | Shared operation step budget across active world work |
+| `millis-per-tick` | 4.0 | 0.1–40.0 | Maximum processing time spent advancing operations in a tick |
+| `max-concurrent` | 1 | 1–8 | Maximum active operations, including planning and spawn-point saves |
+
+The block budget is shared, rather than multiplied by the number of active mazes. Chunk acquisition, preflight, snapshot capture, and block writes all consume operation steps. Waiting for asynchronous chunk or file work does not turn the entire operation into a blocking task.
+
+The runner stops advancing work when its block or time budget is exhausted. File I/O uses a serial storage worker, and topology planning uses a separate bounded worker. Live block access and edits remain on the server thread.
+
+If a large maze takes too long, compare its physical volume and current tick performance before raising budgets. Higher concurrency adds simultaneous work; it does not make each job receive a separate full budget.
+
+## Size Limits
+
+```yaml
+limits:
+  max-cells: 40000
+  max-volume: 4000000
+  max-chunks: 1024
+defaults:
+  cells: 21
+```
+
+| Key | Default | Accepted range | Applies to |
+| --- | --- | --- | --- |
+| `limits.max-cells` | 40000 | 4–1000000 | Logical width multiplied by depth |
+| `limits.max-volume` | 4000000 | 16–16000000 | Physical width × height × depth, including floor and roof |
+| `limits.max-chunks` | 1024 | 1–4096 | Chunks intersecting the X/Z footprint |
+| `defaults.cells` | 21 | At least 2; square must fit `max-cells` | Omitted command width and depth |
+
+A request must satisfy all limits, world height, world border, and overlap checks. A small logical grid with very wide corridors can exceed the physical volume or chunk limit.
+
+## Terrain and Mob Protection
+
+```yaml
+protection:
+  enabled: true
+  prevent-mob-spawns: true
+```
+
+`enabled` protects saved maze volumes against player block and bucket edits, fluids, fire, growth, fading, formation, explosions, pistons, and entity block changes. `mazeengine.bypass` permits ordinary player edits while the maze is idle. Active world work remains protected regardless of this toggle or bypass.
+
+Busy saved volumes also reject entry, teleportation, interactions, inventory operations, hopper transfers, and block physics, and prevent world unload while work is active.
+
+`prevent-mob-spawns` independently cancels mob spawning within saved or pending X/Z footprints from floor level upward, including wall tops and roofs. It does not remove mobs already present or affect the plugin's display entities.
+
+External editors must respect saved regions themselves. Event protection cannot guarantee that an unrelated plugin directly changing blocks will pass through these Minecraft events.
+
+## Replaceable Materials
+
+```yaml
+placement:
+  replaceable:
+    - STONE
+    - DIRT
+    - GRASS_BLOCK
+    - COARSE_DIRT
+    - ROOTED_DIRT
+    - PODZOL
+    - MOSS_BLOCK
+    - SHORT_GRASS
+    - TALL_GRASS
+    - SNOW
+```
+
+Use material names recognized by the running server. Air is always permitted. `REPLACE` allows listed materials throughout a new maze's volume; `SAFE` consults the list only at floor level and requires air above it. `CLEAR` does not use this list.
+
+This is a creation preflight rule. Regeneration and repair work from the saved structural plan, and clearing deletion intentionally clears the volume.
+
+## Progress Boss Bar
+
+```yaml
+progress:
+  enabled: true
+  color: GREEN
+  overlay: PROGRESS
+```
+
+The boss bar shows operation progress to the initiating player. Colors are `PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, and `WHITE`. Overlays are `PROGRESS`, `NOTCHED_6`, `NOTCHED_10`, `NOTCHED_12`, and `NOTCHED_20`.
+
+Displayed stages describe preparation, chunk acquisition, preflight, snapshot handling, block work, and final persistence. A percentage or stage name is presentation information; successful completion includes the final storage commit.
+
+## Shared Visual Settings
+
+```yaml
+visuals:
+  spawns-per-tick: 100
+  view-range: 8.0
+  brightness:
+    block: 15
+    sky: 15
+  action-bar: true
+```
+
+| Key | Default | Range / type | Purpose |
+| --- | --- | --- | --- |
+| `spawns-per-tick` | 100 | 1–1000 | Shared new preview-display spawn budget |
+| `view-range` | 8.0 | 0.1–16.0 | Display view-range multiplier; 1.0 represents 64 client blocks |
+| `brightness.block` | 15 | 0–15 | Block-light override |
+| `brightness.sky` | 15 | 0–15 | Sky-light override |
+| `action-bar` | `true` | Boolean | Preview loading and guide-distance text |
+
+Preview displays and guide arrows are visible only to their owner. These visual settings are independent of the real block-operation budget.
+
+## Preview Sessions
+
+```yaml
+visuals:
+  preview:
+    duration-seconds: 300
+    max-sessions: 8
+    max-displays: 12000
+```
+
+| Key | Default | Range | Purpose |
+| --- | --- | --- | --- |
+| `duration-seconds` | 300 | 1–3600 | Preview and issued-button lifetime |
+| `max-sessions` | 8 | 1–32 | Maximum simultaneous player previews |
+| `max-displays` | 12000 | 100–12000 | Display cap before geometry is simplified |
+
+Large previews simplify visual geometry to fit this cap. The confirmed maze still builds the full retained specification.
+
+## Route Guide
+
+```yaml
+visuals:
+  guide:
+    duration-seconds: 600
+    look-ahead: 7
+    block: minecraft:lime_concrete
+    elevation: 1.14
+    width: 0.05
+    thickness: 0.025
+```
+
+| Key | Default | Range / type | Purpose |
+| --- | --- | --- | --- |
+| `duration-seconds` | 600 | 1–3600 | Personal guide and Close-button lifetime |
+| `look-ahead` | 7 | 1–32 | Maximum cell transitions drawn ahead |
+| `block` | `minecraft:lime_concrete` | Visible, non-air block data | Arrow appearance |
+| `elevation` | 1.14 | 1.01–2.0 | Height above the floor origin |
+| `width` | 0.05 | 0.01–0.5 | Arrow stroke width in blocks |
+| `thickness` | 0.025 | 0.005–0.25 | Vertical arrow thickness in blocks |
+
+For red arrows, set `block: minecraft:red_concrete`. Wider arrows are hidden when their geometry would cross maze walls. Follow [previews and guides](/maze-engine/previews-and-guides/) for session behavior and reload effects.

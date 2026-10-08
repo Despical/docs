@@ -1,0 +1,67 @@
+---
+title: messages.yml
+description: Customize MazeEngine MiniMessage feedback, chat panels, button labels, hover text, progress, and contextual placeholders.
+---
+
+## File and Formatting
+
+Edit `plugins/MazeEngine/messages.yml`, then use `/maze reload`. Every configured value must be text. Message loading parses MiniMessage syntax and requires the essential keys before publishing the replacement.
+
+Messages support [Adventure MiniMessage](https://docs.advntr.dev/minimessage/format.html) formatting, including hexadecimal colors and line breaks:
+
+```yaml
+prefix: '<#8BD5CA>MazeEngine</#8BD5CA> <#606A7B>»</#606A7B> '
+error: '<#FF5555><reason></#FF5555>'
+reloaded: '<#91B78A>Maze settings reloaded.</#91B78A>'
+button-build: '[Create Maze]'
+hover-build: '<#91B78A>Build this layout.</#91B78A><newline><#A8B8C9>Move outside the area first.</#A8B8C9>'
+```
+
+Quote strings containing `#`, angle-bracket tags, or punctuation meaningful to YAML. In the file, `<name>` and similar tags are contextual placeholders supplied by MazeEngine, rather than PlaceholderAPI expressions.
+
+## Message Groups
+
+| Group | Examples | Used for |
+| --- | --- | --- |
+| General feedback | `prefix`, `line`, `error`, `reloaded` | Common output and validation failures |
+| Operation outcomes | `creation-queued`, `completed`, `regenerated`, `repaired`, `deleted`, `cancelled` | Accepted operations and final results |
+| Progress | `progress`, stage labels | Boss-bar text and operation stage presentation |
+| Preset browser | `presets-title`, `preset-row`, `preset-hover`, `presets-footer` | Theme table and preview suggestions |
+| Maze browser | `list-title`, `maze-row`, `maze-hover`, `list-footer` | Record listing and management actions |
+| Maze information | `info-card` and related labels | Geometry, state, graph statistics, snapshot, and teleport metadata |
+| Previews | `preview-preparing`, `preview-ready`, `preview-ended`, `preview-bar` | Preview lifecycle and action-bar status |
+| Guides | `guide-started`, `guide-ended`, `guide-distance`, `guide-outside` | Personal guide feedback |
+| Deletion | `delete-prompt`, `delete-hover`, `confirm-expired` | Review, terrain policy, and expiry |
+| Buttons and hovers | `button-build`, `button-delete`, `hover-teleport`, `hover-guide` | Clickable chat controls |
+| Help and concepts | `help-title`, `help-row`, concept text | Command reference and explanatory panels |
+
+The bundled file is the complete key reference. Preserve contextual placeholders already present in each template rather than assuming every tag is available in every message.
+
+## Contextual Placeholders
+
+| Placeholder | Typical context |
+| --- | --- |
+| `<name>` | Maze or preset identifier |
+| `<preset>`, `<theme>` | Theme label or rich theme component |
+| `<cells>` | Logical grid dimensions |
+| `<blocks>` or `<width>`, `<height>`, `<depth>` | Physical dimensions where supplied |
+| `<seed>` | Stored deterministic seed |
+| `<status>` | Record or visual-session state |
+| `<stage>`, `<percent>` | Operation progress |
+| `<solution>`, `<deadends>` | Graph statistics in maze panels |
+| `<reason>` | Validation or operation failure reason |
+| `<actions>`, `<action>`, `<trailing-actions>` | Rich clickable components supplied by the relevant panel |
+
+Ordinary arguments are inserted as unparsed text, so a maze name cannot inject MiniMessage markup. Rich action placeholders are Adventure components created by the plugin and carry their real permission, actor, token, and expiration behavior.
+
+Changing `[Delete]` to `[Remove]` changes its label, not its authorization or terrain policy. Callback commands remain managed by the plugin.
+
+## Panels and Compatibility
+
+Where a matching `*-title` and `*-body` template exists, feedback is rendered as a panel with contextual actions. The plugin fills additional missing keys from bundled defaults. Essential keys still must exist: `prefix`, `line`, `queued`, `completed`, `deleted`, `cancelled`, `teleported`, `reloaded`, `empty`, `error`, `progress`, `list-entry`, and `info`.
+
+Named colors such as `<green>` are normalized to the plugin's shared palette. Use explicit hexadecimal tags when you want a precise custom color. Title templates retain title styling; regular feedback and body text are normalized to non-bold rendering.
+
+## PlaceholderAPI
+
+MazeEngine's message renderer does not run PlaceholderAPI substitution over message templates. Use `%mazeengine_...%` placeholders in another plugin that supports PlaceholderAPI, such as a scoreboard or hologram. See the [placeholder tables](/maze-engine/placeholders/) for those separate expressions.

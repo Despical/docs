@@ -1,0 +1,98 @@
+---
+title: Operations and Recovery
+description: Understand MazeEngine journals, saved records, snapshot restoration, regeneration versus repair, cancellation, failure states, and backup recovery.
+---
+
+## Operation Lifecycle
+
+MazeEngine tracks creation, regeneration, repair, and deletion by name and operation identity. An accepted request may first be planning its graph before a saved record exists. World work then advances in bounded stages on the server thread, with serial storage work on a separate executor.
+
+| Record status | Meaning |
+| --- | --- |
+| `PREPARING` | Preparation, chunk acquisition, preflight, or snapshot capture before maze block mutation |
+| `GENERATING` | Structure mutation has been journaled and building is in progress |
+| `READY` | World work and final record persistence succeeded |
+| `DELETING` | Clear or restore removal is in progress |
+| `FAILED` | Interrupted, cancelled, or failed work retained a record needing attention |
+
+`DELETED` exists in public API results for successful removal; it is not a retained saved record. Busy status also includes planning and other reservations, so a record's label alone is not a complete operation-state check.
+
+Names and regions are reserved to prevent conflicting requests. Chunk leases keep required chunks available during world work. Final success is published only after the required save or metadata deletion completes and the name reservation is released.
+
+## Saved Files
+
+| Path under `plugins/MazeEngine/` | Contents |
+| --- | --- |
+| `config.yml` | Global validated settings |
+| `messages.yml` | Chat and progress templates |
+| `presets/<id>.yml` | Current templates for new requests |
+| `mazes/<name>.yml` | Saved world identity, owner, origin, grid graph, seed, frozen preset, portals, state, and optional teleport point |
+| `snapshots/<name>.schem` | Original terrain captured through WorldEdit or FAWE |
+
+Records use atomic file replacement. Startup validates schema, filename identity, graph size and connectivity, reciprocal connections, portal placement, frozen preset, and overlap between saved mazes. Invalid persisted data aborts startup rather than silently forgetting a potentially occupied region.
+
+The saved graph is authoritative for regeneration, guide routes, statistics, and API queries. It does not recalculate itself when an external editor changes world blocks.
+
+## Regeneration and Repair
+
+```text
+/maze regenerate garden
+/maze regenerate garden --seed 123
+/maze regenerate garden --new-seed
+/maze regenerate garden --repair
+```
+
+Full regeneration writes the whole saved structural plan, including air in passage space. With the saved seed it reuses the stored graph; another seed generates replacement topology with the saved preset and dimensions.
+
+Repair keeps the seed and graph and writes only planned non-air blocks. This preserves contents in positions that the plan marks as passages. A player addition at a planned wall or floor position can still be replaced. Repair is therefore suitable for restoring damaged structure while retaining passage additions, rather than preserving every edit everywhere.
+
+Regeneration and repair retain the **original** snapshot. They reject a recorded snapshot whose file is missing and reject incomplete initial snapshot capture. Recover the original file or remove the incomplete record with an appropriate removal policy before starting over.
+
+## Clear and Restore Removal
+
+| Policy | Result |
+| --- | --- |
+| Automatic | Restore if a snapshot was captured; otherwise clear |
+| `--restore` | Require original-terrain snapshot and compatible integration, then restore |
+| `--clear` | Clear every block in the bounded volume to air |
+
+Successful removal deletes the metadata and snapshot, releases the identifier, and permits it to be used again. Restoration replaces the complete captured volume, including additions made after capture. Clearing also removes additions and terrain in that volume.
+
+A snapshot is an original-terrain copy, not a backup of the current maze. It is bounded by the saved region and cannot recover blocks outside it. A recorded but missing file causes a restore error; the automatic policy does not silently clear instead.
+
+## Cancellation
+
+```text
+/maze cancel garden
+```
+
+Cancellation requests the end of that operation and observes pending journal writes. It is **not a rollback promise**. Once world mutation has occurred, the record can remain failed and the partial structure can remain in the world.
+
+An initial preparation that has not changed blocks can be abandoned and its metadata removed. A job already completing its final commit may finish successfully rather than cancel. Read the final feedback and current record before choosing a recovery action.
+
+## Interrupted Startup Recovery
+
+| Interrupted state | Startup behavior |
+| --- | --- |
+| `PREPARING` | Discard the preparation record and its temporary snapshot; maze blocks were not mutated |
+| `GENERATING` | Save as `FAILED`, retain region metadata for recovery |
+| `DELETING` | Save as `FAILED`, retain region metadata for recovery |
+| `READY` or `FAILED` | Retain the record after validation |
+
+There is no automatic replay or terrain rollback of a partially changed operation. Inspect a failed record with `/maze info <name>`, read its error, and choose regeneration, repair, restoration, or clearing according to what remains available.
+
+## Recovery Workflow
+
+1. Keep players outside the affected volume and inspect the current record and error.
+2. Confirm the saved world is loaded and any required integration is enabled.
+3. If original terrain is needed, verify its snapshot file before requesting `delete --restore`.
+4. If you want the maze back, use regeneration or repair when the saved record and required original snapshot are complete.
+5. Use clearing only when removing all blocks in the volume is the intended result.
+
+Do not delete a record file merely to make an error disappear: it also removes the plugin's knowledge and protection of that occupied region. If validation prevents startup, stop the server, back up the data, and correct or restore the affected files with the world state in mind.
+
+## Backups and Moving Servers
+
+Back up the **world data and the complete MazeEngine data folder together** with the server stopped. Keep records and their matching snapshots paired. Copying only preset templates cannot recover a saved graph or original terrain.
+
+Records identify worlds by UUID and retain their world names for display. A newly created world with the same name is not necessarily the saved world. Preserve the actual world identity when moving a server or restore the matching backup.

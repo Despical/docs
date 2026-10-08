@@ -1,0 +1,49 @@
+---
+title: Permissions
+description: Grant MazeEngine command permissions, distinguish ownership from administration, and understand terrain and WorldGuard bypass rules.
+---
+
+## Permission Nodes
+
+Every node below defaults to **operator**. `mazeengine.admin` grants all listed child nodes, including management of other owners' mazes and the terrain-protection bypass.
+
+| Permission | Grants |
+| --- | --- |
+| `mazeengine.admin` | Full MazeEngine administration |
+| `mazeengine.use` | Access to the main command and help; required alongside action permissions |
+| `mazeengine.create` | Create mazes and build previews |
+| `mazeengine.list` | List saved maze records |
+| `mazeengine.info` | Inspect maze details |
+| `mazeengine.presets` | Browse configured presets |
+| `mazeengine.preview` | Create and close private previews |
+| `mazeengine.tp` | Teleport to a ready maze |
+| `mazeengine.solve` | Open and close personal route guides |
+| `mazeengine.setspawn` | Save or reset maze teleport destinations |
+| `mazeengine.regenerate` | Regenerate or repair mazes |
+| `mazeengine.delete` | Review and remove mazes |
+| `mazeengine.cancel` | Request operation cancellation |
+| `mazeengine.reload` | Reload settings, messages, and presets |
+| `mazeengine.manage.others` | Manage mazes owned by another player |
+| `mazeengine.bypass` | Bypass ordinary player block/bucket protection on an idle saved maze |
+
+## Maze Ownership
+
+A maze created by a player stores that player's UUID as owner. Regeneration, deletion, cancellation, and spawn-point changes require the appropriate action permission **and** ownership or `mazeengine.manage.others`.
+
+Non-player administrative senders follow the administrative rules. A maze created by a non-player actor stores the zero UUID as its owner. Querying, teleporting, and opening a guide are separate from ownership-controlled world management.
+
+Giving someone `mazeengine.delete` alone does not permit them to remove every player's maze. Give `mazeengine.manage.others` only to roles intended to manage other owners' records.
+
+## Protection Bypass
+
+`mazeengine.bypass` permits normal player block and bucket edits in an idle maze when terrain protection is enabled. It does not permit entry or editing during an active world operation and does not disable the plugin's size, overlap, player-safety, or WorldGuard checks.
+
+WorldGuard uses its own build permissions and session bypass. MazeEngine's bypass node does not grant a WorldGuard bypass. See [integrations](/maze-engine/integrations/#worldguard) for the authorization behavior.
+
+## Example Roles
+
+For staff who may inspect and explore mazes, grant `mazeengine.use`, `mazeengine.list`, `mazeengine.info`, `mazeengine.tp`, and `mazeengine.solve`.
+
+For a trusted builder who may manage their own creations, add `mazeengine.create`, `mazeengine.preview`, `mazeengine.presets`, `mazeengine.regenerate`, `mazeengine.delete`, `mazeengine.cancel`, and `mazeengine.setspawn`.
+
+For a server administrator, `mazeengine.admin` includes the complete set. Use your permission manager to assign these nodes to the intended groups.

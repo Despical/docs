@@ -1,0 +1,55 @@
+---
+title: MazeEngine Documentation
+description: Generate deterministic Minecraft mazes with configurable themes, private previews, route guides, persistent regions, terrain snapshots, and a public developer API.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## MazeEngine
+
+**MazeEngine** builds persistent mazes directly in your Minecraft world. Choose a theme, preview its layout, and create a maze with a reproducible seed. Manage the finished structure through interactive chat panels, guide players to its exit, rebuild it, or restore the terrain captured before construction.
+
+<img src="/images/mazeengine/social-preview.png" alt="MazeEngine project artwork with a mint maze route and dark teal background" width="1280" height="640" />
+
+MazeEngine supports **Paper for Minecraft 1.21.11 and later, including 26.x**, and requires **Java 25**. WorldEdit or FastAsyncWorldEdit, WorldGuard, and PlaceholderAPI are optional integrations.
+
+## Start Building
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install the plugin, check requirements, and build your first maze." href="/maze-engine/getting-started/" />
+    <LinkCard title="Creating Mazes" description="Choose cell dimensions, world coordinates, placement rules, and WorldEdit selections." href="/maze-engine/creating-mazes/" />
+    <LinkCard title="Previews and Route Guides" description="Inspect a private visual preview and follow a personal route to the exit." href="/maze-engine/previews-and-guides/" />
+</CardGrid>
+
+## Themes and Generation
+
+The plugin includes **30 editable presets**, from open hedge gardens and desert passages to roofed dungeons, copper halls, and volcanic corridors. Presets control physical geometry, block palettes, decorations, generation settings, and display metadata.
+
+<CardGrid>
+    <LinkCard title="Preset Reference" description="Create custom themes with weighted palettes, roofs, lighting, caps, and wall inlays." href="/maze-engine/presets/" />
+    <LinkCard title="Generation and Geometry" description="Understand deterministic seeds, perfect and braided graphs, physical size, and complexity." href="/maze-engine/generation/" />
+</CardGrid>
+
+## Server Administration
+
+<CardGrid>
+    <LinkCard title="Commands" description="Every public command, accepted option, and practical example." href="/maze-engine/commands/" />
+    <LinkCard title="Permissions" description="Action permissions, maze ownership, management rights, and protection bypass." href="/maze-engine/permissions/" />
+    <LinkCard title="config.yml" description="Control operation budgets, size limits, terrain protection, and visual sessions." href="/maze-engine/configuration/config/" />
+    <LinkCard title="messages.yml" description="Customize MiniMessage text, chat panels, buttons, and hover information." href="/maze-engine/configuration/messages/" />
+    <LinkCard title="Integrations" description="WorldEdit selections and snapshots, WorldGuard checks, and PlaceholderAPI." href="/maze-engine/integrations/" />
+    <LinkCard title="PlaceholderAPI" description="Use global, named-maze, player-location, and ownership placeholders." href="/maze-engine/placeholders/" />
+    <LinkCard title="Operations and Recovery" description="Understand saved records, removal modes, interrupted work, and backups." href="/maze-engine/operations-and-recovery/" />
+</CardGrid>
+
+## Developer API
+
+The public API exposes immutable maze descriptions, preset metadata, graph routes, operation handles, and completion events. Integrations use the same permission, ownership, and region checks as commands.
+
+<CardGrid>
+    <LinkCard title="API Getting Started" description="Load the Bukkit service and query mazes, destinations, routes, and presets." href="/maze-engine/api/getting-started/" />
+    <LinkCard title="Operations and Events" description="Submit creation, regeneration, repair, and removal, then observe their outcomes." href="/maze-engine/api/operations-and-events/" />
+    <LinkCard title="Troubleshooting" description="Diagnose rejected regions, unavailable integrations, failed records, and visual sessions." href="/maze-engine/misc/faq/" />
+    <LinkCard title="Source Code" description="Read the implementation, report a reproducible issue, or contribute on GitHub." href="https://github.com/Despical/MazeEngine" />
+</CardGrid>

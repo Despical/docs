@@ -1,0 +1,139 @@
+---
+title: Presets
+description: Customize MazeEngine themes with YAML geometry, metadata, weighted block palettes, patterns, roofs, lighting, caps, and wall inlays.
+---
+
+## Preset Files
+
+Each file in `plugins/MazeEngine/presets/` defines one theme. The lowercase filename without `.yml` is its identifier, for example `hedge.yml` becomes `--preset hedge`. The `default.yml` preset is required.
+
+`/maze presets` shows the default first and then sorts other themes by configured display name. Hover a row to inspect geometry and descriptive metadata; its preview action suggests a command for that theme.
+
+The 30 bundled identifiers are:
+
+| Presets | Presets | Presets |
+| --- | --- | --- |
+| `default` | `hedge` | `dungeon` |
+| `wilderness` | `desert` | `temple` |
+| `frost` | `nether` | `ocean` |
+| `copper` | `gladiator` | `end` |
+| `claustrophobic` | `bamboo` | `catacombs` |
+| `crystal` | `factory` | `library` |
+| `monochrome` | `ruins` | `rainbow` |
+| `volcanic` | `swamp` | `haunted` |
+| `sakura` | `sky` | `steampunk` |
+| `graveyard` | `candy` | `abyss` |
+
+Bundled files are installed when absent and are not overwritten on startup. To create a custom theme, copy a preset to a new valid filename, edit it, and run `/maze reload`. Use block types available on the server version where that preset will be loaded.
+
+## Complete Custom Example
+
+Save this as `presets/garden.yml`:
+
+```yaml
+display-name: Garden
+description: An open garden with broad paths and flowering walls.
+difficulty: EASY
+accent: "#91B78A"
+path-width: 3
+wall-thickness: 2
+wall-height: 3
+roof: false
+snapshot: false
+placement: SAFE
+algorithm: PERFECT
+complexity: 0.55
+palette:
+  pattern: RANDOM
+  section-size: 8
+  floor:
+    - 'minecraft:moss_block@3'
+    - 'minecraft:grass_block@1'
+  wall:
+    - 'minecraft:oak_leaves[persistent=true]@4'
+    - 'minecraft:flowering_azalea_leaves[persistent=true]@1'
+  ceiling: ['minecraft:oak_leaves[persistent=true]@1']
+  cap: ['minecraft:flowering_azalea_leaves[persistent=true]@1']
+decoration:
+  cap-chance: 0.25
+  light-spacing: 4
+  light: minecraft:sea_lantern
+  entrance-marker: minecraft:emerald_block
+  exit-marker: minecraft:gold_block
+  inlay-chance: 0.0
+```
+
+Ceiling and cap palettes remain part of the validated preset even when a roof or caps are disabled. Provide valid non-empty palettes for every required role.
+
+## Display Metadata
+
+| Key | Meaning |
+| --- | --- |
+| `display-name` | Player-facing theme name, used exactly as configured |
+| `description` | Theme description shown in preset hover text |
+| `difficulty` | Author-defined label: `EASY`, `MEDIUM`, or `HARD` |
+| `accent` | Theme color in `#RRGGBB` format |
+
+Difficulty is descriptive metadata. MazeEngine does not infer it from a filename, seed, route length, or complexity. A custom display name is not rewritten to match the identifier.
+
+## Geometry and Placement
+
+| Key | Range / values | Meaning |
+| --- | --- | --- |
+| `path-width` | 1–16 | Corridor width in blocks |
+| `wall-thickness` | 1–8 | Wall thickness in blocks |
+| `wall-height` | 2–64 | Wall height above the floor |
+| `roof` | Boolean | Add one ceiling layer above the walls |
+| `snapshot` | Boolean | Request original-terrain capture when creating |
+| `placement` | `CLEAR`, `SAFE`, `REPLACE` | Existing-terrain policy |
+
+The physical footprint depends on cell dimensions as well as geometry. See [generation and geometry](/maze-engine/generation/) for the formula and [creating mazes](/maze-engine/creating-mazes/) for placement behavior.
+
+## Weighted Block Palettes
+
+Entries use Bukkit block-data syntax, optionally followed by `@weight`:
+
+```yaml
+palette:
+  floor: ['minecraft:stone_bricks@8', 'minecraft:cracked_stone_bricks@2']
+  wall: ['minecraft:oak_log[axis=y]@1']
+  ceiling: ['minecraft:stone_bricks@1']
+  cap: ['minecraft:cobweb@1']
+```
+
+Weights are positive, finite relative values. A weight of 8 against 2 means an 80% versus 20% share under `RANDOM`; weights need not add up to 100. An omitted weight is 1. Each palette supports 1–64 entries.
+
+Floor, wall, ceiling, light, and marker materials must be solid blocks without gravity. Cap palettes additionally accept cobwebs. Invalid block states or unsupported materials reject configuration loading.
+
+Selection is deterministic for the seed and local coordinate. Rebuilding the saved plan does not randomly shuffle its palette each time.
+
+## Palette Patterns
+
+| Key | Values | Behavior |
+| --- | --- | --- |
+| `palette.pattern` | `RANDOM`, `SECTIONS` | Coordinate-based weighted selection, or repeating X/Z sections |
+| `palette.section-size` | 1–128 | Section width used by `SECTIONS`; default 8 |
+
+`RANDOM` respects entry weights. `SECTIONS` cycles through entries according to X/Z section indices and entry order; it does not use the random weights to choose section entries. The pattern applies to the normal floor, wall, ceiling, and cap palettes.
+
+## Decorations
+
+| Key | Range | Behavior |
+| --- | --- | --- |
+| `decoration.cap-chance` | 0–1 | Chance of replacing a top-wall block with its cap palette |
+| `decoration.light-spacing` | 0–10000 | Corridor-cell spacing for inset floor lights; 0 disables them |
+| `decoration.light` | Solid, stable block data | Floor light material |
+| `decoration.entrance-marker` | Solid, stable block data | Floor block marking the entrance portal |
+| `decoration.exit-marker` | Solid, stable block data | Floor block marking the exit portal |
+| `palette.wall-inlay` | Optional weighted palette | Interior wall accent material |
+| `decoration.inlay-chance` | 0–1 | Chance of eligible interior wall inlays |
+
+Markers occupy portal floor positions and lighting is inset into the floor. Caps occupy the top layer of walls. These decorations do not fill walkable passages.
+
+Wall inlays require an interior block surrounded on all four horizontal sides by non-passage wall space and enough wall height for the inset level. They may use stable solid materials or lava. A lava inlay requires wall materials that contain it: occluding blocks, glass, or stained glass. A narrow wall may have no eligible enclosed inlay positions.
+
+## Changes and Saved Mazes
+
+New requests use the current loaded preset. Each created maze saves its full preset with its graph, rather than remembering only a filename. Editing `garden.yml` and reloading changes future garden mazes; regeneration and repair of an existing maze continue using its frozen settings.
+
+Keep custom descriptions, display names, and difficulty labels in YAML. Generation controls are documented separately in [generation and geometry](/maze-engine/generation/#generation-controls).

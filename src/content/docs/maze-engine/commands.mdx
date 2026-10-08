@@ -1,0 +1,103 @@
+---
+title: Commands
+description: Complete MazeEngine command and option reference with examples for building, previewing, managing, guiding, and restoring mazes.
+---
+
+## Public Commands
+
+The main command is `/maze`; `/mazeengine` is an alias. All commands require `mazeengine.use` in addition to their action permission. Angle brackets indicate required arguments; square brackets indicate optional arguments.
+
+| Command | Purpose | Action permission |
+| --- | --- | --- |
+| `/maze help [page]` | Open command help | `mazeengine.use` |
+| `/maze help concepts [page]` | Explain cells, geometry, seeds, snapshots, and related concepts | `mazeengine.use` |
+| `/maze create <name> [width depth] [options]` | Build a maze or confirm a matching active preview | `mazeengine.create` |
+| `/maze preview <name> [width depth] [options]` | Create your private display preview | `mazeengine.preview` |
+| `/maze preview stop` | Close your preview | `mazeengine.preview` |
+| `/maze list [page]` | List saved records and open management panels | `mazeengine.list` |
+| `/maze info <name>` | Inspect a record and its current operation state | `mazeengine.info` |
+| `/maze presets [page]` | Browse configured themes and preview suggestions | `mazeengine.presets` |
+| `/maze tp <name>` | Teleport to the saved destination or entrance | `mazeengine.tp` |
+| `/maze solve <name> [stop]` | Open or close your route guide | `mazeengine.solve` |
+| `/maze setspawn <name> [reset]` | Save your current location as the arrival point, or reset it | `mazeengine.setspawn` |
+| `/maze regenerate <name> [options]` | Rebuild or repair the saved structure | `mazeengine.regenerate` |
+| `/maze delete <name> [options]` | Review removal with a terrain policy | `mazeengine.delete` |
+| `/maze cancel <name>` | Request cancellation of active work | `mazeengine.cancel` |
+| `/maze reload` | Reload configuration, messages, and presets | `mazeengine.reload` |
+
+Preview, teleport, guide, and spawn commands require a player. Creation supports console with explicit world and coordinates. Management actions also apply [ownership checks](/maze-engine/permissions/).
+
+## Creation and Preview Options
+
+| Option | Value | Behavior |
+| --- | --- | --- |
+| `--preset` | Preset identifier | Select a file from `presets/`; default is `default` |
+| `--seed` | Signed long integer | Fix the deterministic generation seed |
+| `--selection` | Flag | Fit a WorldEdit or FAWE cuboid; omit dimensions and coordinate/world options |
+| `--world` | Loaded world name | Select the target world |
+| `--x`, `--y`, `--z` | Integers | Floor origin; all three must be supplied together |
+| `--path-width` | Integer, 1–16 | Width of each walkable corridor in blocks |
+| `--wall-thickness` | Integer, 1–8 | Thickness of separating and outer walls |
+| `--wall-height` | Integer, 2–64 | Wall height above the floor |
+| `--complexity` | Number, 0–1 | Derive generation biases from this value |
+| `--snapshot` | Flag | Capture original terrain; requires WorldEdit or FAWE |
+| `--mode` | `CLEAR`, `SAFE`, or `REPLACE` | Override the preset's placement policy |
+
+Flags have no trailing boolean value. Valued options take a separate argument, for example `--seed -123`. Duplicate options, unknown options, and missing values are rejected.
+
+```text
+/maze create courtyard 21 15 --preset default --seed 42 --mode SAFE
+/maze preview grove 13 13 --preset sakura --path-width 4
+/maze create vault --selection --preset dungeon --snapshot
+/maze create remote 11 11 --world world --x 100 --y 64 --z 200
+```
+
+## Regeneration Options
+
+| Option | Behavior |
+| --- | --- |
+| No option | Rebuild the full maze with its saved seed and graph |
+| `--seed <value>` | Generate replacement topology with a chosen seed |
+| `--new-seed` | Generate replacement topology with a random seed |
+| `--repair` | Restore planned non-air structure blocks while preserving passage contents |
+
+`--seed` and `--new-seed` are mutually exclusive. `--repair` must be used alone. Regeneration always uses the maze's **saved preset and grid dimensions**, even if the current preset file has changed.
+
+```text
+/maze regenerate courtyard
+/maze regenerate courtyard --new-seed
+/maze regenerate courtyard --repair
+```
+
+Full regeneration writes planned air as well as structural blocks, so additions inside passage space may be removed. Repair skips planned air; additions occupying positions where the saved plan expects solid structure can still be replaced.
+
+## Deletion Options
+
+| Option | Behavior |
+| --- | --- |
+| No terrain option | Restore when the record has a snapshot; otherwise clear |
+| `--restore` | Require the complete original snapshot and restore it |
+| `--clear` | Clear the entire volume to air, even if a snapshot exists |
+| `--confirm` | Submit removal immediately instead of issuing the confirmation panel |
+
+`--restore` and `--clear` cannot be combined. A recorded but missing snapshot causes restoration to fail; it does not silently fall back to clearing.
+
+Normal deletion opens a confirmation that lasts 60 seconds. Its token is tied to the actor and exact record, preventing an old panel from deleting a changed replacement record.
+
+## Teleports and Guides
+
+```text
+/maze tp courtyard
+/maze setspawn courtyard
+/maze setspawn courtyard reset
+/maze solve courtyard
+/maze solve courtyard stop
+```
+
+`setspawn` records your position and view direction after verifying a safe destination. Resetting restores the default entrance destination. Teleport waits for the arrival chunk, rechecks record readiness and terrain safety, and then moves the player. The guide requires a ready maze in your current world.
+
+## Chat Actions
+
+Chat panels provide pagination, preset previews, management buttons, preview creation, guide closure, and deletion review. Hover text supplies extra detail. Permission-sensitive buttons appear only when the actor has the relevant rights.
+
+`build`, `confirm`, `dismiss`, and session tokens support these callbacks. They are hidden from normal client suggestions and are not commands you need to compose manually. Console deletion prints a confirmation command because console cannot click the player chat panel.
