@@ -1,0 +1,236 @@
+---
+import GameScreenshot from './GameScreenshot.astro';
+
+interface Props {
+    label: string;
+    images: {
+        src: string;
+        alt: string;
+        title: string;
+        crop: [number, number, number, number];
+    }[];
+}
+
+const { label, images } = Astro.props;
+---
+
+<screenshot-gallery role="region" aria-roledescription="carousel" aria-label={label}>
+    <div class="gallery-stage">
+        <div class="gallery-track" tabindex="0" aria-label={`${label}. Use the arrow keys or swipe to change images.`}>
+            {images.map((image, index) => (
+                <div class:list={['gallery-slide', { 'is-active': index === 0 }]} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${images.length}: ${image.title}`} data-title={image.title}>
+                    <GameScreenshot src={image.src} alt={image.alt} crop={image.crop} />
+                    <button class="gallery-jump" type="button" aria-label={`Show ${image.title}`} tabindex="-1" hidden={index === 0}></button>
+                </div>
+            ))}
+        </div>
+        <button class="gallery-arrow previous" type="button" aria-label="Previous image" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6" /></svg>
+        </button>
+        <button class="gallery-arrow next" type="button" aria-label="Next image" hidden={images.length < 2}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
+        </button>
+    </div>
+    <div class="gallery-caption" aria-live="polite" aria-atomic="true">
+        <span class="gallery-title">{images[0]?.title}</span>
+        <span class="gallery-count">1 / {images.length}</span>
+    </div>
+</screenshot-gallery>
+
+<style>
+    screenshot-gallery {
+        --gallery-peek: clamp(28px, 6%, 44px);
+        display: block;
+        min-width: 0;
+        margin-block: 1.5rem;
+    }
+
+    .gallery-stage {
+        position: relative;
+    }
+
+    .gallery-track {
+        position: relative;
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        padding-inline: var(--gallery-peek);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
+    }
+
+    .gallery-track::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gallery-track:focus-visible {
+        outline: 2px solid var(--sl-color-text-accent);
+        outline-offset: 4px;
+        border-radius: 0.625rem;
+    }
+
+    .gallery-slide {
+        position: relative;
+        flex: 0 0 100%;
+        min-width: 0;
+        margin: 0;
+        scroll-snap-align: center;
+        transition: opacity 180ms ease;
+    }
+
+    .gallery-slide:not(.is-active) {
+        opacity: 0.5;
+    }
+
+    .gallery-slide :global(.game-screenshot) {
+        margin: 0;
+    }
+
+    .gallery-jump {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .gallery-arrow {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 10px;
+        margin: 0;
+        transform: translateY(-50%);
+        border: 1px solid var(--sl-color-gray-4);
+        border-radius: 50%;
+        background: var(--sl-color-bg-nav);
+        color: var(--sl-color-white);
+        box-shadow: 0 2px 8px #0003;
+        cursor: pointer;
+    }
+
+    .gallery-arrow:hover {
+        border-color: var(--sl-color-text-accent);
+        color: var(--sl-color-text-accent);
+    }
+
+    .gallery-arrow:focus-visible {
+        outline: 2px solid var(--sl-color-text-accent);
+        outline-offset: 3px;
+    }
+
+    .previous {
+        left: 4px;
+    }
+
+    .next {
+        right: 4px;
+    }
+
+    .gallery-arrow svg {
+        width: 100%;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .gallery-caption {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 0.75rem;
+        color: var(--sl-color-gray-2);
+        font-size: var(--sl-text-sm);
+    }
+
+    .gallery-count {
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+    }
+
+    [hidden] {
+        display: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .gallery-slide {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    class ScreenshotGallery extends HTMLElement {
+        connectedCallback() {
+            const track = this.querySelector<HTMLElement>('.gallery-track');
+            const slides = [...this.querySelectorAll<HTMLElement>('.gallery-slide')];
+            const previous = this.querySelector<HTMLButtonElement>('.previous');
+            const next = this.querySelector<HTMLButtonElement>('.next');
+            const title = this.querySelector('.gallery-title');
+            const count = this.querySelector('.gallery-count');
+            if (!track || !previous || !next || !title || !count) return;
+
+            let index = 0;
+            let scrollTimer: ReturnType<typeof setTimeout>;
+            const update = (selected: number) => {
+                index = selected;
+                previous.hidden = index === 0;
+                next.hidden = index === slides.length - 1;
+                title.textContent = slides[index].dataset.title ?? '';
+                count.textContent = `${index + 1} / ${slides.length}`;
+                slides.forEach((slide, slideIndex) => {
+                    const active = slideIndex === index;
+                    slide.classList.toggle('is-active', active);
+                    slide.setAttribute('aria-hidden', String(!active));
+                    const jump = slide.querySelector<HTMLButtonElement>('.gallery-jump');
+                    if (jump) jump.hidden = active;
+                    const zoom = slide.querySelector<HTMLButtonElement>('.starlight-image-zoom-control');
+                    if (zoom) zoom.tabIndex = active ? 0 : -1;
+                });
+            };
+
+            const goTo = (selected: number, animate = true) => {
+                selected = Math.max(0, Math.min(selected, slides.length - 1));
+                update(selected);
+                track.scrollTo({
+                    left: slides[selected].offsetLeft - (track.clientWidth - slides[selected].clientWidth) / 2,
+                    behavior: animate && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto',
+                });
+            };
+
+            previous.addEventListener('click', () => goTo(index - 1));
+            next.addEventListener('click', () => goTo(index + 1));
+            slides.forEach((slide, slideIndex) => {
+                slide.querySelector('.gallery-jump')?.addEventListener('click', () => goTo(slideIndex));
+            });
+            this.addEventListener('keydown', (event) => {
+                if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+                event.preventDefault();
+                goTo(index + (event.key === 'ArrowRight' ? 1 : -1));
+            });
+            track.addEventListener('scroll', () => {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(() => {
+                    const center = track.scrollLeft + track.clientWidth / 2;
+                    const distances = slides.map((slide) => Math.abs(slide.offsetLeft + slide.clientWidth / 2 - center));
+                    update(distances.indexOf(Math.min(...distances)));
+                }, 120);
+            });
+            new ResizeObserver(() => goTo(index, false)).observe(track);
+            update(0);
+        }
+    }
+
+    if (!customElements.get('screenshot-gallery')) customElements.define('screenshot-gallery', ScreenshotGallery);
+</script>

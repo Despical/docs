@@ -4,8 +4,10 @@ description: See MazeEngine's real in-game help, preset browser, maze controls, 
 ---
 
 import GameScreenshot from "../../../components/GameScreenshot.astro";
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { commandHelpScreenshots } from "../../../data/mazeengine-screenshots";
 
-MazeEngine presents its controls in Minecraft chat. These screenshots were captured in-game against a dark block backdrop, with previous messages cleared between panels. Each image focuses on the panel; select it to view the original screenshot.
+MazeEngine presents its controls in Minecraft chat. These screenshots were captured in-game against a dark block backdrop, with previous messages cleared between panels. Each image focuses on the panel; select it to enlarge it without leaving the page.
 
 Open chat to interact with the buttons. Hover a command or row for additional details. Available actions depend on your permissions and the maze's current state.
 
@@ -13,11 +15,9 @@ Open chat to interact with the buttons. Hover a command or row for additional de
 
 Run `/maze help` to browse commands for building, previewing, and navigating. Clicking a command fills the chat input so you can complete its arguments before submitting it.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-help.webp" alt="MazeEngine command help with creation, preview, preset, list, info, teleport, and guide commands" crop={[4, 640, 656, 360]} />
+<ScreenshotGallery label="Command help pages" images={commandHelpScreenshots} />
 
-The second page covers management and configuration commands:
-
-<GameScreenshot src="/images/mazeengine/gameplay/chat-help-management.webp" alt="The second help page showing spawn, regeneration, deletion review, cancellation, reload, and help commands" crop={[4, 640, 656, 360]} />
+Use the arrows or swipe to move between building commands and the management page.
 
 See [commands](/maze-engine/commands/) for all arguments and permissions.
 

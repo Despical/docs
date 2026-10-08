@@ -1,4 +1,6 @@
 ---
+import { Zoom } from 'starlight-image-zoom/components';
+
 interface Props {
     src: string;
     alt: string;
@@ -9,11 +11,14 @@ const { src, alt, crop } = Astro.props;
 const [left, top, width, height] = crop;
 ---
 
-<a class="game-screenshot" href={src} target="_blank" rel="noopener noreferrer" aria-label={`${alt}. Open the original screenshot in a new tab.`}>
-    <svg viewBox={`${left} ${top} ${width} ${height}`} width={width} height={height} role="img" aria-label={alt}>
-        <image href={src} width="1920" height="1080" />
-    </svg>
-</a>
+<div class="game-screenshot">
+    <Zoom label={alt}>
+        <svg viewBox={`${left} ${top} ${width} ${height}`} width={width} height={height} role="img" aria-label={alt}>
+            <title>{alt}</title>
+            <image href={src} width="1920" height="1080" />
+        </svg>
+    </Zoom>
+</div>
 
 <style>
     .game-screenshot {
@@ -32,8 +37,4 @@ const [left, top, width, height] = crop;
         overflow: hidden;
     }
 
-    .game-screenshot:focus-visible {
-        outline: 2px solid var(--sl-color-text-accent);
-        outline-offset: 4px;
-    }
 </style>
