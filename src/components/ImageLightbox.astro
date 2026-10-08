@@ -1,0 +1,220 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none" aria-hidden="true">
+    <symbol id="starlight-image-zoom-icon-zoom" viewBox="0 0 24 24">
+        <path d="M8 3H3v5h2V5h3V3Zm8 0v2h3v3h2V3h-5ZM3 16v5h5v-2H5v-3H3Zm16 0v3h-3v2h5v-5h-2Z" />
+    </symbol>
+</svg>
+
+<template id="docs-image-lightbox-template">
+    <dialog class="docs-image-lightbox" aria-label="Image preview" aria-describedby="docs-image-lightbox-caption">
+        <button class="docs-image-lightbox-close" type="button" aria-label="Close image">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+        <div class="docs-image-lightbox-caption" id="docs-image-lightbox-caption"></div>
+    </dialog>
+</template>
+
+<style is:global>
+    starlight-image-zoom-zoomable {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+    }
+
+    starlight-image-zoom-zoomable > :is(img, svg),
+    starlight-image-zoom-zoomable > picture img,
+    starlight-image-zoom-zoomable > button {
+        cursor: zoom-in;
+    }
+
+    starlight-image-zoom-zoomable > button {
+        position: absolute;
+        inset: 12px 12px auto auto;
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        margin: 0;
+        padding: 9px;
+        border: 1px solid var(--sl-color-gray-3);
+        border-radius: 50%;
+        color: var(--sl-color-white);
+        background: var(--sl-color-bg-nav);
+    }
+
+    starlight-image-zoom-zoomable > button:not(:focus-visible) {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    starlight-image-zoom-zoomable > button svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .docs-image-lightbox {
+        position: fixed;
+        inset: 0;
+        width: 100dvw;
+        height: 100dvh;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        overflow: hidden;
+    }
+
+    .docs-image-lightbox::backdrop {
+        background: rgb(7 11 15 / 88%);
+    }
+
+    .docs-image-lightbox-media {
+        position: fixed;
+        display: block;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        transform-origin: 0 0;
+        border-radius: 8px;
+        box-shadow: 0 16px 64px #0005;
+        cursor: zoom-out;
+    }
+
+    .docs-image-lightbox-close {
+        position: fixed;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+        margin: 0;
+        border: 1px solid #64717d;
+        border-radius: 50%;
+        color: #f1f5f9;
+        background: #14202b;
+        cursor: pointer;
+    }
+
+    .docs-image-lightbox-close:hover {
+        background: #263747;
+    }
+
+    .docs-image-lightbox-close:focus-visible,
+    starlight-image-zoom-zoomable > button:focus-visible {
+        outline: 2px solid #79c7ff;
+        outline-offset: 3px;
+    }
+
+    .docs-image-lightbox-close svg {
+        width: 100%;
+        height: 100%;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+    }
+
+    .docs-image-lightbox-caption {
+        position: fixed;
+        margin: 0;
+        color: #dce5ed;
+        font-size: 13px;
+        line-height: 1.5;
+        text-align: center;
+    }
+</style>
+
+<script>
+    const template = document.querySelector<HTMLTemplateElement>('#docs-image-lightbox-template');
+    type Media = HTMLImageElement | SVGSVGElement;
+    let active: { close: (immediate?: boolean) => void } | undefined;
+
+    const open = (source: Media, trigger: Element) => {
+        if (!template || active) return;
+        // Capture the source before scroll locking or modal focus can affect layout.
+        const origin = source.getBoundingClientRect();
+        const svg = source instanceof SVGSVGElement;
+        const naturalWidth = svg ? source.viewBox.baseVal.width : source.naturalWidth;
+        const naturalHeight = svg ? source.viewBox.baseVal.height : source.naturalHeight;
+        if (!naturalWidth || !naturalHeight) return;
+        const gutter = innerWidth < 600 ? 24 : 48;
+        const scale = Math.min(1, 960 / naturalWidth, (innerWidth - gutter) / naturalWidth, innerHeight * 0.75 / naturalHeight);
+        const width = naturalWidth * scale;
+        const height = naturalHeight * scale;
+        const left = (innerWidth - width) / 2;
+        const top = (innerHeight - height) / 2;
+        const dialog = template.content.firstElementChild!.cloneNode(true) as HTMLDialogElement;
+        const closeButton = dialog.querySelector<HTMLButtonElement>('button')!;
+        const caption = dialog.querySelector<HTMLElement>('.docs-image-lightbox-caption')!;
+        const image = source.cloneNode(true) as Media;
+        image.removeAttribute('id');
+        image.classList.add('docs-image-lightbox-media');
+        if (image instanceof HTMLImageElement && source instanceof HTMLImageElement) {
+            image.src = source.currentSrc || source.src;
+        }
+        Object.assign(image.style, { width: `${width}px`, height: `${height}px`, left: `${left}px`, top: `${top}px` });
+        Object.assign(closeButton.style, { left: `${left + width - 40}px`, top: `${Math.max(12, top - 48)}px` });
+        Object.assign(caption.style, { width: `${width}px`, left: `${left}px`, top: `${top + height + 12}px` });
+        caption.textContent = source.getAttribute('alt') || source.querySelector('title')?.textContent || '';
+        dialog.append(image);
+
+        const previous = { overflow: document.body.style.overflow, width: document.body.style.width, visibility: source.style.visibility };
+        document.body.style.width = `${document.body.clientWidth}px`;
+        document.body.style.overflow = 'hidden';
+        source.style.visibility = 'hidden';
+        document.body.append(dialog);
+        dialog.showModal();
+        closeButton.focus({ preventScroll: true });
+
+        const transformFor = (bounds: DOMRect) => `translate(${bounds.left - left}px, ${bounds.top - top}px) scale(${bounds.width / width}, ${bounds.height / height})`;
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let animation: Animation | undefined;
+        let closing = false;
+        if (!reduceMotion) {
+            animation = image.animate([{ transform: transformFor(origin) }, { transform: 'none' }], {
+                duration: 260, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+            });
+        }
+
+        const finish = () => {
+            animation?.cancel();
+            dialog.close();
+            dialog.remove();
+            source.style.visibility = previous.visibility;
+            document.body.style.overflow = previous.overflow;
+            document.body.style.width = previous.width;
+            active = undefined;
+            if (trigger instanceof HTMLElement && trigger.isConnected) trigger.focus({ preventScroll: true });
+        };
+        const close = (immediate = false) => {
+            if (closing) return;
+            closing = true;
+            if (immediate || reduceMotion) return finish();
+            const current = image.getBoundingClientRect();
+            animation?.cancel();
+            animation = image.animate([{ transform: transformFor(current) }, { transform: transformFor(source.getBoundingClientRect()) }], {
+                duration: 220, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards',
+            });
+            animation.finished.then(finish, finish);
+        };
+        active = { close };
+        closeButton.addEventListener('click', () => close());
+        image.addEventListener('click', () => close());
+        dialog.addEventListener('click', (event) => { if (event.target === dialog) close(); });
+        dialog.addEventListener('cancel', (event) => { event.preventDefault(); close(); });
+    };
+
+    document.addEventListener('click', (event) => {
+        if (!(event.target instanceof Element)) return;
+        const wrapper = event.target.closest('starlight-image-zoom-zoomable');
+        const source = wrapper?.querySelector<Media>(':scope > img, :scope > picture img, :scope > svg');
+        if (!source) return;
+        event.preventDefault();
+        const trigger = wrapper!.querySelector('button') || source;
+        open(source, trigger);
+    });
+    window.addEventListener('resize', () => active?.close(true));
+    document.addEventListener('astro:before-swap', () => active?.close(true));
+</script>

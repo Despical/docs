@@ -55,7 +55,6 @@ const { label, images, showTitles = true } = Astro.props;
         display: flex;
         gap: 1rem;
         overflow-x: auto;
-        padding-inline: var(--gallery-peek);
         scroll-snap-type: x mandatory;
         scrollbar-width: none;
         overscroll-behavior-x: contain;
@@ -74,7 +73,7 @@ const { label, images, showTitles = true } = Astro.props;
 
     .gallery-slide {
         position: relative;
-        flex: 0 0 100%;
+        flex: 0 0 calc(100% - var(--gallery-peek) - 1rem);
         min-width: 0;
         margin: 0;
         scroll-snap-align: center;
@@ -83,6 +82,10 @@ const { label, images, showTitles = true } = Astro.props;
 
     .gallery-slide:not(.is-active) {
         opacity: 0.5;
+    }
+
+    .gallery-slide:only-child {
+        flex-basis: 100%;
     }
 
     .gallery-slide :global(.game-screenshot) {
@@ -202,11 +205,17 @@ const { label, images, showTitles = true } = Astro.props;
                 });
             };
 
+            const positionFor = (selected: number) => {
+                if (selected === 0) return 0;
+                if (selected === slides.length - 1) return track.scrollWidth - track.clientWidth;
+                return slides[selected].offsetLeft - (track.clientWidth - slides[selected].clientWidth) / 2;
+            };
+
             const goTo = (selected: number, animate = true) => {
                 selected = Math.max(0, Math.min(selected, slides.length - 1));
                 update(selected);
                 track.scrollTo({
-                    left: slides[selected].offsetLeft - (track.clientWidth - slides[selected].clientWidth) / 2,
+                    left: positionFor(selected),
                     behavior: animate && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto',
                 });
             };
@@ -224,8 +233,7 @@ const { label, images, showTitles = true } = Astro.props;
             track.addEventListener('scroll', () => {
                 clearTimeout(scrollTimer);
                 scrollTimer = setTimeout(() => {
-                    const center = track.scrollLeft + track.clientWidth / 2;
-                    const distances = slides.map((slide) => Math.abs(slide.offsetLeft + slide.clientWidth / 2 - center));
+                    const distances = slides.map((_, slideIndex) => Math.abs(positionFor(slideIndex) - track.scrollLeft));
                     update(distances.indexOf(Math.min(...distances)));
                 }, 120);
             });
