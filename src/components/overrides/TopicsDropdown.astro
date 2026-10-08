@@ -59,6 +59,7 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
         class="starlight-sidebar-topics-dropdown-menu"
         hidden
     >
+        <div class="starlight-sidebar-topics-dropdown-options">
         {
             topics.map((topic) => {
                 return (
@@ -91,6 +92,7 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
                 );
             })
         }
+        </div>
     </div>
 </div>
     )}
@@ -203,16 +205,19 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
         min-width: 200px;
         padding: 0.5rem;
         box-sizing: border-box;
-        max-height: calc(5 * 2.5rem + 1rem);
-        overflow-y: auto;
-        overscroll-behavior: contain;
-        scrollbar-width: thin;
         border-radius: 0.25rem;
         z-index: 1000000;
     }
 
     .starlight-sidebar-topics-dropdown-menu[hidden] {
         display: none;
+    }
+
+    .starlight-sidebar-topics-dropdown-options {
+        max-height: calc(5 * 2.5rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
     }
 
     .starlight-sidebar-topics-dropdown-item {
