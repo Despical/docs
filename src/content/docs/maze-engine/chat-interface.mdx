@@ -1,0 +1,66 @@
+---
+title: Chat Interface
+description: See MazeEngine's real in-game help, preset browser, maze controls, private preview, and route-guide chat panels.
+---
+
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
+MazeEngine presents its controls in Minecraft chat. These screenshots were captured in-game against a dark block backdrop, with previous messages cleared between panels. Each image focuses on the panel; select it to view the original screenshot.
+
+Open chat to interact with the buttons. Hover a command or row for additional details. Available actions depend on your permissions and the maze's current state.
+
+## Command Help
+
+Run `/maze help` to browse commands for building, previewing, and navigating. Clicking a command fills the chat input so you can complete its arguments before submitting it.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-help.webp" alt="MazeEngine command help with creation, preview, preset, list, info, teleport, and guide commands" crop={[4, 640, 656, 360]} />
+
+The second page covers management and configuration commands:
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-help-management.webp" alt="The second help page showing spawn, regeneration, deletion review, cancellation, reload, and help commands" crop={[4, 640, 656, 360]} />
+
+See [commands](/maze-engine/commands/) for all arguments and permissions.
+
+## Concept Explanations
+
+`/maze help concepts` explains terms in short cards with example commands. This captured view shows **Seed** and **Complexity**, followed by page navigation. Scroll up in chat to see the panel heading, or use Next to browse the other concepts.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-concepts.webp" alt="The in-game Seed and Complexity explanation cards with example preview commands and concept pagination" crop={[4, 640, 656, 360]} />
+
+The [core concepts guide](/maze-engine/concepts/) expands these explanations with sizing examples and links to the relevant settings.
+
+## Preset Browser
+
+`/maze presets` lists themes with their configured difficulty, path width, and wall height. Hover a row for details; clicking it suggests a preview command. Previous and Next navigate the available themes.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-presets.webp" alt="The preset browser displaying theme names, difficulty labels, path widths, wall heights, and page controls" crop={[4, 640, 656, 360]} />
+
+These values come from the server's editable preset files. See [presets](/maze-engine/presets/) to customize them.
+
+## Saved Maze List
+
+`/maze list` displays saved mazes with their theme, cell dimensions, and current status. Click a row to open its management panel.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-maze-list.webp" alt="The saved-maze list showing six ready mazes, their themes and dimensions, and the click-to-manage hint" crop={[4, 796, 520, 202]} />
+
+## Maze Details and Actions
+
+`/maze info <name>` displays the saved geometry, world position, graph statistics, seed, snapshot availability, and teleport destination. The example below is a ready Hedge maze.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-maze-details.webp" alt="Maze Details for docs_hedge showing geometry, readiness, seed 42, snapshot status, and Teleport, Guide, Repair, Copy seed, and Delete buttons" crop={[4, 710, 520, 288]} />
+
+**Teleport** moves you to its destination, **Guide** enables your personal route arrows, and **Copy seed** copies the generation seed. **Repair** rebuilds planned non-air structure; **Delete** opens a removal review. Read [operations and recovery](/maze-engine/operations-and-recovery/) before choosing a world-editing action.
+
+## Preview Confirmation
+
+After a preview finishes planning, its panel summarizes the retained specification. Move outside the target volume, then choose **Create** to submit it for construction. **Close** ends the preview.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-preview.webp" alt="Maze Preview confirmation with theme, dimensions, path and wall sizes, ceiling, and Create and Close buttons" crop={[4, 817, 520, 181]} />
+
+## Route Guide
+
+`/maze solve <name>` enables personal arrows toward the exit. The chat panel identifies the maze and provides **Close guide**. Enter the maze's corridors to follow the arrows; the panel itself does not teleport you.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-guide.webp" alt="Guide Enabled confirmation for docs_hedge with the Close guide action" crop={[4, 918, 520, 80]} />
+
+See [previews and route guides](/maze-engine/previews-and-guides/) for session lifetimes, permissions, and visual settings. Customize panel wording and colors through [messages.yml](/maze-engine/configuration/messages/).

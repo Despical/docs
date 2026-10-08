@@ -3,6 +3,20 @@ title: Operations and Recovery
 description: Understand MazeEngine journals, saved records, snapshot restoration, regeneration versus repair, cancellation, failure states, and backup recovery.
 ---
 
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
+## Inspect and Manage
+
+Use `/maze list` to browse saved mazes. Hover a row for details or click it to open the maze controls.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-maze-list.webp" alt="The saved maze list with names, themes, cell dimensions, and Ready status" crop={[4, 796, 520, 202]} />
+
+`/maze info <name>` opens the same details panel directly. It includes the saved geometry and seed, current state, snapshot availability, and action buttons allowed by your permissions.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-maze-details.webp" alt="A ready Hedge maze detail panel with Teleport, Guide, Repair, Copy seed, and Delete controls" crop={[4, 710, 520, 288]} />
+
+The example has no terrain snapshot. Check this field before relying on restoration during deletion. The [chat interface guide](/maze-engine/chat-interface/) explains the other panels.
+
 ## Operation Lifecycle
 
 MazeEngine tracks creation, regeneration, repair, and deletion by name and operation identity. An accepted request may first be planning its graph before a saved record exists. World work then advances in bounded stages on the server thread, with serial storage work on a separate executor.

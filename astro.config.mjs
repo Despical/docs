@@ -1241,6 +1241,7 @@ export default defineConfig({
                                 label: "Administration",
                                 items: [
                                     {label: "Commands", link: "/maze-engine/commands/"},
+                                    {label: "Chat Interface", link: "/maze-engine/chat-interface/"},
                                     {label: "Permissions", link: "/maze-engine/permissions/"},
                                     {label: "Operations and Recovery", link: "/maze-engine/operations-and-recovery/"},
                                 ],

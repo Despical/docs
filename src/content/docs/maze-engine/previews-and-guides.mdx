@@ -25,7 +25,7 @@ Each player has at most one active preview. A new preview replaces that player's
 
 The chat panel provides **Create** and **Close** buttons. Creation is available when you have `mazeengine.create`.
 
-<GameScreenshot src="/images/mazeengine/gameplay/preview-panel.webp" alt="The active Maze Preview chat panel listing its theme and dimensions, with Create and Close buttons beneath the summary" crop={[4, 775, 659, 225]} />
+<GameScreenshot src="/images/mazeengine/gameplay/chat-preview.webp" alt="The active Maze Preview chat panel listing its theme and dimensions, with Create and Close buttons beneath the summary" crop={[4, 817, 520, 181]} />
 
 After moving outside the volume, choose Create or submit the matching name without new options:
 
@@ -57,6 +57,8 @@ Teleport to a ready maze's world and enable its guide:
 ```
 
 The guide draws personal arrows above the maze floor toward the exit. It uses the saved graph and your current cell, adapting as you move. You do not have to remain on the original entrance-to-exit route: it chooses a route onward from your current reachable cell.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-guide.webp" alt="The personal route-guide confirmation with its Close guide button" crop={[4, 918, 520, 80]} />
 
 The action bar shows remaining cell steps or asks you to enter the maze when outside its corridor area. Arrows are positioned inside walkable space and hidden when their geometry would cross walls. The default look-ahead is 7 cell transitions.
 
