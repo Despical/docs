@@ -3,6 +3,8 @@ title: Commands
 description: Complete MazeEngine command and option reference with examples for building, previewing, managing, guiding, and restoring mazes.
 ---
 
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
 The [core concepts guide](/maze-engine/concepts/) expands the explanations shown by `/maze help concepts`, including cells, seeds, placement, and snapshots.
 
 ## Public Commands
@@ -98,7 +100,22 @@ Normal deletion opens a confirmation that lasts 60 seconds. Its token is tied to
 
 `setspawn` records your position and view direction after verifying a safe destination. Resetting restores the default entrance destination. Teleport waits for the arrival chunk, rechecks record readiness and terrain safety, and then moves the player. The guide requires a ready maze in your current world.
 
+## In-Game Help
+
+`/maze help` opens this command browser. Hover for details, click a command to fill the input, or use Next for management commands.
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-help.webp" alt="The in-game command browser with build, preview, navigation, and guide commands" crop={[4, 640, 656, 360]} />
+
+<details>
+<summary>Management commands on the second page</summary>
+
+<GameScreenshot src="/images/mazeengine/gameplay/chat-help-management.webp" alt="The second command-help page showing management and configuration actions" crop={[4, 640, 656, 360]} />
+
+</details>
+
 ## Chat Actions
+
+See the [chat interface gallery](/maze-engine/chat-interface/) for captured examples of each panel.
 
 Chat panels provide pagination, preset previews, management buttons, preview creation, guide closure, and deletion review. Hover text supplies extra detail. Permission-sensitive buttons appear only when the actor has the relevant rights.
 
