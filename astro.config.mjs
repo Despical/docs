@@ -249,6 +249,7 @@ export default defineConfig({
                 Header: "./src/components/overrides/Header.astro",
                 SiteTitle: "./src/components/overrides/SiteTitle.astro",
                 PageFrame: "./src/components/overrides/PageFrame.astro",
+                MarkdownContent: "./src/components/overrides/MarkdownContent.astro",
                 Footer: "./src/components/overrides/Footer.astro",
                 LastUpdated: "./src/components/overrides/LastUpdated.astro",
                 SocialIcons: "./src/components/overrides/SocialIcons.astro",
