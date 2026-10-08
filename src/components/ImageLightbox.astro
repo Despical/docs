@@ -83,6 +83,8 @@
 
     .docs-image-lightbox-close {
         position: fixed;
+        top: max(20px, env(safe-area-inset-top));
+        right: max(20px, env(safe-area-inset-right));
         z-index: 1;
         display: grid;
         place-items: center;
@@ -155,7 +157,6 @@
             image.src = source.currentSrc || source.src;
         }
         Object.assign(image.style, { width: `${width}px`, height: `${height}px`, left: `${left}px`, top: `${top}px` });
-        Object.assign(closeButton.style, { left: `${left + width - 40}px`, top: `${Math.max(12, top - 48)}px` });
         Object.assign(caption.style, { width: `${width}px`, left: `${left}px`, top: `${top + height + 12}px` });
         caption.textContent = source.getAttribute('alt') || source.querySelector('title')?.textContent || '';
         dialog.append(image);
