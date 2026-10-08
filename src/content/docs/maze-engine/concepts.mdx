@@ -1,6 +1,6 @@
 ---
 title: Core Concepts
-description: Understand the terms in MazeEngine's in-game help, from cells and seeds to placement modes, previews, and terrain snapshots.
+description: Understand the terms in Maze Engine's in-game help, from cells and seeds to placement modes, previews, and terrain snapshots.
 ---
 
 import GameScreenshot from "../../../components/GameScreenshot.astro";
@@ -37,13 +37,13 @@ A **preset** is an editable YAML theme. It combines geometry, block palettes, de
 
 ## Seeds and Complexity
 
-A **seed** is the number that starts the generator's deterministic random sequence. Reusing the same seed, dimensions, and generation settings reproduces the same layout. Omitting `--seed` lets MazeEngine choose one; inspect the saved maze to reuse it later. Changing geometry or theme settings can change the resulting structure even when the seed stays the same.
+A **seed** is the number that starts the generator's deterministic random sequence. Reusing the same seed, dimensions, and generation settings reproduces the same layout. Omitting `--seed` lets Maze Engine choose one; inspect the saved maze to reuse it later. Changing geometry or theme settings can change the resulting structure even when the seed stays the same.
 
 **Complexity** is a value from `0` to `1` that adjusts generation biases. Higher values favor longer, more winding branches. It affects layout choices rather than wall height, corridor width, or the block palette. Use `--complexity 0.7`, for example, to override the preset's generation biases.
 
 ## Perfect and Braided Mazes
 
-A **perfect** maze has one route between any two cells. A **braided** maze adds connections to the initial layout, creating loops and alternative routes. Both start with MazeEngine's configurable Growing Tree generator; the [generation page](/maze-engine/generation/#how-the-generator-builds-a-maze) explains its decisions and the braiding pass.
+A **perfect** maze has one route between any two cells. A **braided** maze adds connections to the initial layout, creating loops and alternative routes. Both start with Maze Engine's configurable Growing Tree generator; the [generation page](/maze-engine/generation/#how-the-generator-builds-a-maze) explains its decisions and the braiding pass.
 
 The personal **route guide** uses breadth-first search to find a shortest route from your current cell to the exit. Its arrows adapt as you move and are visible only to you. They do not modify world blocks. See [route guides](/maze-engine/previews-and-guides/#personal-route-guide).
 
@@ -51,7 +51,7 @@ The personal **route guide** uses breadth-first search to find a shortest route 
 
 The **origin** is the structure's floor-level starting coordinate. By default, a player's maze begins 3 blocks east and 3 blocks south of their position, with its floor 1 block below their feet. Supply `--x`, `--y`, and `--z` together to choose an explicit origin. Console creation also needs `--world`.
 
-A **WorldEdit selection** supplies a cuboid that the maze must fit inside. With `--selection`, MazeEngine calculates the largest logical grid that fits the selected area and checks the available height. Do not combine a selection with explicit dimensions or coordinate options. See [creating mazes](/maze-engine/creating-mazes/) for examples.
+A **WorldEdit selection** supplies a cuboid that the maze must fit inside. With `--selection`, Maze Engine calculates the largest logical grid that fits the selected area and checks the available height. Do not combine a selection with explicit dimensions or coordinate options. See [creating mazes](/maze-engine/creating-mazes/) for examples.
 
 ## Placement Modes
 

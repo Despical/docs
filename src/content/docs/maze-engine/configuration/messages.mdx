@@ -1,6 +1,6 @@
 ---
 title: messages.yml
-description: Customize MazeEngine MiniMessage feedback, chat panels, button labels, hover text, progress, and contextual placeholders.
+description: Customize Maze Engine MiniMessage feedback, chat panels, button labels, hover text, progress, and contextual placeholders.
 ---
 
 ## File and Formatting
@@ -10,14 +10,14 @@ Edit `plugins/MazeEngine/messages.yml`, then use `/maze reload`. Every configure
 Messages support [Adventure MiniMessage](https://docs.advntr.dev/minimessage/format.html) formatting, including hexadecimal colors and line breaks:
 
 ```yaml
-prefix: '<#8BD5CA>MazeEngine</#8BD5CA> <#606A7B>»</#606A7B> '
+prefix: '<#8BD5CA>Maze Engine</#8BD5CA> <#606A7B>»</#606A7B> '
 error: '<#FF5555><reason></#FF5555>'
 reloaded: '<#91B78A>Maze settings reloaded.</#91B78A>'
 button-build: '[Create Maze]'
 hover-build: '<#91B78A>Build this layout.</#91B78A><newline><#A8B8C9>Move outside the area first.</#A8B8C9>'
 ```
 
-Quote strings containing `#`, angle-bracket tags, or punctuation meaningful to YAML. In the file, `<name>` and similar tags are contextual placeholders supplied by MazeEngine, rather than PlaceholderAPI expressions.
+Quote strings containing `#`, angle-bracket tags, or punctuation meaningful to YAML. In the file, `<name>` and similar tags are contextual placeholders supplied by Maze Engine, rather than PlaceholderAPI expressions.
 
 ## Message Groups
 
@@ -64,4 +64,4 @@ Named colors such as `<green>` are normalized to the plugin's shared palette. Us
 
 ## PlaceholderAPI
 
-MazeEngine's message renderer does not run PlaceholderAPI substitution over message templates. Use `%mazeengine_...%` placeholders in another plugin that supports PlaceholderAPI, such as a scoreboard or hologram. See the [placeholder tables](/maze-engine/placeholders/) for those separate expressions.
+Maze Engine's message renderer does not run PlaceholderAPI substitution over message templates. Use `%mazeengine_...%` placeholders in another plugin that supports PlaceholderAPI, such as a scoreboard or hologram. See the [placeholder tables](/maze-engine/placeholders/) for those separate expressions.

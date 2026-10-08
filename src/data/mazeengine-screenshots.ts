@@ -2,7 +2,7 @@ export const commandHelpScreenshots = [
     {
         src: '/images/mazeengine/gameplay/chat-help.webp',
         title: 'Build, preview, and navigate',
-        alt: 'MazeEngine command help with creation, preview, preset, list, info, teleport, and guide commands',
+        alt: 'Maze Engine command help with creation, preview, preset, list, info, teleport, and guide commands',
         crop: [4, 640, 656, 360] as [number, number, number, number],
     },
     {

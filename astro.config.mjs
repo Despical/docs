@@ -1216,7 +1216,7 @@ export default defineConfig({
                         ],
                     },
                     {
-                        label: "MazeEngine",
+                        label: "Maze Engine",
                         id: "maze-engine",
                         link: "/maze-engine/",
                         icon: "maze-engine",

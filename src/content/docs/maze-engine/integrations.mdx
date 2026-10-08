@@ -1,11 +1,11 @@
 ---
 title: Integrations
-description: Configure optional WorldEdit or FAWE selections and snapshots, WorldGuard authorization, and MazeEngine's automatic PlaceholderAPI expansion.
+description: Configure optional WorldEdit or FAWE selections and snapshots, WorldGuard authorization, and Maze Engine's automatic PlaceholderAPI expansion.
 ---
 
 ## Optional Dependencies
 
-MazeEngine declares WorldEdit, FastAsyncWorldEdit, WorldGuard, and PlaceholderAPI as soft dependencies. Basic generation and management do not require them. Install builds compatible with your Paper and Minecraft version, then restart the server so dependency order and integration registration are correct.
+Maze Engine declares WorldEdit, FastAsyncWorldEdit, WorldGuard, and PlaceholderAPI as soft dependencies. Basic generation and management do not require them. Install builds compatible with your Paper and Minecraft version, then restart the server so dependency order and integration registration are correct.
 
 | Integration | Adds | Project |
 | --- | --- | --- |
@@ -16,23 +16,23 @@ MazeEngine declares WorldEdit, FastAsyncWorldEdit, WorldGuard, and PlaceholderAP
 
 ## WorldEdit and FAWE
 
-Use `--selection` to fit a cuboid selection. MazeEngine computes cell dimensions and a centered origin; the selection must be tall enough and fit at least 2×2 cells. Selection requires a player and replaces explicit origin and dimension arguments.
+Use `--selection` to fit a cuboid selection. Maze Engine computes cell dimensions and a centered origin; the selection must be tall enough and fit at least 2×2 cells. Selection requires a player and replaces explicit origin and dimension arguments.
 
 Use `--snapshot`, or `snapshot: true` in a preset, to capture original terrain before world mutation. Snapshot files are stored as `snapshots/<name>.schem`. Restoration requires the complete file and a working WorldEdit-compatible integration.
 
-MazeEngine iterates snapshot capture and restoration under its world-operation budget. A snapshot is retained across regeneration and repair. Removing the record successfully also removes its associated snapshot file.
+Maze Engine iterates snapshot capture and restoration under its world-operation budget. A snapshot is retained across regeneration and repair. Removing the record successfully also removes its associated snapshot file.
 
-When neither WorldEdit nor FAWE is enabled, selections and snapshot-dependent actions are rejected. A recorded but missing snapshot is an error; MazeEngine does not reconstruct original terrain from a generated maze.
+When neither WorldEdit nor FAWE is enabled, selections and snapshot-dependent actions are rejected. A recorded but missing snapshot is an error; Maze Engine does not reconstruct original terrain from a generated maze.
 
 ## WorldGuard
 
 When WorldGuard is enabled, each queried block must permit both block placement and block breaking for the actor. Checks occur during preflight and again during world mutation or restoration, so a permission change during an operation can stop it.
 
-Players use their WorldGuard local-player permissions and session bypass. Console and remote-console senders are trusted administrative actors. MazeEngine's `mazeengine.bypass` node affects its own ordinary terrain protection and does not bypass WorldGuard.
+Players use their WorldGuard local-player permissions and session bypass. Console and remote-console senders are trusted administrative actors. Maze Engine's `mazeengine.bypass` node affects its own ordinary terrain protection and does not bypass WorldGuard.
 
 If WorldGuard becomes unavailable after checks were enabled, world editing stops with an error. A failure after blocks changed follows the normal failed-record recovery path.
 
-WorldGuard authorization and MazeEngine region protection solve separate problems: WorldGuard controls whether the actor may perform the operation; MazeEngine protects and tracks its saved and active maze regions.
+WorldGuard authorization and Maze Engine region protection solve separate problems: WorldGuard controls whether the actor may perform the operation; Maze Engine protects and tracks its saved and active maze regions.
 
 ## PlaceholderAPI
 

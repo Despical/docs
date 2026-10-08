@@ -1,6 +1,6 @@
 ---
 title: API Getting Started
-description: Load MazeEngine's Bukkit service, follow its server-thread contract, and inspect immutable maze snapshots, presets, destinations, and graph routes.
+description: Load Maze Engine's Bukkit service, follow its server-thread contract, and inspect immutable maze snapshots, presets, destinations, and graph routes.
 ---
 
 ## Public Contract
@@ -13,13 +13,13 @@ The API is in `dev.despical.mazeengine.api` and its `model`, `request`, `operati
 | `PresetRegistry` | Metadata for currently loaded presets |
 | `MazeOperations` | Accepted creation, regeneration, repair, and deletion requests |
 
-Compile your integration against the public API without shading MazeEngine's classes into your plugin. The project build produces separate API binaries and sources; API Javadocs can be generated with `./gradlew apiJavadoc`. Use the [GitHub source](https://github.com/Despical/MazeEngine/tree/main/src/main/java/dev/despical/mazeengine/api) as the contract reference.
+Compile your integration against the public API without shading Maze Engine's classes into your plugin. The project build produces separate API binaries and sources; API Javadocs can be generated with `./gradlew apiJavadoc`. Use the [GitHub source](https://github.com/Despical/MazeEngine/tree/main/src/main/java/dev/despical/mazeengine/api) as the contract reference.
 
-If MazeEngine is required, declare `depend: [MazeEngine]` in your Bukkit `plugin.yml`. For optional integration, use `softdepend: [MazeEngine]`, verify provider availability, and keep code referencing its types within your optional integration path.
+If Maze Engine is required, declare `depend: [MazeEngine]` in your Bukkit `plugin.yml`. For optional integration, use `softdepend: [MazeEngine]`, verify provider availability, and keep code referencing its types within your optional integration path.
 
 ## Load the Service
 
-MazeEngine registers `MazeEngineApi` with Bukkit's `ServicesManager` while enabled. Resolve it after dependency enablement:
+Maze Engine registers `MazeEngineApi` with Bukkit's `ServicesManager` while enabled. Resolve it after dependency enablement:
 
 ```java
 import dev.despical.mazeengine.api.MazeEngineApi;
@@ -36,13 +36,13 @@ if (api == null) {
 
 ## Thread and Lifetime Rules
 
-Call registry queries, operation submission, progress sampling, and cancellation on the **server thread** while MazeEngine is enabled. Off-thread queries or use of a disabled provider throw `IllegalStateException`.
+Call registry queries, operation submission, progress sampling, and cancellation on the **server thread** while Maze Engine is enabled. Off-thread queries or use of a disabled provider throw `IllegalStateException`.
 
 Returned lists, snapshots, routes, and completed results are immutable values. They can be retained without keeping a live Bukkit world reference and do not update themselves. Query again when your integration needs current record or preset state.
 
 A completion is published on the server thread, but a callback attached after completion may execute on its attaching thread. Async callbacks use their selected executor. Schedule Bukkit work explicitly when necessary and never block the server thread with `join()` or `get()`.
 
-Do not retain a provider indefinitely across MazeEngine disable and enable cycles. Resolve the registered service again for a newly enabled lifecycle.
+Do not retain a provider indefinitely across Maze Engine disable and enable cycles. Resolve the registered service again for a newly enabled lifecycle.
 
 ## Look Up a Maze
 
