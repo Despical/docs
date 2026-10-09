@@ -8,7 +8,9 @@ interface Props {
         src: string;
         alt: string;
         title: string;
-        crop: [number, number, number, number];
+        crop?: [number, number, number, number];
+        width?: number;
+        height?: number;
     }[];
 }
 
@@ -20,7 +22,7 @@ const { label, images, showTitles = true } = Astro.props;
         <div class="gallery-track" tabindex="0" aria-label={`${label}. Use the arrow keys or swipe to change images.`}>
             {images.map((image, index) => (
                 <div class:list={['gallery-slide', { 'is-active': index === 0 }]} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${images.length}: ${image.title}`} data-title={image.title}>
-                    <GameScreenshot src={image.src} alt={image.alt} crop={image.crop} />
+                    <GameScreenshot src={image.src} alt={image.alt} crop={image.crop} width={image.width} height={image.height} />
                     <button class="gallery-jump" type="button" aria-label={`Show ${image.title}`} tabindex="-1" hidden={index === 0}></button>
                 </div>
             ))}

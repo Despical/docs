@@ -4,19 +4,24 @@ import { Zoom } from 'starlight-image-zoom/components';
 interface Props {
     src: string;
     alt: string;
-    crop: [number, number, number, number];
+    crop?: [number, number, number, number];
+    width?: number;
+    height?: number;
 }
 
-const { src, alt, crop } = Astro.props;
-const [left, top, width, height] = crop;
+const { src, alt, crop, width = 1920, height = 1080 } = Astro.props;
 ---
 
 <div class="game-screenshot">
     <Zoom label={alt}>
-        <svg viewBox={`${left} ${top} ${width} ${height}`} width={width} height={height} role="img" aria-label={alt}>
-            <title>{alt}</title>
-            <image href={src} width="1920" height="1080" />
-        </svg>
+        {crop ? (
+            <svg viewBox={crop.join(' ')} width={crop[2]} height={crop[3]} role="img" aria-label={alt}>
+                <title>{alt}</title>
+                <image href={src} width={width} height={height} />
+            </svg>
+        ) : (
+            <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+        )}
     </Zoom>
 </div>
 
@@ -30,7 +35,7 @@ const [left, top, width, height] = crop;
         line-height: 0;
     }
 
-    .game-screenshot svg {
+    .game-screenshot :is(svg, img) {
         display: block;
         width: 100%;
         height: auto;
