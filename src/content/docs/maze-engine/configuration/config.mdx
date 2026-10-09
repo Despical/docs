@@ -3,11 +3,18 @@ title: config.yml
 description: Configure Maze Engine operation budgets, cell and volume limits, terrain and mob protection, replacement materials, progress bars, and display sessions.
 ---
 
+import ScreenshotGallery from "../../../../components/ScreenshotGallery.astro";
+import { settingsScreenshots } from "../../../../data/mazeengine-screenshots";
+
 ## Loading and Reloading
 
 The file is `plugins/MazeEngine/config.yml`. Edit it and use `/maze reload` to publish a validated replacement along with messages and presets. An invalid key, type, or range rejects loading; after a failed reload, the previous settings remain active.
 
 Existing mazes keep their saved graph and preset. Global budgets, protection, messages, and display settings are read from the current configuration. Changes to existing preset files therefore affect new construction rather than rewriting saved mazes.
+
+After a valid reload, chat confirms that settings were applied. Read any validation error before trying again if your reload is rejected.
+
+<ScreenshotGallery label="Validated settings reload confirmation" images={settingsScreenshots} />
 
 ## Performance
 
