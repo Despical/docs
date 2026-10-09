@@ -11,6 +11,11 @@ const project = currentTopic
     ? new URL(currentTopic.link, Astro.url).pathname.split("/").filter(Boolean)[0]
     : undefined;
 const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine"]);
+const pluginProjects = new Set([
+    ...freePlugins,
+    "advanced-parkour", "carousel", "easter-eggs", "eat-everything", "item-upgrader",
+    "santa-says", "the-snake", "tnt-tag", "warden-party",
+]);
 const freePluginMarketplaces = new Set(["Hub", "SpigotMC", "BuiltByBit", "Modrinth"]);
 const brandLabels = new Set(["github", "javadoc", "discord", "patreon", "spigotmc", "builtbybit", "modrinth"]);
 
@@ -49,6 +54,7 @@ const links = (config.social || [])
         return { ...link, label, icon, brand };
     })
     .filter((link) => !project || project === "maze-engine" || !freePlugins.has(project) || freePluginMarketplaces.has(link.label))
+    .filter((link) => !project || !pluginProjects.has(project) || link.icon !== "github")
     .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
 ---
 
