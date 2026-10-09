@@ -3,12 +3,7 @@ title: Core Concepts
 description: Understand the terms in Maze Engine's in-game help, from cells and seeds to placement modes, previews, and terrain snapshots.
 ---
 
-import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
-import { seedComplexityScreenshots, cellsGeometryScreenshots, presetConnectionsScreenshots, placementSnapshotScreenshots, selectionOriginScreenshots } from "../../../data/mazeengine-screenshots";
-
 The in-game `/maze help concepts` menu introduces the terms used by commands and chat panels. This page explains those same ideas with examples. For command syntax, see the [command reference](/maze-engine/commands/).
-
-Each gallery below shows the matching in-game cards. Tall panels have separate heading and lower views, just as you see them when scrolling in chat.
 
 ## Cells and Blocks
 
@@ -28,23 +23,17 @@ A 15 Ã— 15 maze with paths 3 blocks wide and walls 1 block thick occupies **61 Ã
 
 Presets supply geometry defaults. Creation and preview commands can override them with `--path-width`, `--wall-thickness`, and `--wall-height`. See [generation and geometry](/maze-engine/generation/) for sizing and limits.
 
-<ScreenshotGallery label="Cells and geometry concept cards" images={cellsGeometryScreenshots} />
-
 ## Presets and Difficulty
 
 A **preset** is an editable YAML theme. It combines geometry, block palettes, decorations, generation settings, and the information shown in chat. Select one with `--preset hedge`, for example, or browse the available themes with `/maze presets`.
 
 **Easy**, **Medium**, and **Hard** are configured descriptions of the intended challenge. Changing that label alone does not reshape a maze. Saved mazes retain the settings used when they were created, so editing a preset does not silently update existing structures. See the [preset reference](/maze-engine/presets/) and [in-game gallery](/maze-engine/gallery/).
 
-<ScreenshotGallery label="Presets and maze connections concept cards" images={presetConnectionsScreenshots} />
-
 ## Seeds and Complexity
 
 A **seed** is the number that starts the generator's deterministic random sequence. Reusing the same seed, dimensions, and generation settings reproduces the same layout. Omitting `--seed` lets Maze Engine choose one; inspect the saved maze to reuse it later. Changing geometry or theme settings can change the resulting structure even when the seed stays the same.
 
 **Complexity** is a value from `0` to `1` that adjusts generation biases. Higher values favor longer, more winding branches. It affects layout choices rather than wall height, corridor width, or the block palette. Use `--complexity 0.7`, for example, to override the preset's generation biases.
-
-<ScreenshotGallery label="Seed and complexity concept cards" images={seedComplexityScreenshots} />
 
 ## Perfect and Braided Mazes
 
@@ -57,8 +46,6 @@ The personal **route guide** uses breadth-first search to find a shortest route 
 The **origin** is the structure's floor-level starting coordinate. By default, a player's maze begins 3 blocks east and 3 blocks south of their position, with its floor 1 block below their feet. Supply `--x`, `--y`, and `--z` together to choose an explicit origin. Console creation also needs `--world`.
 
 A **WorldEdit selection** supplies a cuboid that the maze must fit inside. With `--selection`, Maze Engine calculates the largest logical grid that fits the selected area and checks the available height. Do not combine a selection with explicit dimensions or coordinate options. See [creating mazes](/maze-engine/creating-mazes/) for examples.
-
-<ScreenshotGallery label="WorldEdit selections and floor origin concept cards" images={selectionOriginScreenshots} />
 
 ## Placement Modes
 
@@ -78,4 +65,3 @@ A **preview** is a temporary personal display of a proposed maze. It creates nei
 
 A **snapshot** preserves the original terrain, including block data, through WorldEdit or FastAsyncWorldEdit. Request it with `--snapshot` when creating a maze if you want the option to restore that terrain later. Regeneration keeps the original snapshot baseline. A snapshot is separate from the saved maze layout and is not automatically created by a preview. See [operations and recovery](/maze-engine/operations-and-recovery/) for removal and restoration policies.
 
-<ScreenshotGallery label="Placement and original-terrain snapshot concept cards" images={placementSnapshotScreenshots} />

@@ -3,9 +3,6 @@ title: Generation and Geometry
 description: Understand Maze Engine cells, physical block dimensions, reproducible seeds, perfect and braided topology, and generation biases.
 ---
 
-import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
-import { cellsGeometryScreenshots, seedHoverScreenshots, presetConnectionsScreenshots, seedComplexityScreenshots } from "../../../data/mazeengine-screenshots";
-
 ## Logical Cells and Physical Blocks
 
 A cell is one logical corridor position in the maze graph. Width and depth in commands count cells. A preset's corridor width and wall thickness expand those cells into a physical structure.
@@ -19,8 +16,6 @@ physical height = 1 floor layer + wall height + (roof ? 1 : 0)
 With 21×21 cells, paths 3 blocks wide, walls 1 block thick, wall height 4, and no roof, the maze occupies **85×5×85 blocks**. Adding a roof makes its height 6. The saved bounds are inclusive and include floor, walls, passages, and ceiling where present.
 
 An origin at X 100, Y 64, Z 200 for that open maze covers X 100–184, Y 64–68, and Z 200–284. Corridor space starts above the floor.
-
-<ScreenshotGallery label="Cell and geometry sizing explained in chat" images={cellsGeometryScreenshots} />
 
 ## Deterministic Seeds
 
@@ -37,8 +32,6 @@ Regeneration with the existing seed reuses the persisted graph. A different seed
 
 **Copy seed** in the info panel copies the stored number. Keep the original cell dimensions and settings when reproducing its topology.
 
-<ScreenshotGallery label="Stored seed and Copy seed hover" images={seedHoverScreenshots} />
-
 ## Perfect and Braided Mazes
 
 The preset key `algorithm` selects the topology mode below. Both modes use the same Growing Tree-style generator; `BRAIDED` adds a pass after the initial tree is built.
@@ -51,8 +44,6 @@ The preset key `algorithm` selects the topology mode below. Both modes use the s
 `PERFECT` requires `advanced.braid-chance` to be 0. `BRAIDED` permits a 0–1 braid chance and defaults to 0.3 when it is omitted. A braided configuration can still retain some dead ends; the chance is applied to eligible dead ends during generation.
 
 The entrance is selected on the outer boundary. The exit is chosen from boundary cells farthest from that entrance in graph distance. The graph always connects the cells; routes are measured through saved topology rather than live player changes.
-
-<ScreenshotGallery label="Preset and connection concepts" images={presetConnectionsScreenshots} />
 
 ## How the Generator Builds a Maze
 
@@ -111,8 +102,6 @@ advanced:
 ```
 
 Advanced entries override only the values supplied in YAML. A command `--complexity` override discards the preset's advanced section and derives the standard values for that new request.
-
-<ScreenshotGallery label="Seed and complexity guidance" images={seedComplexityScreenshots} />
 
 ## Graph Statistics
 
