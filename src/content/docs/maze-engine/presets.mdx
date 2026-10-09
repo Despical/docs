@@ -4,6 +4,10 @@ description: Customize Maze Engine themes with YAML geometry, metadata, weighted
 ---
 
 import GameScreenshot from "../../../components/GameScreenshot.astro";
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { presetBrowserScreenshots, presetHoverScreenshots } from "../../../data/mazeengine-screenshots";
+
+Compare every bundled theme in the [preset gallery](/maze-engine/preset-gallery/). Each preset has overhead, side, and corridor photographs, along with its name, description, and geometry. This page explains how to choose and customize those themes.
 
 ## Preset Files
 
@@ -11,30 +15,34 @@ Each file in `plugins/MazeEngine/presets/` defines one theme. The lowercase file
 
 `/maze presets` shows the default first and then sorts other themes by configured display name. Hover a row to inspect geometry and descriptive metadata; its preview action suggests a command for that theme.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-presets.webp" alt="The preset browser with theme names, difficulty labels, path widths, wall heights, and navigation buttons" crop={[4, 640, 656, 360]} />
+<ScreenshotGallery label="Preset browser pages" images={presetBrowserScreenshots} />
+
+Hovering a preset reveals its configured description, geometry, and preview command:
+
+<ScreenshotGallery label="Preset descriptions and hover details" images={presetHoverScreenshots} />
 
 The 30 bundled identifiers are:
 
 | Presets | Presets | Presets |
 | --- | --- | --- |
-| `default` | `hedge` | `dungeon` |
-| `wilderness` | `desert` | `temple` |
-| `frost` | `nether` | `ocean` |
-| `copper` | `gladiator` | `end` |
-| `claustrophobic` | `bamboo` | `catacombs` |
-| `crystal` | `factory` | `library` |
-| `monochrome` | `ruins` | `rainbow` |
-| `volcanic` | `swamp` | `haunted` |
-| `sakura` | `sky` | `steampunk` |
-| `graveyard` | `candy` | `abyss` |
+| [`default`](/maze-engine/preset-gallery/#default) | [`hedge`](/maze-engine/preset-gallery/#hedge) | [`dungeon`](/maze-engine/preset-gallery/#dungeon) |
+| [`wilderness`](/maze-engine/preset-gallery/#wilderness) | [`desert`](/maze-engine/preset-gallery/#desert) | [`temple`](/maze-engine/preset-gallery/#temple) |
+| [`frost`](/maze-engine/preset-gallery/#frost) | [`nether`](/maze-engine/preset-gallery/#nether) | [`ocean`](/maze-engine/preset-gallery/#ocean) |
+| [`copper`](/maze-engine/preset-gallery/#copper) | [`gladiator`](/maze-engine/preset-gallery/#gladiator) | [`end`](/maze-engine/preset-gallery/#end) |
+| [`claustrophobic`](/maze-engine/preset-gallery/#claustrophobic) | [`bamboo`](/maze-engine/preset-gallery/#bamboo) | [`catacombs`](/maze-engine/preset-gallery/#catacombs) |
+| [`crystal`](/maze-engine/preset-gallery/#crystal) | [`factory`](/maze-engine/preset-gallery/#factory) | [`library`](/maze-engine/preset-gallery/#library) |
+| [`monochrome`](/maze-engine/preset-gallery/#monochrome) | [`ruins`](/maze-engine/preset-gallery/#ruins) | [`rainbow`](/maze-engine/preset-gallery/#rainbow) |
+| [`volcanic`](/maze-engine/preset-gallery/#volcanic) | [`swamp`](/maze-engine/preset-gallery/#swamp) | [`haunted`](/maze-engine/preset-gallery/#haunted) |
+| [`sakura`](/maze-engine/preset-gallery/#sakura) | [`sky`](/maze-engine/preset-gallery/#sky) | [`steampunk`](/maze-engine/preset-gallery/#steampunk) |
+| [`graveyard`](/maze-engine/preset-gallery/#graveyard) | [`candy`](/maze-engine/preset-gallery/#candy) | [`abyss`](/maze-engine/preset-gallery/#abyss) |
 
 Bundled files are installed when absent and are not overwritten on startup. To create a custom theme, copy a preset to a new valid filename, edit it, and run `/maze reload`. Use block types available on the server version where that preset will be loaded.
 
 ## In-Game Examples
 
-<GameScreenshot src="/images/mazeengine/gameplay/sakura-overview.webp" alt="The Sakura preset built in Minecraft, with wide pink and white passages, cherry-colored walls, and blossom caps" crop={[335, 290, 1260, 690]} />
+<GameScreenshot src="/images/mazeengine/presets/sakura-interior.webp" alt="Inside a Sakura maze corridor in Minecraft, with cherry wood walls, blossom caps, and broad pink and white passages" />
 
-Sakura combines cherry wood, blossom caps, and pink or white floors with wide paths. Hedge uses leaf walls and a garden floor; browse the [in-game gallery](/maze-engine/gallery/#themes) for the captured theme views.
+Sakura combines cherry wood, blossom caps, and pink or white floors with wide paths. Hedge uses leaf walls and a garden floor. Browse the [30-preset gallery](/maze-engine/preset-gallery/) to compare their materials and corridor shapes before choosing a theme.
 
 ## Complete Custom Example
 
