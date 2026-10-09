@@ -37,6 +37,26 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "maze-engine:Hub",
+                    href: "https://hub.despical.dev/plugins/maze-engine",
+                },
+                {
+                    icon: "external",
+                    label: "maze-engine:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/maze-engine-30-themes-private-previews-route-guides.139500/",
+                },
+                {
+                    icon: "external",
+                    label: "maze-engine:BuiltByBit",
+                    href: "https://builtbybit.com/resources/maze-engine-themed-maze-generator.130660/",
+                },
+                {
+                    icon: "external",
+                    label: "maze-engine:Modrinth",
+                    href: "https://modrinth.com/plugin/maze-engine",
+                },
+                {
+                    icon: "external",
                     label: "advanced-parkour:SpigotMC",
                     href: "https://www.spigotmc.org/resources/advanced-parkour.133887/",
                 },
