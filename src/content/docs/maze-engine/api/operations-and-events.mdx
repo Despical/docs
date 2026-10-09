@@ -48,6 +48,8 @@ var wideRequest = CreateMazeRequest.builder(
 
 Snapshot capture requires WorldEdit or FAWE. A player actor becomes the maze owner; a non-player actor stores the zero owner UUID. API requests apply normal `mazeengine.use`, action, ownership, reservation, and safety checks rather than bypassing them.
 
+---
+
 ## Rebuild, Repair, and Remove
 
 ```java
@@ -82,6 +84,8 @@ The API submits removal immediately. Provide a concrete confirmation in your own
 
 Regeneration uses the saved preset and dimensions and retains the original snapshot. Repair keeps topology and skips planned air positions. See [operations and recovery](/maze-engine/operations-and-recovery/) for their terrain effects.
 
+---
+
 ## Validation Versus Accepted Failure
 
 Validation before submission throws directly and returns no handle. Examples include missing permissions, invalid worlds or geometry, unavailable presets, conflicting reservations, and action-specific snapshot requirements.
@@ -105,6 +109,8 @@ try {
 
 This snippet assumes it runs inside your `JavaPlugin` on the server thread. If the callback will access Bukkit entities or world state, schedule that work explicitly through your plugin's server scheduler. Do not block the server thread waiting for the stage.
 
+---
+
 ## Operation Identity and Progress
 
 | Method | Returns |
@@ -120,6 +126,8 @@ Sample `progress()` on the server thread. Lifecycle states are `RUNNING`, `COMPL
 
 The handle retains its terminal state after another request reuses the name. Never replace operation identity with name-only tracking if your UI must refer to the exact request.
 
+---
+
 ## Cancellation
 
 ```java
@@ -129,6 +137,8 @@ boolean requested = operation.cancel(actor);
 The actor needs cancellation and ownership or management rights. An ended handle returns false and cannot cancel newer work with the same name. Cancelling a future derived from `completion()` does not cancel world work; use the handle method.
 
 Cancellation completes exceptionally with `CancellationException`. It does not guarantee rollback and may leave a failed record or changed terrain needing recovery. A request already finishing its commit can complete successfully.
+
+---
 
 ## Lifecycle Events
 

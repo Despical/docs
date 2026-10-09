@@ -38,11 +38,15 @@ The 30 bundled identifiers are:
 
 Bundled files are installed when absent and are not overwritten on startup. To create a custom theme, copy a preset to a new valid filename, edit it, and run `/maze reload`. Use block types available on the server version where that preset will be loaded.
 
+---
+
 ## In-Game Examples
 
 <GameScreenshot src="/images/mazeengine/presets/sakura-interior.webp" alt="Inside a Sakura maze corridor in Minecraft, with cherry wood walls, blossom caps, and broad pink and white passages" />
 
 Sakura combines cherry wood, blossom caps, and pink or white floors with wide paths. Hedge uses leaf walls and a garden floor. Browse the [30-preset gallery](/maze-engine/preset-gallery/) to compare their materials and corridor shapes before choosing a theme.
+
+---
 
 ## Complete Custom Example
 
@@ -83,6 +87,8 @@ decoration:
 
 Ceiling and cap palettes remain part of the validated preset even when a roof or caps are disabled. Provide valid non-empty palettes for every required role.
 
+---
+
 ## Display Metadata
 
 | Key | Meaning |
@@ -93,6 +99,8 @@ Ceiling and cap palettes remain part of the validated preset even when a roof or
 | `accent` | Theme color in `#RRGGBB` format |
 
 Difficulty is descriptive metadata. Maze Engine does not infer it from a filename, seed, route length, or complexity. A custom display name is not rewritten to match the identifier.
+
+---
 
 ## Geometry and Placement
 
@@ -106,6 +114,8 @@ Difficulty is descriptive metadata. Maze Engine does not infer it from a filenam
 | `placement` | `CLEAR`, `SAFE`, `REPLACE` | Existing-terrain policy |
 
 The physical footprint depends on cell dimensions as well as geometry. See [generation and geometry](/maze-engine/generation/) for the formula and [creating mazes](/maze-engine/creating-mazes/) for placement behavior.
+
+---
 
 ## Weighted Block Palettes
 
@@ -125,6 +135,8 @@ Floor, wall, ceiling, light, and marker materials must be solid blocks without g
 
 Selection is deterministic for the seed and local coordinate. Rebuilding the saved plan does not randomly shuffle its palette each time.
 
+---
+
 ## Palette Patterns
 
 | Key | Values | Behavior |
@@ -133,6 +145,8 @@ Selection is deterministic for the seed and local coordinate. Rebuilding the sav
 | `palette.section-size` | 1–128 | Section width used by `SECTIONS`; default 8 |
 
 `RANDOM` respects entry weights. `SECTIONS` cycles through entries according to X/Z section indices and entry order; it does not use the random weights to choose section entries. The pattern applies to the normal floor, wall, ceiling, and cap palettes.
+
+---
 
 ## Decorations
 
@@ -149,6 +163,8 @@ Selection is deterministic for the seed and local coordinate. Rebuilding the sav
 Markers occupy portal floor positions and lighting is inset into the floor. Caps occupy the top layer of walls. These decorations do not fill walkable passages.
 
 Wall inlays require an interior block surrounded on all four horizontal sides by non-passage wall space and enough wall height for the inset level. They may use stable solid materials or lava. A lava inlay requires wall materials that contain it: occluding blocks, glass, or stained glass. A narrow wall may have no eligible enclosed inlay positions.
+
+---
 
 ## Changes and Saved Mazes
 

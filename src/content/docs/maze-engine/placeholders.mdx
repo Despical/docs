@@ -9,6 +9,8 @@ Install [PlaceholderAPI](https://wiki.placeholderapi.com/) and restart the serve
 
 Values are cached and refreshed every 10 ticks. Identifiers and fields are case-insensitive. Counts include saved records even when busy or failed; a newly accepted creation still planning its graph has no saved record yet.
 
+---
+
 ## Global and Ownership Values
 
 | Placeholder | Value |
@@ -17,6 +19,8 @@ Values are cached and refreshed every 10 ticks. Identifiers and fields are case-
 | `%mazeengine_preset_count%` | Number of currently configured presets |
 | `%mazeengine_active_operations%` | Active operations, including planning and spawn-point persistence |
 | `%mazeengine_owned_count%` | Records owned by the supplied player's UUID; 0 without a player |
+
+---
 
 ## Named and Current Maze Values
 
@@ -42,11 +46,15 @@ Replace `garden` with a saved maze identifier. Current-maze expressions select t
 
 The theme and geometry refer to the maze's frozen preset, rather than the current file used for future creation. Snapshot `true` indicates the record's capture state; it does not verify that a file remains present on disk at every placeholder request.
 
+---
+
 ## Missing Values
 
 Recognized named fields for a missing maze return empty text. Recognized current fields return empty text when the supplied player has no matching current saved volume. Unknown fields return `null` to PlaceholderAPI as unsupported expressions.
 
 `current_*` uses the online-location cache. Offline player lookups do not discover an offline position. `owned_count` uses the supplied UUID and therefore does not depend on the player standing in a maze.
+
+---
 
 ## Test an Expression
 

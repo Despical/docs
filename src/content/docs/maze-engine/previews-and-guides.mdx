@@ -23,6 +23,8 @@ Preview accepts the same options as creation, including selections, geometry, co
 
 Each player has at most one active preview. A new preview replaces that player's previous session. The global simultaneous-session cap defaults to 8.
 
+---
+
 ## Build the Shown Specification
 
 The chat panel provides **Create** and **Close** buttons. Creation is available when you have `mazeengine.create`.
@@ -41,6 +43,8 @@ This uses the retained origin, dimensions, seed, and preset. The preview must ha
 
 When no active matching preview exists, `/maze create garden` creates an ordinary maze with the current default dimensions and preset. Check the panel before confirming a specification you want to retain.
 
+---
+
 ## Close and Expiry
 
 ```text
@@ -54,6 +58,8 @@ The action bar distinguishes planning, display loading, and a fully displayed pr
 The closure feedback distinguishes an ended preview from a request made when none is active.
 
 <ScreenshotGallery label="Preview closure and inactive-session messages" images={previewLifecycleScreenshots} />
+
+---
 
 ## Personal Route Guide
 
@@ -78,6 +84,8 @@ The action bar shows remaining cell steps or asks you to enter the maze when out
 
 The guide's Close button ends that session. It also expires after **600 seconds** by default, ends when you disconnect or change worlds, and ends if its maze becomes unavailable, busy, or changes graph. Opening another guide replaces your previous guide.
 
+---
+
 ## Visual Settings
 
 | Setting | Default | Purpose |
@@ -95,6 +103,8 @@ The guide's Close button ends that session. It also expires after **600 seconds*
 Guide block data, elevation, arrow width, and thickness are configurable. See [config.yml](/maze-engine/configuration/config/#route-guide) for ranges.
 
 Large previews may use simplified display geometry to respect the cap; the generated physical maze still uses the complete saved specification. Client entity range and rendering settings can affect visibility even when the server-side display view range is high.
+
+---
 
 ## Reload Behavior
 
