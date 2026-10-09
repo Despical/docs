@@ -27,8 +27,13 @@ export default defineConfig({
                 {icon: 'patreon', label: 'home:Patreon', href: 'https://patreon.com/despical'},
                 {
                     icon: "github",
-                    label: "mazeengine:GitHub",
+                    label: "maze-engine:GitHub",
                     href: "https://github.com/Despical/MazeEngine",
+                },
+                {
+                    icon: "seti:java",
+                    label: "maze-engine:Javadoc",
+                    href: "https://javadoc.despical.dev/maze-engine/",
                 },
                 {
                     icon: "external",
