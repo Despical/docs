@@ -1235,6 +1235,7 @@ export default defineConfig({
                                 label: "Themes and Generation",
                                 items: [
                                     {label: "Presets", link: "/maze-engine/presets/"},
+                                    {label: "Preset Gallery", link: "/maze-engine/preset-gallery/"},
                                     {label: "Generation and Geometry", link: "/maze-engine/generation/"},
                                 ],
                             },
