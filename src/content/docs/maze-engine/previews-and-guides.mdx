@@ -66,6 +66,8 @@ Teleport to a ready maze's world and enable its guide:
 
 The guide draws personal arrows above the maze floor toward the exit. It uses the saved graph and your current cell, adapting as you move. You do not have to remain on the original entrance-to-exit route: it chooses a route onward from your current reachable cell.
 
+<GameScreenshot src="/images/mazeengine/gameplay/route-guide.webp" alt="Bright green route-guide arrows above the grass floor inside a Hedge maze corridor, pointing toward the exit" />
+
 <ScreenshotGallery label="Guide enabled, already active, closed and inactive" images={guideLifecycleScreenshots} />
 
 The action bar shows remaining cell steps or asks you to enter the maze when outside its corridor area. Arrows are positioned inside walkable space and hidden when their geometry would cross walls. The default look-ahead is 7 cell transitions.
