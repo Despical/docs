@@ -1,0 +1,433 @@
+---
+title: Preset Gallery
+description: Explore all 30 Maze Engine presets through 90 real Minecraft photographs, with native geometry and ready-to-use creation commands.
+---
+
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { getMazeEnginePreset } from "../../../data/mazeengine-presets";
+
+Explore all **30 presets** from above, from the side, and inside their corridors. Each gallery contains three real Minecraft photographs; swipe or use the arrows to change views, and select an image to enlarge it.
+
+Every maze uses **15 × 15 cells** and **seed 42**, with its preset's native geometry. Roofs were temporarily removed for overhead photographs and restored afterward. Roofed interior photographs use night vision so the materials remain visible.
+
+Use the command under a preset to build the pictured style. The dimensions are cells; the physical block footprint varies with path width and wall thickness. Your editable preset files can change these values—see [preset configuration](/maze-engine/presets/) for the available settings.
+
+## Abyss
+
+{getMazeEnginePreset("abyss").description}
+
+**Preset:** `abyss` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 1 block wide; walls 4 blocks thick and 10 blocks high; roof enabled. The pictured 15 × 15 grid occupies **79 × 79 blocks**.
+
+```text
+/maze create abyss_demo 15 15 --preset abyss --seed 42
+```
+
+<ScreenshotGallery label="Abyss preset views" images={getMazeEnginePreset("abyss").images} />
+
+## Bamboo
+
+{getMazeEnginePreset("bamboo").description}
+
+**Preset:** `bamboo` · **Difficulty:** Easy · **Algorithm:** Braided
+
+**Geometry:** paths 6 blocks wide; walls 1 block thick and 3 blocks high; roof disabled. The pictured 15 × 15 grid occupies **106 × 106 blocks**.
+
+```text
+/maze create bamboo_demo 15 15 --preset bamboo --seed 42
+```
+
+<ScreenshotGallery label="Bamboo preset views" images={getMazeEnginePreset("bamboo").images} />
+
+## Candy
+
+{getMazeEnginePreset("candy").description}
+
+**Preset:** `candy` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 4 blocks wide; walls 1 block thick and 6 blocks high; roof disabled. The pictured 15 × 15 grid occupies **76 × 76 blocks**.
+
+```text
+/maze create candy_demo 15 15 --preset candy --seed 42
+```
+
+<ScreenshotGallery label="Candy preset views" images={getMazeEnginePreset("candy").images} />
+
+## Catacombs
+
+{getMazeEnginePreset("catacombs").description}
+
+**Preset:** `catacombs` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 1 block wide; walls 3 blocks thick and 4 blocks high; roof enabled. The pictured 15 × 15 grid occupies **63 × 63 blocks**.
+
+```text
+/maze create catacombs_demo 15 15 --preset catacombs --seed 42
+```
+
+<ScreenshotGallery label="Catacombs preset views" images={getMazeEnginePreset("catacombs").images} />
+
+## Claustrophobic
+
+{getMazeEnginePreset("claustrophobic").description}
+
+**Preset:** `claustrophobic` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 1 block wide; walls 2 blocks thick and 2 blocks high; roof enabled. The pictured 15 × 15 grid occupies **47 × 47 blocks**.
+
+```text
+/maze create claustrophobic_demo 15 15 --preset claustrophobic --seed 42
+```
+
+<ScreenshotGallery label="Claustrophobic preset views" images={getMazeEnginePreset("claustrophobic").images} />
+
+## Copper
+
+{getMazeEnginePreset("copper").description}
+
+**Preset:** `copper` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 2 blocks wide; walls 1 block thick and 4 blocks high; roof enabled. The pictured 15 × 15 grid occupies **46 × 46 blocks**.
+
+```text
+/maze create copper_demo 15 15 --preset copper --seed 42
+```
+
+<ScreenshotGallery label="Copper preset views" images={getMazeEnginePreset("copper").images} />
+
+## Crystal
+
+{getMazeEnginePreset("crystal").description}
+
+**Preset:** `crystal` · **Difficulty:** Medium · **Algorithm:** Perfect
+
+**Geometry:** paths 5 blocks wide; walls 2 blocks thick and 9 blocks high; roof disabled. The pictured 15 × 15 grid occupies **107 × 107 blocks**.
+
+```text
+/maze create crystal_demo 15 15 --preset crystal --seed 42
+```
+
+<ScreenshotGallery label="Crystal preset views" images={getMazeEnginePreset("crystal").images} />
+
+## Default
+
+{getMazeEnginePreset("default").description}
+
+**Preset:** `default` · **Difficulty:** Medium · **Algorithm:** Perfect
+
+**Geometry:** paths 3 blocks wide; walls 1 block thick and 4 blocks high; roof disabled. The pictured 15 × 15 grid occupies **61 × 61 blocks**.
+
+```text
+/maze create default_demo 15 15 --preset default --seed 42
+```
+
+<ScreenshotGallery label="Default preset views" images={getMazeEnginePreset("default").images} />
+
+## Desert
+
+{getMazeEnginePreset("desert").description}
+
+**Preset:** `desert` · **Difficulty:** Easy · **Algorithm:** Braided
+
+**Geometry:** paths 4 blocks wide; walls 1 block thick and 4 blocks high; roof disabled. The pictured 15 × 15 grid occupies **76 × 76 blocks**.
+
+```text
+/maze create desert_demo 15 15 --preset desert --seed 42
+```
+
+<ScreenshotGallery label="Desert preset views" images={getMazeEnginePreset("desert").images} />
+
+## Dungeon
+
+{getMazeEnginePreset("dungeon").description}
+
+**Preset:** `dungeon` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 2 blocks wide; walls 1 block thick and 4 blocks high; roof enabled. The pictured 15 × 15 grid occupies **46 × 46 blocks**.
+
+```text
+/maze create dungeon_demo 15 15 --preset dungeon --seed 42
+```
+
+<ScreenshotGallery label="Dungeon preset views" images={getMazeEnginePreset("dungeon").images} />
+
+## End
+
+{getMazeEnginePreset("end").description}
+
+**Preset:** `end` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 3 blocks wide; walls 1 block thick and 7 blocks high; roof disabled. The pictured 15 × 15 grid occupies **61 × 61 blocks**.
+
+```text
+/maze create end_demo 15 15 --preset end --seed 42
+```
+
+<ScreenshotGallery label="End preset views" images={getMazeEnginePreset("end").images} />
+
+## Factory
+
+{getMazeEnginePreset("factory").description}
+
+**Preset:** `factory` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 2 blocks wide; walls 1 block thick and 10 blocks high; roof enabled. The pictured 15 × 15 grid occupies **46 × 46 blocks**.
+
+```text
+/maze create factory_demo 15 15 --preset factory --seed 42
+```
+
+<ScreenshotGallery label="Factory preset views" images={getMazeEnginePreset("factory").images} />
+
+## Frost
+
+{getMazeEnginePreset("frost").description}
+
+**Preset:** `frost` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 3 blocks wide; walls 1 block thick and 4 blocks high; roof disabled. The pictured 15 × 15 grid occupies **61 × 61 blocks**.
+
+```text
+/maze create frost_demo 15 15 --preset frost --seed 42
+```
+
+<ScreenshotGallery label="Frost preset views" images={getMazeEnginePreset("frost").images} />
+
+## Gladiator
+
+{getMazeEnginePreset("gladiator").description}
+
+**Preset:** `gladiator` · **Difficulty:** Hard · **Algorithm:** Braided
+
+**Geometry:** paths 3 blocks wide; walls 3 blocks thick and 12 blocks high; roof disabled. The pictured 15 × 15 grid occupies **93 × 93 blocks**.
+
+```text
+/maze create gladiator_demo 15 15 --preset gladiator --seed 42
+```
+
+<ScreenshotGallery label="Gladiator preset views" images={getMazeEnginePreset("gladiator").images} />
+
+## Graveyard
+
+{getMazeEnginePreset("graveyard").description}
+
+**Preset:** `graveyard` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 2 blocks wide; walls 3 blocks thick and 3 blocks high; roof disabled. The pictured 15 × 15 grid occupies **78 × 78 blocks**.
+
+```text
+/maze create graveyard_demo 15 15 --preset graveyard --seed 42
+```
+
+<ScreenshotGallery label="Graveyard preset views" images={getMazeEnginePreset("graveyard").images} />
+
+## Haunted
+
+{getMazeEnginePreset("haunted").description}
+
+**Preset:** `haunted` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 2 blocks wide; walls 1 block thick and 5 blocks high; roof enabled. The pictured 15 × 15 grid occupies **46 × 46 blocks**.
+
+```text
+/maze create haunted_demo 15 15 --preset haunted --seed 42
+```
+
+<ScreenshotGallery label="Haunted preset views" images={getMazeEnginePreset("haunted").images} />
+
+## Hedge
+
+{getMazeEnginePreset("hedge").description}
+
+**Preset:** `hedge` · **Difficulty:** Easy · **Algorithm:** Perfect
+
+**Geometry:** paths 3 blocks wide; walls 2 blocks thick and 4 blocks high; roof disabled. The pictured 15 × 15 grid occupies **77 × 77 blocks**.
+
+```text
+/maze create hedge_demo 15 15 --preset hedge --seed 42
+```
+
+<ScreenshotGallery label="Hedge preset views" images={getMazeEnginePreset("hedge").images} />
+
+## Library
+
+{getMazeEnginePreset("library").description}
+
+**Preset:** `library` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 2 blocks wide; walls 2 blocks thick and 3 blocks high; roof enabled. The pictured 15 × 15 grid occupies **62 × 62 blocks**.
+
+```text
+/maze create library_demo 15 15 --preset library --seed 42
+```
+
+<ScreenshotGallery label="Library preset views" images={getMazeEnginePreset("library").images} />
+
+## Monochrome
+
+{getMazeEnginePreset("monochrome").description}
+
+**Preset:** `monochrome` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 3 blocks wide; walls 4 blocks thick and 5 blocks high; roof disabled. The pictured 15 × 15 grid occupies **109 × 109 blocks**.
+
+```text
+/maze create monochrome_demo 15 15 --preset monochrome --seed 42
+```
+
+<ScreenshotGallery label="Monochrome preset views" images={getMazeEnginePreset("monochrome").images} />
+
+## Nether
+
+{getMazeEnginePreset("nether").description}
+
+**Preset:** `nether` · **Difficulty:** Hard · **Algorithm:** Braided
+
+**Geometry:** paths 2 blocks wide; walls 2 blocks thick and 5 blocks high; roof disabled. The pictured 15 × 15 grid occupies **62 × 62 blocks**.
+
+```text
+/maze create nether_demo 15 15 --preset nether --seed 42
+```
+
+<ScreenshotGallery label="Nether preset views" images={getMazeEnginePreset("nether").images} />
+
+## Ocean
+
+{getMazeEnginePreset("ocean").description}
+
+**Preset:** `ocean` · **Difficulty:** Easy · **Algorithm:** Braided
+
+**Geometry:** paths 4 blocks wide; walls 1 block thick and 5 blocks high; roof enabled. The pictured 15 × 15 grid occupies **76 × 76 blocks**.
+
+```text
+/maze create ocean_demo 15 15 --preset ocean --seed 42
+```
+
+<ScreenshotGallery label="Ocean preset views" images={getMazeEnginePreset("ocean").images} />
+
+## Rainbow
+
+{getMazeEnginePreset("rainbow").description}
+
+**Preset:** `rainbow` · **Difficulty:** Easy · **Algorithm:** Braided
+
+**Geometry:** paths 4 blocks wide; walls 2 blocks thick and 5 blocks high; roof disabled. The pictured 15 × 15 grid occupies **92 × 92 blocks**.
+
+```text
+/maze create rainbow_demo 15 15 --preset rainbow --seed 42
+```
+
+<ScreenshotGallery label="Rainbow preset views" images={getMazeEnginePreset("rainbow").images} />
+
+## Ruins
+
+{getMazeEnginePreset("ruins").description}
+
+**Preset:** `ruins` · **Difficulty:** Easy · **Algorithm:** Braided
+
+**Geometry:** paths 7 blocks wide; walls 1 block thick and 2 blocks high; roof disabled. The pictured 15 × 15 grid occupies **121 × 121 blocks**.
+
+```text
+/maze create ruins_demo 15 15 --preset ruins --seed 42
+```
+
+<ScreenshotGallery label="Ruins preset views" images={getMazeEnginePreset("ruins").images} />
+
+## Sakura
+
+{getMazeEnginePreset("sakura").description}
+
+**Preset:** `sakura` · **Difficulty:** Easy · **Algorithm:** Braided
+
+**Geometry:** paths 5 blocks wide; walls 1 block thick and 3 blocks high; roof disabled. The pictured 15 × 15 grid occupies **91 × 91 blocks**.
+
+```text
+/maze create sakura_demo 15 15 --preset sakura --seed 42
+```
+
+<ScreenshotGallery label="Sakura preset views" images={getMazeEnginePreset("sakura").images} />
+
+## Sky
+
+{getMazeEnginePreset("sky").description}
+
+**Preset:** `sky` · **Difficulty:** Easy · **Algorithm:** Perfect
+
+**Geometry:** paths 6 blocks wide; walls 2 blocks thick and 4 blocks high; roof disabled. The pictured 15 × 15 grid occupies **122 × 122 blocks**.
+
+```text
+/maze create sky_demo 15 15 --preset sky --seed 42
+```
+
+<ScreenshotGallery label="Sky preset views" images={getMazeEnginePreset("sky").images} />
+
+## Steampunk
+
+{getMazeEnginePreset("steampunk").description}
+
+**Preset:** `steampunk` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 3 blocks wide; walls 2 blocks thick and 7 blocks high; roof enabled. The pictured 15 × 15 grid occupies **77 × 77 blocks**.
+
+```text
+/maze create steampunk_demo 15 15 --preset steampunk --seed 42
+```
+
+<ScreenshotGallery label="Steampunk preset views" images={getMazeEnginePreset("steampunk").images} />
+
+## Swamp
+
+{getMazeEnginePreset("swamp").description}
+
+**Preset:** `swamp` · **Difficulty:** Medium · **Algorithm:** Braided
+
+**Geometry:** paths 3 blocks wide; walls 2 blocks thick and 3 blocks high; roof disabled. The pictured 15 × 15 grid occupies **77 × 77 blocks**.
+
+```text
+/maze create swamp_demo 15 15 --preset swamp --seed 42
+```
+
+<ScreenshotGallery label="Swamp preset views" images={getMazeEnginePreset("swamp").images} />
+
+## Temple
+
+{getMazeEnginePreset("temple").description}
+
+**Preset:** `temple` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 3 blocks wide; walls 2 blocks thick and 7 blocks high; roof enabled. The pictured 15 × 15 grid occupies **77 × 77 blocks**.
+
+```text
+/maze create temple_demo 15 15 --preset temple --seed 42
+```
+
+<ScreenshotGallery label="Temple preset views" images={getMazeEnginePreset("temple").images} />
+
+## Volcanic
+
+{getMazeEnginePreset("volcanic").description}
+
+**Preset:** `volcanic` · **Difficulty:** Hard · **Algorithm:** Perfect
+
+**Geometry:** paths 2 blocks wide; walls 3 blocks thick and 8 blocks high; roof enabled. The pictured 15 × 15 grid occupies **78 × 78 blocks**.
+
+```text
+/maze create volcanic_demo 15 15 --preset volcanic --seed 42
+```
+
+<ScreenshotGallery label="Volcanic preset views" images={getMazeEnginePreset("volcanic").images} />
+
+## Wilderness
+
+{getMazeEnginePreset("wilderness").description}
+
+**Preset:** `wilderness` · **Difficulty:** Medium · **Algorithm:** Perfect
+
+**Geometry:** paths 3 blocks wide; walls 2 blocks thick and 4 blocks high; roof disabled. The pictured 15 × 15 grid occupies **77 × 77 blocks**.
+
+```text
+/maze create wilderness_demo 15 15 --preset wilderness --seed 42
+```
+
+<ScreenshotGallery label="Wilderness preset views" images={getMazeEnginePreset("wilderness").images} />
