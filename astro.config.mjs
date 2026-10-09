@@ -57,6 +57,11 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "advanced-parkour:Hub",
+                    href: "https://hub.despical.dev/plugins/advanced-parkour",
+                },
+                {
+                    icon: "external",
                     label: "advanced-parkour:SpigotMC",
                     href: "https://www.spigotmc.org/resources/advanced-parkour.133887/",
                 },
@@ -64,6 +69,11 @@ export default defineConfig({
                     icon: "external",
                     label: "advanced-parkour:BuiltByBit",
                     href: "https://builtbybit.com/resources/advanced-parkour.101133/",
+                },
+                {
+                    icon: "external",
+                    label: "carousel:Hub",
+                    href: "https://hub.despical.dev/plugins/carousel",
                 },
                 {
                     icon: "external",
@@ -87,8 +97,18 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "command-framework:Hub",
+                    href: "https://hub.despical.dev/plugins/command-framework",
+                },
+                {
+                    icon: "external",
                     label: "command-framework:SpigotMC",
                     href: "https://spigotmc.org/resources/89933/",
+                },
+                {
+                    icon: "external",
+                    label: "easter-eggs:Hub",
+                    href: "https://hub.despical.dev/plugins/easter-eggs",
                 },
                 {
                     icon: "external",
@@ -99,6 +119,11 @@ export default defineConfig({
                     icon: "external",
                     label: "easter-eggs:BuiltByBit",
                     href: "https://builtbybit.com/resources/easter-eggs.50201/",
+                },
+                {
+                    icon: "external",
+                    label: "eat-everything:Hub",
+                    href: "https://hub.despical.dev/plugins/eat-everything",
                 },
                 {
                     icon: "external",
@@ -127,6 +152,11 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "particle-text:Hub",
+                    href: "https://hub.despical.dev/plugins/particle-text",
+                },
+                {
+                    icon: "external",
                     label: "particle-text:SpigotMC",
                     href: "https://www.spigotmc.org/resources/particle-text.110996/",
                 },
@@ -134,6 +164,11 @@ export default defineConfig({
                     icon: "external",
                     label: "particle-text:BuiltByBit",
                     href: "https://builtbybit.com/resources/particle-text.50324/",
+                },
+                {
+                    icon: "external",
+                    label: "particle-text:Modrinth",
+                    href: "https://modrinth.com/plugin/particle-text",
                 },
                 {
                     icon: "github",
@@ -144,6 +179,11 @@ export default defineConfig({
                     icon: "seti:java",
                     label: "tnt-run:Javadoc",
                     href: "https://javadoc.despical.dev/tnt-run/",
+                },
+                {
+                    icon: "external",
+                    label: "tnt-run:Hub",
+                    href: "https://hub.despical.dev/plugins/tnt-run",
                 },
                 {
                     icon: "external",
@@ -172,6 +212,11 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "kotl:Hub",
+                    href: "https://hub.despical.dev/plugins/king-of-the-ladder",
+                },
+                {
+                    icon: "external",
                     label: "kotl:SpigotMC",
                     href: "https://www.spigotmc.org/resources/king-of-the-ladder.80686/",
                 },
@@ -179,6 +224,16 @@ export default defineConfig({
                     icon: "external",
                     label: "kotl:BuiltByBit",
                     href: "https://builtbybit.com/resources/king-of-the-ladder.51128/",
+                },
+                {
+                    icon: "external",
+                    label: "kotl:Modrinth",
+                    href: "https://modrinth.com/plugin/kotl",
+                },
+                {
+                    icon: "external",
+                    label: "item-upgrader:Hub",
+                    href: "https://hub.despical.dev/plugins/item-upgrader",
                 },
                 {
                     icon: "external",
@@ -192,6 +247,11 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "santa-says:Hub",
+                    href: "https://hub.despical.dev/plugins/santa-says",
+                },
+                {
+                    icon: "external",
                     label: "santa-says:SpigotMC",
                     href: "https://www.spigotmc.org/resources/santa-says.132658/",
                 },
@@ -202,8 +262,18 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "the-snake:Hub",
+                    href: "https://hub.despical.dev/plugins/the-snake",
+                },
+                {
+                    icon: "external",
                     label: "the-snake:SpigotMC",
                     href: "https://www.spigotmc.org/resources/the-snake.120508/",
+                },
+                {
+                    icon: "external",
+                    label: "tnt-tag:Hub",
+                    href: "https://hub.despical.dev/plugins/tnt-tag",
                 },
                 {
                     icon: "external",
@@ -214,6 +284,11 @@ export default defineConfig({
                     icon: "external",
                     label: "tnt-tag:BuiltByBit",
                     href: "https://builtbybit.com/resources/tnt-tag.50271/",
+                },
+                {
+                    icon: "external",
+                    label: "warden-party:Hub",
+                    href: "https://hub.despical.dev/plugins/warden-party",
                 },
                 {
                     icon: "external",
@@ -237,6 +312,11 @@ export default defineConfig({
                 },
                 {
                     icon: "external",
+                    label: "whack-me:Hub",
+                    href: "https://hub.despical.dev/plugins/whack-me",
+                },
+                {
+                    icon: "external",
                     label: "whack-me:SpigotMC",
                     href: "https://www.spigotmc.org/resources/whack-me.104912/",
                 },
@@ -244,6 +324,11 @@ export default defineConfig({
                     icon: "external",
                     label: "whack-me:BuiltByBit",
                     href: "https://builtbybit.com/resources/whack-me.50294/",
+                },
+                {
+                    icon: "external",
+                    label: "whack-me:Modrinth",
+                    href: "https://modrinth.com/plugin/whack-me",
                 },
                 {
                     icon: "external",
