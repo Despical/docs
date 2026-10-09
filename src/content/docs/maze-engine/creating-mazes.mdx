@@ -28,6 +28,8 @@ The **create** help card summarizes the command before submission. Hover the com
 
 <ScreenshotGallery label="Create command and argument tooltip" images={creationHelpScreenshots} />
 
+---
+
 ## Choose Placement Rules
 
 All three policies produce the same final block plan. They differ in which existing materials the preflight permits.
@@ -45,6 +47,8 @@ All three policies produce the same final block plan. They differ in which exist
 
 `REPLACE` can carve through permitted stone or dirt. It rejects an unlisted material rather than overwriting it. `CLEAR` does not consult the replaceable list. None of these policies bypass player exclusion, maze overlap checks, limits, world height, the world border, or WorldGuard authorization.
 
+---
+
 ## Capture Original Terrain
 
 `--snapshot` requests an original-terrain snapshot before the first block mutation:
@@ -60,6 +64,8 @@ The command flag can enable snapshot capture for a preset that normally disables
 After creation, inspect **Snapshot** in `/maze info <name>`. The captured Hedge record has no original-terrain snapshot; its hover card explains what that means for removal.
 
 <ScreenshotGallery label="Snapshot availability field and explanation" images={snapshotHoverScreenshots} />
+
+---
 
 ## Fit a WorldEdit Selection
 
@@ -77,6 +83,8 @@ Maze Engine finds the largest whole-cell grid fitting the selection's X/Z span a
 
 Selection requests require a player and cannot be combined with explicit dimensions, `--world`, or coordinate options. A selection unable to fit at least 2×2 cells is rejected.
 
+---
+
 ## Override a Preset
 
 Creation and preview accept `--path-width`, `--wall-thickness`, `--wall-height`, and `--complexity`:
@@ -86,6 +94,8 @@ Creation and preview accept `--path-width`, `--wall-thickness`, `--wall-height`,
 ```
 
 Geometry changes physical size. Complexity replaces the preset's advanced generation overrides with values derived from the supplied complexity while retaining the selected topology mode. A `BRAIDED` preset then uses its derived braid default. Roofs, palettes, decorations, topology mode, and custom difficulty labels belong in the preset YAML.
+
+---
 
 ## Validation and Progress
 

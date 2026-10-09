@@ -14,6 +14,8 @@ Maze Engine declares WorldEdit, FastAsyncWorldEdit, WorldGuard, and PlaceholderA
 | WorldGuard | Per-block build authorization for plugin-driven world changes | [WorldGuard documentation](https://worldguard.enginehub.org/en/latest/) |
 | PlaceholderAPI | Cached maze placeholders for other plugins | [PlaceholderAPI](https://wiki.placeholderapi.com/) |
 
+---
+
 ## WorldEdit and FAWE
 
 Use `--selection` to fit a cuboid selection. Maze Engine computes cell dimensions and a centered origin; the selection must be tall enough and fit at least 2×2 cells. Selection requires a player and replaces explicit origin and dimension arguments.
@@ -26,6 +28,8 @@ Maze Engine iterates snapshot capture and restoration under its world-operation 
 
 When neither WorldEdit nor FAWE is enabled, selections and snapshot-dependent actions are rejected. A recorded but missing snapshot is an error; Maze Engine does not reconstruct original terrain from a generated maze.
 
+---
+
 ## WorldGuard
 
 When WorldGuard is enabled, each queried block must permit both block placement and block breaking for the actor. Checks occur during preflight and again during world mutation or restoration, so a permission change during an operation can stop it.
@@ -35,6 +39,8 @@ Players use their WorldGuard local-player permissions and session bypass. Consol
 If WorldGuard becomes unavailable after checks were enabled, world editing stops with an error. A failure after blocks changed follows the normal failed-record recovery path.
 
 WorldGuard authorization and Maze Engine region protection solve separate problems: WorldGuard controls whether the actor may perform the operation; Maze Engine protects and tracks its saved and active maze regions.
+
+---
 
 ## PlaceholderAPI
 

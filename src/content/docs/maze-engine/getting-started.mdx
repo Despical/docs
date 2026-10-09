@@ -18,6 +18,8 @@ import { previewScreenshots, mazeDetailsScreenshots, removalReviewScreenshots, s
 
 Use integration builds compatible with your chosen server version. The basic generator, chat interface, previews, and route guides work without these integrations.
 
+---
+
 ## Build from Source
 
 With a Java 25 JDK installed:
@@ -34,6 +36,8 @@ On Windows PowerShell, use `./gradlew.bat clean build`. The plugin JAR is genera
 
 **Optional API Javadocs:** run `./gradlew apiJavadoc` separately to generate HTML in `build/docs/api/`.
 
+---
+
 ## Install
 
 Use `build/libs/mazeengine-1.0.0.jar` for every supported server version and run the server with Java 25.
@@ -45,6 +49,8 @@ Use `build/libs/mazeengine-1.0.0.jar` for every supported server version and run
 5. Run `/maze help` as an operator or an account with the relevant [permissions](/maze-engine/permissions/).
 
 The first startup creates `plugins/MazeEngine/config.yml`, `messages.yml`, and the bundled preset files. Existing configuration files are retained. Saved maze records and optional snapshots are stored under the same plugin data directory.
+
+---
 
 ## Preview Your First Maze
 
@@ -68,6 +74,8 @@ Move outside the preview's entire footprint before choosing **Create**. You can 
 
 A plain create command with the matching name uses the preview's retained origin, seed, dimensions, and preset. Supplying new options instead starts an ordinary creation request.
 
+---
+
 ## Create Directly
 
 ```text
@@ -79,6 +87,8 @@ Without explicit coordinates, the floor origin is three blocks east and south of
 :::caution[Placement changes terrain]
 The bundled presets use `CLEAR` placement. This permits existing materials to be replaced across the full maze volume. Choose a suitable area, use `SAFE` or `REPLACE` when appropriate, and use `--snapshot` with WorldEdit or FAWE if you need the original terrain restored later.
 :::
+
+---
 
 ## Inspect and Explore
 
@@ -93,6 +103,8 @@ Creation finishes after the world work and final record save complete. The info 
 
 <ScreenshotGallery label="Ready Hedge maze: geometry and actions" images={mazeDetailsScreenshots.slice(0, 1)} />
 
+---
+
 ## Remove a Maze
 
 ```text
@@ -106,6 +118,8 @@ For explicit terrain handling, use `/maze delete garden --restore` or `/maze del
 The example below reviews clearing a record without a snapshot, then uses **Cancel** to close the request while keeping the maze.
 
 <ScreenshotGallery label="Read and cancel a removal review" images={removalReviewScreenshots} />
+
+---
 
 ## Configure and Reload
 

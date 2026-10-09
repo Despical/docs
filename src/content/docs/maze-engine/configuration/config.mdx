@@ -16,6 +16,8 @@ After a valid reload, chat confirms that settings were applied. Read any validat
 
 <ScreenshotGallery label="Validated settings reload confirmation" images={settingsScreenshots} />
 
+---
+
 ## Performance
 
 ```yaml
@@ -37,6 +39,8 @@ The runner stops advancing work when its block or time budget is exhausted. File
 
 If a large maze takes too long, compare its physical volume and current tick performance before raising budgets. Higher concurrency adds simultaneous work; it does not make each job receive a separate full budget.
 
+---
+
 ## Size Limits
 
 ```yaml
@@ -57,6 +61,8 @@ defaults:
 
 A request must satisfy all limits, world height, world border, and overlap checks. A small logical grid with very wide corridors can exceed the physical volume or chunk limit.
 
+---
+
 ## Terrain and Mob Protection
 
 ```yaml
@@ -72,6 +78,8 @@ Busy saved volumes also reject entry, teleportation, interactions, inventory ope
 `prevent-mob-spawns` independently cancels mob spawning within saved or pending X/Z footprints from floor level upward, including wall tops and roofs. It does not remove mobs already present or affect the plugin's display entities.
 
 External editors must respect saved regions themselves. Event protection cannot guarantee that an unrelated plugin directly changing blocks will pass through these Minecraft events.
+
+---
 
 ## Replaceable Materials
 
@@ -94,6 +102,8 @@ Use material names recognized by the running server. Air is always permitted. `R
 
 This is a creation preflight rule. Regeneration and repair work from the saved structural plan, and clearing deletion intentionally clears the volume.
 
+---
+
 ## Progress Boss Bar
 
 ```yaml
@@ -106,6 +116,8 @@ progress:
 The boss bar shows operation progress to the initiating player. Colors are `PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, and `WHITE`. Overlays are `PROGRESS`, `NOTCHED_6`, `NOTCHED_10`, `NOTCHED_12`, and `NOTCHED_20`.
 
 Displayed stages describe preparation, chunk acquisition, preflight, snapshot handling, block work, and final persistence. A percentage or stage name is presentation information; successful completion includes the final storage commit.
+
+---
 
 ## Shared Visual Settings
 
@@ -129,6 +141,8 @@ visuals:
 
 Preview displays and guide arrows are visible only to their owner. These visual settings are independent of the real block-operation budget.
 
+---
+
 ## Preview Sessions
 
 ```yaml
@@ -146,6 +160,8 @@ visuals:
 | `max-displays` | 12000 | 100–12000 | Display cap before geometry is simplified |
 
 Large previews simplify visual geometry to fit this cap. The confirmed maze still builds the full retained specification.
+
+---
 
 ## Route Guide
 

@@ -12,27 +12,39 @@ Read the argument named in the chat panel. Use `/maze list` for saved maze names
 
 <ScreenshotGallery label="Unknown maze, unknown preset, invalid page and existing-name feedback" images={validationErrorScreenshots} />
 
+---
+
 ## What server versions are supported?
 
 Maze Engine targets Paper for Minecraft **1.21.11 and later**, using **Java 25**. Install `mazeengine-1.0.0.jar` for every supported server version. Confirm the server process actually uses Java 25; changing an IDE JDK does not change the executable in your server startup script.
 
 Optional integration versions must also support your chosen server. Check the startup log for the enabled plugins and the actual failure cause rather than assuming any older WorldEdit build is compatible with a new Minecraft release.
 
+---
+
 ## Why is my 21×21 maze much larger than 21 blocks?
 
 Dimensions count cells. Each axis expands to `cells × (path-width + wall-thickness) + wall-thickness`. With paths 3 and walls 1, 21 cells span 85 blocks. See [generation and geometry](/maze-engine/generation/).
+
+---
 
 ## Why does creation reject a player inside the area?
 
 World edits require the affected volume to be empty of players. Move everyone outside its full bounds, including the floor and any roof layer. Viewing a private preview from inside it is allowed, but building that preview applies the normal editing check.
 
+---
+
 ## Why does SAFE or REPLACE reject terrain?
 
 `SAFE` permits air above floor level and air or configured replaceable materials at the floor. `REPLACE` permits air or listed materials at every position. Add a material to `placement.replaceable` only when replacing it is intended. `CLEAR` permits overwriting materials but still obeys region safety and WorldGuard rules.
 
+---
+
 ## Why does WorldGuard reject an operator?
 
 Maze Engine checks placement and breaking for the actor through WorldGuard. The Maze Engine admin or protection-bypass node does not grant WorldGuard authorization. Review the region's permissions, flags, and WorldGuard's own session bypass. Console is treated as an administrative actor.
+
+---
 
 ## Why does a preview look simplified or load gradually?
 
@@ -42,39 +54,57 @@ Closing a preview ends that session. A second stop request reports that no previ
 
 <ScreenshotGallery label="Preview closed and no-active-preview feedback" images={previewLifecycleScreenshots} />
 
+---
+
 ## Why did an old chat button expire?
 
 Preview and guide buttons belong to their specific session and expire with it. Deletion confirmation lasts 60 seconds and is tied to the actor and exact current record. Create a fresh preview, guide, or deletion request after expiry or after the record changes.
 
 <ScreenshotGallery label="Expired request and already-closed request examples" images={requestLifecycleScreenshots} />
 
+---
+
 ## Why does regeneration ignore my edited preset file?
 
 A saved maze retains its full original preset and graph. Reload affects future requests. Regeneration rebuilds from the saved settings; repair uses the same graph and restores non-air plan blocks. To use a new theme specification, create a new maze with that preset after handling the old region intentionally.
+
+---
 
 ## Can cancel undo a half-built maze?
 
 Cancellation stops work when possible and preserves recovery metadata where mutation occurred. It is not guaranteed to roll back applied blocks. Inspect the failed record, then regenerate, repair, restore from the original snapshot, or clear according to the intended terrain result.
 
+---
+
 ## The snapshot file is missing. Can Maze Engine restore it?
 
 Original terrain cannot be recreated from the generated maze or graph. Recover the matching `snapshots/<name>.schem` from a backup. A recorded but missing snapshot causes restoration and relevant regeneration checks to fail. Explicit clearing removes the volume and should only be chosen when that is the intended result.
+
+---
 
 ## Maze Engine will not enable after a saved-record error
 
 The repository validates records before registering the running services. Malformed YAML, an unsupported schema, invalid graph, filename mismatch, or overlapping records can stop startup. Back up the world and data, then restore or correct the named record. Deleting metadata without handling its world region removes tracking and protection of that terrain.
 
+---
+
 ## Why does teleport refuse my custom point?
 
 Arrival requires passable non-liquid feet and head space, a safe solid floor, a location inside the world border, and no active maze work at the point. Magma blocks, campfires, soul campfires, and cactus floors are excluded. `/maze setspawn <name> reset` returns to the entrance fallback; its current terrain still must be safe.
+
+---
 
 ## Why is a current-maze placeholder empty?
 
 The player must be online and inside the saved three-dimensional volume. Standing on top of the roof is outside that volume. Named fields require an existing record; a new creation still planning its graph may not be present yet. Values update from the cache every 10 ticks.
 
+---
+
 ## Why was reload rejected?
 
 The complete configuration, messages, and presets must validate. Check the exact key, type, range, block state, or required preset named in the error. Unknown keys are rejected to surface typos. A failed reload retains the previous running settings.
+
+---
 
 ## How do I report a useful issue?
 

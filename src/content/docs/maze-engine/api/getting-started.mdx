@@ -17,6 +17,8 @@ Compile your integration against the public API without shading Maze Engine's cl
 
 If Maze Engine is required, declare `depend: [MazeEngine]` in your Bukkit `plugin.yml`. For optional integration, use `softdepend: [MazeEngine]`, verify provider availability, and keep code referencing its types within your optional integration path.
 
+---
+
 ## Load the Service
 
 Maze Engine registers `MazeEngineApi` with Bukkit's `ServicesManager` while enabled. Resolve it after dependency enablement:
@@ -34,6 +36,8 @@ if (api == null) {
 
 `MazeEngineApi.VERSION` is the public contract version, currently **1**. It is independent of the plugin release version.
 
+---
+
 ## Thread and Lifetime Rules
 
 Call registry queries, operation submission, progress sampling, and cancellation on the **server thread** while Maze Engine is enabled. Off-thread queries or use of a disabled provider throw `IllegalStateException`.
@@ -43,6 +47,8 @@ Returned lists, snapshots, routes, and completed results are immutable values. T
 A completion is published on the server thread, but a callback attached after completion may execute on its attaching thread. Async callbacks use their selected executor. Schedule Bukkit work explicitly when necessary and never block the server thread with `join()` or `get()`.
 
 Do not retain a provider indefinitely across Maze Engine disable and enable cycles. Resolve the registered service again for a newly enabled lifecycle.
+
+---
 
 ## Look Up a Maze
 
@@ -63,6 +69,8 @@ api.mazes().find(id).ifPresent(maze -> {
 
 `all()` includes preparing, generating, deleting, and failed records. A newly accepted create request still planning topology may be absent because it has no saved record yet. Use its operation handle to track that request.
 
+---
+
 ## Find the Current Volume
 
 ```java
@@ -80,6 +88,8 @@ var current = api.mazes().at(position);
 
 The query checks world UUID and all three coordinates against inclusive saved bounds. A position above the roof or below the floor is outside. The returned optional can include a busy or failed record.
 
+---
+
 ## Preset Metadata
 
 ```java
@@ -91,6 +101,8 @@ Preset identifiers are case-insensitive. The current default is listed first, fo
 
 Current preset queries reflect successful reloads. `maze.preset()` instead describes that saved maze's frozen metadata. The API does not expose mutable palette or internal configuration objects.
 
+---
+
 ## Resolve Destinations
 
 ```java
@@ -101,6 +113,8 @@ var destination = api.mazes().destination(new MazeId("garden"));
 `entrance` resolves the centered arrival point at the entrance corridor, one block above the floor and facing inward. `destination` uses the saved custom point when present, otherwise the entrance. A custom point can belong to another world.
 
 These calls resolve coordinates only. They require the selected world to be loaded, do not teleport a player, and do not validate the current arrival terrain. A snapshot's optional custom destination is not the same as the resolved fallback destination.
+
+---
 
 ## Query a Route
 

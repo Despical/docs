@@ -20,6 +20,8 @@ The example has no terrain snapshot. Check this field before relying on restorat
 
 <ScreenshotGallery label="Original-terrain snapshot availability" images={snapshotHoverScreenshots} />
 
+---
+
 ## Operation Lifecycle
 
 Maze Engine tracks creation, regeneration, repair, and deletion by name and operation identity. An accepted request may first be planning its graph before a saved record exists. World work then advances in bounded stages on the server thread, with serial storage work on a separate executor.
@@ -36,6 +38,8 @@ Maze Engine tracks creation, regeneration, repair, and deletion by name and oper
 
 Names and regions are reserved to prevent conflicting requests. Chunk leases keep required chunks available during world work. Final success is published only after the required save or metadata deletion completes and the name reservation is released.
 
+---
+
 ## Saved Files
 
 | Path under `plugins/MazeEngine/` | Contents |
@@ -49,6 +53,8 @@ Names and regions are reserved to prevent conflicting requests. Chunk leases kee
 Records use atomic file replacement. Startup validates schema, filename identity, graph size and connectivity, reciprocal connections, portal placement, frozen preset, and overlap between saved mazes. Invalid persisted data aborts startup rather than silently forgetting a potentially occupied region.
 
 The saved graph is authoritative for regeneration, guide routes, statistics, and API queries. It does not recalculate itself when an external editor changes world blocks.
+
+---
 
 ## Regeneration and Repair
 
@@ -68,6 +74,8 @@ Regeneration and repair retain the **original** snapshot. They reject a recorded
 The regeneration help card explains rebuilding and repair before either command starts terrain work.
 
 <ScreenshotGallery label="Regeneration and repair command help" images={regenerationHelpScreenshots} />
+
+---
 
 ## Clear and Restore Removal
 
@@ -89,6 +97,8 @@ An expired review or an already-closed request must be opened again before it ca
 
 <ScreenshotGallery label="Expired and closed removal requests" images={requestLifecycleScreenshots} />
 
+---
+
 ## Cancellation
 
 ```text
@@ -103,6 +113,8 @@ The command help below describes cancelling active terrain work. Cancelling a de
 
 <ScreenshotGallery label="Active-operation cancellation guidance" images={cancellationHelpScreenshots} />
 
+---
+
 ## Interrupted Startup Recovery
 
 | Interrupted state | Startup behavior |
@@ -114,6 +126,8 @@ The command help below describes cancelling active terrain work. Cancelling a de
 
 There is no automatic replay or terrain rollback of a partially changed operation. Inspect a failed record with `/maze info <name>`, read its error, and choose regeneration, repair, restoration, or clearing according to what remains available.
 
+---
+
 ## Recovery Workflow
 
 1. Keep players outside the affected volume and inspect the current record and error.
@@ -123,6 +137,8 @@ There is no automatic replay or terrain rollback of a partially changed operatio
 5. Use clearing only when removing all blocks in the volume is the intended result.
 
 Do not delete a record file merely to make an error disappear: it also removes the plugin's knowledge and protection of that occupied region. If validation prevents startup, stop the server, back up the data, and correct or restore the affected files with the world state in mind.
+
+---
 
 ## Backups and Moving Servers
 

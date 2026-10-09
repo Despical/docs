@@ -17,6 +17,8 @@ With 21×21 cells, paths 3 blocks wide, walls 1 block thick, wall height 4, and 
 
 An origin at X 100, Y 64, Z 200 for that open maze covers X 100–184, Y 64–68, and Z 200–284. Corridor space starts above the floor.
 
+---
+
 ## Deterministic Seeds
 
 The same seed, cell dimensions, and generation settings reproduce the same topology. The seed and saved preset also determine palette choices and decoration positions. A seed by itself is insufficient to reproduce a maze if the geometry or generation settings differ.
@@ -32,6 +34,8 @@ Regeneration with the existing seed reuses the persisted graph. A different seed
 
 **Copy seed** in the info panel copies the stored number. Keep the original cell dimensions and settings when reproducing its topology.
 
+---
+
 ## Perfect and Braided Mazes
 
 The preset key `algorithm` selects the topology mode below. Both modes use the same Growing Tree-style generator; `BRAIDED` adds a pass after the initial tree is built.
@@ -44,6 +48,8 @@ The preset key `algorithm` selects the topology mode below. Both modes use the s
 `PERFECT` requires `advanced.braid-chance` to be 0. `BRAIDED` permits a 0–1 braid chance and defaults to 0.3 when it is omitted. A braided configuration can still retain some dead ends; the chance is applied to eligible dead ends during generation.
 
 The entrance is selected on the outer boundary. The exit is chosen from boundary cells farthest from that entrance in graph distance. The graph always connects the cells; routes are measured through saved topology rather than live player changes.
+
+---
 
 ## How the Generator Builds a Maze
 
@@ -77,6 +83,8 @@ Route queries also use breadth-first distances, starting at the target cell. The
 
 See the implementation in [MazeGenerator](https://github.com/Despical/MazeEngine/blob/main/src/main/java/dev/despical/mazeengine/core/MazeGenerator.java) and [MazeLayout](https://github.com/Despical/MazeEngine/blob/main/src/main/java/dev/despical/mazeengine/core/MazeLayout.java) for the exact selection and search behavior.
 
+---
+
 ## Generation Controls
 
 All generation values must be finite and between 0 and 1.
@@ -103,11 +111,15 @@ advanced:
 
 Advanced entries override only the values supplied in YAML. A command `--complexity` override discards the preset's advanced section and derives the standard values for that new request.
 
+---
+
 ## Graph Statistics
 
 The info panel and public snapshots expose route length and dead-end count. Route length is the number of cell transitions from entrance to exit, so a route containing 12 cells has length 11. Dead ends are cells with one open graph connection.
 
 A guide or API route can navigate the saved graph even when someone has manually changed live blocks. Repair restores the structural plan; it does not update graph connectivity to match external edits.
+
+---
 
 ## Limits and Cost
 
