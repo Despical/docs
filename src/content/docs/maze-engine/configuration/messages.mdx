@@ -3,6 +3,9 @@ title: messages.yml
 description: Customize Maze Engine MiniMessage feedback, chat panels, button labels, hover text, progress, and contextual placeholders.
 ---
 
+import ScreenshotGallery from "../../../../components/ScreenshotGallery.astro";
+import { settingsScreenshots, previewScreenshots, removalReviewScreenshots, seedHoverScreenshots, validationErrorScreenshots } from "../../../../data/mazeengine-screenshots";
+
 ## File and Formatting
 
 Edit `plugins/MazeEngine/messages.yml`, then use `/maze reload`. Every configured value must be text. Message loading parses MiniMessage syntax and requires the essential keys before publishing the replacement.
@@ -18,6 +21,10 @@ hover-build: '<#91B78A>Build this layout.</#91B78A><newline><#A8B8C9>Move outsid
 ```
 
 Quote strings containing `#`, angle-bracket tags, or punctuation meaningful to YAML. In the file, `<name>` and similar tags are contextual placeholders supplied by Maze Engine, rather than PlaceholderAPI expressions.
+
+The settings confirmation is an example of the shared feedback panel. Reload after changing message templates to apply their validated replacement.
+
+<ScreenshotGallery label="Settings message after reload" images={settingsScreenshots} />
 
 ## Message Groups
 
@@ -36,6 +43,10 @@ Quote strings containing `#`, angle-bracket tags, or punctuation meaningful to Y
 | Help and concepts | `help-title`, `help-row`, concept text | Command reference and explanatory panels |
 
 The bundled file is the complete key reference. Preserve contextual placeholders already present in each template rather than assuming every tag is available in every message.
+
+The preview panels show how theme, dimensions, ceiling state and rich action buttons form one message group. The values change with the retained preview specification.
+
+<ScreenshotGallery label="Preview message templates in actual chat" images={previewScreenshots} />
 
 ## Contextual Placeholders
 
@@ -56,11 +67,23 @@ Ordinary arguments are inserted as unparsed text, so a maze name cannot inject M
 
 Changing `[Delete]` to `[Remove]` changes its label, not its authorization or terrain policy. Callback commands remain managed by the plugin.
 
+The **Copy seed** hover is rendered with its contextual value and action. The full panel and focused tooltip below come from the same captured interaction.
+
+<ScreenshotGallery label="Contextual seed value and hover message" images={seedHoverScreenshots} />
+
 ## Panels and Compatibility
 
 Where a matching `*-title` and `*-body` template exists, feedback is rendered as a panel with contextual actions. The plugin fills additional missing keys from bundled defaults. Essential keys still must exist: `prefix`, `line`, `queued`, `completed`, `deleted`, `cancelled`, `teleported`, `reloaded`, `empty`, `error`, `progress`, `list-entry`, and `info`.
 
 Named colors such as `<green>` are normalized to the plugin's shared palette. Use explicit hexadecimal tags when you want a precise custom color. Title templates retain title styling; regular feedback and body text are normalized to non-bold rendering.
+
+Removal review uses its own policy text, Confirm/Cancel controls and closed-request feedback. This sequence ends by cancelling the review.
+
+<ScreenshotGallery label="Removal review and cancellation message templates" images={removalReviewScreenshots} />
+
+Validation panels share the same presentation while keeping the argument-specific reason visible.
+
+<ScreenshotGallery label="Maze, preset, page and duplicate-name validation messages" images={validationErrorScreenshots} />
 
 ## PlaceholderAPI
 
