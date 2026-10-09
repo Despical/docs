@@ -3,19 +3,22 @@ title: Operations and Recovery
 description: Understand Maze Engine journals, saved records, snapshot restoration, regeneration versus repair, cancellation, failure states, and backup recovery.
 ---
 
-import GameScreenshot from "../../../components/GameScreenshot.astro";
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { savedMazeScreenshots, mazeDetailsScreenshots, snapshotHoverScreenshots, regenerationHelpScreenshots, removalReviewScreenshots, requestLifecycleScreenshots, cancellationHelpScreenshots } from "../../../data/mazeengine-screenshots";
 
 ## Inspect and Manage
 
 Use `/maze list` to browse saved mazes. Hover a row for details or click it to open the maze controls.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-maze-list.webp" alt="The saved maze list with names, themes, cell dimensions, and Ready status" crop={[4, 796, 520, 202]} />
+<ScreenshotGallery label="Saved maze list and hovered record summary" images={savedMazeScreenshots} />
 
 `/maze info <name>` opens the same details panel directly. It includes the saved geometry and seed, current state, snapshot availability, and action buttons allowed by your permissions.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-maze-details.webp" alt="A ready Hedge maze detail panel with Teleport, Guide, Repair, Copy seed, and Delete controls" crop={[4, 710, 520, 288]} />
+<ScreenshotGallery label="Hedge record dimensions and management controls" images={mazeDetailsScreenshots.slice(0, 2)} />
 
 The example has no terrain snapshot. Check this field before relying on restoration during deletion. The [chat interface guide](/maze-engine/chat-interface/) explains the other panels.
+
+<ScreenshotGallery label="Original-terrain snapshot availability" images={snapshotHoverScreenshots} />
 
 ## Operation Lifecycle
 
@@ -62,6 +65,10 @@ Repair keeps the seed and graph and writes only planned non-air blocks. This pre
 
 Regeneration and repair retain the **original** snapshot. They reject a recorded snapshot whose file is missing and reject incomplete initial snapshot capture. Recover the original file or remove the incomplete record with an appropriate removal policy before starting over.
 
+The regeneration help card explains rebuilding and repair before either command starts terrain work.
+
+<ScreenshotGallery label="Regeneration and repair command help" images={regenerationHelpScreenshots} />
+
 ## Clear and Restore Removal
 
 | Policy | Result |
@@ -74,6 +81,14 @@ Successful removal deletes the metadata and snapshot, releases the identifier, a
 
 A snapshot is an original-terrain copy, not a backup of the current maze. It is bounded by the saved region and cannot recover blocks outside it. A recorded but missing file causes a restore error; the automatic policy does not silently clear instead.
 
+Deletion first opens a review that names the terrain policy. The captured record has no snapshot, so the review states **clear**. Its Cancel hover and final cancelled-request panel show closing the review without removing the maze.
+
+<ScreenshotGallery label="Clear-removal review and cancelled request" images={removalReviewScreenshots} />
+
+An expired review or an already-closed request must be opened again before it can act on the current record.
+
+<ScreenshotGallery label="Expired and closed removal requests" images={requestLifecycleScreenshots} />
+
 ## Cancellation
 
 ```text
@@ -83,6 +98,10 @@ A snapshot is an original-terrain copy, not a backup of the current maze. It is 
 Cancellation requests the end of that operation and observes pending journal writes. It is **not a rollback promise**. Once world mutation has occurred, the record can remain failed and the partial structure can remain in the world.
 
 An initial preparation that has not changed blocks can be abandoned and its metadata removed. A job already completing its final commit may finish successfully rather than cancel. Read the final feedback and current record before choosing a recovery action.
+
+The command help below describes cancelling active terrain work. Cancelling a deletion **review** closes a pending request; `/maze cancel` addresses an operation that is already running.
+
+<ScreenshotGallery label="Active-operation cancellation guidance" images={cancellationHelpScreenshots} />
 
 ## Interrupted Startup Recovery
 
