@@ -19,10 +19,12 @@ export interface MazeEnginePreset {
     images: { src: string; alt: string; title: string }[];
 }
 
-type PresetDefinition = Omit<MazeEnginePreset, 'images' | 'command'>;
+type PresetDefinition = Omit<MazeEnginePreset, 'images' | 'command' | 'views'>;
+
+const presetViewOrder: MazeEnginePreset['views'] = ['side', 'interior', 'overhead'];
 
 // Native geometry and difficulty from the saved 15 x 15, seed 42 photo mazes.
-// View orders were shuffled once: each angle starts exactly ten of the galleries.
+// Every gallery starts with the distant view, followed by the interior and overhead views.
 const presetDefinitions: PresetDefinition[] = [
     {
         id: "abyss",
@@ -32,7 +34,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.99,
         geometry: { pathWidth: 1, wallThickness: 4, wallHeight: 10, roof: true, footprint: 79 },
-        views: ["overhead", "interior", "side"],
     },
     {
         id: "bamboo",
@@ -42,7 +43,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.2,
         geometry: { pathWidth: 6, wallThickness: 1, wallHeight: 3, roof: false, footprint: 106 },
-        views: ["overhead", "side", "interior"],
     },
     {
         id: "candy",
@@ -52,7 +52,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.5,
         geometry: { pathWidth: 4, wallThickness: 1, wallHeight: 6, roof: false, footprint: 76 },
-        views: ["interior", "overhead", "side"],
     },
     {
         id: "catacombs",
@@ -62,7 +61,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 1.0,
         geometry: { pathWidth: 1, wallThickness: 3, wallHeight: 4, roof: true, footprint: 63 },
-        views: ["interior", "side", "overhead"],
     },
     {
         id: "claustrophobic",
@@ -72,7 +70,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.95,
         geometry: { pathWidth: 1, wallThickness: 2, wallHeight: 2, roof: true, footprint: 47 },
-        views: ["side", "overhead", "interior"],
     },
     {
         id: "copper",
@@ -82,7 +79,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.7,
         geometry: { pathWidth: 2, wallThickness: 1, wallHeight: 4, roof: true, footprint: 46 },
-        views: ["interior", "overhead", "side"],
     },
     {
         id: "crystal",
@@ -92,7 +88,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.45,
         geometry: { pathWidth: 5, wallThickness: 2, wallHeight: 9, roof: false, footprint: 107 },
-        views: ["overhead", "interior", "side"],
     },
     {
         id: "default",
@@ -102,7 +97,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.7,
         geometry: { pathWidth: 3, wallThickness: 1, wallHeight: 4, roof: false, footprint: 61 },
-        views: ["side", "interior", "overhead"],
     },
     {
         id: "desert",
@@ -112,7 +106,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.35,
         geometry: { pathWidth: 4, wallThickness: 1, wallHeight: 4, roof: false, footprint: 76 },
-        views: ["interior", "side", "overhead"],
     },
     {
         id: "dungeon",
@@ -122,7 +115,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.9,
         geometry: { pathWidth: 2, wallThickness: 1, wallHeight: 4, roof: true, footprint: 46 },
-        views: ["interior", "side", "overhead"],
     },
     {
         id: "end",
@@ -132,7 +124,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.65,
         geometry: { pathWidth: 3, wallThickness: 1, wallHeight: 7, roof: false, footprint: 61 },
-        views: ["overhead", "side", "interior"],
     },
     {
         id: "factory",
@@ -142,7 +133,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.5,
         geometry: { pathWidth: 2, wallThickness: 1, wallHeight: 10, roof: true, footprint: 46 },
-        views: ["overhead", "interior", "side"],
     },
     {
         id: "frost",
@@ -152,7 +142,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.6,
         geometry: { pathWidth: 3, wallThickness: 1, wallHeight: 4, roof: false, footprint: 61 },
-        views: ["overhead", "side", "interior"],
     },
     {
         id: "gladiator",
@@ -162,7 +151,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.85,
         geometry: { pathWidth: 3, wallThickness: 3, wallHeight: 12, roof: false, footprint: 93 },
-        views: ["interior", "side", "overhead"],
     },
     {
         id: "graveyard",
@@ -172,7 +160,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.88,
         geometry: { pathWidth: 2, wallThickness: 3, wallHeight: 3, roof: false, footprint: 78 },
-        views: ["side", "interior", "overhead"],
     },
     {
         id: "haunted",
@@ -182,7 +169,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.97,
         geometry: { pathWidth: 2, wallThickness: 1, wallHeight: 5, roof: true, footprint: 46 },
-        views: ["overhead", "side", "interior"],
     },
     {
         id: "hedge",
@@ -192,7 +178,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.55,
         geometry: { pathWidth: 3, wallThickness: 2, wallHeight: 4, roof: false, footprint: 77 },
-        views: ["side", "interior", "overhead"],
     },
     {
         id: "library",
@@ -202,7 +187,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.92,
         geometry: { pathWidth: 2, wallThickness: 2, wallHeight: 3, roof: true, footprint: 62 },
-        views: ["overhead", "interior", "side"],
     },
     {
         id: "monochrome",
@@ -212,7 +196,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.95,
         geometry: { pathWidth: 3, wallThickness: 4, wallHeight: 5, roof: false, footprint: 109 },
-        views: ["interior", "overhead", "side"],
     },
     {
         id: "nether",
@@ -222,7 +205,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.5,
         geometry: { pathWidth: 2, wallThickness: 2, wallHeight: 5, roof: false, footprint: 62 },
-        views: ["interior", "side", "overhead"],
     },
     {
         id: "ocean",
@@ -232,7 +214,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.55,
         geometry: { pathWidth: 4, wallThickness: 1, wallHeight: 5, roof: true, footprint: 76 },
-        views: ["side", "overhead", "interior"],
     },
     {
         id: "rainbow",
@@ -242,7 +223,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.3,
         geometry: { pathWidth: 4, wallThickness: 2, wallHeight: 5, roof: false, footprint: 92 },
-        views: ["side", "interior", "overhead"],
     },
     {
         id: "ruins",
@@ -252,7 +232,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.15,
         geometry: { pathWidth: 7, wallThickness: 1, wallHeight: 2, roof: false, footprint: 121 },
-        views: ["side", "overhead", "interior"],
     },
     {
         id: "sakura",
@@ -262,7 +241,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.2,
         geometry: { pathWidth: 5, wallThickness: 1, wallHeight: 3, roof: false, footprint: 91 },
-        views: ["interior", "overhead", "side"],
     },
     {
         id: "sky",
@@ -272,7 +250,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.12,
         geometry: { pathWidth: 6, wallThickness: 2, wallHeight: 4, roof: false, footprint: 122 },
-        views: ["interior", "overhead", "side"],
     },
     {
         id: "steampunk",
@@ -282,7 +259,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.68,
         geometry: { pathWidth: 3, wallThickness: 2, wallHeight: 7, roof: true, footprint: 77 },
-        views: ["side", "overhead", "interior"],
     },
     {
         id: "swamp",
@@ -292,7 +268,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Braided",
         complexity: 0.6,
         geometry: { pathWidth: 3, wallThickness: 2, wallHeight: 3, roof: false, footprint: 77 },
-        views: ["side", "overhead", "interior"],
     },
     {
         id: "temple",
@@ -302,7 +277,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.9,
         geometry: { pathWidth: 3, wallThickness: 2, wallHeight: 7, roof: true, footprint: 77 },
-        views: ["overhead", "side", "interior"],
     },
     {
         id: "volcanic",
@@ -312,7 +286,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.9,
         geometry: { pathWidth: 2, wallThickness: 3, wallHeight: 8, roof: true, footprint: 78 },
-        views: ["overhead", "interior", "side"],
     },
     {
         id: "wilderness",
@@ -322,7 +295,6 @@ const presetDefinitions: PresetDefinition[] = [
         algorithm: "Perfect",
         complexity: 0.75,
         geometry: { pathWidth: 3, wallThickness: 2, wallHeight: 4, roof: false, footprint: 77 },
-        views: ["side", "interior", "overhead"],
     },
 ];
 
@@ -344,8 +316,9 @@ function describeView(preset: PresetDefinition, angle: PresetAngle): string {
 
 export const mazeEnginePresets: MazeEnginePreset[] = presetDefinitions.map((preset) => ({
     ...preset,
+    views: presetViewOrder,
     command: `/maze create ${preset.id}_demo 15 15 --preset ${preset.id} --seed 42`,
-    images: preset.views.map((angle) => ({
+    images: presetViewOrder.map((angle) => ({
         src: `/images/mazeengine/presets/${preset.id}-${angle}.webp`,
         title: viewTitles[angle],
         alt: describeView(preset, angle),
