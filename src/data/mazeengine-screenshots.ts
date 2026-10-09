@@ -505,74 +505,54 @@ export const commandHelpScreenshots = select(
 
 export const commandHoverScreenshots = select(
     "chat-help-create-hover",
-    "chat-help-create-hover-tooltip",
     "chat-help-teleport-hover",
-    "chat-help-teleport-hover-tooltip",
     "chat-help-setspawn-hover",
-    "chat-help-setspawn-hover-tooltip",
     "chat-help-regenerate-hover",
-    "chat-help-regenerate-hover-tooltip",
     "chat-help-cancel-hover",
-    "chat-help-cancel-hover-tooltip",
 );
 
 export const conceptHelpScreenshots = select(
-    "chat-concepts-seed-complexity-upper",
     "chat-concepts-seed-complexity",
-    "chat-concepts-cells-geometry-upper",
     "chat-concepts-cells-geometry",
-    "chat-concepts-presets-connections-upper",
     "chat-concepts-presets-connections",
-    "chat-concepts-placement-snapshot-upper",
     "chat-concepts-placement-snapshot",
-    "chat-concepts-selection-origin-upper",
     "chat-concepts-selection-origin",
 );
 
 export const creationHelpScreenshots = select(
     "chat-help-create-hover",
-    "chat-help-create-hover-tooltip",
 );
 
 export const teleportHelpScreenshots = select(
     "chat-help-teleport-hover",
-    "chat-help-teleport-hover-tooltip",
     "chat-help-setspawn-hover",
-    "chat-help-setspawn-hover-tooltip",
 );
 
 export const regenerationHelpScreenshots = select(
     "chat-help-regenerate-hover",
-    "chat-help-regenerate-hover-tooltip",
 );
 
 export const cancellationHelpScreenshots = select(
     "chat-help-cancel-hover",
-    "chat-help-cancel-hover-tooltip",
 );
 
 export const seedComplexityScreenshots = select(
-    "chat-concepts-seed-complexity-upper",
     "chat-concepts-seed-complexity",
 );
 
 export const cellsGeometryScreenshots = select(
-    "chat-concepts-cells-geometry-upper",
     "chat-concepts-cells-geometry",
 );
 
 export const presetConnectionsScreenshots = select(
-    "chat-concepts-presets-connections-upper",
     "chat-concepts-presets-connections",
 );
 
 export const placementSnapshotScreenshots = select(
-    "chat-concepts-placement-snapshot-upper",
     "chat-concepts-placement-snapshot",
 );
 
 export const selectionOriginScreenshots = select(
-    "chat-concepts-selection-origin-upper",
     "chat-concepts-selection-origin",
 );
 
@@ -584,21 +564,15 @@ export const presetBrowserScreenshots = select(
 
 export const presetHoverScreenshots = select(
     "chat-preset-bamboo-hover",
-    "chat-preset-bamboo-hover-tooltip",
     "chat-preset-default-hover",
-    "chat-preset-default-hover-tooltip",
     "chat-preset-abyss-hover",
-    "chat-preset-abyss-hover-tooltip",
 );
 
 export const savedMazeScreenshots = select(
     "chat-maze-list",
-    "chat-maze-list-hover",
-    "chat-maze-list-hover-tooltip",
 );
 
 export const mazeDetailsScreenshots = select(
-    "chat-maze-details-hedge-upper",
     "chat-maze-details-hedge",
     "chat-maze-details-sakura",
     "chat-maze-details-frost",
@@ -609,30 +583,22 @@ export const mazeDetailsScreenshots = select(
 
 export const mazeDetailsHoverScreenshots = select(
     "chat-details-snapshot-hover",
-    "chat-details-snapshot-hover-tooltip",
     "chat-details-entrance-hover",
-    "chat-details-entrance-hover-tooltip",
     "chat-details-copy-seed-hover",
-    "chat-details-copy-seed-hover-tooltip",
     "chat-details-custom-spawn-hover",
-    "chat-details-custom-spawn-hover-tooltip",
 );
 
 export const snapshotHoverScreenshots = select(
     "chat-details-snapshot-hover",
-    "chat-details-snapshot-hover-tooltip",
 );
 
 export const arrivalHoverScreenshots = select(
     "chat-details-entrance-hover",
-    "chat-details-entrance-hover-tooltip",
     "chat-details-custom-spawn-hover",
-    "chat-details-custom-spawn-hover-tooltip",
 );
 
 export const seedHoverScreenshots = select(
     "chat-details-copy-seed-hover",
-    "chat-details-copy-seed-hover-tooltip",
 );
 
 export const previewScreenshots = select(
@@ -643,7 +609,6 @@ export const previewScreenshots = select(
 export const previewLifecycleScreenshots = select(
     "chat-preview-closed",
     "chat-preview-already-closed",
-    "chat-preview-roofed-closed",
 );
 
 export const guideLifecycleScreenshots = select(
@@ -666,8 +631,6 @@ export const validationErrorScreenshots = select(
 
 export const removalReviewScreenshots = select(
     "chat-delete-review-clear",
-    "chat-delete-review-cancel-hover",
-    "chat-delete-review-cancel-hover-tooltip",
     "chat-delete-cancelled",
 );
 
