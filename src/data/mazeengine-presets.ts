@@ -339,7 +339,7 @@ function describeView(preset: PresetDefinition, angle: PresetAngle): string {
     if (angle === 'side') {
         return `A distant side view of the ${preset.name} maze showing its wall height and materials`;
     }
-    return `Inside a ${preset.name} maze corridor${preset.geometry.roof ? ', with the ceiling restored and night vision used to show the block textures' : ''}`;
+    return `Inside the ${preset.name} maze, at corridor level${preset.geometry.roof ? ', with the ceiling restored and night vision used to show the block textures' : ''}`;
 }
 
 export const mazeEnginePresets: MazeEnginePreset[] = presetDefinitions.map((preset) => ({

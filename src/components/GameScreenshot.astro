@@ -12,7 +12,7 @@ interface Props {
 const { src, alt, crop, width = 1920, height = 1080 } = Astro.props;
 ---
 
-<div class="game-screenshot" style={!crop ? `--screenshot-width: ${width}px` : undefined}>
+<div class="game-screenshot" style={!crop ? `--screenshot-width: ${width + 2}px` : undefined}>
     <Zoom label={alt}>
         {crop ? (
             <svg viewBox={crop.join(' ')} width={crop[2]} height={crop[3]} role="img" aria-label={alt}>
