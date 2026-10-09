@@ -14,7 +14,7 @@ Use `/maze list` to browse saved mazes. Hover a row for details or click it to o
 
 `/maze info <name>` opens the same details panel directly. It includes the saved geometry and seed, current state, snapshot availability, and action buttons allowed by your permissions.
 
-<ScreenshotGallery label="Hedge record dimensions and management controls" images={mazeDetailsScreenshots.slice(0, 2)} />
+<ScreenshotGallery label="Hedge record dimensions and management controls" images={mazeDetailsScreenshots.slice(0, 1)} />
 
 The example has no terrain snapshot. Check this field before relying on restoration during deletion. The [chat interface guide](/maze-engine/chat-interface/) explains the other panels.
 
@@ -81,7 +81,7 @@ Successful removal deletes the metadata and snapshot, releases the identifier, a
 
 A snapshot is an original-terrain copy, not a backup of the current maze. It is bounded by the saved region and cannot recover blocks outside it. A recorded but missing file causes a restore error; the automatic policy does not silently clear instead.
 
-Deletion first opens a review that names the terrain policy. The captured record has no snapshot, so the review states **clear**. Its Cancel hover and final cancelled-request panel show closing the review without removing the maze.
+Deletion first opens a review that names the terrain policy. The captured record has no snapshot, so the review states **clear**. The final cancelled-request panel shows closing the review without removing the maze.
 
 <ScreenshotGallery label="Clear-removal review and cancelled request" images={removalReviewScreenshots} />
 
