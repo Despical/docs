@@ -7,8 +7,10 @@ const currentTopic = isPageWithTopic ? topics.find((t) => t.isCurrent) : null;
 const normalizedPath = Astro.url.pathname.replace(/\/+$/, "");
 const isSourceAccess = normalizedPath === "/source-access";
 
-const project = currentTopic?.label?.toLowerCase().replace(' ', '-');
-const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "mazeengine"]);
+const project = currentTopic
+    ? new URL(currentTopic.link, Astro.url).pathname.split("/").filter(Boolean)[0]
+    : undefined;
+const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine"]);
 const freePluginMarketplaces = new Set(["SpigotMC", "BuiltByBit", "Modrinth"]);
 const brandLabels = new Set(["github", "javadoc", "discord", "patreon", "spigotmc", "builtbybit", "modrinth"]);
 
@@ -44,7 +46,7 @@ const links = (config.social || [])
 
         return { ...link, label, icon, brand };
     })
-    .filter((link) => !project || project === "mazeengine" || !freePlugins.has(project) || freePluginMarketplaces.has(link.label))
+    .filter((link) => !project || project === "maze-engine" || !freePlugins.has(project) || freePluginMarketplaces.has(link.label))
     .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
 ---
 
