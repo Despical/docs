@@ -3,7 +3,6 @@ import GameScreenshot from './GameScreenshot.astro';
 
 interface Props {
     label: string;
-    showTitles?: boolean;
     images: {
         src: string;
         alt: string;
@@ -14,7 +13,7 @@ interface Props {
     }[];
 }
 
-const { label, images, showTitles = true } = Astro.props;
+const { label, images } = Astro.props;
 ---
 
 <screenshot-gallery role="region" aria-roledescription="carousel" aria-label={label}>
@@ -34,10 +33,11 @@ const { label, images, showTitles = true } = Astro.props;
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6" /></svg>
         </button>
     </div>
-    <div class="gallery-caption" aria-live="polite" aria-atomic="true">
-        <span class="gallery-title" hidden={!showTitles}>{images[0]?.title}</span>
-        <span class="gallery-count">1 / {images.length}</span>
-    </div>
+    {images.length > 1 && (
+        <div class="gallery-caption" aria-live="polite" aria-atomic="true">
+            <span class="gallery-count">1 / {images.length}</span>
+        </div>
+    )}
 </screenshot-gallery>
 
 <style>
@@ -157,7 +157,7 @@ const { label, images, showTitles = true } = Astro.props;
 
     .gallery-caption {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         gap: 1rem;
         margin-top: 0.75rem;
         color: var(--sl-color-gray-2);
@@ -188,9 +188,8 @@ const { label, images, showTitles = true } = Astro.props;
             const slides = [...this.querySelectorAll<HTMLElement>('.gallery-slide')];
             const previous = this.querySelector<HTMLButtonElement>('.previous');
             const next = this.querySelector<HTMLButtonElement>('.next');
-            const title = this.querySelector('.gallery-title');
             const count = this.querySelector('.gallery-count');
-            if (!track || !previous || !next || !title || !count) return;
+            if (!track || !previous || !next || !slides.length) return;
 
             let index = 0;
             let scrollTimer: ReturnType<typeof setTimeout>;
@@ -198,8 +197,7 @@ const { label, images, showTitles = true } = Astro.props;
                 index = selected;
                 previous.hidden = index === 0;
                 next.hidden = index === slides.length - 1;
-                title.textContent = slides[index].dataset.title ?? '';
-                count.textContent = `${index + 1} / ${slides.length}`;
+                if (count) count.textContent = `${index + 1} / ${slides.length}`;
                 slides.forEach((slide, slideIndex) => {
                     const active = slideIndex === index;
                     slide.classList.toggle('is-active', active);
