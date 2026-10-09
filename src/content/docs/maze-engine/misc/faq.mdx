@@ -3,6 +3,15 @@ title: Troubleshooting
 description: Diagnose Maze Engine installation, dimensions, placement, previews, permissions, WorldGuard failures, snapshot recovery, placeholders, and teleport safety.
 ---
 
+import ScreenshotGallery from "../../../../components/ScreenshotGallery.astro";
+import { validationErrorScreenshots, requestLifecycleScreenshots, previewLifecycleScreenshots } from "../../../../data/mazeengine-screenshots";
+
+## Why is a maze, preset or help page unavailable?
+
+Read the argument named in the chat panel. Use `/maze list` for saved maze names and `/maze presets` for currently loaded themes. Help uses pages 1 and 2; the concept browser has its own pages. If the name already exists, inspect it with `/maze info <name>` or choose a different name for the new maze.
+
+<ScreenshotGallery label="Unknown maze, unknown preset, invalid page and existing-name feedback" images={validationErrorScreenshots} />
+
 ## What server versions are supported?
 
 Maze Engine targets Paper for Minecraft **1.21.11 and later**, using **Java 25**. Install `mazeengine-1.0.0.jar` for every supported server version. Confirm the server process actually uses Java 25; changing an IDE JDK does not change the executable in your server startup script.
@@ -29,9 +38,15 @@ Maze Engine checks placement and breaking for the actor through WorldGuard. The 
 
 Previews use a shared display spawn budget and simplify geometry when the configured display cap would be exceeded. The actual build retains the full specification. Check `visuals.spawns-per-tick`, `max-displays`, client entity rendering distance, and whether the action bar is still showing planning or loading.
 
+Closing a preview ends that session. A second stop request reports that no preview remains; open a fresh preview if you want to inspect its specification again.
+
+<ScreenshotGallery label="Preview closed and no-active-preview feedback" images={previewLifecycleScreenshots} />
+
 ## Why did an old chat button expire?
 
 Preview and guide buttons belong to their specific session and expire with it. Deletion confirmation lasts 60 seconds and is tied to the actor and exact current record. Create a fresh preview, guide, or deletion request after expiry or after the record changes.
+
+<ScreenshotGallery label="Expired request and already-closed request examples" images={requestLifecycleScreenshots} />
 
 ## Why does regeneration ignore my edited preset file?
 
