@@ -1065,11 +1065,6 @@ export default defineConfig({
                                 items: [
                                     {label: "Whack Me API", link: "/whack-me/api/whack-me-api"},
                                     {
-                                        label: "Javadocs",
-                                        link: "https://javadoc.despical.dev/whack-me/",
-                                        attrs: {target: "_blank"},
-                                    },
-                                    {
                                         label: "Game Events",
                                         collapsed: true,
                                         items: [
@@ -1096,6 +1091,11 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {label: "FAQ", link: "/whack-me/misc/faq"},
+                                    {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/whack-me/",
+                                        attrs: {target: "_blank", rel: "noopener noreferrer"},
+                                    },
                                     {
                                         label: "Source Code",
                                         link: "https://github.com/Despical/WhackMe",
@@ -1377,6 +1377,11 @@ export default defineConfig({
                                 items: [
                                     {label: "Troubleshooting", link: "/maze-engine/misc/faq/"},
                                     {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/maze-engine/",
+                                        attrs: {target: "_blank", rel: "noopener noreferrer"},
+                                    },
+                                    {
                                         label: "Source Code",
                                         link: "https://github.com/Despical/MazeEngine",
                                         attrs: {target: "_blank", rel: "noopener noreferrer"},
@@ -1599,11 +1604,6 @@ export default defineConfig({
                                         link: "/tnt-run/api/tnt-run-api",
                                     },
                                     {
-                                        label: "Javadocs",
-                                        link: "https://javadoc.despical.dev/tnt-run/",
-                                        attrs: {target: "_blank"},
-                                    },
-                                    {
                                         label: "Game Events",
                                         collapsed: true,
                                         items: [
@@ -1667,6 +1667,11 @@ export default defineConfig({
                                     {
                                         label: "FAQ",
                                         link: "/tnt-run/misc/faq",
+                                    },
+                                    {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/tnt-run/",
+                                        attrs: {target: "_blank", rel: "noopener noreferrer"},
                                     },
                                     {
                                         label: "Source Code",
@@ -1817,11 +1822,6 @@ export default defineConfig({
                                         link: "/kotl/api/kotl-api",
                                     },
                                     {
-                                        label: "Javadocs",
-                                        link: "https://javadoc.despical.dev/kotl/",
-                                        attrs: {target: "_blank"},
-                                    },
-                                    {
                                         label: "Game Events",
                                         collapsed: true,
                                         items: [
@@ -1869,6 +1869,11 @@ export default defineConfig({
                                     {
                                         label: "FAQ",
                                         link: "/kotl/misc/faq",
+                                    },
+                                    {
+                                        label: "Javadocs",
+                                        link: "https://javadoc.despical.dev/kotl/",
+                                        attrs: {target: "_blank", rel: "noopener noreferrer"},
                                     },
                                     {
                                         label: "Source Code",
