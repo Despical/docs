@@ -3,6 +3,9 @@ title: Creating Mazes
 description: Resolve Maze Engine cell dimensions, origins, world selection, placement modes, terrain snapshots, and WorldEdit cuboids.
 ---
 
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { creationHelpScreenshots, placementSnapshotScreenshots, snapshotHoverScreenshots, selectionOriginScreenshots } from "../../../data/mazeengine-screenshots";
+
 ## Name, Cells, and Origin
 
 ```text
@@ -21,6 +24,10 @@ The origin is the minimum X/Z corner at **floor level**. For a player in the tar
 
 The world must already be loaded. Console requests require `--world`, `--x`, `--y`, and `--z`. A player targeting a different world also needs explicit coordinates.
 
+The **create** help card summarizes the command before submission. Hover the command in `/maze help` to see its argument guidance.
+
+<ScreenshotGallery label="Create command and argument tooltip" images={creationHelpScreenshots} />
+
 ## Choose Placement Rules
 
 All three policies produce the same final block plan. They differ in which existing materials the preflight permits.
@@ -38,6 +45,8 @@ All three policies produce the same final block plan. They differ in which exist
 
 `REPLACE` can carve through permitted stone or dirt. It rejects an unlisted material rather than overwriting it. `CLEAR` does not consult the replaceable list. None of these policies bypass player exclusion, maze overlap checks, limits, world height, the world border, or WorldGuard authorization.
 
+<ScreenshotGallery label="Placement and snapshot guidance in chat" images={placementSnapshotScreenshots} />
+
 ## Capture Original Terrain
 
 `--snapshot` requests an original-terrain snapshot before the first block mutation:
@@ -49,6 +58,10 @@ All three policies produce the same final block plan. They differ in which exist
 WorldEdit or FAWE must be available. The snapshot covers the full physical maze volume, including floor and roof where present. Regeneration retains that original snapshot rather than capturing the already-built maze.
 
 The command flag can enable snapshot capture for a preset that normally disables it. To control the default, edit the preset's `snapshot` property. The command has no `--no-snapshot` flag.
+
+After creation, inspect **Snapshot** in `/maze info <name>`. The captured Hedge record has no original-terrain snapshot; its hover card explains what that means for removal.
+
+<ScreenshotGallery label="Snapshot availability field and explanation" images={snapshotHoverScreenshots} />
 
 ## Fit a WorldEdit Selection
 
@@ -65,6 +78,10 @@ The command flag can enable snapshot capture for a preset that normally disables
 Maze Engine finds the largest whole-cell grid fitting the selection's X/Z span and centers it horizontally. The floor starts at the selection's minimum Y. Any unused horizontal margin remains outside the maze; the result does not necessarily fill every selected block.
 
 Selection requests require a player and cannot be combined with explicit dimensions, `--world`, or coordinate options. A selection unable to fit at least 2×2 cells is rejected.
+
+The concept cards explain selection fitting and the floor origin. These are command guidance for the workflow above.
+
+<ScreenshotGallery label="Selection fitting and origin guidance" images={selectionOriginScreenshots} />
 
 ## Override a Preset
 
