@@ -3,6 +3,9 @@ title: Integrations
 description: Configure optional WorldEdit or FAWE selections and snapshots, WorldGuard authorization, and Maze Engine's automatic PlaceholderAPI expansion.
 ---
 
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { selectionOriginScreenshots, snapshotHoverScreenshots } from "../../../data/mazeengine-screenshots";
+
 ## Optional Dependencies
 
 Maze Engine declares WorldEdit, FastAsyncWorldEdit, WorldGuard, and PlaceholderAPI as soft dependencies. Basic generation and management do not require them. Install builds compatible with your Paper and Minecraft version, then restart the server so dependency order and integration registration are correct.
@@ -18,7 +21,15 @@ Maze Engine declares WorldEdit, FastAsyncWorldEdit, WorldGuard, and PlaceholderA
 
 Use `--selection` to fit a cuboid selection. Maze Engine computes cell dimensions and a centered origin; the selection must be tall enough and fit at least 2×2 cells. Selection requires a player and replaces explicit origin and dimension arguments.
 
+The in-game concept help explains the selection and origin rules before you submit a request.
+
+<ScreenshotGallery label="WorldEdit selection and origin help" images={selectionOriginScreenshots} />
+
 Use `--snapshot`, or `snapshot: true` in a preset, to capture original terrain before world mutation. Snapshot files are stored as `snapshots/<name>.schem`. Restoration requires the complete file and a working WorldEdit-compatible integration.
+
+Inspect **Snapshot** in the saved maze panel before requesting restoration. This example's hover card explains that the captured Hedge record has no original-terrain snapshot.
+
+<ScreenshotGallery label="Snapshot metadata and restoration guidance" images={snapshotHoverScreenshots} />
 
 Maze Engine iterates snapshot capture and restoration under its world-operation budget. A snapshot is retained across regeneration and repair. Removing the record successfully also removes its associated snapshot file.
 
