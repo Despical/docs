@@ -4,6 +4,8 @@ description: Use personal Maze Engine display previews and adaptive route arrows
 ---
 
 import GameScreenshot from "../../../components/GameScreenshot.astro";
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { previewScreenshots, previewLifecycleScreenshots, guideLifecycleScreenshots } from "../../../data/mazeengine-screenshots";
 
 ## Private Previews
 
@@ -25,7 +27,9 @@ Each player has at most one active preview. A new preview replaces that player's
 
 The chat panel provides **Create** and **Close** buttons. Creation is available when you have `mazeengine.create`.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-preview.webp" alt="The active Maze Preview chat panel listing its theme and dimensions, with Create and Close buttons beneath the summary" crop={[4, 817, 520, 181]} />
+The captured panels compare an open Hedge preview with a roofed Dungeon preview. Both retain their own specification for the Create action.
+
+<ScreenshotGallery label="Open and roofed preview confirmation" images={previewScreenshots} />
 
 After moving outside the volume, choose Create or submit the matching name without new options:
 
@@ -47,6 +51,10 @@ The default preview lifetime is **300 seconds**. Expiry, disconnecting, changing
 
 The action bar distinguishes planning, display loading, and a fully displayed preview. A preview's entity spawn progress is separate from real maze construction progress.
 
+The closure feedback distinguishes an ended preview from a request made when none is active. The gallery also includes the roofed preview's Close result.
+
+<ScreenshotGallery label="Preview closure and inactive-session messages" images={previewLifecycleScreenshots} />
+
 ## Personal Route Guide
 
 Teleport to a ready maze's world and enable its guide:
@@ -58,7 +66,7 @@ Teleport to a ready maze's world and enable its guide:
 
 The guide draws personal arrows above the maze floor toward the exit. It uses the saved graph and your current cell, adapting as you move. You do not have to remain on the original entrance-to-exit route: it chooses a route onward from your current reachable cell.
 
-<GameScreenshot src="/images/mazeengine/gameplay/chat-guide.webp" alt="The personal route-guide confirmation with its Close guide button" crop={[4, 918, 520, 80]} />
+<ScreenshotGallery label="Guide enabled, already active, closed and inactive" images={guideLifecycleScreenshots} />
 
 The action bar shows remaining cell steps or asks you to enter the maze when outside its corridor area. Arrows are positioned inside walkable space and hidden when their geometry would cross walls. The default look-ahead is 7 cell transitions.
 
