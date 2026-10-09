@@ -3,6 +3,9 @@ title: Getting Started
 description: Install Maze Engine on Paper with Java 25, configure optional integrations, and create your first persistent maze.
 ---
 
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import { previewScreenshots, mazeDetailsScreenshots, removalReviewScreenshots, settingsScreenshots } from "../../../data/mazeengine-screenshots";
+
 ## Requirements
 
 | Component | Requirement |
@@ -53,6 +56,10 @@ Choose a clear area in your current world and run:
 
 The dimensions are **logical cells**, rather than physical blocks. The preview uses display entities visible to you and does not change the terrain. Its chat panel provides **Create** and **Close** actions.
 
+The captured examples show the confirmation panel for an open Hedge layout and a roofed Dungeon layout.
+
+<ScreenshotGallery label="First preview: open and roofed examples" images={previewScreenshots} />
+
 Move outside the preview's entire footprint before choosing **Create**. You can also confirm the same active preview with:
 
 ```text
@@ -84,6 +91,8 @@ The bundled presets use `CLEAR` placement. This permits existing materials to be
 
 Creation finishes after the world work and final record save complete. The info panel shows the theme, cell and block dimensions, seed, route length, dead ends, snapshot availability, and teleport destination. The route guide is personal and follows the saved cell graph toward the exit.
 
+<ScreenshotGallery label="Ready Hedge maze: geometry and actions" images={mazeDetailsScreenshots.slice(0, 2)} />
+
 ## Remove a Maze
 
 ```text
@@ -94,6 +103,10 @@ Review the deletion panel before confirming. By default, a maze with a saved sna
 
 For explicit terrain handling, use `/maze delete garden --restore` or `/maze delete garden --clear`. See [operations and recovery](/maze-engine/operations-and-recovery/) before clearing a maze containing player-built additions.
 
+The example below reviews clearing a record without a snapshot, then uses **Cancel** to close the request while keeping the maze.
+
+<ScreenshotGallery label="Read and cancel a removal review" images={removalReviewScreenshots} />
+
 ## Configure and Reload
 
 Edit `config.yml`, `messages.yml`, or a file under `presets/`, then run:
@@ -103,5 +116,7 @@ Edit `config.yml`, `messages.yml`, or a file under `presets/`, then run:
 ```
 
 A reload validates the complete replacement configuration before publishing it. Invalid values reject the reload. Existing mazes retain their saved preset and graph; changed presets affect new mazes. Global presentation and operation settings use the newly loaded configuration.
+
+<ScreenshotGallery label="Settings reload confirmation" images={settingsScreenshots} />
 
 Continue with [creating mazes](/maze-engine/creating-mazes/) for selection and coordinate workflows, or [presets](/maze-engine/presets/) to design a theme.
