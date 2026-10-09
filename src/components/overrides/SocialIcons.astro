@@ -54,7 +54,7 @@ const links = (config.social || [])
         return { ...link, label, icon, brand };
     })
     .filter((link) => !project || project === "maze-engine" || !freePlugins.has(project) || freePluginMarketplaces.has(link.label))
-    .filter((link) => !project || !pluginProjects.has(project) || link.icon !== "github")
+    .filter((link) => !project || !pluginProjects.has(project) || !["github", "javadoc"].includes(link.label.toLowerCase()))
     .filter((l, pos, self) => self.findIndex((e) => e.label === l.label) === pos);
 ---
 
