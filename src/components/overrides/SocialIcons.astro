@@ -39,7 +39,9 @@ const links = (config.social || [])
                 ? "builtbybit"
                 : label === "Modrinth"
                     ? "modrinth"
-                    : link.icon;
+                    : label === "Hub"
+                        ? "plugin-hub"
+                        : link.icon;
 
         const normalizedLabel = label.toLowerCase();
         const brand = brandLabels.has(normalizedLabel) ? normalizedLabel : null;
