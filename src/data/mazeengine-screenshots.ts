@@ -503,6 +503,32 @@ export const commandHelpScreenshots = select(
     "chat-help-management",
 );
 
+export const commandHoverScreenshots = select(
+    "chat-help-create-hover",
+    "chat-help-create-hover-tooltip",
+    "chat-help-teleport-hover",
+    "chat-help-teleport-hover-tooltip",
+    "chat-help-setspawn-hover",
+    "chat-help-setspawn-hover-tooltip",
+    "chat-help-regenerate-hover",
+    "chat-help-regenerate-hover-tooltip",
+    "chat-help-cancel-hover",
+    "chat-help-cancel-hover-tooltip",
+);
+
+export const conceptHelpScreenshots = select(
+    "chat-concepts-seed-complexity-upper",
+    "chat-concepts-seed-complexity",
+    "chat-concepts-cells-geometry-upper",
+    "chat-concepts-cells-geometry",
+    "chat-concepts-presets-connections-upper",
+    "chat-concepts-presets-connections",
+    "chat-concepts-placement-snapshot-upper",
+    "chat-concepts-placement-snapshot",
+    "chat-concepts-selection-origin-upper",
+    "chat-concepts-selection-origin",
+);
+
 export const creationHelpScreenshots = select(
     "chat-help-create-hover",
     "chat-help-create-hover-tooltip",
