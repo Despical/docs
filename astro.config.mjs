@@ -1227,7 +1227,6 @@ export default defineConfig({
                                     {label: "Getting Started", link: "/maze-engine/getting-started/"},
                                     {label: "Core Concepts", link: "/maze-engine/concepts/"},
                                     {label: "Creating Mazes", link: "/maze-engine/creating-mazes/"},
-                                    {label: "In-Game Gallery", link: "/maze-engine/gallery/"},
                                     {label: "Previews and Route Guides", link: "/maze-engine/previews-and-guides/"},
                                 ],
                             },
@@ -1243,7 +1242,6 @@ export default defineConfig({
                                 label: "Administration",
                                 items: [
                                     {label: "Commands", link: "/maze-engine/commands/"},
-                                    {label: "Chat Interface", link: "/maze-engine/chat-interface/"},
                                     {label: "Permissions", link: "/maze-engine/permissions/"},
                                     {label: "Operations and Recovery", link: "/maze-engine/operations-and-recovery/"},
                                 ],
