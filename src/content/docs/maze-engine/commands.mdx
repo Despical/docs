@@ -4,9 +4,15 @@ description: Complete Maze Engine command and option reference with examples for
 ---
 
 import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
-import { commandHelpScreenshots } from "../../../data/mazeengine-screenshots";
+import { commandHelpScreenshots, creationHelpScreenshots, teleportHelpScreenshots, regenerationHelpScreenshots, cancellationHelpScreenshots, removalReviewScreenshots, savedMazeScreenshots } from "../../../data/mazeengine-screenshots";
 
 The [core concepts guide](/maze-engine/concepts/) expands the explanations shown by `/maze help concepts`, including cells, seeds, placement, and snapshots.
+
+## In-Game Help
+
+`/maze help` opens the command browser. Hover for details, click a command to fill the input, or use Next to move between building and management commands.
+
+<ScreenshotGallery label="Command help pages" images={commandHelpScreenshots} />
 
 ## Public Commands
 
@@ -31,6 +37,10 @@ The main command is `/maze`; `/mazeengine` is an alias. All commands require `ma
 | `/maze reload` | Reload configuration, messages, and presets | `mazeengine.reload` |
 
 Preview, teleport, guide, and spawn commands require a player. Creation supports console with explicit world and coordinates. Management actions also apply [ownership checks](/maze-engine/permissions/).
+
+The saved-maze browser opens the relevant record when you click a row. Its hover card summarizes the saved theme, dimensions, state and actions.
+
+<ScreenshotGallery label="Saved maze commands and row details" images={savedMazeScreenshots} />
 
 ## Creation and Preview Options
 
@@ -57,6 +67,10 @@ Flags have no trailing boolean value. Valued options take a separate argument, f
 /maze create remote 11 11 --world world --x 100 --y 64 --z 200
 ```
 
+Hovering **create** explains the arguments before you submit a terrain-changing request. The gallery pairs its full help panel with the focused tooltip.
+
+<ScreenshotGallery label="Create command guidance" images={creationHelpScreenshots} />
+
 ## Regeneration Options
 
 | Option | Behavior |
@@ -76,6 +90,8 @@ Flags have no trailing boolean value. Valued options take a separate argument, f
 
 Full regeneration writes planned air as well as structural blocks, so additions inside passage space may be removed. Repair skips planned air; additions occupying positions where the saved plan expects solid structure can still be replaced.
 
+<ScreenshotGallery label="Regeneration and repair command guidance" images={regenerationHelpScreenshots} />
+
 ## Deletion Options
 
 | Option | Behavior |
@@ -89,6 +105,10 @@ Full regeneration writes planned air as well as structural blocks, so additions 
 
 Normal deletion opens a confirmation that lasts 60 seconds. Its token is tied to the actor and exact record, preventing an old panel from deleting a changed replacement record.
 
+The captured example reviews **clear** removal for a maze without a snapshot, then cancels the review. Cancelling this panel closes the request without deleting the maze.
+
+<ScreenshotGallery label="Deletion review and cancellation" images={removalReviewScreenshots} />
+
 ## Teleports and Guides
 
 ```text
@@ -101,11 +121,15 @@ Normal deletion opens a confirmation that lasts 60 seconds. Its token is tied to
 
 `setspawn` records your position and view direction after verifying a safe destination. Resetting restores the default entrance destination. Teleport waits for the arrival chunk, rechecks record readiness and terrain safety, and then moves the player. The guide requires a ready maze in your current world.
 
-## In-Game Help
+The help tooltips explain teleport and custom-arrival behavior; the focused crops make their safety checks easier to read.
 
-`/maze help` opens this command browser. Hover for details, click a command to fill the input, or use Next for management commands.
+<ScreenshotGallery label="Teleport and setspawn command guidance" images={teleportHelpScreenshots} />
 
-<ScreenshotGallery label="Command help pages" images={commandHelpScreenshots} />
+## Cancel Active Work
+
+`/maze cancel <name>` requests an end to active terrain work. Read the final operation feedback and inspect the record afterward: cancellation can retain a partial structure and recovery record.
+
+<ScreenshotGallery label="Operation cancellation command guidance" images={cancellationHelpScreenshots} />
 
 ## Chat Actions
 
