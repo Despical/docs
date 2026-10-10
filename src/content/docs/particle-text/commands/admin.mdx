@@ -3,7 +3,7 @@ title: Admin Commands
 description: Commands for creating, editing, positioning, inspecting, and reloading Particle Text renderers.
 ---
 
-All Particle Text management commands use `/pt`. The full `/particletext` alias is also available. Operators receive the administrative permissions by default through `particletext.admin`.
+All Particle Text management commands use `/pt`. The full `/particletext` alias is also available. Commands use Aikar's annotation system with native Paper suggestions. Operators receive the administrative permissions by default through `particletext.admin`.
 
 ---
 
@@ -34,13 +34,27 @@ Permanently removes a renderer and its saved data.
 
 ## List Command
 
-Lists every configured renderer ID.
+Browses saved renderer IDs and their enabled state. Players with the info permission can hover for details and click an ID to open its management card.
 
 ```bash
-/pt list
+/pt list [page]
 ```
 
 **Permission:** `particletext.command.list`
+
+Pages start at `1` and use `chat.page-size` from `config.yml`.
+
+---
+
+## Info Command
+
+Shows a renderer's text, status, particle count, font, transform, and location. Players see permitted teleport, edit, enable/disable, and delete actions. Edit and delete buttons fill in a command for review.
+
+```bash
+/pt info <id>
+```
+
+**Permission:** `particletext.command.info`
 
 ---
 
@@ -73,7 +87,7 @@ Teleports you to a renderer or moves a renderer to your current location.
 
 ## Move Command
 
-Moves a renderer relative to the direction the player is facing. If omitted, the amount is `0.25` blocks.
+Moves a renderer relative to the direction the player is facing. If omitted, the amount comes from `commands.default-move-amount`, which defaults to `0.25` blocks.
 
 ```bash
 /pt move <id> <forward|backward|left|right|up|down> [amount]
@@ -106,7 +120,7 @@ Changes the world-space scale of the renderer.
 ```
 
 **Permission:** `particletext.command.edit`
-**Scale range:** Greater than `0` and no more than `10`
+**Scale range:** `0.01` to `10`
 
 ---
 
@@ -121,6 +135,8 @@ Changes the Java AWT font family, style, and rasterization size.
 **Permission:** `particletext.command.edit`
 **Styles:** `PLAIN`, `BOLD`, `ITALIC`, `BOLD_ITALIC`
 **Size range:** `4` to `128`
+
+Run `/pt fonts` to list font families available in the server's Java environment. It uses the same edit permission.
 
 ---
 
@@ -159,6 +175,8 @@ Sets the rotation angle for one axis. Angles are expressed in degrees.
 
 **Permission:** `particletext.command.edit`
 
+Requests that leave text, scale, font, particle, enabled state, inverted state, or rotation unchanged return an error message instead of reporting a successful edit. Moving or teleporting to the exact current location also reports that nothing changed.
+
 ---
 
 ## Reload Command
@@ -176,7 +194,7 @@ Reloads cached settings, messages, renderer data, and the render task.
 ## Help and Version Commands
 
 ```bash
-/pt help
+/pt help [page]
 /pt version
 ```
 
@@ -185,6 +203,8 @@ Reloads cached settings, messages, renderer data, and the render task.
 
 The version permission is granted to all players by default. Standard tab completions require `particletext.command.tabcomplete`.
 
+Help is paginated with `chat.page-size` and shows only commands the sender can use. Players can hover for descriptions and click to fill in a command.
+
 ---
 
 ## Parent Permissions
@@ -192,4 +212,4 @@ The version permission is granted to all players by default. Standard tab comple
 | Permission | Access | Default |
 |:--|:--|:--|
 | `particletext.*` | Includes `particletext.admin`. | Operators |
-| `particletext.admin` | Includes every create, edit, menu, reload, help, version, and tab-completion permission. | Operators |
+| `particletext.admin` | Includes create, delete, edit, list, info, menu, teleport, reload, help, version, and tab-completion permissions. | Operators |

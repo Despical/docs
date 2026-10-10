@@ -13,7 +13,7 @@ Run `/pt list` to confirm the ID and `/pt teleport <id>` to visit its saved loca
 
 ## Why does my renderer use the wrong font?
 
-Font availability depends on the Java environment running the server. Use the portable `SansSerif` family or install the desired font on the host, then update the renderer with `/pt font`.
+Font availability depends on the Java environment running the server. Run `/pt fonts` to inspect available families. Use the portable `SansSerif` family or install the desired font on the host, then update the renderer with `/pt font`.
 
 ---
 
@@ -43,7 +43,7 @@ No. Particle Text supports particles that do not require additional Bukkit data.
 
 ## Can commands be run from the console?
 
-Commands that depend on a player location or inventory are player-only: `create`, `menu`, `teleport`, `tphere`, and `move`. Data-only commands such as `list`, `delete`, editing commands, `reload`, `help`, and `version` can be used by other permitted senders.
+Commands that depend on a player location or inventory are player-only: `create`, `menu`, `teleport`, `tphere`, and `move`. Data-only commands such as `list`, `info`, `fonts`, `delete`, editing commands, `reload`, `help`, and `version` can be used by other permitted senders.
 
 ---
 

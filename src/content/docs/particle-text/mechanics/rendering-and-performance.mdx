@@ -11,7 +11,7 @@ Particle Text converts each renderer's text into a cached point cloud. A single 
 
 ## Point Cloud Generation
 
-The configured Java AWT font rasterizes text into an image. Eligible foreground pixels become particle points; inverted renderers use background pixels instead. Scale and three-axis rotation are applied before those points are placed in the world.
+The configured Java AWT font rasterizes text into pixels. Eligible foreground pixels become particle points; inverted renderers use background pixels instead. Scale and three-axis rotation are applied before those points are placed in the world.
 
 Point clouds are cached. They are rebuilt when a renderer's visual data changes or when dynamic PlaceholderAPI text resolves to a different value.
 
@@ -29,6 +29,7 @@ The `performance.force-particles` option controls whether particle packets ignor
 
 | Setting | Effect | Default |
 |:--|:--|:--|
+| `max-particles-per-tick` | Shared packet budget per server tick. Renderers take turns when the budget is exhausted. | `15000` |
 | `render-interval-ticks` | Ticks between shared render passes. Lower values look smoother but do more work. | `2` |
 | `initial-delay-ticks` | Delay before rendering starts after startup or reload. | `20` |
 | `view-distance` | Maximum renderer visibility radius in blocks. | `32.0` |
