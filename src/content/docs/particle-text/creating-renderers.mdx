@@ -15,7 +15,7 @@ A renderer combines text, a particle type, font settings, scale, rotation, state
 1. Stand at the location where the text should be anchored.
 2. Run `/pt create <id> <text>`.
 3. Use `/pt teleport <id>` to return to its saved location while adjusting it.
-4. Open `/pt menu` to review all configured renderers.
+4. Use `/pt info <id>` for a chat management card or `/pt menu` to browse the inventory.
 </Steps>
 
 ```bash
@@ -42,7 +42,7 @@ Fine-tune it relative to the direction you are facing:
 /pt move rules forward 1.00
 ```
 
-The direction can be `forward`, `backward`, `left`, `right`, `up`, or `down`. The optional amount defaults to `0.25` blocks and must be between `0.01` and `100.0`.
+The direction can be `forward`, `backward`, `left`, `right`, `up`, or `down`. The optional amount uses `commands.default-move-amount` (`0.25` blocks by default) and must be between `0.01` and `100.0`.
 
 ---
 
@@ -56,7 +56,7 @@ The direction can be `forward`, `backward`, `left`, `right`, `up`, or `down`. Th
 /pt rotate rules y 15
 ```
 
-Font styles are `PLAIN`, `BOLD`, `ITALIC`, and `BOLD_ITALIC`. Font size must be from `4` to `128`, while scale must be greater than `0` and no more than `10`.
+Font styles are `PLAIN`, `BOLD`, `ITALIC`, and `BOLD_ITALIC`. Font size must be from `4` to `128`, while scale must be from `0.01` to `10`. Run `/pt fonts` to inspect available font families.
 
 <Aside type="caution" title="Particle compatibility">
 Particle Text accepts particles that do not require extra Bukkit data. Tab completion lists the supported values for the current server version.
@@ -73,3 +73,5 @@ Particle Text accepts particles that do not require extra Bukkit data. Tab compl
 ```
 
 Disabling preserves the renderer in `renderers.yml` but stops rendering it. Inverted mode draws background pixels instead of glyph pixels and can produce substantially more particle points.
+
+Setting a renderer to its current value returns an error, such as "already disabled," and leaves the saved data unchanged.
