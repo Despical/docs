@@ -10,7 +10,7 @@ const isSourceAccess = normalizedPath === "/source-access";
 const project = currentTopic
     ? new URL(currentTopic.link, Astro.url).pathname.split("/").filter(Boolean)[0]
     : undefined;
-const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine"]);
+const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine", "portbridge"]);
 const pluginProjects = new Set([
     ...freePlugins,
     "advanced-parkour", "carousel", "easter-eggs", "eat-everything", "item-upgrader",

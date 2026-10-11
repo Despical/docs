@@ -1326,6 +1326,41 @@ export default defineConfig({
                         ],
                     },
                     {
+                        label: "PortBridge",
+                        id: "portbridge",
+                        link: "/portbridge/",
+                        icon: "portbridge",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/portbridge/getting-started/"},
+                                    {label: "Compatibility", link: "/portbridge/compatibility/"},
+                                    {label: "Tunnels and Relays", link: "/portbridge/tunnels-and-relays/"},
+                                ],
+                            },
+                            {
+                                label: "Reference",
+                                items: [
+                                    {label: "Commands", link: "/portbridge/commands/"},
+                                    {label: "Permissions", link: "/portbridge/permissions/"},
+                                    {label: "config.yml", link: "/portbridge/configuration/config/"},
+                                    {label: "messages.yml", link: "/portbridge/configuration/messages/"},
+                                ],
+                            },
+                            {
+                                label: "Development and Help",
+                                items: [
+                                    {label: "Developer Reference", link: "/portbridge/developers/"},
+                                    {label: "Troubleshooting", link: "/portbridge/troubleshooting/"},
+                                    {label: "Javadocs", link: "https://javadoc.despical.dev/portbridge/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                    {label: "Source Code", link: "https://github.com/Despical/PortBridge", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                    {label: "Issue Tracker", link: "https://github.com/Despical/PortBridge/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                ],
+                            },
+                        ],
+                    },
+                    {
                         label: "Maze Engine",
                         id: "maze-engine",
                         link: "/maze-engine/",

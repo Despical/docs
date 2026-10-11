@@ -1,0 +1,53 @@
+---
+title: Tunnels and Relays
+description: Understand local Minecraft listeners, public Bore ports, shared secrets, route checks and reconnection.
+---
+
+## Local listener and public port
+
+The **local port** belongs to your existing Minecraft server. With `local.auto-detect=true`, PortBridge reads the running server's bind address and port; wildcard bindings are contacted through `127.0.0.1`. Automatic detection does not change router settings or Minecraft's local port.
+
+The **public port** belongs to the Bore relay. `relay.port=0` requests a free port. A specific port remains subject to availability; `relay.fallback-to-random` permits a random replacement when Bore reports that it is occupied.
+
+## Public relay
+
+The default relay is `bore.pub`, operated independently. Its Bore control connection uses TCP 7835. Availability, assigned ports and latency depend on the relay. Your address can change after restart or reconnection.
+
+## Private relay
+
+Run Bore on a reachable relay machine:
+
+```shell
+bore server --secret your-private-secret
+```
+
+Configure the matching endpoint:
+
+```yaml
+relay:
+  host: 'relay.example.com'
+  public-host: ''
+  port: 0
+  fallback-to-random: true
+  secret: 'your-private-secret'
+```
+
+The control port and allocated public ports must be reachable. `relay.public-host` changes both the address shown to friends and the hostname used for public probes; leave it empty unless that hostname reaches the forwarded Minecraft port.
+
+Bore's secret authenticates tunnel creation and does not encrypt forwarded traffic. Minecraft's own authenticated connection encryption remains intact. Keep secrets out of shared configuration and issue reports.
+
+## Health and reconnection
+
+PortBridge checks the local Minecraft status listener before launching Bore. When public checks are enabled, it validates status JSON and a matching ping reply through the public endpoint without performing a login.
+
+| State | Meaning |
+| --- | --- |
+| Stopped | No desired tunnel or pending retry. |
+| Preparing Bore | Resolve the executable and check the local Minecraft listener. |
+| Connecting | Contact the relay or verify its allocated route. |
+| Online | Public check succeeded, or relay connected with checks disabled. |
+| Route unavailable | Public checks failed below the configured threshold. |
+| Reconnecting | Wait for an accepted retry. |
+| Failed | No retry is scheduled after a connection failure. |
+
+Retry delays double from the initial delay to the configured maximum. `reconnect.max-attempts=0` permits unlimited retries. An explicit stop invalidates previous callbacks and cancels retries.

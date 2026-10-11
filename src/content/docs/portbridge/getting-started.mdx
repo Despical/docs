@@ -1,0 +1,39 @@
+---
+title: Getting Started
+description: Install PortBridge, enable Minecraft status responses and share your first public connection address.
+---
+
+## Requirements
+
+- Paper or a compatible fork for Minecraft 1.21.11+.
+- Java 25 or newer for every supported Minecraft version.
+- A reachable Bore relay and outbound HTTPS access for the first managed download.
+- `enable-status=true` in `server.properties`.
+
+Managed downloads support Windows x64/x86 and Linux/macOS x64/ARM64. Other platforms require a compatible `bore.executable`.
+
+## Installation
+
+1. Stop the server.
+2. Download the plugin JAR from [GitHub Releases](https://github.com/Despical/PortBridge/releases) and place it in `plugins/`.
+3. Keep `enable-status=true` in `server.properties`.
+4. Start the server with the required Java version.
+5. Wait for the tunnel address in the console, or run `/port status` and `/port address`.
+
+PortBridge installs missing `config.yml` and `messages.yml` under `plugins/PortBridge/`. The first tunnel start downloads and verifies Bore v0.6.0 unless a verified cached executable or custom executable is available.
+
+## Connect with friends
+
+Copy the address from `/port address` or click **Copy Address** in chat. Friends enter it in Minecraft Java's **Multiplayer > Direct Connection** screen. Keep the computer, server and tunnel running. The server's whitelist, account authentication and Minecraft version requirements still apply.
+
+```text
+/port help
+/port status
+/port address
+```
+
+Automatic startup is enabled by default. If disabled, run `/port start`. Run `/port stop` to disconnect remote players and cancel retries.
+
+## Update
+
+Stop the server, replace only the plugin JAR and restart. Existing configuration is preserved; missing message keys use bundled defaults. Compare your files with the [config](/portbridge/configuration/config/) and [message](/portbridge/configuration/messages/) references when you want to customize new settings.
