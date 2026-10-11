@@ -1,0 +1,31 @@
+---
+title: Developer Reference
+description: Build PortBridge and understand its services, immutable snapshots, message templates and server-thread rules.
+---
+
+## Build
+
+Use Java 25 and the included Gradle wrapper:
+
+```shell
+./gradlew clean build javadocJar
+```
+
+On Windows, use `gradlew.bat`. The plugin artifact is `build/libs/portbridge-<version>.jar`. The plain, source and Javadoc JARs are developer artifacts. Sources target Java 25 and compile against Paper 1.21.11.
+
+## Services and thread rules
+
+- `PortBridgePlugin` coordinates configuration, tunnel initialization, command registration, listener registration and scheduled startup.
+- `PlayerJoinListener` owns the delayed permission-aware join notification.
+- `SettingsLoader` resolves Bukkit listener properties on the server thread and produces immutable `BridgeSettings`.
+- `Messages` validates the message catalog and publishes immutable appearance values. Formatting substitutes literal `{name}` values once.
+- `TunnelService` serializes native lifecycle and route probes on its worker. Output readers use virtual threads. State callbacks marshal Bukkit access onto the server thread.
+- `TunnelSnapshot` is immutable and can be retained across threads.
+
+Plugin accessors are intended for enabled-plugin use on the server thread. An address in a snapshot does not by itself establish a verified public route. Check state and latency/health policy.
+
+## Reference and contribution
+
+Browse the [generated Javadocs](https://javadoc.despical.dev/portbridge/) and [source](https://github.com/Despical/PortBridge). This release exposes its implementation reference rather than a separately versioned integration API.
+
+Preserve permission checks, reload validation and cancellation tokens when extending lifecycle behavior. Run the unit suite and check runtime behavior against the intended server versions. Follow the repository's contribution guidelines and GPL/class Javadoc headers.

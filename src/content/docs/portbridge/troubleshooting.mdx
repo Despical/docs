@@ -1,0 +1,36 @@
+---
+title: Troubleshooting
+description: Diagnose PortBridge local listener failures, relay problems, executable downloads, permission issues and invalid reloads.
+---
+
+## Local Minecraft server did not respond
+
+Keep `enable-status=true` in `server.properties` and restart Minecraft after changing it. Check `/port status` for the resolved target. With automatic detection disabled, `local.host` and `local.port` must identify an existing Minecraft Java listener. A successful plain TCP connection alone does not satisfy the Minecraft status probe.
+
+## Bore download or executable failure
+
+The server needs HTTPS access to the pinned GitHub release. Check the operating system and CPU architecture against [Compatibility](/portbridge/compatibility/). Managed archives and cache receipts are verified; modified or invalid caches are replaced when downloads are allowed. A custom path must identify a readable executable; relative paths start inside `plugins/PortBridge/`.
+
+## Connecting or reconnecting repeatedly
+
+Check relay reachability, TCP 7835 and the assigned public port. A private relay's secret must match. If `relay.public-host` is configured, it must reach the forwarded Minecraft port from the server machine as well as from friends. Public relay outages can require waiting or selecting another relay.
+
+## Requested port is occupied
+
+Enable `relay.fallback-to-random` or request port `0`. Assigned addresses can change; share the new address after reconnecting.
+
+## Address appears but friends cannot join
+
+Check the public-route result. With public checks disabled, the relay may allocate a port without proving Minecraft is reachable. Friends still need a compatible Minecraft Java version, a valid authenticated account when required and whitelist access. PortBridge does not expose Bedrock or UDP services.
+
+## Permission denied
+
+Give the player the specific [permission](/portbridge/permissions/) or `portbridge.admin`. Status permission alone does not reveal the public address or grant tunnel management.
+
+## Reload rejected
+
+Values must match the documented types and ranges. Message values require non-empty single-line strings, and theme colors require quoted `#RRGGBB`. The previous settings remain active after validation fails. Correct the file and retry `/port reload`.
+
+## Report an issue
+
+Include plugin version, exact Paper/Minecraft and Java versions, OS/architecture, reproduction steps and relevant logs. Remove relay secrets and private information. Report vulnerabilities privately following [SECURITY.md](https://github.com/Despical/PortBridge/blob/main/SECURITY.md).
