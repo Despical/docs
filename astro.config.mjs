@@ -26,6 +26,11 @@ export default defineConfig({
                 {icon: 'discord', label: 'home:Discord', href: 'https://discord.gg/uXVU8jmtpU'},
                 {icon: 'patreon', label: 'home:Patreon', href: 'https://patreon.com/despical'},
                 {
+                    icon: "external",
+                    label: "portbridge:Hub",
+                    href: "https://hub.despical.dev/plugins/port-bridge",
+                },
+                {
                     icon: "github",
                     label: "maze-engine:GitHub",
                     href: "https://github.com/Despical/MazeEngine",
