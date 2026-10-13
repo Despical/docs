@@ -50,12 +50,15 @@ The main timer values are configured in `config.yml`:
 |:--|:--|:--|
 | `waiting-time` | `300` | The normal lobby countdown while the arena waits for players. |
 | `pre-game-waiting-time` | `120` | The shortened countdown used after the minimum player count is reached. |
-| `game-starting-time` | `30` | The final countdown before players are moved into active gameplay. |
-| `full-game-starting-time` | `15` | The faster countdown used when the arena is mostly full or completely full. |
+| `game-starting-time` | `30` | The shorter countdown used at the accelerated start threshold, about 80% of arena capacity. |
+| `full-game-starting-time` | `15` | The faster countdown used when the arena reaches its maximum player count. |
 | `ending-time` | `10` | How long the ending state lasts before the arena restarts. |
 
 When the arena reaches the minimum player count, the countdown is shortened to `pre-game-waiting-time` if needed.
 If the arena is mostly full or completely full, the countdown can be shortened again for faster starts.
+
+A shortened countdown never increases the time already remaining. Set `pre-game-waiting-time`, `game-starting-time`, or `full-game-starting-time` to `0` to start without a countdown at that setting's player threshold.
+Negative values in `time-settings` produce a console warning and use the corresponding default instead.
 
 ---
 
@@ -67,9 +70,9 @@ If a player joins while the game is already in progress, the plugin can place th
 
 ## Elimination
 
-A player is eliminated when they <u>**fall into the void**</u> or <u>**leave the server**</u>.
+A player is eliminated when they <u>**fall into the void**</u>. In an arena with PvP enabled, a lethal hit from another player, including a player-fired projectile, also eliminates them instead of causing a normal Minecraft death.
 
-The player is moved to spectator mode, their survival time can be recorded, and the game checks whether only one active player remains.
+Eliminated players become spectators, their survival time is recorded, and the game checks whether only one active player remains. Leaving the arena or disconnecting also removes a runner from the active survivor list.
 
 When one survivor is left, that player wins and the game moves to the ending state.
 
