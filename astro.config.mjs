@@ -43,6 +43,11 @@ export default defineConfig({
                     href: "https://hub.despical.dev/plugins/port-bridge",
                 },
                 {
+                    icon: "external",
+                    label: "port-bridge:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/port-bridge-local-server-tunnels.139616/",
+                },
+                {
                     icon: "github",
                     label: "maze-engine:GitHub",
                     href: "https://github.com/Despical/MazeEngine",
