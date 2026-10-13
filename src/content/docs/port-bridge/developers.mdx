@@ -1,31 +1,64 @@
 ---
 title: Developer Reference
-description: Build Port Bridge and understand its services, immutable snapshots, message templates and server-thread rules.
+description: Build Port Bridge and understand its services, immutable settings and snapshots, lifecycle ownership, and server-thread contract.
 ---
 
-## Build
+## Build from Source
 
-Use Java 25 and the included Gradle wrapper:
+Use a **Java 25 JDK** and the included Gradle wrapper:
 
-```shell
+```bash
 ./gradlew clean build javadocJar
 ```
 
-On Windows, use `gradlew.bat`. The plugin artifact is `build/libs/port-bridge-<version>.jar`. The plain and Javadoc JARs are developer artifacts. Sources target Java 25 and compile against Paper 1.21.11.
+On Windows PowerShell, use `./gradlew.bat clean build javadocJar`. Sources target Java 25 and compile against Paper 1.21.11.
 
-## Services and thread rules
+| Output | Purpose |
+| --- | --- |
+| `build/libs/port-bridge-<version>.jar` | Deployable plugin with bundled runtime dependencies |
+| `build/libs/port-bridge-<version>-plain.jar` | Unshaded developer artifact |
+| `build/libs/port-bridge-<version>-javadoc.jar` | Packaged implementation reference |
+| `build/docs/javadoc/` | Generated HTML documentation |
 
-- `PortBridgePlugin` coordinates configuration, tunnel initialization, command registration, listener registration and scheduled startup.
-- `PlayerJoinListener` owns the delayed permission-aware join notification.
-- `SettingsLoader` resolves Bukkit listener properties on the server thread and produces immutable `BridgeSettings`.
-- `Messages` validates the message catalog and publishes immutable appearance values. Formatting substitutes literal `{name}` values once.
-- `TunnelService` serializes native lifecycle and route probes on its worker. Output readers use virtual threads. State callbacks marshal Bukkit access onto the server thread.
-- `TunnelSnapshot` is immutable and can be retained across threads.
+Install the deployable plugin JAR on the server. Browse the [generated Javadocs](https://javadoc.despical.dev/portbridge/) for class and method contracts.
 
-Plugin accessors are intended for enabled-plugin use on the server thread. An address in a snapshot does not by itself establish a verified public route. Check state and latency/health policy.
+---
 
-## Reference and contribution
+## Service Ownership
 
-Browse the [generated Javadocs](https://javadoc.despical.dev/portbridge/) and [source](https://github.com/Despical/PortBridge). This release exposes its implementation reference rather than a separately versioned integration API.
+| Class | Responsibility |
+| --- | --- |
+| `PortBridgePlugin` | Configuration, tunnel initialization, command/listener registration, scheduled startup, and bStats lifecycle |
+| `PlayerJoinListener` | Delayed, permission-aware joining-player notification |
+| `SettingsLoader` | Listener-property resolution and validated immutable `BridgeSettings` |
+| `Messages` | Validated message catalog, immutable appearance values, and literal placeholders |
+| `TunnelService` | Serialized native-process lifecycle, route probes, retries, and state callbacks |
+| `TunnelSnapshot` | Immutable connection state and diagnostic values |
 
-Preserve permission checks, reload validation and cancellation tokens when extending lifecycle behavior. Run the unit suite and check runtime behavior against the intended server versions. Follow the repository's contribution guidelines and GPL/class Javadoc headers.
+This release exposes its implementation reference rather than a separately versioned integration API. Read the [source](https://github.com/Despical/PortBridge) before depending on implementation types.
+
+---
+
+## Thread Contract
+
+`SettingsLoader` resolves Bukkit listener properties on the server thread. Plugin accessors are intended for enabled-plugin use on that thread.
+
+`TunnelService` serializes native lifecycle and route probes on its worker. Process-output readers use virtual threads, and state callbacks marshal Bukkit interactions back to the server thread. Immutable `TunnelSnapshot` values can be retained across threads.
+
+An address in a snapshot does not by itself establish a verified public route. Check the state and latency/health policy when interpreting connection results.
+
+---
+
+## Messages and Lifecycle
+
+Message formatting substitutes literal contextual values once. User-configured templates do not parse MiniMessage or legacy color codes; appearance colors are validated separately. See [messages.yml](/port-bridge/configuration/messages/).
+
+Preserve reload validation, permission checks, and cancellation tokens when extending lifecycle behavior. Native processes, scheduled startup, and metrics are owned by the plugin lifecycle and must stop during disable.
+
+---
+
+## Contribution and Validation
+
+The build runs the unit suite. Check runtime behavior against the intended Paper versions when changing startup, commands, native process management, or thread callbacks. Follow the repository's contribution guidelines, GPL headers, and class Javadocs.
+
+Use the [issue tracker](https://github.com/Despical/PortBridge/issues) for reproducible bugs. Include exact server and Java versions, reproduction steps, and relevant logs; follow [SECURITY.md](https://github.com/Despical/PortBridge/blob/main/SECURITY.md) for private vulnerability reports.

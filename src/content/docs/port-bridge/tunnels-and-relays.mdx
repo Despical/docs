@@ -3,17 +3,25 @@ title: Tunnels and Relays
 description: Understand local Minecraft listeners, public Bore ports, shared secrets, route checks and reconnection.
 ---
 
-## Local listener and public port
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+
+## Local Listener and Public Port
 
 The **local port** belongs to your existing Minecraft server. With `local.auto-detect=true`, Port Bridge reads the running server's bind address and port; wildcard bindings are contacted through `127.0.0.1`. Automatic detection does not change router settings or Minecraft's local port.
 
 The **public port** belongs to the Bore relay. `relay.port=0` requests a free port. A specific port remains subject to availability; `relay.fallback-to-random` permits a random replacement when Bore reports that it is occupied.
 
-## Public relay
+<GameScreenshot src="/images/portbridge/connection-flow.png" alt="Connection flow from your local Paper server through a Bore relay to friends using Minecraft Java" width={1200} height={360} />
+
+---
+
+## Public Relay
 
 The default relay is `bore.pub`, operated independently. Its Bore control connection uses TCP 7835. Availability, assigned ports and latency depend on the relay. Your address can change after restart or reconnection.
 
-## Private relay
+---
+
+## Private Relay
 
 Run Bore on a reachable relay machine:
 
@@ -36,7 +44,9 @@ The control port and allocated public ports must be reachable. `relay.public-hos
 
 Bore's secret authenticates tunnel creation and does not encrypt forwarded traffic. Minecraft's own authenticated connection encryption remains intact. Keep secrets out of shared configuration and issue reports.
 
-## Health and reconnection
+---
+
+## Health and Reconnection
 
 Port Bridge checks the local Minecraft status listener before launching Bore. When public checks are enabled, it validates status JSON and a matching ping reply through the public endpoint without performing a login.
 

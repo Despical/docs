@@ -3,7 +3,7 @@ title: Compatibility
 description: Port Bridge Minecraft, Java, server software and native executable support boundaries.
 ---
 
-## Server versions
+## Server Versions
 
 Port Bridge targets **Minecraft 1.21.11+ on Paper and compatible forks**. It compiles against Paper 1.21.11 and uses Bukkit lifecycle, configuration and event APIs plus Paper's Adventure components. It does not use Minecraft internals or version-specific world APIs.
 
@@ -16,13 +16,17 @@ The plugin emits Java 25 bytecode; building from source uses the Java 25 toolcha
 
 Port Bridge requires Java 25 for its compiled classes, including on older server versions. The [Paper installation reference](https://docs.papermc.io/paper/getting-started/) lists the server software's own Java recommendations.
 
+---
+
 ## Validation
 
 The source builds against the minimum API, and unit tests cover message validation, settings, retry behavior, archive handling, status packets and text layout. Isolated Paper smoke checks verify plugin startup, registered commands, permission errors, reloads and listener registration. The release notes list the exact server builds checked. These checks do not cover every intermediate fork or real internet route.
 
 Version 1.0.0 passed these checks on **Paper 1.21.11 build 132 / Java 25** and **Paper 26.3 build 157 / Java 25**. The unit suite passed all 44 tests.
 
-## Native Bore downloads
+---
+
+## Native Bore Downloads
 
 | Operating system | Managed architectures |
 | --- | --- |
@@ -32,6 +36,8 @@ Version 1.0.0 passed these checks on **Paper 1.21.11 build 132 / Java 25** and *
 
 Other targets require a compatible custom executable. Managed downloads use pinned SHA-256 verification. A custom executable is checked for usability and is outside managed release verification.
 
-## Network services
+---
+
+## Network Services
 
 Port Bridge forwards Minecraft Java TCP traffic. It does not expose Bedrock, UDP query or other UDP services, and it does not preserve real player IP addresses. A relay can introduce latency. Disabling public health checks marks the connection as unverified; local status checks remain required.

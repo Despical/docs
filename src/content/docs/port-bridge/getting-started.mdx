@@ -1,39 +1,108 @@
 ---
 title: Getting Started
-description: Install Port Bridge, enable Minecraft status responses and share your first public connection address.
+description: Download and install Port Bridge on Paper with Java 25, open a managed tunnel, and share your first Minecraft connection address.
 ---
+
+import { Badge } from "@astrojs/starlight/components";
 
 ## Requirements
 
-- Paper or a compatible fork for Minecraft 1.21.11+.
-- Java 25 or newer for every supported Minecraft version.
-- A reachable Bore relay and outbound HTTPS access for the first managed download.
-- `enable-status=true` in `server.properties`.
+| Component | Requirement |
+| --- | --- |
+| [Paper](https://papermc.io/downloads/paper) or a compatible fork | Minecraft **1.21.11 and later** |
+| Java | **Java 25 or newer** for every supported server version |
+| Minecraft status listener | `enable-status=true` in `server.properties` |
+| Network access | A reachable Bore relay; outbound HTTPS for the first managed download |
+| Operating system | Windows x64/x86 or Linux/macOS x64/ARM64 for managed Bore downloads |
 
-Managed downloads support Windows x64/x86 and Linux/macOS x64/ARM64. Other platforms require a compatible `bore.executable`.
+Folia and Spigot are not supported. Other operating systems or architectures require a compatible custom `bore.executable`. See [compatibility](/port-bridge/compatibility/) for the tested server builds and platform details.
 
-## Installation
+---
 
-1. Stop the server.
-2. Download the plugin JAR from the [Plugin Hub](https://hub.despical.dev/plugins/port-bridge) or [GitHub Releases](https://github.com/Despical/PortBridge/releases) and place it in `plugins/`.
-3. Keep `enable-status=true` in `server.properties`.
-4. Start the server with the required Java version.
-5. Wait for the tunnel address in the console, or run `/port status` and `/port address`.
+## Download
 
-Port Bridge installs missing `config.yml` and `messages.yml` under `plugins/PortBridge/`. The first tunnel start downloads and verifies Bore v0.6.0 unless a verified cached executable or custom executable is available.
+Download the plugin JAR from [Hub](https://hub.despical.dev/plugins/port-bridge) or [GitHub Releases](https://github.com/Despical/PortBridge/releases). Choose `port-bridge-<version>.jar`; the current Hub download is `port-bridge-1.0.0.jar`.
 
-## Connect with friends
+You do not need Gradle or Git to install a published build. The plain and Javadoc JARs are for developers; install the plugin JAR on your server.
 
-Copy the address from `/port address` or click **Copy Address** in chat. Friends enter it in Minecraft Java's **Multiplayer > Direct Connection** screen. Keep the computer, server and tunnel running. The server's whitelist, account authentication and Minecraft version requirements still apply.
+---
+
+## Install
+
+Use the same plugin JAR for every supported server version and run the server with Java 25 or newer.
+
+1. Stop the server and place the plugin JAR in its `plugins` directory.
+2. Keep `enable-status=true` in `server.properties`.
+3. Start the server and check the console for a successful Port Bridge startup.
+4. Run `/port help` as an operator or an account with the relevant [permissions](/port-bridge/permissions/).
+
+The first startup creates `plugins/PortBridge/config.yml` and `messages.yml` when they are missing. Existing files are retained. The first tunnel start downloads and verifies Bore v0.6.0 unless a verified cached executable or custom executable is available.
+
+---
+
+## Open Your First Tunnel
+
+Automatic startup is enabled by default. After the startup delay, Port Bridge checks your existing Minecraft listener, starts Bore, and verifies the public route.
 
 ```text
-/port help
 /port status
 /port address
 ```
 
-Automatic startup is enabled by default. If disabled, run `/port start`. Run `/port stop` to disconnect remote players and cancel retries.
+The status panel shows the connection state, local target, relay, latency, and latest diagnostic. The address panel shows the public address once one is available.
+
+If you disabled `startup.auto-start`, start the tunnel manually:
+
+```text
+/port start
+```
+
+Wait for the connection result, then request the address again. See [tunnels and relays](/port-bridge/tunnels-and-relays/) for the difference between an allocated port and a verified Minecraft route.
+
+---
+
+## Connect with Friends
+
+Copy the address from `/port address` or click **Copy Address** in chat. Friends enter it in Minecraft Java's **Multiplayer > Direct Connection** screen.
+
+Keep your computer, Minecraft server, and tunnel running while people play. The server's whitelist, account authentication, and Minecraft client-version requirements still apply.
+
+```text
+/port stop
+```
+
+Stopping the tunnel disconnects remote players and cancels pending retries. A later `/port start` opens a new session; its public address can change.
+
+---
+
+## Configure and Reload
+
+Edit [config.yml](/port-bridge/configuration/config/) or [messages.yml](/port-bridge/configuration/messages/), then run:
+
+```text
+/port reload
+```
+
+A reload validates both replacement files before applying them. Invalid values retain the previous configuration. An active tunnel reconnects with the new settings; an explicitly stopped tunnel stays stopped.
+
+---
 
 ## Update
 
-Stop the server, replace only the plugin JAR and restart. Existing configuration is preserved; missing message keys use bundled defaults. Compare your files with the [config](/port-bridge/configuration/config/) and [message](/port-bridge/configuration/messages/) references when you want to customize new settings.
+Stop the server, replace the plugin JAR, and restart. Existing configuration files are preserved, and missing message keys use bundled defaults. Compare your files with the configuration references when you want to customize newly added settings.
+
+---
+
+## Build from Source <Badge text="Optional" variant="tip" />
+
+To build a local copy or contribute, install a Java 25 JDK and Git:
+
+1. Clone the [repository](https://github.com/Despical/PortBridge) with `git clone https://github.com/Despical/PortBridge.git`.
+2. Open the project directory with `cd PortBridge`.
+3. Build using the included Gradle wrapper:
+
+```bash
+./gradlew clean build
+```
+
+On Windows PowerShell, use `./gradlew.bat clean build`. Install `build/libs/port-bridge-<version>.jar` using the steps above. Run `./gradlew javadocJar` separately to generate the Javadoc JAR and HTML documentation.
