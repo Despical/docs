@@ -5,7 +5,7 @@ description: Understand local Minecraft listeners, public Bore ports, shared sec
 
 ## Local listener and public port
 
-The **local port** belongs to your existing Minecraft server. With `local.auto-detect=true`, PortBridge reads the running server's bind address and port; wildcard bindings are contacted through `127.0.0.1`. Automatic detection does not change router settings or Minecraft's local port.
+The **local port** belongs to your existing Minecraft server. With `local.auto-detect=true`, Port Bridge reads the running server's bind address and port; wildcard bindings are contacted through `127.0.0.1`. Automatic detection does not change router settings or Minecraft's local port.
 
 The **public port** belongs to the Bore relay. `relay.port=0` requests a free port. A specific port remains subject to availability; `relay.fallback-to-random` permits a random replacement when Bore reports that it is occupied.
 
@@ -38,7 +38,7 @@ Bore's secret authenticates tunnel creation and does not encrypt forwarded traff
 
 ## Health and reconnection
 
-PortBridge checks the local Minecraft status listener before launching Bore. When public checks are enabled, it validates status JSON and a matching ping reply through the public endpoint without performing a login.
+Port Bridge checks the local Minecraft status listener before launching Bore. When public checks are enabled, it validates status JSON and a matching ping reply through the public endpoint without performing a login.
 
 | State | Meaning |
 | --- | --- |
