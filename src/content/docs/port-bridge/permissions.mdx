@@ -1,18 +1,40 @@
 ---
 title: Permissions
-description: Port Bridge permission nodes for connection addresses, status, tunnel management and reloads.
+description: Grant Port Bridge command permissions and separate status access, address sharing, tunnel management, and configuration reloads.
 ---
 
-All permissions default to operators. `portbridge.admin` grants the four command permissions below.
+## Permission Nodes
 
-| Permission | Purpose |
+Every node below defaults to **operator**. `portbridge.admin` grants the four child command permissions.
+
+| Permission | Grants |
 | --- | --- |
-| `portbridge.status` | View status and command help. |
-| `portbridge.address` | View/copy the address and receive connection announcements. |
-| `portbridge.manage` | Start, stop and restart the tunnel. |
-| `portbridge.reload` | Validate and reload configuration and messages. |
-| `portbridge.admin` | Grant all of the above. |
+| `portbridge.admin` | Full Port Bridge administration |
+| `portbridge.status` | Status panels and command help |
+| `portbridge.address` | Address panels, copy controls, and connection announcements |
+| `portbridge.manage` | Tunnel startup, shutdown, and restart |
+| `portbridge.reload` | Validated configuration and message reloads |
 
-The optional join notification also checks `portbridge.address`. Its delayed callback rechecks the player, current preference, permission and tunnel state before sending a panel.
+---
 
-Chat controls hide actions the sender cannot use. Displaying a copy control does not grant management permissions. Framework denial text can be customized through `acf.acf-core.permission_denied` in [messages.yml](/port-bridge/configuration/messages/).
+## Status and Address Access
+
+Status access shows the connection state and diagnostic details. Give `portbridge.address` to players who should receive the public join address and copy controls.
+
+The address permission does not grant tunnel management. Grant `portbridge.manage` separately to trusted players who should start, stop, or restart the connection.
+
+---
+
+## Joining-Player Notifications
+
+The optional notification uses `notifications.on-admin-join` in [config.yml](/port-bridge/configuration/config/) and requires `portbridge.address`.
+
+The delayed callback rechecks the player, current preference, permission, and tunnel state before sending a panel. Turning off the setting disables this automatic notification while retaining the `/port address` command.
+
+---
+
+## Chat Controls and Denials
+
+Chat panels hide actions the sender cannot use. Displaying a copy control does not grant management permissions; typed commands and clicked actions follow the same permission checks.
+
+Customize framework denial text under `acf.acf-core.permission_denied` in [messages.yml](/port-bridge/configuration/messages/). See the [command reference](/port-bridge/commands/) for the permission required by each action.

@@ -1,40 +1,67 @@
 ---
-title: Port Bridge
-description: Share a local Minecraft Java server with a managed Bore TCP tunnel, route checks, automatic reconnection and configurable chat controls.
+title: Port Bridge Documentation
+description: Share your Minecraft Java server through a managed TCP tunnel, with copyable addresses, public route checks, automatic reconnection, and configurable chat controls.
+tableOfContents: false
 ---
 
-import { CardGrid } from "@astrojs/starlight/components";
-import LinkCard from "/src/components/LinkCard.astro";
-import GameScreenshot from "/src/components/GameScreenshot.astro";
+import GameScreenshot from "../../../components/GameScreenshot.astro";
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-**Port Bridge** connects your running local Minecraft Java server to friends through a public TCP relay. It manages the Bore client, shows a copyable address and checks that Minecraft responds through the route.
+## Port Bridge
 
-<GameScreenshot src="/images/portbridge/cover.png" alt="Port Bridge cover: a cyan network bridge connects a local server island to a Minecraft village" width={1774} height={887} />
+**Port Bridge** connects your local Minecraft Java server to friends through a public TCP relay. Keep the world on your own computer, open a managed Bore tunnel, and share the connection address from chat or the console. The plugin checks the Minecraft route, shows connection details, and reconnects after interruptions.
 
-The plugin targets **Paper and compatible forks for Minecraft 1.21.11+**. Use **Java 25 or newer** for every supported server version. Folia and Spigot are not supported. Read the [compatibility reference](/port-bridge/compatibility/) for validation details.
+<GameScreenshot src="/images/portbridge/cover.png" alt="Port Bridge cover with a cyan network bridge connecting a local Minecraft server to a village" width={1774} height={887} />
 
-## Download
+Follow the [installation guide](/port-bridge/getting-started/) to share your first address, or read [tunnels and relays](/port-bridge/tunnels-and-relays/) to understand how the connection works. Select the cover to enlarge it without leaving the documentation.
 
-Download `port-bridge-<version>.jar` from the [Plugin Hub](https://hub.despical.dev/plugins/port-bridge) or [GitHub Releases](https://github.com/Despical/PortBridge/releases), then follow [Getting Started](/port-bridge/getting-started/). The plugin is free and open source under [GPL-3.0-or-later](https://github.com/Despical/PortBridge/blob/main/LICENSE).
+Port Bridge supports **Paper and compatible forks for Minecraft 1.21.11 and later** and requires **Java 25 or newer**. Folia and Spigot are not supported. Managed Bore downloads are available for Windows x64/x86 and Linux/macOS x64/ARM64.
 
-## Start sharing
+---
+
+## Download Port Bridge
+
+Download the latest plugin JAR from [Hub](https://hub.despical.dev/plugins/port-bridge) or [GitHub Releases](https://github.com/Despical/PortBridge/releases), then follow the [installation guide](/port-bridge/getting-started/). Install `port-bridge-<version>.jar`; you do not need to compile the plugin yourself.
+
+The plugin is free and open source under [GPL-3.0-or-later](https://github.com/Despical/PortBridge/blob/main/LICENSE). The plain and Javadoc JARs are developer artifacts.
+
+---
+
+## Start Sharing
 
 <CardGrid>
-    <LinkCard title="Getting Started" description="Install the plugin and copy your first connection address." href="/port-bridge/getting-started/" />
-    <LinkCard title="Tunnels and Relays" description="Understand local targets, public ports and private relay servers." href="/port-bridge/tunnels-and-relays/" />
-    <LinkCard title="Commands" description="Control tunnel startup, status, shutdown and configuration reloads." href="/port-bridge/commands/" />
-    <LinkCard title="Troubleshooting" description="Diagnose listener failures, relay availability and reconnect loops." href="/port-bridge/troubleshooting/" />
+    <LinkCard title="Getting Started" description="Install the plugin, check requirements, and share your first connection address." href="/port-bridge/getting-started/" />
+    <LinkCard title="Tunnels and Relays" description="Understand local listeners, public ports, route checks, and private relays." href="/port-bridge/tunnels-and-relays/" />
+    <LinkCard title="Compatibility" description="Check Minecraft and Java versions, supported platforms, and network requirements." href="/port-bridge/compatibility/" />
+    <LinkCard title="Troubleshooting" description="Diagnose listener failures, download errors, and unavailable public routes." href="/port-bridge/troubleshooting/" />
 </CardGrid>
 
-## Administration and development
+---
+
+## Server Administration
 
 <CardGrid>
-    <LinkCard title="Permissions" description="Choose who can see addresses and manage tunnels." href="/port-bridge/permissions/" />
-    <LinkCard title="config.yml" description="Tune startup, executable installation, retries and route checks." href="/port-bridge/configuration/config/" />
-    <LinkCard title="messages.yml" description="Customize replies, panels, timing labels and permission errors." href="/port-bridge/configuration/messages/" />
-    <LinkCard title="Developer Reference" description="Inspect lifecycle ownership, thread rules and generated Javadocs." href="/port-bridge/developers/" />
+    <LinkCard title="Commands" description="Every command, accepted alias, permission, and practical example." href="/port-bridge/commands/" />
+    <LinkCard title="Permissions" description="Choose who can view addresses, manage tunnels, and reload settings." href="/port-bridge/permissions/" />
+    <LinkCard title="config.yml" description="Configure startup, Bore installation, relays, retries, and public health checks." href="/port-bridge/configuration/config/" />
+    <LinkCard title="messages.yml" description="Customize chat panels, colors, buttons, hover text, and command feedback." href="/port-bridge/configuration/messages/" />
 </CardGrid>
 
-## Usage statistics
+---
 
-Port Bridge uses [bStats](https://bstats.org/plugin/bukkit/Port%20Bridge/34669) for anonymous usage statistics. To opt out, set `enabled: false` in `plugins/bStats/config.yml`.
+## Development and Resources
+
+The implementation uses immutable settings and tunnel snapshots, a worker for native processes and network checks, and server-thread callbacks for Bukkit interactions. Browse the implementation reference when building from source or contributing.
+
+<CardGrid>
+    <LinkCard title="Developer Reference" description="Build the plugin and understand service ownership, lifecycle, and thread rules." href="/port-bridge/developers/" />
+    <LinkCard title="Javadocs" description="Browse the generated class, method, and package documentation." href="https://javadoc.despical.dev/portbridge/" target="_blank" rel="noopener noreferrer" />
+    <LinkCard title="Source Code" description="Read the implementation or contribute to Port Bridge on GitHub." href="https://github.com/Despical/PortBridge" target="_blank" rel="noopener noreferrer" />
+    <LinkCard title="Issue Tracker" description="Report a reproducible problem with your server version and relevant logs." href="https://github.com/Despical/PortBridge/issues" target="_blank" rel="noopener noreferrer" />
+</CardGrid>
+
+---
+
+## Usage Statistics
+
+Port Bridge uses [bStats](https://bstats.org/plugin/bukkit/Port%20Bridge/34669) for anonymous usage statistics. Server owners can opt out by setting `enabled: false` in `plugins/bStats/config.yml` and restarting the server.

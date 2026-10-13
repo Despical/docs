@@ -1,26 +1,77 @@
 ---
 title: Commands
-description: Every Port Bridge command, alias, permission and lifecycle effect.
+description: Complete Port Bridge command reference with permissions, chat controls, and examples for sharing, managing, and reloading a tunnel.
 ---
 
-`/port`, `/portbridge` and `/pb` share the same command tree. Console access is supported.
+## In-Game Help
 
-| Command | Permission | Effect |
+```text
+/port help
+```
+
+The help panel shows the commands available to you. Hover for details or click a command to fill the input. Console access is supported; console controls include the matching command as text.
+
+---
+
+## Public Commands
+
+The main command is `/port`; `/portbridge` and `/pb` are aliases. Each action uses its own [permission](/port-bridge/permissions/).
+
+| Command | Purpose | Permission |
 | --- | --- | --- |
-| `/port` or `/port status` | `portbridge.status` | Show state, target, relay, uptime, latency, retry timing and errors. |
-| `/port help` | `portbridge.status` | Show available commands and clickable suggestions. |
-| `/port address` or `/port ip` | `portbridge.address` | Show and copy the public Minecraft address. |
-| `/port start` | `portbridge.manage` | Start preparing the tunnel in the background. |
-| `/port stop` | `portbridge.manage` | Stop the tunnel and cancel pending retries. |
-| `/port restart` | `portbridge.manage` | Start a replacement session; the public address may change. |
-| `/port reload` | `portbridge.reload` | Validate both configuration files and reconnect an active tunnel. |
+| `/port` or `/port status` | Show state, target, relay, uptime, latency, retries, and the latest error | `portbridge.status` |
+| `/port help` | Open command help and clickable suggestions | `portbridge.status` |
+| `/port address` or `/port ip` | Show and copy the public Minecraft address | `portbridge.address` |
+| `/port start` | Prepare the executable and start a tunnel in the background | `portbridge.manage` |
+| `/port stop` | Close the tunnel and cancel pending retries | `portbridge.manage` |
+| `/port restart` | Start a replacement tunnel session | `portbridge.manage` |
+| `/port reload` | Validate configuration and messages, then reconnect an active tunnel | `portbridge.reload` |
 
-## Reload behavior
+All permissions default to operators. `portbridge.admin` grants all four command permissions.
 
-Invalid config or messages reject the reload and leave the previous settings active. A stopped tunnel stays stopped. If startup was still scheduled, reload cancels that task and reschedules it only when automatic startup remains enabled.
+---
 
-## Chat controls
+## Inspect and Share
 
-Panels show actions according to command permissions. Copy buttons use the Minecraft client's clipboard action. Start, Stop, Restart and Refresh dispatch the same command handlers as typed commands. Console buttons include the matching command as text.
+```text
+/port status
+/port address
+```
 
-All command replies and framework permission/error replies are defined in [messages.yml](/port-bridge/configuration/messages/). Diagnostic reasons can contain original I/O or Bore output.
+The status panel reports the resolved local listener, relay, public-check policy, connection timing, and latest diagnostic. The address panel provides **Copy Address** when a public address is available.
+
+Copy controls use the Minecraft client's clipboard action. Share the copied address with friends for **Multiplayer > Direct Connection**. An allocated address with public checks disabled does not establish a verified Minecraft route; see [tunnels and relays](/port-bridge/tunnels-and-relays/).
+
+---
+
+## Manage the Tunnel
+
+```text
+/port start
+/port stop
+/port restart
+```
+
+Start prepares the connection asynchronously. Starting an already running or preparing tunnel reports its current condition. Stop closes the tunnel and cancels retries; stopping an already stopped tunnel reports that it is stopped.
+
+Restart opens a replacement session. Remote players can disconnect and the public address can change, so request the current address again afterward.
+
+---
+
+## Reload Settings
+
+```text
+/port reload
+```
+
+Reload validates both [config.yml](/port-bridge/configuration/config/) and [messages.yml](/port-bridge/configuration/messages/) before applying replacements. Invalid settings or messages reject the reload and leave the previous configuration active.
+
+An active tunnel reconnects with the new settings. An explicitly stopped tunnel stays stopped. If startup was still scheduled, reload cancels the pending task and reschedules it only when automatic startup remains enabled.
+
+---
+
+## Chat Controls
+
+Panels show **Start**, **Stop**, **Restart**, and **Refresh** according to the sender's command permissions. These buttons dispatch the same handlers as typed commands.
+
+All labels, hover text, command replies, and framework permission/error replies are configurable through [messages.yml](/port-bridge/configuration/messages/). Diagnostic reasons can contain original I/O or Bore output.
