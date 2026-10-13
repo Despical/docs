@@ -32,6 +32,14 @@ These values (in seconds) control the pace of your arenas. **TNT Run** uses a sm
 | `full-game-starting-time` | 15      | The fastest countdown used when the arena reaches its maximum player count.        |
 | `ending-time`             | 10      | Duration of the ending phase before players are returned and the arena resets.     |
 
+Set a starting countdown to `0` to skip waiting when its player threshold is reached:
+
+* **`pre-game-waiting-time: 0`**: Start when the minimum player count is reached.
+* **`game-starting-time: 0`**: Start at the accelerated threshold, about 80% of arena capacity.
+* **`full-game-starting-time: 0`**: Start when the arena is full.
+
+Shortening a countdown never extends a smaller remaining timer. Negative values in `time-settings` are replaced with the corresponding defaults, with a warning in the console, both on startup and after `/tr reload`.
+
 ---
 
 ## Gameplay Mechanics
