@@ -11,6 +11,18 @@ const googleAnalyticsId = 'G-SGNN9QLBSE';
 export default defineConfig({
     site: 'https://docs.despical.dev',
     base: '/',
+    redirects: {
+        "/portbridge": "/port-bridge/",
+        "/portbridge/commands": "/port-bridge/commands/",
+        "/portbridge/compatibility": "/port-bridge/compatibility/",
+        "/portbridge/configuration/config": "/port-bridge/configuration/config/",
+        "/portbridge/configuration/messages": "/port-bridge/configuration/messages/",
+        "/portbridge/developers": "/port-bridge/developers/",
+        "/portbridge/getting-started": "/port-bridge/getting-started/",
+        "/portbridge/permissions": "/port-bridge/permissions/",
+        "/portbridge/troubleshooting": "/port-bridge/troubleshooting/",
+        "/portbridge/tunnels-and-relays": "/port-bridge/tunnels-and-relays/",
+    },
     build: {
         inlineStylesheets: "always",
     },
@@ -27,7 +39,7 @@ export default defineConfig({
                 {icon: 'patreon', label: 'home:Patreon', href: 'https://patreon.com/despical'},
                 {
                     icon: "external",
-                    label: "portbridge:Hub",
+                    label: "port-bridge:Hub",
                     href: "https://hub.despical.dev/plugins/port-bridge",
                 },
                 {
@@ -1331,33 +1343,48 @@ export default defineConfig({
                         ],
                     },
                     {
-                        label: "PortBridge",
+                        label: "Port Bridge",
                         id: "portbridge",
-                        link: "/portbridge/",
+                        link: "/port-bridge/",
                         icon: "portbridge",
                         items: [
                             {
                                 label: "Basics",
                                 items: [
-                                    {label: "Getting Started", link: "/portbridge/getting-started/"},
-                                    {label: "Compatibility", link: "/portbridge/compatibility/"},
-                                    {label: "Tunnels and Relays", link: "/portbridge/tunnels-and-relays/"},
+                                    {label: "Getting Started", link: "/port-bridge/getting-started/"},
+                                    {label: "Compatibility", link: "/port-bridge/compatibility/"},
+                                    {label: "Tunnels and Relays", link: "/port-bridge/tunnels-and-relays/"},
                                 ],
                             },
                             {
                                 label: "Reference",
                                 items: [
-                                    {label: "Commands", link: "/portbridge/commands/"},
-                                    {label: "Permissions", link: "/portbridge/permissions/"},
-                                    {label: "config.yml", link: "/portbridge/configuration/config/"},
-                                    {label: "messages.yml", link: "/portbridge/configuration/messages/"},
+                                    {label: "Commands", link: "/port-bridge/commands/"},
+                                    {label: "Permissions", link: "/port-bridge/permissions/"},
                                 ],
                             },
                             {
-                                label: "Development and Help",
+                                label: "Configuration",
                                 items: [
-                                    {label: "Developer Reference", link: "/portbridge/developers/"},
-                                    {label: "Troubleshooting", link: "/portbridge/troubleshooting/"},
+                                    {label: "config.yml", link: "/port-bridge/configuration/config/"},
+                                    {label: "messages.yml", link: "/port-bridge/configuration/messages/"},
+                                ],
+                            },
+                            {
+                                label: "Development",
+                                items: [
+                                    {label: "Developer Reference", link: "/port-bridge/developers/"},
+                                ],
+                            },
+                            {
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "Troubleshooting", link: "/port-bridge/troubleshooting/"},
+                                ],
+                            },
+                            {
+                                label: "Resources",
+                                items: [
                                     {label: "Javadocs", link: "https://javadoc.despical.dev/portbridge/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                     {label: "Source Code", link: "https://github.com/Despical/PortBridge", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                     {label: "Issue Tracker", link: "https://github.com/Despical/PortBridge/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},

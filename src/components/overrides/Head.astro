@@ -13,7 +13,7 @@ const projectNames: Record<string, string> = {
     'item-upgrader': 'Item Upgrader',
     'kotl': 'King of the Ladder',
     'maze-engine': 'Maze Engine',
-    'portbridge': 'PortBridge',
+    'port-bridge': 'Port Bridge',
     'particle-text': 'Particle Text',
     'santa-says': 'Santa Says',
     'spigot-webhook': 'Spigot Sales Webhook',
@@ -30,7 +30,7 @@ const pageTitle = projectName && segments.length > 1
     : undefined;
 
 const resolvedHead = head.map((item) => {
-    if (['maze-engine', 'portbridge'].includes(segments[0]) && item.tag === 'meta' && item.attrs?.name === 'twitter:card') {
+    if (['maze-engine', 'port-bridge'].includes(segments[0]) && item.tag === 'meta' && item.attrs?.name === 'twitter:card') {
         return { ...item, attrs: { ...item.attrs, content: 'summary_large_image' } };
     }
 
@@ -107,12 +107,12 @@ if (segments.length > 0) {
         <meta name="twitter:image" content="https://docs.despical.dev/images/mazeengine/social-preview.png" />
     </>
 )}
-{segments[0] === 'portbridge' && (
+{segments[0] === 'port-bridge' && (
     <>
         <meta property="og:image" content="https://docs.despical.dev/images/portbridge/cover.png" />
         <meta property="og:image:width" content="1774" />
         <meta property="og:image:height" content="887" />
-        <meta property="og:image:alt" content="PortBridge connects two Minecraft islands with a cyan network bridge" />
+        <meta property="og:image:alt" content="Port Bridge connects two Minecraft islands with a cyan network bridge" />
         <meta name="twitter:image" content="https://docs.despical.dev/images/portbridge/cover.png" />
     </>
 )}

@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Diagnose PortBridge local listener failures, relay problems, executable downloads, permission issues and invalid reloads.
+description: Diagnose Port Bridge local listener failures, relay problems, executable downloads, permission issues and invalid reloads.
 ---
 
 ## Local Minecraft server did not respond
@@ -9,7 +9,7 @@ Keep `enable-status=true` in `server.properties` and restart Minecraft after cha
 
 ## Bore download or executable failure
 
-The server needs HTTPS access to the pinned GitHub release. Check the operating system and CPU architecture against [Compatibility](/portbridge/compatibility/). Managed archives and cache receipts are verified; modified or invalid caches are replaced when downloads are allowed. A custom path must identify a readable executable; relative paths start inside `plugins/PortBridge/`.
+The server needs HTTPS access to the pinned GitHub release. Check the operating system and CPU architecture against [Compatibility](/port-bridge/compatibility/). Managed archives and cache receipts are verified; modified or invalid caches are replaced when downloads are allowed. A custom path must identify a readable executable; relative paths start inside `plugins/PortBridge/`.
 
 ## Connecting or reconnecting repeatedly
 
@@ -21,11 +21,11 @@ Enable `relay.fallback-to-random` or request port `0`. Assigned addresses can ch
 
 ## Address appears but friends cannot join
 
-Check the public-route result. With public checks disabled, the relay may allocate a port without proving Minecraft is reachable. Friends still need a compatible Minecraft Java version, a valid authenticated account when required and whitelist access. PortBridge does not expose Bedrock or UDP services.
+Check the public-route result. With public checks disabled, the relay may allocate a port without proving Minecraft is reachable. Friends still need a compatible Minecraft Java version, a valid authenticated account when required and whitelist access. Port Bridge does not expose Bedrock or UDP services.
 
 ## Permission denied
 
-Give the player the specific [permission](/portbridge/permissions/) or `portbridge.admin`. Status permission alone does not reveal the public address or grant tunnel management.
+Give the player the specific [permission](/port-bridge/permissions/) or `portbridge.admin`. Status permission alone does not reveal the public address or grant tunnel management.
 
 ## Reload rejected
 

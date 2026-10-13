@@ -1,6 +1,6 @@
 ---
 title: Permissions
-description: PortBridge permission nodes for connection addresses, status, tunnel management and reloads.
+description: Port Bridge permission nodes for connection addresses, status, tunnel management and reloads.
 ---
 
 All permissions default to operators. `portbridge.admin` grants the four command permissions below.
@@ -15,4 +15,4 @@ All permissions default to operators. `portbridge.admin` grants the four command
 
 The optional join notification also checks `portbridge.address`. Its delayed callback rechecks the player, current preference, permission and tunnel state before sending a panel.
 
-Chat controls hide actions the sender cannot use. Displaying a copy control does not grant management permissions. Framework denial text can be customized through `acf.acf-core.permission_denied` in [messages.yml](/portbridge/configuration/messages/).
+Chat controls hide actions the sender cannot use. Displaying a copy control does not grant management permissions. Framework denial text can be customized through `acf.acf-core.permission_denied` in [messages.yml](/port-bridge/configuration/messages/).

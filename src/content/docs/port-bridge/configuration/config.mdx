@@ -1,6 +1,6 @@
 ---
 title: config.yml
-description: Every PortBridge setting, default, range and reload behavior for listeners, relays, retries and route checks.
+description: Every Port Bridge setting, default, range and reload behavior for listeners, relays, retries and route checks.
 ---
 
 Edit `plugins/PortBridge/config.yml` and run `/port reload`. Invalid settings reject the whole reload. Active tunnels reconnect with the replacement settings; an explicitly stopped tunnel remains stopped.
@@ -10,15 +10,15 @@ The comments below describe every setting and validation range. Local and public
 ```yaml
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #                                                                             #
-#                                  PortBridge                                 #
+#                                  Port Bridge                                 #
 #                                 by Despical                                 #
 #                                                                             #
 #                    https://github.com/Despical/PortBridge                   #
-#                    https://docs.despical.dev/portbridge/                    #
+#                    https://docs.despical.dev/port-bridge/                    #
 #                    https://github.com/Despical/PortBridge                   #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# PortBridge connects your running Paper server to a public TCP relay.
+# Port Bridge connects your running Paper server to a public TCP relay.
 # Reload with /port reload. Invalid values reject the entire reload.
 # Active tunnels reconnect with the new settings; an explicitly stopped tunnel stays stopped.
 startup:
@@ -93,4 +93,4 @@ debug: false
 
 ## Related references
 
-Read [Tunnels and Relays](/portbridge/tunnels-and-relays/) for network behavior and [messages.yml](/portbridge/configuration/messages/) for configurable output.
+Read [Tunnels and Relays](/port-bridge/tunnels-and-relays/) for network behavior and [messages.yml](/port-bridge/configuration/messages/) for configurable output.

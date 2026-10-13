@@ -1,11 +1,11 @@
 ---
 title: Compatibility
-description: PortBridge Minecraft, Java, server software and native executable support boundaries.
+description: Port Bridge Minecraft, Java, server software and native executable support boundaries.
 ---
 
 ## Server versions
 
-PortBridge targets **Minecraft 1.21.11+ on Paper and compatible forks**. It compiles against Paper 1.21.11 and uses Bukkit lifecycle, configuration and event APIs plus Paper's Adventure components. It does not use Minecraft internals or version-specific world APIs.
+Port Bridge targets **Minecraft 1.21.11+ on Paper and compatible forks**. It compiles against Paper 1.21.11 and uses Bukkit lifecycle, configuration and event APIs plus Paper's Adventure components. It does not use Minecraft internals or version-specific world APIs.
 
 | Server version | Runtime Java |
 | --- | --- |
@@ -14,7 +14,7 @@ PortBridge targets **Minecraft 1.21.11+ on Paper and compatible forks**. It comp
 
 The plugin emits Java 25 bytecode; building from source uses the Java 25 toolchain. Minecraft versions older than 1.21.11 are outside the supported range. Compatibility has been checked through Minecraft 26.3; future releases require another compatibility check. Folia and Spigot are not supported.
 
-PortBridge requires Java 25 for its compiled classes, including on older server versions. The [Paper installation reference](https://docs.papermc.io/paper/getting-started/) lists the server software's own Java recommendations.
+Port Bridge requires Java 25 for its compiled classes, including on older server versions. The [Paper installation reference](https://docs.papermc.io/paper/getting-started/) lists the server software's own Java recommendations.
 
 ## Validation
 
@@ -34,4 +34,4 @@ Other targets require a compatible custom executable. Managed downloads use pinn
 
 ## Network services
 
-PortBridge forwards Minecraft Java TCP traffic. It does not expose Bedrock, UDP query or other UDP services, and it does not preserve real player IP addresses. A relay can introduce latency. Disabling public health checks marks the connection as unverified; local status checks remain required.
+Port Bridge forwards Minecraft Java TCP traffic. It does not expose Bedrock, UDP query or other UDP services, and it does not preserve real player IP addresses. A relay can introduce latency. Disabling public health checks marks the connection as unverified; local status checks remain required.
