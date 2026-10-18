@@ -1,0 +1,72 @@
+---
+title: "Palettes and Dithering"
+description: "Choose among 335 block materials, family palettes, perceptual matching, transparency and Floyd-Steinberg dithering."
+---
+
+## Material Coverage
+
+The bundled `palette.yml` contains **335 different materials**. The count represents material names, not multiple views of one block. Supported entries vary with the running server registry; a material missing from that server is skipped.
+
+Families include concrete, wool, terracotta and glazed terracotta; logs, wood, hyphae and stripped variants; ores, masonry, copper, resin and tuff; stable ice, mushrooms, foliage and glass. Persistent leaf data prevents natural decay. Blocks with gravity or block-entity state are rejected.
+
+```text
+/pp materials
+/pp materials concrete 2
+/pp materials wool
+```
+
+---
+
+## Global Filters and Command Families
+
+`palette.include` and `palette.exclude` in `config.yml` define the global candidate set. An empty include list permits all available entries. Explicit inclusions must exist after exclusions; invalid or empty results reject loading.
+
+Command families are applied within that set:
+
+| Family | Selection |
+| --- | --- |
+| `all` | Every globally enabled entry |
+| `concrete` | Material names ending in `_CONCRETE` |
+| `wool` | Material names ending in `_WOOL` |
+| `terracotta` | Material names ending in `_TERRACOTTA`, including glazed variants |
+
+Concrete powder is not part of the concrete family. Terracotta without a color prefix is available in `all`; the `terracotta` command family uses the suffix rule above.
+
+---
+
+## Perceptual Matching
+
+The matcher converts source sRGB colors and palette colors into Oklab coordinates, then chooses the entry with the smallest squared distance. Repeated source colors are cached during a planning task.
+
+A representative texture average cannot reproduce every visible face exactly. Logs, columns and directional materials may look different from above. Glass and foliage depend on background blocks, light and biome tint. Copper may weather after placement. Use exclusions when those effects do not suit the artwork.
+
+The palette does not install a resource pack or recolor Minecraft textures.
+
+---
+
+## Dithering
+
+Floyd-Steinberg dithering distributes color error to nearby pixels. With a small palette, alternating blocks can approximate an intermediate shade that no single material provides.
+
+```text
+/pp preview landscape.png 96 concrete false true
+/pp preview landscape.png 96 concrete true true
+```
+
+The first estimate disables dithering; the second enables it. Compare material distribution before painting. Both preserve transparent areas.
+
+Use dithering for photographs, soft gradients and shaded illustrations. Try it disabled for flat logos, icons and intentionally limited-color pixel art. Dithering changes selected materials and may increase color variation, but it does not change output dimensions.
+
+---
+
+## Extend the Palette
+
+Add supported Bukkit names and quoted sRGB colors to `palette.yml`, then reload:
+
+```yaml
+blocks:
+  PALE_OAK_PLANKS: '#E4DAD8'
+  RESIN_BRICKS: '#CE5818'
+```
+
+This is a small excerpt, not a replacement for the complete file. Keep other desired entries. The [palette reference](/pixel-painter/configuration/palette/) explains validation and safe material selection.
