@@ -1,0 +1,44 @@
+---
+title: Troubleshooting
+description: Fix FrameUI Studio WebGL previews, browser storage, missing images, exports and server connection errors.
+---
+
+## The Preview Is Blank or WebGL Is Unavailable
+
+Enable browser hardware acceleration and reload Studio. If WebGL is unavailable, editing and export remain available, but the shader preview cannot render. Check with a current browser and record any displayed renderer error.
+
+A design can also be blank at the beginning or end of its animation. Move the timeline into the hold phase, enable captions or the intended background/image, and check opacity and component positions.
+
+## The Image Is Missing
+
+YAML stores a path, not an embedded picture. Import the complete Studio ZIP or choose the referenced image again. PNG/JPEG input is supported by Studio; plugin exports contain PNG. The plugin image limit is 8 MiB and 2048 × 2048 pixels.
+
+Check image opacity, reveal delay, scale, placement and fit. Scrub the timeline to confirm the image finishes appearing before the exit.
+
+## Controls Are Disabled
+
+Some fields do not apply to the selected template or composition. Use the nearby field help to see why. For example, ambient speed only affects templates that use ambient motion, and showing hands requires the HUD to remain visible.
+
+An export can also be disabled by an invalid ID or configuration value. Correct the validation message in the inspector footer.
+
+## My Drafts Are Gone
+
+Confirm you are using the same browser, profile and Studio address. Private sessions, blocked storage or clearing site data can remove or isolate drafts. Browser-local effects do not synchronize automatically. Reimport a saved ZIP backup if available.
+
+If Studio reports storage access failure, export your current work before closing the tab.
+
+## Import to Server or Save to Server Fails
+
+Keep your Minecraft player online with `frameui.command.editor`. Personal links last 30 minutes and a replacement link invalidates the old one. Run `/frameui editor` again and open the new link.
+
+A revision conflict means the server definition changed since you opened it. Export the draft if needed, then reopen the current server effect and reapply your changes. For connection failures, check server outbound HTTPS access and the connection status. See [Connect Your Server](/frameui-studio/server-connection/).
+
+## Selected Events Do Not Play
+
+Import or save the design first; changing checkboxes in a draft does not apply them to the server. Check **Events**, the integration state and **In-game** filters. A pending native request or cancelled teleport does not start a travel screen. Review [automatic playback](/frameui/automatic-playback/).
+
+## Minecraft Looks Different
+
+The browser uses sample data and a captured player view. Test the final result with the refreshed FrameUI resource pack in Minecraft, including aspect ratio, captions and HUD/hand settings. The gallery contains Studio-rendered previews, not gameplay captures.
+
+For plugin-side pack, reload or language issues, see [FrameUI Troubleshooting](/frameui/troubleshooting/).

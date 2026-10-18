@@ -1,0 +1,362 @@
+[
+  {
+    "id": "frameui",
+    "name": "FrameUI Signature",
+    "category": "Presets",
+    "seconds": 4.8
+  },
+  {
+    "id": "cherry-valley",
+    "name": "Cherry Valley",
+    "category": "Presets",
+    "seconds": 4.9
+  },
+  {
+    "id": "clean-loader",
+    "name": "Clean Loader",
+    "category": "Presets",
+    "seconds": 2
+  },
+  {
+    "id": "nether-forge",
+    "name": "Nether Forge",
+    "category": "Presets",
+    "seconds": 4.6
+  },
+  {
+    "id": "orbit-loader",
+    "name": "Orbit Loader",
+    "category": "Presets",
+    "seconds": 3.2
+  },
+  {
+    "id": "overworld",
+    "name": "Overworld Panorama",
+    "category": "Presets",
+    "seconds": 5
+  },
+  {
+    "id": "pulse-loader",
+    "name": "Pulse Loader",
+    "category": "Presets",
+    "seconds": 2.2
+  },
+  {
+    "id": "segmented-loader",
+    "name": "Segmented Loader",
+    "category": "Presets",
+    "seconds": 2.5
+  },
+  {
+    "id": "split-loader",
+    "name": "Split Loader",
+    "category": "Presets",
+    "seconds": 1.8
+  },
+  {
+    "id": "terminal-loader",
+    "name": "Terminal Loader",
+    "category": "Presets",
+    "seconds": 3
+  },
+  {
+    "id": "loading",
+    "name": "Original loading",
+    "category": "Animations",
+    "seconds": 2.5
+  },
+  {
+    "id": "fade-in",
+    "name": "Fade In",
+    "category": "Animations",
+    "seconds": 1
+  },
+  {
+    "id": "fade-out",
+    "name": "Fade Out",
+    "category": "Animations",
+    "seconds": 1.2
+  },
+  {
+    "id": "color-wipe",
+    "name": "Color Wipe",
+    "category": "Animations",
+    "seconds": 1.4
+  },
+  {
+    "id": "iris",
+    "name": "Cinema Iris",
+    "category": "Animations",
+    "seconds": 1.8
+  },
+  {
+    "id": "aurora",
+    "name": "Aurora",
+    "category": "Animations",
+    "seconds": 4
+  },
+  {
+    "id": "fade-black",
+    "name": "Black Fade",
+    "category": "Animations",
+    "seconds": 1.5
+  },
+  {
+    "id": "fade-rose",
+    "name": "Rose Fade",
+    "category": "Animations",
+    "seconds": 1.6
+  },
+  {
+    "id": "wipe-right",
+    "name": "Reverse Curtain",
+    "category": "Animations",
+    "seconds": 1.1
+  },
+  {
+    "id": "wipe-down",
+    "name": "Blue Waterfall",
+    "category": "Animations",
+    "seconds": 1.3
+  },
+  {
+    "id": "wipe-up",
+    "name": "Amber Rise",
+    "category": "Animations",
+    "seconds": 1.7
+  },
+  {
+    "id": "diagonal-wipe",
+    "name": "Diagonal Sweep",
+    "category": "Animations",
+    "seconds": 1.9
+  },
+  {
+    "id": "blinds",
+    "name": "Horizontal Blinds",
+    "category": "Animations",
+    "seconds": 1.25
+  },
+  {
+    "id": "vertical-blinds",
+    "name": "Vertical Blinds",
+    "category": "Animations",
+    "seconds": 1.75
+  },
+  {
+    "id": "checkerboard",
+    "name": "Checkerboard",
+    "category": "Animations",
+    "seconds": 2.1
+  },
+  {
+    "id": "mosaic",
+    "name": "Ocean Mosaic",
+    "category": "Animations",
+    "seconds": 2.6
+  },
+  {
+    "id": "diamond",
+    "name": "Diamond Bloom",
+    "category": "Animations",
+    "seconds": 2.05
+  },
+  {
+    "id": "hexagon",
+    "name": "Honeycomb",
+    "category": "Animations",
+    "seconds": 2.2
+  },
+  {
+    "id": "split-horizontal",
+    "name": "Side Curtains",
+    "category": "Animations",
+    "seconds": 1.45
+  },
+  {
+    "id": "split-vertical",
+    "name": "Cinema Curtains",
+    "category": "Animations",
+    "seconds": 2.3
+  },
+  {
+    "id": "zoom-square",
+    "name": "Square Zoom",
+    "category": "Animations",
+    "seconds": 1.35
+  },
+  {
+    "id": "shutter",
+    "name": "Camera Shutter",
+    "category": "Animations",
+    "seconds": 1.55
+  },
+  {
+    "id": "ripple",
+    "name": "Ripple Reveal",
+    "category": "Animations",
+    "seconds": 2.8
+  },
+  {
+    "id": "radar",
+    "name": "Emerald Radar",
+    "category": "Animations",
+    "seconds": 3.5
+  },
+  {
+    "id": "sonar",
+    "name": "Deep Sonar",
+    "category": "Animations",
+    "seconds": 3.6
+  },
+  {
+    "id": "starfield",
+    "name": "Starlit Sky",
+    "category": "Animations",
+    "seconds": 4.5
+  },
+  {
+    "id": "warp",
+    "name": "Warp Drive",
+    "category": "Animations",
+    "seconds": 2
+  },
+  {
+    "id": "nebula",
+    "name": "Violet Nebula",
+    "category": "Animations",
+    "seconds": 5
+  },
+  {
+    "id": "eclipse",
+    "name": "Solar Eclipse",
+    "category": "Animations",
+    "seconds": 3.7
+  },
+  {
+    "id": "solar-flare",
+    "name": "Solar Flare",
+    "category": "Animations",
+    "seconds": 2.4
+  },
+  {
+    "id": "ocean",
+    "name": "Ocean Waves",
+    "category": "Animations",
+    "seconds": 4.4
+  },
+  {
+    "id": "lava",
+    "name": "Molten Lava",
+    "category": "Animations",
+    "seconds": 3.2
+  },
+  {
+    "id": "snowflakes",
+    "name": "Winter Snow",
+    "category": "Animations",
+    "seconds": 4.8
+  },
+  {
+    "id": "rain",
+    "name": "Midnight Rain",
+    "category": "Animations",
+    "seconds": 3.4
+  },
+  {
+    "id": "sakura",
+    "name": "Sakura Petals",
+    "category": "Animations",
+    "seconds": 4.6
+  },
+  {
+    "id": "fireflies",
+    "name": "Forest Fireflies",
+    "category": "Animations",
+    "seconds": 4.9
+  },
+  {
+    "id": "matrix",
+    "name": "Digital Rain",
+    "category": "Animations",
+    "seconds": 2.7
+  },
+  {
+    "id": "scanlines",
+    "name": "Retro CRT",
+    "category": "Animations",
+    "seconds": 2.15
+  },
+  {
+    "id": "glitch",
+    "name": "Signal Glitch",
+    "category": "Animations",
+    "seconds": 1.05
+  },
+  {
+    "id": "pixel-dissolve",
+    "name": "Pixel Dissolve",
+    "category": "Animations",
+    "seconds": 2.35
+  },
+  {
+    "id": "ink",
+    "name": "Ink Flood",
+    "category": "Animations",
+    "seconds": 3.1
+  },
+  {
+    "id": "paper",
+    "name": "Paper Fold",
+    "category": "Animations",
+    "seconds": 1.85
+  },
+  {
+    "id": "film-grain",
+    "name": "Old Film",
+    "category": "Animations",
+    "seconds": 2.9
+  },
+  {
+    "id": "prism",
+    "name": "Glass Prism",
+    "category": "Animations",
+    "seconds": 3.8
+  },
+  {
+    "id": "gradient-sunset",
+    "name": "Sunset Gradient",
+    "category": "Animations",
+    "seconds": 4.7
+  },
+  {
+    "id": "gradient-ocean",
+    "name": "Ocean Gradient",
+    "category": "Animations",
+    "seconds": 4.2
+  },
+  {
+    "id": "monochrome",
+    "name": "Silver Monochrome",
+    "category": "Animations",
+    "seconds": 2.25
+  },
+  {
+    "id": "pulse",
+    "name": "Soft Pulse",
+    "category": "Animations",
+    "seconds": 2.55
+  },
+  {
+    "id": "ribbon",
+    "name": "Silk Ribbons",
+    "category": "Animations",
+    "seconds": 4.3
+  },
+  {
+    "id": "spiral",
+    "name": "Golden Spiral",
+    "category": "Animations",
+    "seconds": 2.95
+  }
+]

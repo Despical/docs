@@ -1,0 +1,43 @@
+---
+title: Connect Your Server
+description: Connect FrameUI Studio through a private personal link, import designs, save revisions and permanently delete custom server effects.
+---
+
+## Open a Personal Session
+
+1. Join a server running FrameUI with `frameui.command.editor`.
+2. Run `/frameui editor` and open the personal link in chat.
+3. Keep the Minecraft account online while editing.
+4. Select or create a design and choose **Import to server**.
+
+The default setup uses an outbound HTTPS connection and needs no inbound port. Standalone Studio has a **Connect server** action explaining how to obtain the personal link; opening the public website alone does not grant access to your server.
+
+Personal links expire after **30 minutes**. Running the command again replaces the previous capability. Keep the full link private. Revoking the editor permission also blocks an existing session.
+
+## Import a New Design
+
+Editing a bundled animation or preset creates your own copy. Click **Import to server** to install the effect and its image. The server validates the definition, rebuilds its resource pack and applies the saved event bindings.
+
+The imported effect appears under **My Effects**. Accept the refreshed pack and test `/frameui preview <id>`. Global filters, individual filters and cooldowns still apply.
+
+## Save an Existing Effect
+
+Open a custom server effect from My Effects. After editing, click **Save to server**. Changes remain a draft until that save succeeds.
+
+Studio checks the current server revision before replacing a definition. If someone else changed it, reopen the latest server effect before saving. Export an unsaved draft first if you need to preserve it. Do not repeatedly retry a stale save expecting it to overwrite another change.
+
+## Events and Availability
+
+**Events → When to play** selects joins, teleports and world changes. **Plugin events** shows optional integration states. **In-game** controls filters and destination restrictions. A design may save successfully yet be ineligible for a particular player or event.
+
+See [Automatic Playback](/frameui/automatic-playback/) and [Filters and Selection](/frameui/filters/).
+
+## Delete a Custom Effect
+
+Use the delete action on a custom effect and review the **Delete permanently?** confirmation. Confirming deletes the server effect when connected; it is not simply a local catalog hide. Export a backup before deleting a design you may need again.
+
+## If the Connection Stops
+
+Check that your player is online, the permission remains granted and the link has not expired. Generate a replacement link for an expired session. The server requires outbound HTTPS access for the maintained connection.
+
+Connected saves and relay pack delivery depend on relay availability. The relay forwards effect and pack data in memory; it does not persist them. Standalone editing and ZIP export remain available without a live server connection. See [Troubleshooting](/frameui-studio/troubleshooting/).

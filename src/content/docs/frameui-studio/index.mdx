@@ -1,0 +1,37 @@
+---
+title: FrameUI Studio Documentation
+description: Create and preview FrameUI loading screens in your browser with direct manipulation, reusable templates, ZIP exports and connected server saves.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## FrameUI Studio
+
+**FrameUI Studio** is the browser editor for [FrameUI](/frameui/). Choose from 50 animations and 10 ready-made presets, then customize text, colors, images, motion, event bindings and the player's view. Drag and resize elements directly on the preview.
+
+[Open FrameUI Studio](https://frameui.despical.dev/). No Studio account is required. You can edit and export without connecting to a server, or open `/frameui editor` in Minecraft to import and save directly.
+
+![FrameUI Studio desktop editor with the effect library, live preview, timeline and design inspector](/images/frameui/studio-desktop.webp)
+
+## Create a Loading Screen
+
+<CardGrid>
+  <LinkCard title="Your First Effect" description="Choose a template, customize it and preview it in Minecraft." href="/frameui-studio/first-effect/" />
+  <LinkCard title="Design and Layout" description="Edit captions, images, backgrounds, indicators and screen placement." href="/frameui-studio/design/" />
+  <LinkCard title="Motion and Timing" description="Control entrance, hold, exit, extra wait and ambient motion speed." href="/frameui-studio/motion/" />
+  <LinkCard title="Effect Gallery" description="Watch all 60 bundled effects before choosing your starting point." href="/frameui/effects/" />
+</CardGrid>
+
+## Use It on Your Server
+
+<CardGrid>
+  <LinkCard title="Connect Your Server" description="Open a personal session, import a copy and save custom server effects." href="/frameui-studio/server-connection/" />
+  <LinkCard title="Import and Export" description="Install ZIPs manually, reopen YAML and keep portable backups." href="/frameui-studio/import-export/" />
+  <LinkCard title="Library and Shortcuts" description="Manage My Effects, understand browser storage and work with undo." href="/frameui-studio/library/" />
+  <LinkCard title="Troubleshooting" description="Fix WebGL, storage, missing images, connection and stale-save problems." href="/frameui-studio/troubleshooting/" />
+</CardGrid>
+
+Studio offers 28 interface languages through its header selector. Your effect content stays as you wrote it. The editor adapts to desktop, tablet and mobile; verify the finished design in Minecraft before using it for players.
+
+Studio is licensed under GPL-3.0-only. Its [source code](https://github.com/Despical/FrameUIStudio) is separate from the proprietary FrameUI plugin.

@@ -14,7 +14,7 @@ const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me",
 const pluginProjects = new Set([
     ...freePlugins,
     "advanced-parkour", "carousel", "easter-eggs", "eat-everything", "item-upgrader",
-    "santa-says", "the-snake", "tnt-tag", "warden-party",
+    "santa-says", "the-snake", "tnt-tag", "warden-party", "frameui",
 ]);
 const freePluginMarketplaces = new Set(["Hub", "SpigotMC", "BuiltByBit", "Modrinth"]);
 const brandLabels = new Set(["github", "javadoc", "discord", "patreon", "spigotmc", "builtbybit", "modrinth"]);
@@ -28,7 +28,7 @@ const links = (config.social || [])
             return true;
 
         if (l.label.startsWith("marketplace:"))
-            return Boolean(project) && !freePlugins.has(project);
+            return Boolean(project) && project !== "frameui-studio" && !freePlugins.has(project);
 
         if (l.label.startsWith("home:"))
             return !project;

@@ -1,0 +1,126 @@
+---
+title: Effect Files
+description: FrameUI effect YAML reference for IDs, templates, timing, captions, images, palettes, screen elements and presentation.
+---
+
+Each definition is stored in `plugins/FrameUI/effects/<id>.yml`. Copy a bundled definition or export one from Studio to keep all settings consistent.
+
+## Identity and Selection
+
+| Key | Meaning |
+| --- | --- |
+| `id` | Match the filename without `.yml`. Use lowercase letters, digits and single hyphens, up to 48 characters. |
+| `name` | Display name, up to 64 characters. |
+| `template` | One of the 50 stable animation IDs in the [gallery](/frameui/effects/). Presets are compositions built on these templates. |
+| `enabled` | Whether the effect is eligible. |
+| `priority` | Highest eligible value wins. |
+| `weight` | Positive random-selection weight among equal priorities. |
+| `play-on` | Automatic base or native addon events. Empty means manual-only. |
+
+Connected Studio creates a copy of a bundled definition rather than overwriting it. New custom definitions appear under **My Effects**. Keep the template ID when giving a copy its own ID.
+
+## Example Custom Effect
+
+```yaml
+id: 'lobby-aurora'
+name: 'Lobby Aurora'
+template: 'aurora'
+enabled: true
+priority: 0
+weight: 1
+play-on: ['join']
+
+timing:
+  fade-in-ticks: 14
+  minimum-ticks: 64
+  maximum-ticks: 84
+  fade-out-ticks: 16
+
+captions:
+  enabled: true
+  title: 'Welcome, {player}'
+  subtitle: 'Your next adventure starts here'
+  join-detail: 'Joining {world}'
+  teleport-detail: 'Travelling to {world}'
+  preview-detail: '{effect} preview'
+
+appearance:
+  palette: 'custom'
+  background: '#081221'
+  primary: '#7FAEFF'
+  secondary: '#C2D6FF'
+  speed: 1.0
+  intensity: 1.0
+  image: ''
+
+filters:
+  worlds:
+    include: ['lobby']
+```
+
+Save as `lobby-aurora.yml`, reload and test in `lobby` with `/frameui preview lobby-aurora`. Omitted optional keys use schema defaults. Unknown settings reject the definition.
+
+## Timing
+
+All YAML timing values use server ticks: **20 ticks = 1 second**.
+
+| Key | Meaning |
+| --- | --- |
+| `fade-in-ticks` | Entrance length; may be zero. |
+| `minimum-ticks` | Earliest release point measured from the start, including the entrance. |
+| `maximum-ticks` | Latest release point while waiting for world readiness. |
+| `fade-out-ticks` | Exit length after release; at least one tick. |
+
+For the example, entrance is `0.7s`, hold is `2.5s`, exit is `0.8s` and extra loading wait is up to `1s`. The normal duration is `(minimum-ticks + fade-out-ticks) / 20`, or `4s`.
+
+Each timing value is bounded to `1200` ticks. `minimum-ticks` must be at least `fade-in-ticks`; `maximum-ticks` must be at least `minimum-ticks`; maximum plus exit must not exceed `2400` ticks. Studio displays these phases in seconds under **Motion**.
+
+## Captions
+
+Caption text is plain text. Built-in replacements are `{player}`, `{world}`, `{source-world}` and `{effect}`. Optional PlaceholderAPI support expands installed placeholders in captions. Caption colors are `title-color`, `subtitle-color` and `detail-color` under `captions`.
+
+`join-detail`, `teleport-detail` and `preview-detail` select the detail text for the corresponding context. The browser preview uses sample values; test dynamic text in Minecraft.
+
+## Appearance and Images
+
+| Setting | Accepted values |
+| --- | --- |
+| `palette` | `original` or `custom` |
+| `background`, `primary`, `secondary` | Six-digit hex colors such as `#7FAEFF` |
+| `speed` | `0.05`–`8.0`; ambient motion speed, independent of duration |
+| `intensity` | `0.0`–`4.0` |
+| `image` | Empty, or a local PNG path under `images/` |
+| `image-fit` | `cover` fills the area; `contain` keeps the whole image visible |
+| `image-opacity` | `0.0`–`1.0` |
+| `image-motion` | `still`, `panorama`, `page` |
+| `title-motion` | `still`, `grow`; use Studio's individual caption controls for new designs |
+
+Plugin PNGs must be no larger than **8 MiB** and **2048 × 2048** pixels. Use local files, not remote URLs. Studio accepts PNG/JPEG input and includes a PNG in the export.
+
+## Screen Elements
+
+The `elements` section controls composition:
+
+- `background`: `template`, `solid`, `split`, `grid`, `terminal`, `pulse`, `none`.
+- `image-animation`: `inherit`, `fade`, `grow`, `slide-up`, `slide-left`, `slide-right`, `slide-down`, `wipe`, `page`, `none`.
+- `progress`: `none`, `bar`, `segments`, `dots`, `ring`.
+- `decoration`: `none`, `embers`, `petals`, `scan`, `pulse`.
+- `text-animation` and individual `title-animation`, `subtitle-animation`, `detail-animation`: `still`, `grow`, `slide-up`, `slide-down`, `slide-left`, `slide-right`, `none`.
+
+Image, text and indicator position, scale and stretch controls live in the same section. Positions use normalized screen coordinates, where `0.5` is the center. Individual caption offsets, scale and stretch can refine the shared text layout. Use [direct editing in Studio](/frameui-studio/design/) to place elements visually.
+
+Loading indicators are animated decoration; they do not measure the server's actual loading progress.
+
+## Player Presentation
+
+```yaml
+presentation:
+  show-hands: false
+  hide-hud: true
+  block-movement: true
+  block-interactions: true
+```
+
+Showing hands requires `hide-hud: false`. These settings apply while the screen is active. Always verify the final player view in Minecraft, including screen cleanup.
+
+See [Filters and Selection](/frameui/filters/) for the `filters` section and [Automatic Playback](/frameui/automatic-playback/) for `play-on`.

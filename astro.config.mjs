@@ -33,6 +33,9 @@ export default defineConfig({
             favicon: '/favicon.svg',
             description: "Official documentation for Despical's Minecraft plugins, developer tools, frameworks, setup guides, API references, and operational notes.",
             social: [
+                {icon: 'external', label: 'frameui:Studio', href: 'https://frameui.despical.dev/'},
+                {icon: 'external', label: 'frameui-studio:Open Studio', href: 'https://frameui.despical.dev/'},
+                {icon: 'github', label: 'frameui-studio:GitHub', href: 'https://github.com/Despical/FrameUIStudio'},
                 {icon: 'github', label: 'home:GitHub', href: 'https://github.com/Despical'},
                 {icon: 'seti:java', label: 'home:Javadoc', href: 'https://javadoc.despical.dev/'},
                 {icon: 'discord', label: 'home:Discord', href: 'https://discord.gg/uXVU8jmtpU'},
@@ -1343,6 +1346,79 @@ export default defineConfig({
                                 items: [
                                     {label: "FAQ", link: "/tnt-tag/misc/faq"},
                                     {label: "Source Access", link: "/source-access"},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "FrameUI",
+                        id: "frameui",
+                        link: "/frameui/",
+                        icon: "frameui",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/frameui/getting-started/"},
+                                    {label: "Effect Gallery", link: "/frameui/effects/"},
+                                    {label: "Automatic Playback", link: "/frameui/automatic-playback/"},
+                                ],
+                            },
+                            {
+                                label: "Reference",
+                                items: [
+                                    {label: "Commands and Permissions", link: "/frameui/commands/"},
+                                    {label: "Filters and Selection", link: "/frameui/filters/"},
+                                    {label: "Plugin Integrations", link: "/frameui/integrations/"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {label: "config.yml", link: "/frameui/configuration/config/"},
+                                    {label: "Effect Files", link: "/frameui/configuration/effects/"},
+                                    {label: "Messages and Languages", link: "/frameui/configuration/messages/"},
+                                ],
+                            },
+                            {
+                                label: "Resources",
+                                items: [
+                                    {label: "Troubleshooting", link: "/frameui/troubleshooting/"},
+                                    {label: "Studio Documentation", link: "https://docs.despical.dev/frameui-studio/"},
+                                    {label: "Open Studio", link: "https://frameui.despical.dev/"},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "FrameUI Studio",
+                        id: "frameui-studio",
+                        link: "/frameui-studio/",
+                        icon: "frameui-studio",
+                        items: [
+                            {
+                                label: "Create",
+                                items: [
+                                    {label: "Your First Effect", link: "/frameui-studio/first-effect/"},
+                                    {label: "Design and Layout", link: "/frameui-studio/design/"},
+                                    {label: "Motion and Timing", link: "/frameui-studio/motion/"},
+                                ],
+                            },
+                            {
+                                label: "Manage",
+                                items: [
+                                    {label: "Connect Your Server", link: "/frameui-studio/server-connection/"},
+                                    {label: "Import and Export", link: "/frameui-studio/import-export/"},
+                                    {label: "Library and Shortcuts", link: "/frameui-studio/library/"},
+                                ],
+                            },
+                            {
+                                label: "Resources",
+                                items: [
+                                    {label: "Troubleshooting", link: "/frameui-studio/troubleshooting/"},
+                                    {label: "Plugin Documentation", link: "https://docs.despical.dev/frameui/"},
+                                    {label: "Open Studio", link: "https://frameui.despical.dev/"},
+                                    {label: "Source Code", link: "https://github.com/Despical/FrameUIStudio"},
                                 ],
                             },
                         ],

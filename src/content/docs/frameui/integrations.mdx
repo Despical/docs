@@ -1,0 +1,63 @@
+---
+title: Plugin Integrations
+description: Configure native FrameUI events for EssentialsX, HuskHomes, CMI, BetterRTP, Multiverse, Towny, Lands, SuperiorSkyblock2 and PlaceholderAPI.
+---
+
+## Choose Native Events
+
+Open **Events → Plugin events** in connected Studio. Each integration shows whether it is active, disabled, missing or using an unsupported API. Select the events you need and import or save your effect.
+
+Optional plugins are not required for FrameUI itself. Missing dependencies leave their hooks inactive. The exact third-party plugin version and API must be compatible; an available configuration option is not proof that every version is supported.
+
+## Event IDs
+
+| Plugin | Events used in `play-on` |
+| --- | --- |
+| EssentialsX | `essentials-teleport`, `essentials-home`, `essentials-warp`, `essentials-spawn`, `essentials-back`, `essentials-tpa` |
+| HuskHomes | `huskhomes-teleport`, `huskhomes-home`, `huskhomes-warp`, `huskhomes-spawn`, `huskhomes-back`, `huskhomes-tpa`, `huskhomes-rtp` |
+| CMI | `cmi-teleport`, `cmi-home`, `cmi-warp`, `cmi-spawn`, `cmi-back`, `cmi-tpa`, `cmi-rtp` |
+| BetterRTP | `betterrtp-teleport` |
+| Multiverse-Core | `multiverse-teleport` |
+| Multiverse-Portals | `multiverse-portal` |
+| Towny | `towny-town-spawn`, `towny-nation-spawn`, `towny-outpost` |
+| Lands | `lands-spawn` |
+| SuperiorSkyblock2 | `superiorskyblock-create`, `superiorskyblock-home`, `superiorskyblock-visit`, `superiorskyblock-warp` |
+| PlaceholderAPI | Caption placeholder expansion; no playback trigger. |
+
+EssentialsX spawn events also require EssentialsSpawn. Native travel effects need an actual local teleport. A cancelled teleport, pending request or command with no resulting movement does not start a travel effect. Proxy transfers use a Join binding on the destination server.
+
+## Per-Effect Assignment
+
+```yaml
+play-on: ['essentials-home', 'essentials-warp']
+filters:
+  addon-targets:
+    include: ['spawn', 'survival-*']
+    exclude: ['staff-*']
+```
+
+This limits the selected native events to matching home/warp names. Names support `*` and `?`; exclusions win. Use addon destination filters for names and world filters for the destination world.
+
+## Addon Files
+
+`plugins/FrameUI/addons/` contains one YAML file per integration. For example, `addons/essentialsx.yml` includes:
+
+```yaml
+enabled: true
+correlation-seconds: 10
+events:
+  essentials-teleport: []
+  essentials-home: ['aurora']
+  essentials-warp: []
+  essentials-spawn: []
+  essentials-back: []
+  essentials-tpa: []
+```
+
+The lists add effect candidates for native events. They accept exact effect IDs, not display names or wildcards. Empty lists do not disable per-effect Studio bindings. Candidates still pass all filters and compete by priority and weight.
+
+`correlation-seconds` is the maximum age of a native travel signal while matching it to the real Bukkit teleport. It is not an effect delay. Valid values are `1`–`120`. Reload clears pending signals and applies addon settings without rewriting existing files.
+
+## PlaceholderAPI
+
+With PlaceholderAPI installed and enabled in its addon configuration, caption text can use placeholders supplied by installed expansions. The browser preview cannot resolve live Minecraft player data. Check the result in game.
