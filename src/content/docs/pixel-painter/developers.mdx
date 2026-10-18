@@ -1,0 +1,67 @@
+---
+title: "Developer Reference"
+description: "Explore Pixel Painter implementation Javadocs, package responsibilities, worker/server-thread boundaries and source builds."
+---
+
+## Implementation Documentation
+
+The [source repository](https://github.com/Despical/PixelPainter) contains the Gradle project and implementation documentation. Generate class, method and package Javadocs locally using the [build instructions below](#build-locally).
+
+These are implementation references. Pixel Painter does not currently publish a separate stable API artifact or register a dedicated Bukkit `ServicesManager` API. Do not assume that implementation classes are a versioned extension contract.
+
+---
+
+## Packages
+
+| Package | Responsibility |
+| --- | --- |
+| `dev.despical.pixelpainter` | Plugin entry point and service lifetimes |
+| `command` | ACF dispatch, argument validation, permission checks and Adventure panels |
+| `config` | Bounded settings, literal message templates and configuration publication |
+| `core` | World-independent positions, inclusive bounds, orientation and Oklab mathematics |
+| `image` | Validated sources, palettes, resizing, diffusion and prepared plans |
+| `service` | Bounded workers, server-thread jobs, chunk ownership and restoration |
+| `storage` | Copied journal records, binary persistence and startup recovery |
+
+`PixelPainter` initializes configuration and services before registering commands. `ConfigurationManager` validates all resource candidates before changing active references. `TaskExecutor` owns two workers and a queue of eight waiting tasks. `PaintService` owns one world-operation slot, including waiting journal I/O.
+
+---
+
+## Thread Boundaries
+
+Live player/world access, palette resolution, job submission and history queries belong to the server thread. Image decoding, resizing, color matching, downloads and journal I/O run on bounded workers.
+
+A prepared `PaintPlan` copies its pixel array and material counts. `Position`, `Bounds` and journal records identify geometry without retaining live worlds. Palette entries cache Oklab coordinates; their coordinate arrays must be treated as read-only when shared with workers.
+
+Worker callbacks return to the server thread while enabled. Queue rejection reaches the failure callback immediately. Shutdown may suppress a callback even when a journal write succeeded, so recovery must rely on durable records rather than callback delivery alone.
+
+---
+
+## Persistence Contract
+
+A journal is saved and flushed before its painting can mutate terrain. Restart loading checks the binary format, ID/filename relationship, size bounds, coordinates and trailing content. Corrupt complete records fail loading and remain available for maintenance.
+
+Restoration compares current data with the recorded original and target states. It preserves conflicts and retains the journal until restoration completes without conflicts. Changing the binary format requires migration planning and interrupted-operation tests.
+
+---
+
+## Build Locally
+
+Use Java 25 and the checked-in Gradle wrapper:
+
+```text
+./gradlew clean build
+./gradlew javadocJar
+```
+
+Windows uses `gradlew.bat` with the same tasks. The build produces:
+
+| Output | Purpose |
+| --- | --- |
+| `build/libs/pixel-painter-2.0.0.jar` | Shaded server plugin |
+| `build/libs/pixel-painter-2.0.0-plain.jar` | Unshaded implementation artifact |
+| `build/libs/pixel-painter-2.0.0-sources.jar` | Source archive |
+| `build/libs/pixel-painter-2.0.0-javadoc.jar` | Generated documentation archive |
+| `build/docs/javadoc/index.html` | Local HTML documentation entry point |
+
+Javadoc validation treats warnings as errors. CI validates documentation separately from the ordinary plugin build. See the repository's contribution and security policies before submitting changes.
