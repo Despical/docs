@@ -1,0 +1,84 @@
+---
+title: "Troubleshooting"
+description: "Resolve invalid image names, palette errors, excessive dimensions, busy jobs, overlap, undo conflicts and startup/reload failures."
+---
+
+## Start with the Failure Stage
+
+Read the in-game message and the matching console error. Distinguish source preparation, region capture, journal saving, painting and restoration. Do not remove the undo directory as a general troubleshooting step.
+
+For a reproducible report, include the plugin/server/Java versions, command and options, source dimensions, relevant configuration, and the exact error. Remove private URLs and credentials. Report vulnerabilities privately using the repository security policy.
+
+---
+
+## Plugin Does Not Enable
+
+Check that the server runs Paper 1.21.11+ on Java 25 and that you installed the shaded plugin JAR. A configuration or complete-journal validation failure disables the plugin.
+
+For invalid YAML or message syntax, fix the cited file and restart. For a corrupt complete journal, preserve it with a world/data backup before investigating. An old unsupported material allowlist may also reject initialization; see [upgrade behavior](/pixel-painter/configuration/config/#upgrading-from-version-1).
+
+---
+
+## Image Missing or Ambiguous
+
+Check `plugins/PixelPainter/images/` and `/pp list`. Use a supported extension and a flat name without spaces. If a base name matches more than one extension, include the extension. Unsupported formats, unreadable files and symbolic links are not normal sources.
+
+A filename ending in `.png` does not make arbitrary bytes a valid PNG. Re-export the source as PNG or JPEG when decoding fails.
+
+---
+
+## Download Host or Transfer Rejected
+
+Use a direct HTTPS image URL and a listed host. Redirects to an unlisted content host are rejected even when the original host is allowed. Ports other than 443, URL credentials and local destinations are rejected.
+
+A download can also exceed source byte/pixel limits or time out. Check [download policy](/pixel-painter/image-files/#download-an-image); downloading a file does not bypass decode limits.
+
+---
+
+## Output Too Large or Outside Bounds
+
+Requested height must be a positive whole number within `max-height`. Width follows the source ratio, and the entire resized area must fit `max-blocks`. Transparent pixels still count toward output allocation.
+
+For vertical art, the top row must remain below the world's maximum build height. All art must remain inside the current world border and coordinate bounds. Large flat artwork can exceed `max-chunks` even when its vertical height is unchanged.
+
+Reduce the requested height, choose a clearer origin or pre-generate the target chunks before increasing limits.
+
+---
+
+## Another Job Is Running
+
+Only one world operation runs at a time, including waits for journal I/O. Wait for completion or let the owner cancel. An administrator needs both `pp.cancel` and `pp.admin` to stop another player's job.
+
+A player may also have an outstanding image preparation. Cancel that preparation before starting another request. Started downloads and file deletion must finish; their effects are not rolled back by cancellation.
+
+---
+
+## Block Entity or Overlap Rejected
+
+A chest, sign, spawner or another block entity at a selected pixel aborts capture before placement. Choose another origin or preserve that source position with transparency.
+
+An existing journal reserves its entire inclusive region, regardless of owner or transparent pixels. Successfully undo the old painting before reusing that area.
+
+---
+
+## Undo Storage Is Full
+
+Review `/pp history` and restore older paintings. New work stops instead of evicting recovery records. `max-stored-blocks` capacity is checked conservatively against selected pixels before capture.
+
+Raising capacity increases recovery memory and storage requirements. Never delete journals without deciding what to do with their corresponding world changes and backups.
+
+---
+
+## Undo Keeps Conflicting Blocks
+
+This is intentional. Later edits and new block entities are preserved. The journal remains for retry, and already restored blocks are recognized on the next attempt.
+
+Restore a conflicting position to the journal's painted target only if you deliberately want undo to replace it with the recorded original. Otherwise preserve the later edit and keep the recovery record until you have a maintenance plan.
+
+---
+
+## Reload Rejected or Palette Empty
+
+A failed reload keeps the previous active resources. Check numeric ranges, list types, quoted hex colors and MiniMessage closing tags. Explicit included materials must exist in the palette and cannot also be excluded.
+
+A family command can become empty after global filtering even when `all` is non-empty. Choose another family or adjust the filters. Existing jobs keep their captured settings when a later reload succeeds.
