@@ -1,53 +1,48 @@
 ---
-title: Creating & Managing Carousels
-description: A complete guide to creating, configuring, and customizing carousels in your world.
+title: Creating and Managing Carousels
+description: Create rides and edit horses, riding access, glow and leashes.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-This guide explains how to bring your world to life by creating interactive carousels and customizing them to fit your needs.
+## Create a Ride
 
----
+Stand at the intended center and run:
 
-## 🎠 Creating a Carousel
-
-To get started, you will need to spawn a carousel instance. The carousel will be created around your current location.
-
-Run the following command in-game:
-
-```bash
-/carousel create <carousel_name>
+```text
+/carousel create spawn
+/carousel edit spawn
 ```
 
-<Aside type="tip" title="Good to Know">
-    Once you execute the command, the carousel will automatically start spinning around you. Players can ride any horse by simply right-clicking on them.
+Choose a unique, case-sensitive ID without dots, which are YAML path separators. New rides have eight adult horses, radius 4, one-tick updates, 2 degrees per update, vertical step 0.05 and maximum height 1. Riding and inventories are enabled; saddles, small horses, leashes and glow are disabled.
+
+## Inventory Editor
+
+| Control | Effect |
+| --- | --- |
+| Horse Amount | Left click adds one; right click removes one, with a minimum of one. Rebuilds the ride. |
+| Small Horses | Changes adult/baby appearance and rebuilds the ride. |
+| Allow Horse Riding | Changes access; Shift + left click dismounts current passengers. |
+| Allow Horse Inventory | Controls opening the inventory. Inventory clicks while mounted remain blocked. |
+| Horse Saddle | Changes equipment and rebuilds the ride. |
+| Leash Settings | Changes holder visibility, height and inward offset. |
+| Glow Settings | Selects fixed glow, randomized rainbow colors or no glow. |
+| Set Carousel Location | Saves your position as center; also requires `carousel.setlocation`. |
+
+Leash height/offset controls use left/right click for changes of 1, or Shift + left/right for 0.5. Height is at least 1 and capped at 10 before Minecraft 1.21. Offset is an inward radial displacement and may be negative; excessive values can move holders across the center.
+
+<Aside type="caution" title="Saddles and Riding">
+On Minecraft 1.20.5 and later, mounting is blocked while saddles are enabled. Disable saddles to permit riding. Global riding permissions and mount-event cancellation may also deny access.
 </Aside>
 
----
+## Stop, Restart or Delete
 
-## 🛠️ Editing & Configuration
-
-You can fully customize the appearance and interaction settings of your carousel using the built-in GUI Editor.
-
-To open the editor menu, run:
-
-```bash
-/carousel edit <carousel_name>
+```text
+/carousel destroy spawn
+/carousel start spawn
+/carousel delete spawn
 ```
 
-### Editor Features
+`destroy` removes entities but keeps saved settings. Enable/reload starts the saved ride again. `delete` removes its saved entry too. Structural editor changes may restart rides and dismount passengers.
 
-Inside the editor menu, you can tweak various settings to change how the carousel looks and functions:
-
-| Feature            | Description                                                               |
-|:-------------------|:--------------------------------------------------------------------------|
-| **Horse Amount**   | Adjust the number of horses in the carousel to change its density.        |
-| **Baby Horses**    | Toggle **Small Horses** mode to use baby variants instead of adults.      |
-| **Interaction**    | Enable or disable **Riding** to prevent players from mounting the horses. |
-| **Inventory**      | Block players from opening the horse's inventory (saddle/armor slots).    |
-| **Visual Effects** | Apply **Glowing Colors** to entities to make them stand out at night.     |
-| **Leash Settings** | Configure visual leash connections between the center and the entities.   |
-
-<Aside type="note" title="Advanced Configuration">
-    Looking to change how the carousel moves or its logic? Check out the [**Carousel** Behavior](/carousel/mechanics/carousel-behavior) page for advanced mechanics.
-</Aside>
+See [movement](/carousel/mechanics/carousel-behavior/) and [backups](/carousel/configuration/other-files/).
