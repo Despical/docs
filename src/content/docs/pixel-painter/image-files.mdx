@@ -1,0 +1,71 @@
+---
+title: "Image Files and Downloads"
+description: "Manage PNG/JPEG files, safe flat filenames, trusted HTTPS sources, byte/pixel limits and source deletion."
+---
+
+## Local Sources
+
+Place PNG or JPEG files directly inside `plugins/PixelPainter/images/`. Files may use `.png`, `.jpg` or `.jpeg` extensions. GIF, WebP and other formats are not supported.
+
+The base name starts with a letter or digit and contains at most 64 letters, digits, underscores or hyphens. An allowed extension is optional in a command. Spaces, path separators, nested folders and names such as `../image.png` are rejected.
+
+```text
+/pp list
+/pp specs poster.png
+/pp specs poster
+```
+
+Lookup ignores case. If both `poster.png` and `poster.jpg` exist, use the full name to resolve the ambiguity. Listing ignores symbolic links and files outside the supported name/extension policy.
+
+---
+
+## Download an Image
+
+```text
+/pp download poster https://i.imgur.com/example.png
+```
+
+The URL above is a syntax example: use a real PNG or JPEG URL. An omitted destination extension becomes `.png`. The file is validated by its decoded format, not merely its name.
+
+Configure exact trusted hosts in `config.yml`:
+
+```yaml
+downloads:
+  allowed-hosts:
+    - i.imgur.com
+    - raw.githubusercontent.com
+    - images.example.com
+```
+
+`images.example.com` is an example host to replace with your own trusted image server. Host names do not include a scheme, path or wildcard.
+
+Only HTTPS with the default port or port 443 is accepted. URL credentials, local/private network destinations and hosts absent from the list are rejected. Redirect destinations must also be listed; up to four redirects may be followed. Trust the owners of every configured host.
+
+The download uses connection/read timeouts, a transfer deadline and the configured byte limit. A temporary file is decoded before it is promoted into the images folder. Existing source files are never replaced.
+
+An empty list disables downloading without affecting local images.
+
+---
+
+## File and Pixel Limits
+
+| Setting | Default | Applies to |
+| --- | --- | --- |
+| `limits.max-file-mb` | 16 MiB | Local and downloaded source bytes |
+| `limits.max-source-pixels` | 16,777,216 | Original width × height, checked before pixel decode |
+| `limits.max-height` | 512 | Requested output rows |
+| `limits.max-blocks` | 131,072 | Resized output area, including transparent pixels |
+
+A highly compressed image can satisfy the byte limit but exceed the source pixel limit. Re-exporting or resizing the original file is often preferable to raising the server's memory limits.
+
+---
+
+## Delete a Source
+
+```text
+/pp delete poster.png
+```
+
+Deletion removes only the resolved source file. Existing block art and recovery journals remain available. To remove placed artwork while restoring terrain, use [undo](/pixel-painter/operations-and-recovery/).
+
+Downloads and deletion finish once started. `/pp cancel` reports that the file operation must finish, rather than pretending to roll back a disk mutation. Disconnecting does not cancel that disk operation.
