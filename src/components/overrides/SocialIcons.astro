@@ -11,7 +11,7 @@ const project = currentTopic
     ? new URL(currentTopic.link, Astro.url).pathname.split("/").filter(Boolean)[0]
     : undefined;
 const openExternalLinksInNewTab = ["frameui", "frameui-studio"].includes(project || "");
-const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine", "port-bridge"]);
+const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine", "port-bridge", "pixel-painter"]);
 const pluginProjects = new Set([
     ...freePlugins,
     "advanced-parkour", "carousel", "easter-eggs", "eat-everything", "item-upgrader",
