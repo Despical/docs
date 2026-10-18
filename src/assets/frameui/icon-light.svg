@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 40" width="170" height="40" role="img" aria-label="FrameUI">
+    <g transform="scale(.3125)">
+        <rect width="128" height="128" rx="26" fill="#171b22"/>
+        <rect x="9" y="9" width="110" height="110" rx="19" fill="#222832" stroke="#d5b877" stroke-width="2"/>
+        <path d="M27 46V28h18M83 28h18v18M101 82v18H83M45 100H27V82" fill="none" stroke="#d5b877" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M44 40h42v12H58v13h23v12H58v18H44z" fill="#f2eee5"/>
+    </g>
+    <text x="50" y="27" fill="#FFFFFF" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="800" font-size="22">FRAMEUI</text>
+</svg>
