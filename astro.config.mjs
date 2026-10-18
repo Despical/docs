@@ -52,11 +52,6 @@ export default defineConfig({
                 },
                 {
                     icon: "github",
-                    label: "pixel-painter:GitHub",
-                    href: "https://github.com/Despical/PixelPainter",
-                },
-                {
-                    icon: "github",
                     label: "maze-engine:GitHub",
                     href: "https://github.com/Despical/MazeEngine",
                 },
@@ -1514,13 +1509,6 @@ export default defineConfig({
                                     {label: "Developer Reference", link: "/pixel-painter/developers/"},
                                     {label: "Troubleshooting", link: "/pixel-painter/troubleshooting/"},
                                     {label: "FAQ", link: "/pixel-painter/misc/faq/"},
-                                ],
-                            },
-                            {
-                                label: "Resources",
-                                items: [
-                                    {label: "Source Code", link: "https://github.com/Despical/PixelPainter", attrs: {target: "_blank", rel: "noopener noreferrer"}},
-                                    {label: "Issue Tracker", link: "https://github.com/Despical/PixelPainter/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                 ],
                             },
                         ],
