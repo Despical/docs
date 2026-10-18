@@ -1,25 +1,37 @@
 ---
 title: config.yml
-description: Detailed guide for the main configuration settings of Carousel.
+description: Riding access, startup update checks, interaction sounds and rainbow glow exclusions.
 ---
 
-The `config.yml` file is the core configuration file for **Carousel**. It controls global plugin behaviors, riding permissions, sound effects, and visual exclusions for your carousels.
+The file is stored at `plugins/Carousel/config.yml`. Horse count, centers and movement are saved per ride in `data.yml`.
 
----
+## Global Options
 
-## General Settings
+| Key | Default | Behavior |
+| --- | --- | --- |
+| `riding-horse-permission` | `""` | Optional custom node required for mounting; empty means no extra node. |
+| `update-notifier` | `true` | Enables the startup update check. It does not install updates. |
+| `sounds.mount` | `NONE` | XSound name played at a successful mount. |
+| `sounds.dismount` | `NONE` | XSound name played at a successful dismount. |
+| `remove-from-rainbow` | `["BLACK"]` | Bukkit ChatColor exclusions for rainbow **glow**, not horse coat colors. |
 
-* **`riding-horse-permission`**: Defines the permission required for a player to ride the carousel horses. Leave this string empty (`""`) to allow all players to ride without needing a specific permission node.
-* **`update-notifier`**: When enabled (`true`), the plugin will automatically check for new version updates during server startup and notify the console/administrators.
+```yaml
+riding-horse-permission: "carousel.ride"
+update-notifier: true
+sounds:
+  mount: NONE
+  dismount: NONE
+remove-from-rainbow:
+  - BLACK
+  - DARK_GRAY
+```
 
----
+Grant the configured riding node to players when non-empty. Invalid color names are logged and ignored. An empty usable palette falls back to white. Colors are shuffled for the number of horses and repeat when more horses exist than eligible colors.
 
-## Visuals & Audio
+Use XSound names recognized by the bundled library. `NONE` disables a sound; unresolved names produce no sound. Cancelled custom interactions send neither normal sound nor normal message.
 
-* **`sounds`**: Define the specific Minecraft sound effects played during player interactions.
-  * `mount`: The sound played when a player successfully mounts a **Carousel** horse.
-  * `dismount`: The sound played when a player dismounts or leaves the **Carousel**.
-  * *Note: Set any of these values to `NONE` to completely disable that specific sound trigger.*
-* **`remove-from-rainbow`**: A configurable list of horse colors to exclude when a carousel is set to generate with a rainbow pattern. By default, `"BLACK"` is excluded to keep the rainbow vibrant.
+## Reload and Telemetry
 
----
+`/carousel reload` rereads settings/messages, refreshes rainbow colors and restarts saved rides, potentially dismounting passengers. Invalid message YAML is rejected before restarting rides. The Bukkit config loader reports its own YAML problems; correct console errors and keep backups.
+
+The update notifier is evaluated on startup, so changing it takes effect on next enable. bStats uses its normal server-wide settings, independently of `update-notifier`.
