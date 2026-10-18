@@ -10,7 +10,10 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
 <div class="starlight-sidebar-topics-dropdown-dropdown">
     <button
         id="starlight-sidebar-topics-dropdown-button"
-        class="starlight-sidebar-topics-dropdown-button"
+        class:list={[
+            "starlight-sidebar-topics-dropdown-button",
+            ["frameui", "frameui-studio"].includes(currentTopic.icon || "") && "frameui-topic",
+        ]}
         aria-expanded="false"
         aria-controls="starlight-sidebar-topics-dropdown-menu"
     >
@@ -127,13 +130,18 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
         z-index: -1;
     }
 
+    .starlight-sidebar-topics-dropdown-button.frameui-topic {
+        /* Icon width, wrapper padding and button padding define the colored column. */
+        --topic-icon-column-width: calc(1.25rem + 0.4rem + 1rem);
+    }
+
     .starlight-sidebar-topics-dropdown-button:has(
       .starlight-sidebar-topics-dropdown-button-icon
     )::before {
         content: "";
         background-image: linear-gradient(
             to right,
-            var(--sl-color-text-accent) calc(1.4rem + 16px + 2px),
+            var(--sl-color-text-accent) calc(var(--topic-icon-column-width, calc(1.4rem + 16px)) + 2px),
             var(--sl-color-gray-5) 0
         );
     }
@@ -143,7 +151,7 @@ const currentTopic = topics.find((topic) => topic.isCurrent) || topics[0];
   ) {
         background: linear-gradient(
             to right,
-            var(--sl-color-text-accent) calc(1.4rem + 16px),
+            var(--sl-color-text-accent) var(--topic-icon-column-width, calc(1.4rem + 16px)),
             var(--sl-color-gray-6) 0
         );
     }
