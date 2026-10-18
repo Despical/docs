@@ -1,0 +1,91 @@
+---
+title: "Commands"
+description: "Complete Pixel Painter command syntax, permissions, aliases, optional argument order, examples and console availability."
+---
+
+## Root Commands
+
+`/pp` and `/pixelpainter` share the same command tree. Empty input opens help; `/pp help [page]` lists commands available to the sender's permissions. Rows suggest commands on click and show detailed explanations on hover.
+
+Required arguments use angle brackets; optional arguments use square brackets. Do not type those brackets. Image names may omit their extension only when unambiguous.
+
+---
+
+## Command Reference
+
+| Command | Permission | Console |
+| --- | --- | --- |
+| `/pp help [page]` | `pp.help` | Yes |
+| `/pp create <image> <direction> <height> [transparent] [palette] [dither]` | `pp.create` | No |
+| `/pp preview <image> <height> [palette] [dither] [transparent]` | `pp.howmanyblocks` | No |
+| `/pp undo [id or image]` | `pp.undo` | No |
+| `/pp cancel` | `pp.cancel` | No |
+| `/pp list [page]` | `pp.list` | Yes |
+| `/pp specs <image>` | `pp.specs` | No |
+| `/pp history [page]` | `pp.undo` | No |
+| `/pp materials [palette] [page]` | `pp.materials` | Yes |
+| `/pp download <image> <https-url>` | `pp.download` | No |
+| `/pp delete <image>` | `pp.delete` | No |
+| `/pp reload` | `pp.reload` | Yes |
+
+`/pp howmanyblocks` is an alias for `preview`. `/pp info` is an alias for `specs`. The old block-count permission name `pp.howmanyblocks` is retained for compatibility.
+
+---
+
+## Creation and Estimates
+
+```text
+/pp create logo.png north 64
+/pp create logo.png east 64 false concrete true
+/pp preview logo.png 64 concrete true false
+```
+
+The second creation and the estimate use the same settings: concrete, dithering enabled and transparency disabled. The optional argument order differs between these commands.
+
+| Option | Accepted values | Default |
+| --- | --- | --- |
+| Height | Positive whole number within configured limits | Required |
+| Transparency | `true`, `false` | `true` |
+| Palette | `all`, `concrete`, `wool`, `terracotta` | `all` |
+| Dithering | `true`, `false` | `false` |
+
+The estimate shows output dimensions, selected/transparent pixel counts and the eight most-used materials. Additional material types are summarized as a remaining count. It does not display a world preview.
+
+---
+
+## History and Cancellation
+
+```text
+/pp history 2
+/pp undo
+/pp undo 012345abcdef
+/pp cancel
+```
+
+Use a real ID from history. Undo access requires ownership or `pp.admin`; cancellation of another player's active world job also requires `pp.admin`. The action permission is still required. See [recovery rules](/pixel-painter/operations-and-recovery/).
+
+---
+
+## Sources and Reference
+
+```text
+/pp list 2
+/pp specs portrait.jpg
+/pp materials terracotta 2
+/pp delete portrait.jpg
+/pp reload
+```
+
+List, history, materials and help use positive one-based page numbers. An out-of-range page is rejected. Source deletion does not remove placed art or its journal.
+
+`reload` validates settings, messages and palette before publishing them together. A failed load preserves the previous active configuration.
+
+---
+
+## Downloads
+
+```text
+/pp download portrait https://i.imgur.com/example.png
+```
+
+Replace the example URL with a real readable image. The destination must satisfy the filename policy; an absent extension becomes `.png`. Both initial and redirected hosts must be configured. See [image files and downloads](/pixel-painter/image-files/).
