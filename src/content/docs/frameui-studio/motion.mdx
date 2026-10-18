@@ -1,0 +1,39 @@
+---
+title: Motion and Timing
+description: Set FrameUI entrance, hold, exit and extra loading wait in seconds, and distinguish animation speed from total duration.
+---
+
+## Timing Phases
+
+Open **Motion**. **Total duration** scales entrance, hold and exit together. Expand **Fine-tune each phase** to change them independently.
+
+| Control | Meaning |
+| --- | --- |
+| Fade in | Time to reveal the effect. |
+| Hold | Time fully visible before release. |
+| Fade out | Time to reveal the game again. |
+| Extra loading wait | Additional allowance while the destination world is still loading. |
+
+The normal duration is entrance + hold + exit. Extra wait is a maximum allowance, not a guaranteed pause on every preview. Studio shows seconds; exported YAML uses server ticks, with 20 ticks per second.
+
+For example, `0.7s` entrance + `2.5s` hold + `0.8s` exit gives a normal duration of `4s`. In YAML this is fade-in `14`, minimum `64` and fade-out `16`. The minimum includes the entrance.
+
+## Preview Controls
+
+Use play/pause, restart, the timeline slider and **Loop** below the preview. Scrub across both transitions to catch images or captions that appear too late. The phase display shows fade in, hold or fade out.
+
+A saved event assignment does not change the preview controls. Previewing in the browser is independent of importing the design to the server.
+
+## Ambient Motion Speed
+
+The speed slider changes the motion of templates that use an ambient animation clock. `0.5×` is half speed; `2×` is double speed. It does not change the total duration, entrance or exit.
+
+Some transition-only templates do not use ambient motion. Studio disables controls that do not affect the selected design and provides an explanation through the field help.
+
+## Component Animation
+
+Select an image, caption or indicator to open its controls. Image reveals include fade, grow, directional slides, wipe and page. Individual captions can remain still, grow or slide independently.
+
+Image delay is tied to its entrance reveal. Use the timeline to verify that the image has time to finish appearing before the effect releases. Background animation, image motion, caption motion and total duration are separate settings.
+
+For exact YAML limits and the relationship between minimum/maximum ticks, read [Effect Files](/frameui/configuration/effects/#timing).

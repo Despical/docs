@@ -1,0 +1,63 @@
+---
+title: Getting Started
+description: Install FrameUI on Paper 26.3, verify resource-pack delivery and create your first automatic loading screen.
+---
+
+## Requirements
+
+| Requirement | Supported setup |
+| --- | --- |
+| Server | Paper 26.3 |
+| Java | Java 25 or newer |
+| Client | Vanilla first-person Minecraft 26.3 is the target |
+| Resource pack | Players must accept the FrameUI pack |
+| Connected editor | Outbound HTTPS access from the Minecraft server |
+
+Bedrock/Geyser clients and rendering mods have not been qualified. Check the finished effect in the client configuration your players use.
+
+## Install the Plugin
+
+1. Stop the server and place `FrameUI.jar` in `plugins/`.
+2. Start the server. FrameUI creates `plugins/FrameUI/` with configuration, effects, images, languages and addon settings.
+3. Join with an operator account and accept the required resource pack.
+4. Run `/frameui`, then `/frameui preview aurora`.
+5. Run `/frameui stop` to close an active or pending preview.
+
+The default maintained connection handles Studio and resource-pack delivery. **You do not need to open an inbound port or change the loopback pack URL for this default setup.** The direct `resource-pack.public-url` is used when `editor.relay.enabled` is `false`.
+
+## Browse the Effects
+
+```text
+/frameui effects
+/frameui effects animations 1
+/frameui effects presets 1
+/frameui preview aurora
+/frameui preview random
+```
+
+Selecting an effect row in the catalog runs its preview when you have preview permission. Catalog access and preview access are separate permissions. The [effect gallery](/frameui/effects/) includes a video and command for every bundled effect.
+
+## Enable an Automatic Effect
+
+Automatic event assignments are empty by default. A working manual preview does not automatically enable join or teleport playback.
+
+1. Run `/frameui editor` and open your personal link.
+2. Select an animation or preset and customize it.
+3. Open **Events → When to play** and select **Join**, **Teleport** or **World change**.
+4. Click **Import to server**. Editing a bundled design creates a custom copy.
+5. Accept the refreshed pack, then trigger the selected event.
+
+Existing custom effects use **Save to server**. Filters and cooldowns still apply to automatic effects and manual previews. See [Automatic Playback](/frameui/automatic-playback/).
+
+## Install an Exported ZIP
+
+Studio also works without a server connection. Click **Export effect**, extract the ZIP into `plugins/FrameUI/`, and merge its `effects/` and optional `images/` folders with the existing folders. Run `/frameui reload`, accept the refreshed pack and test `/frameui preview <id>`.
+
+Keep a backup before replacing an existing ID. A new ID creates a separate effect. See [Import and Export](/frameui-studio/import-export/) for the complete workflow.
+
+## Next Steps
+
+- [Commands and permissions](/frameui/commands/)
+- [Create a design in Studio](/frameui-studio/first-effect/)
+- [Configure languages and messages](/frameui/configuration/messages/)
+- [Diagnose connection or resource-pack problems](/frameui/troubleshooting/)

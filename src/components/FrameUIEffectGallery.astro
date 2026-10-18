@@ -1,0 +1,77 @@
+---
+import effects from '../data/frameui-effects.json';
+---
+
+<section class="effect-gallery not-content" aria-label="FrameUI effect previews" data-effect-gallery>
+    <div class="gallery-controls">
+        <label>Search effects<input type="search" placeholder="Aurora, loading, nether…" data-effect-search /></label>
+        <label>Category<select data-effect-category><option value="all">All effects</option><option value="Animations">Animations</option><option value="Presets">Presets</option></select></label>
+    </div>
+    <p class="gallery-count" role="status" data-effect-count>{effects.length} effects</p>
+    <div class="effect-grid">
+        {effects.map(effect => (
+            <article class="effect-card" data-effect-card data-category={effect.category} data-search={`${effect.name} ${effect.id}`.toLowerCase()}>
+                <video controls playsinline preload="none" poster={`/images/frameui/${effect.id}.webp`} width="640" height="360" aria-label={`${effect.name} animated Studio preview`}>
+                    <source src={`/images/frameui/${effect.id}.mp4`} type="video/mp4" />
+                    <a href={`/images/frameui/${effect.id}.mp4`}>Watch {effect.name}</a>
+                </video>
+                <div class="effect-info">
+                    <h3>{effect.name}</h3>
+                    <p>{effect.category} <span aria-hidden="true">·</span> {effect.seconds.toFixed(1)} seconds</p>
+                    <code>/frameui preview {effect.id}</code>
+                </div>
+            </article>
+        ))}
+    </div>
+    <p data-effect-empty hidden>No effects match your search. Try another name or category.</p>
+</section>
+
+<script>
+    function setupGalleries() {
+        document.querySelectorAll<HTMLElement>('[data-effect-gallery]').forEach(gallery => {
+            if (gallery.dataset.ready) return;
+            gallery.dataset.ready = 'true';
+            const search = gallery.querySelector<HTMLInputElement>('[data-effect-search]')!;
+            const category = gallery.querySelector<HTMLSelectElement>('[data-effect-category]')!;
+            const cards = [...gallery.querySelectorAll<HTMLElement>('[data-effect-card]')];
+            const videos = [...gallery.querySelectorAll('video')];
+            const filter = () => {
+                const query = search.value.trim().toLowerCase();
+                let count = 0;
+                for (const card of cards) {
+                    card.hidden = !(card.dataset.search!.includes(query) && (category.value === 'all' || card.dataset.category === category.value));
+                    if (card.hidden) card.querySelector('video')?.pause();
+                    else count++;
+                }
+                gallery.querySelector('[data-effect-count]')!.textContent = `${count} ${count === 1 ? 'effect' : 'effects'}`;
+                gallery.querySelector<HTMLElement>('[data-effect-empty]')!.hidden = count > 0;
+            };
+            search.addEventListener('input', filter);
+            category.addEventListener('change', filter);
+            for (const video of videos) video.addEventListener('play', () => {
+                for (const other of videos) if (other !== video) other.pause();
+            });
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) videos.forEach(video => video.pause());
+            });
+        });
+    }
+    setupGalleries();
+    document.addEventListener('astro:page-load', setupGalleries);
+</script>
+
+<style>
+    .gallery-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(10rem, .45fr); gap: 1rem; }
+    label { display: grid; gap: .4rem; font-size: .9rem; font-weight: 600; }
+    input, select { width: 100%; min-width: 0; padding: .65rem .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-text); font: inherit; }
+    .gallery-count { color: var(--sl-color-gray-2); font-size: .875rem; margin: 1rem 0; }
+    .effect-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+    .effect-card { overflow: hidden; border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; background: var(--sl-color-bg); }
+    .effect-card[hidden] { display: none; }
+    video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #11171e; }
+    .effect-info { padding: .9rem 1rem 1rem; }
+    h3 { margin: 0; font-size: 1.1rem; color: var(--sl-color-white); }
+    .effect-info p { margin: .25rem 0 .6rem; font-size: .8rem; color: var(--sl-color-gray-2); }
+    code { display: block; overflow-wrap: anywhere; font-size: .75rem; color: var(--sl-color-text-accent); }
+    @media (max-width: 45rem) { .effect-grid, .gallery-controls { grid-template-columns: minmax(0, 1fr); } }
+</style>

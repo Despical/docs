@@ -1,0 +1,51 @@
+---
+title: Messages and Languages
+description: Configure FrameUI's 28 languages, customize translated defaults and edit MiniMessage chat panels without losing custom text.
+---
+
+## Choose a Language
+
+Set `language` in `plugins/FrameUI/config.yml` and run `/frameui reload`:
+
+```yaml
+language: tr
+```
+
+| Code | Language | Code | Language |
+| --- | --- | --- | --- |
+| `en` | English | `es` | Spanish |
+| `ru` | Russian | `de` | German |
+| `fr` | French | `pt` | Portuguese |
+| `pl` | Polish | `tr` | Turkish |
+| `zh` | Chinese | `id` | Indonesian |
+| `it` | Italian | `vi` | Vietnamese |
+| `nl` | Dutch | `ko` | Korean |
+| `cs` | Czech | `th` | Thai |
+| `hu` | Hungarian | `ar` | Arabic |
+| `ja` | Japanese | `uk` | Ukrainian |
+| `sv` | Swedish | `da` | Danish |
+| `ro` | Romanian | `sk` | Slovak |
+| `he` | Hebrew | `lt` | Lithuanian |
+| `ms` | Malay | `ta` | Tamil |
+
+Regional forms such as `en-SG`, `zh_SG`, `ms-SG` and `ta-SG` resolve to their base language. English, Mandarin, Malay and Tamil are included.
+
+## Customize Translations
+
+On startup, missing bundled files are copied to `plugins/FrameUI/languages/`. Edit `languages/<code>.yml` to customize that translation. Keep the existing keys and placeholders, then reload.
+
+`messages.yml` contains chat panels, command help, hover text and resource-pack messages. Existing custom values in that file take precedence over the selected language. Unchanged bundled English values follow the selected translation.
+
+Missing keys fall back to bundled defaults in memory. Reload does not rewrite your custom file to fill them in. Invalid language codes or malformed files reject the reload and keep the running state.
+
+## Formatting and Placeholders
+
+Chat messages use MiniMessage formatting and literal `{name}` placeholders. Preserve the placeholders from the message you edit; different keys receive different values. Dynamic values are inserted as literal text, so player or effect names do not become formatting tags.
+
+Effect names and captions are author-controlled content. They do not translate automatically. Effect captions are plain text and use their own color settings; see [Effect Files](/frameui/configuration/effects/).
+
+## Studio Language
+
+A personal editor link opens in the accepted plugin language. The language selector in Studio can override it for that browser without changing server configuration, effect IDs, captions, images or exported YAML.
+
+Standalone Studio defaults to English and remembers an explicit language selection. Translations are bundled with Studio; they do not require a translation service.

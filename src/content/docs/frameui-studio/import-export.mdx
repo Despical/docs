@@ -1,0 +1,50 @@
+---
+title: Import and Export
+description: Import FrameUI YAML or Studio ZIPs, export complete designs with PNG assets and install effects manually.
+---
+
+## Export a Complete Effect
+
+Click **Export effect** to download a ZIP containing one effect definition, its optional image and installation instructions:
+
+```text
+effects/
+  lobby-welcome.yml
+images/
+  lobby-welcome.png
+INSTALL.txt
+```
+
+The image folder is only needed when the definition references an image. The exact PNG name can differ; keep the file at the `appearance.image` path recorded in the YAML.
+
+## Install Manually
+
+1. Back up any existing definition with the same ID.
+2. Extract into `plugins/FrameUI/`, merging `effects/` and `images/` with the existing folders.
+3. Run `/frameui reload` and resolve any reported validation error.
+4. Accept the refreshed resource pack.
+5. Run `/frameui preview lobby-welcome` using your effect's actual ID.
+
+A new ID creates a separate effect. The same ID replaces an existing file when you manually overwrite it. Do not replace the whole `effects/` folder with the single exported folder.
+
+If the generated resource pack is hosted externally, upload the rebuilt ZIP after installing changed content. The default maintained connection handles pack delivery automatically.
+
+## Import into Studio
+
+Use **Import** to open `.yml`, `.yaml` or a Studio `.zip`. A ZIP can carry its referenced PNG. A YAML file contains settings and an image path, not the image itself; choose the matching image if it is missing.
+
+Imported content is a browser draft until exported or explicitly imported/saved to the connected server. Review event bindings, filters, name and ID before publishing it to your server.
+
+## YAML-Only Download
+
+The footer's **Download YAML** action exports just the definition. Use it when managing image files separately or reviewing configuration changes. Use a full ZIP to move a complete image-based design between computers.
+
+## Connected Import
+
+Connected Studio accepts its bounded effect bundles, not arbitrary plugin folders or resource-pack archives. A connected upload is limited to **9 MiB**; PNG limits are **8 MiB** and **2048 × 2048** pixels. Bundles contain one effect YAML, its optional PNG and optional `INSTALL.txt`.
+
+Built-in IDs are protected by connected import; create a custom copy. Revision checks protect saves to existing server effects. See [Connect Your Server](/frameui-studio/server-connection/).
+
+## Keep Backups
+
+Browser storage is convenient for drafts but can be cleared or unavailable. Export completed work and any design you need to keep. Your browser library does not automatically synchronize to another device or server.

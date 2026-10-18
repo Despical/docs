@@ -5,6 +5,8 @@ const normalizedPath = Astro.url.pathname.replace(/^\/+|\/+$/g, '');
 const segments = normalizedPath ? normalizedPath.split('/') : [];
 
 const projectNames: Record<string, string> = {
+    'frameui': 'FrameUI',
+    'frameui-studio': 'FrameUI Studio',
     'advanced-parkour': 'Advanced Parkour',
     'carousel': 'Carousel',
     'command-framework': 'Command Framework',

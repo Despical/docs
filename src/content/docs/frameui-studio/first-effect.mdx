@@ -1,0 +1,45 @@
+---
+title: Your First Effect
+description: Build your first FrameUI loading screen from a template, adjust its design and events, and install it on a Minecraft server.
+---
+
+## Choose a Starting Point
+
+Open [Studio](https://frameui.despical.dev/) or run `/frameui editor` in Minecraft for a connected session. The effect library has three categories:
+
+| Category | Contents |
+| --- | --- |
+| Animations | 50 animation templates, including Aurora, Iris, Matrix and Pixel Dissolve. |
+| Presets | 10 ready-made compositions with images, text and indicators. |
+| My Effects | Your local designs and connected custom server effects. |
+
+Use search to find a design. Choose **Aurora** for an animated background or **FrameUI Signature** for an editable logo composition. The [gallery](/frameui/effects/) shows every starting point.
+
+## Make It Yours
+
+1. In **Design**, change the display name.
+2. Select a caption on the canvas or through the caption field. Edit its text and color in the component inspector.
+3. Choose a custom palette, background layout or uploaded image.
+4. Drag elements on the preview and use their handles to resize them.
+5. Open **Motion** to adjust the total duration or individual phases.
+6. Use the play, restart and timeline controls to watch the entrance and exit.
+
+Editing a bundled template creates your own design; the original remains available. Give it an effect ID such as `lobby-welcome` under **Design → File details**. The ID becomes the YAML filename and preview command argument.
+
+## Choose When It Plays
+
+Open **Events → When to play** and select Join, Teleport or World change. For an optional plugin, use **Plugin events**. Leave every event unchecked if you only want manual previews.
+
+Use **In-game** to configure world filters, permissions, player presentation and advanced conditions. Those conditions also apply when previewing with a command.
+
+## Install and Test
+
+In a connected session, click **Import to server**. For an existing custom server effect, use **Save to server**. Keep your player online. Accept the refreshed resource pack, then run:
+
+```text
+/frameui preview lobby-welcome
+```
+
+Without a connection, click **Export effect**, extract the ZIP into `plugins/FrameUI/` and run `/frameui reload`. The [import/export guide](/frameui-studio/import-export/) explains the folder layout.
+
+Check the design in Minecraft at the screen sizes your players use. Loading indicators are decorative animations, not measurements of actual server loading progress.

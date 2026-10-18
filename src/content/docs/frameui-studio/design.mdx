@@ -1,0 +1,42 @@
+---
+title: Design and Layout
+description: Customize FrameUI captions, images, palettes, backgrounds and indicators with direct canvas manipulation and individual component controls.
+---
+
+## Design Inspector
+
+The **Design** tab controls the display name, captions, background layout, palette, image, loading indicator and ambient decoration. The effect ID appears under **File details**. Use lowercase letters, digits and single hyphens, up to 48 characters.
+
+Choose **Shader template** to retain an animation's background. Other layouts include solid color, split panels, technical grid, terminal, pulse and no background. The original palette preserves template colors; a custom palette uses your background, primary and secondary colors.
+
+## Captions
+
+Select the title, subtitle or detail directly on the canvas, or select its field under **Design → Captions**. The inspector opens controls for that individual component, including text, color, placement, animation and scaling. Use **Effect settings** to return to the main inspector.
+
+Captions are plain text. `{player}`, `{world}`, `{source-world}` and `{effect}` are plugin placeholders. Studio uses sample values; live PlaceholderAPI values must be checked in Minecraft. A translated editor interface does not translate your captions.
+
+## Images
+
+Upload PNG or JPEG artwork, then use **Edit image** or select it on the canvas. Choose **cover** to fill the area or **contain** to keep the whole image visible. Control opacity, position, scale, stretch, delay and reveal animation.
+
+Studio exports the image as PNG alongside the effect YAML. The plugin accepts PNGs up to **8 MiB** and **2048 × 2048** pixels. Keep the exported image with its matching definition; YAML alone does not include the image bytes.
+
+Transparent artwork works well for logos and overlays. Replacing an image leaves its composition controls available, so you can reuse a preset with your own branding.
+
+## Move and Resize
+
+Select an element to show its bounds. Drag it to reposition it and use its corner handles to resize it. Selection opens that component's inspector. Position and scaling fields allow exact adjustments, including separate horizontal and vertical stretch.
+
+Use **Escape** to cancel an active manipulation or clear selection. Arrow keys nudge a focused element or resize handle; **Shift** increases the step. **Ctrl/Cmd+Z** undoes a committed change and **Ctrl/Cmd+Shift+Z** redoes it.
+
+The timeline is useful for checking where a moving element lands at different points in the animation. The final Minecraft display can differ with screen proportions; verify the saved design in game.
+
+## Loading Indicators and Decoration
+
+Available indicators are a moving bar, segmented bar, pulsing dots and rotating ring. Position and size them like other components. They are decorative and do not reflect measured loading progress.
+
+Finishing touches include embers, petals, a scan line and a pulse emblem. Use them with a readable caption layout and enough time for the content to appear.
+
+## Player View
+
+Under **In-game → Player view**, control hands, HUD, movement and interactions. Showing hands requires the HUD to remain visible. Studio previews those choices against its captured player view; test the same combination in Minecraft.

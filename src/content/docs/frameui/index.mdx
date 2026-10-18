@@ -1,0 +1,45 @@
+---
+title: FrameUI Documentation
+description: Animated Minecraft loading screens, 50 animation templates, 10 ready-made designs, automatic event bindings and the connected FrameUI Studio editor.
+tableOfContents: false
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## FrameUI
+
+**FrameUI** adds animated transitions after joining a server, teleporting or changing worlds. Start with **50 animation templates and 10 ready-made designs**, then customize colors, images, captions, timing and loading indicators in [FrameUI Studio](https://frameui.despical.dev/).
+
+The plugin requires **Java 25 and Paper 26.3**. Players must accept its generated resource pack. Effects start after the client world and resource pack are available; Minecraft controls its own startup and terrain-download screens.
+
+<figure>
+  <video controls playsinline preload="none" poster="/images/frameui/frameui.webp" width="640" height="360" style="width:100%;height:auto;border-radius:.6rem" aria-label="FrameUI Signature animated Studio preview">
+    <source src="/images/frameui/frameui.mp4" type="video/mp4" />
+    <a href="/images/frameui/frameui.mp4">Watch the FrameUI Signature preview</a>
+  </video>
+  <figcaption>FrameUI Signature, rendered in Studio. Browse every design in the effect gallery.</figcaption>
+</figure>
+
+## Start Here
+
+<CardGrid>
+  <LinkCard title="Getting Started" description="Install FrameUI, accept the resource pack and preview your first effect." href="/frameui/getting-started/" />
+  <LinkCard title="Effect Gallery" description="Watch all 60 bundled designs and find their exact preview commands." href="/frameui/effects/" />
+  <LinkCard title="Automatic Playback" description="Assign joins, teleports, world changes and optional plugin events." href="/frameui/automatic-playback/" />
+  <LinkCard title="FrameUI Studio" description="Create, preview, import and save effects from the browser editor." href="/frameui-studio/" />
+</CardGrid>
+
+## Configure Your Server
+
+Each effect has its own YAML file. Global and individual filters combine to control who sees it, where it plays and how often it can run. Higher priorities win; weights choose between equally prioritized candidates.
+
+<CardGrid>
+  <LinkCard title="Commands and Permissions" description="Every command, alias, default permission and runnable example." href="/frameui/commands/" />
+  <LinkCard title="config.yml" description="Languages, common filters, legacy playback pools and resource-pack delivery." href="/frameui/configuration/config/" />
+  <LinkCard title="Effect Files" description="Timing, palettes, captions, images, screen elements and validation rules." href="/frameui/configuration/effects/" />
+  <LinkCard title="Filters and Selection" description="Worlds, permissions, cooldowns, distance, time, weather and event destinations." href="/frameui/filters/" />
+  <LinkCard title="Messages and Languages" description="Customize chat panels and choose from 28 bundled languages." href="/frameui/configuration/messages/" />
+  <LinkCard title="Plugin Integrations" description="Homes, warps, portals, towns, lands, islands and PlaceholderAPI." href="/frameui/integrations/" />
+</CardGrid>
+
+For connection, pack or playback problems, use [Troubleshooting](/frameui/troubleshooting/). FrameUI is proprietary; Studio is a separate, open-source browser editor. The editor is not included in the plugin JAR.

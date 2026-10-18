@@ -1,0 +1,65 @@
+---
+title: config.yml
+description: FrameUI common settings, language selection, global filters, legacy pools and default or direct resource-pack delivery.
+---
+
+`plugins/FrameUI/config.yml` controls shared behavior. Individual designs belong in `effects/<id>.yml`; chat text belongs in `messages.yml` and `languages/`.
+
+## Default Connection
+
+```yaml
+language: en
+
+editor:
+  public-url: 'https://frameui.despical.dev/'
+  relay:
+    enabled: true
+
+resource-pack:
+  public-url: 'http://127.0.0.1:25645/frameui.zip'
+  host:
+    enabled: false
+    bind: '127.0.0.1'
+    port: 25645
+```
+
+The default maintained connection provides Studio access and generated resource-pack delivery over outbound HTTPS. No inbound port or custom domain is needed. With the relay enabled, the loopback direct-pack URL is not the player download address. Keep the public Studio website and the direct pack host settings distinct.
+
+`editor.public-url` selects the website opened by `/frameui editor`. An empty value uses the default hosted Studio. The website is a separate application; the plugin bundles its connection API, not the editor website.
+
+## Language
+
+Set a supported language code, then run `/frameui reload`:
+
+```yaml
+language: tr
+```
+
+This selects plugin messages and the initial language of personal Studio links. Studio's header selector can change the browser language independently. See [Messages and Languages](/frameui/configuration/messages/).
+
+## Automatic Playback
+
+The default legacy switches are `false`, and all three pools are empty. Use per-effect **Events** selections in Studio for new designs. See [Automatic Playback](/frameui/automatic-playback/) before enabling legacy pools alongside explicit bindings.
+
+| Setting | Default | Meaning |
+| --- | --- | --- |
+| `loading.on-join` | `false` | Enable the legacy join pool. |
+| `loading.on-teleport` | `false` | Enable legacy teleport and world-change selection. |
+| `loading.teleport-distance` | `8` | Minimum same-world legacy teleport distance in blocks. |
+| `automatic.join-effects` | `[]` | Legacy join candidates. |
+| `automatic.teleport-effects` | `[]` | Legacy same-world teleport candidates. |
+| `automatic.world-change-effects` | `[]` | Legacy world-change candidates. |
+
+## Global Filters
+
+`global-filters` combines with individual `filters`. Both must pass, including for command previews. See the [filter reference](/frameui/filters/) for permissions, world matching, game modes, weather, travel distance and cooldowns.
+
+## Optional Direct Hosting
+
+For a deliberately self-hosted connection, disable `editor.relay.enabled`, enable the built-in host, and configure a reachable HTTPS `resource-pack.public-url`. A reverse proxy must forward both `/frameui.zip` and `/studio/` to the built-in host. The latter path serves the API. Host the editor website separately.
+
+`127.0.0.1` is reachable only on the same computer; `0.0.0.0` listens on all interfaces. Choose a free port from `1` through `65535`, and expose the host through HTTPS for use with the public Studio website. With external static pack hosting, upload the regenerated pack ZIP whenever pack content changes.
+
+## Apply Changes
+
+Run `/frameui reload` for languages, filters, messages, effect rules and addon settings. Invalid candidates preserve the running state. A successful reload closes active and pending screens. Restart after changing host or public-URL settings. Clients need the refreshed resource pack after appearance or image changes.

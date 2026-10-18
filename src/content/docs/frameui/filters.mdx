@@ -1,0 +1,69 @@
+---
+title: Filters and Selection
+description: Control FrameUI effects with permissions, source and destination worlds, travel causes, cooldowns, time, weather and addon destination names.
+---
+
+Global `global-filters` and each effect's `filters` must both pass. Commands obey these rules too; operators do not bypass them. Explicit event bindings extend trigger eligibility, while other filter conditions remain in force.
+
+## Filter Reference
+
+| Key under `filters` | Meaning |
+| --- | --- |
+| `permission` | Required permission; empty allows everyone. |
+| `deny-permissions` | Any matching permission denies playback. |
+| `worlds.include`, `worlds.exclude` | Destination worlds; current world for join/manual previews. |
+| `source-worlds.include`, `source-worlds.exclude` | World the player leaves; current world for join/manual previews. |
+| `game-modes.include`, `game-modes.exclude` | Survival, creative, adventure or spectator. |
+| `teleport-causes` | Allowed Bukkit causes, such as `command`, `plugin` or `nether-portal`; travel only. |
+| `triggers` | Base `join`, `teleport`, `world-change`, `command` eligibility. Empty disables these base triggers unless extended by an explicit binding. |
+| `distance.min`, `distance.max` | Travel distance; `max: -1` is unlimited. |
+| `height.min`, `height.max` | Inclusive destination Y-coordinate bounds. |
+| `time.min`, `time.max` | Inclusive destination world time, `0`–`23999`. |
+| `weather` | `clear`, `rain`, `thunder`; these are separate conditions. |
+| `cooldown-ticks` | Per-player cooldown for this effect; `0` disables it. |
+| `addon-targets.include`, `addon-targets.exclude` | Per-effect native plugin destination names. |
+
+Empty include lists generally allow every value. Exclusions always win. `teleport-causes: []` and `weather: []` allow all causes and conditions. The base `triggers` list is the exception: an empty list does not mean all triggers.
+
+## World and Destination Matching
+
+World and addon destination patterns are case-insensitive and support `*` for any sequence and `?` for one character.
+
+```yaml
+filters:
+  worlds:
+    include: ['survival-*', 'lobby']
+    exclude: ['survival-test']
+  source-worlds:
+    include: []
+    exclude: ['minigame-*']
+  addon-targets:
+    include: ['spawn', 'town-*']
+    exclude: ['staff-*']
+```
+
+`addon-targets` belongs in individual effect files. Use it with the corresponding native plugin events; it matches home, warp, portal, town, nation, land or island names. Multiverse-Core uses destination world names.
+
+## Cross-World Travel
+
+Cross-world distance is treated as infinite. An unlimited maximum (`-1`) allows it; a finite maximum excludes it. The minimum distance is satisfied by cross-world travel. For same-world travel, the actual block distance is checked.
+
+## Time and Weather
+
+```yaml
+filters:
+  time:
+    min: 18000
+    max: 6000
+  weather: ['clear']
+```
+
+A start greater than the end wraps through midnight. This example permits late night through the next morning, in clear weather only. Values refer to Minecraft world time, not the server's local clock.
+
+## Priority, Weight and Cooldowns
+
+After eligibility checks, the highest priority wins and positive weight selects between equal priorities. Weight is relative: weights `3` and `1` produce a 3:1 choice when those are the only equal-priority eligible candidates.
+
+The global cooldown and individual cooldown are independent. Both must permit playback. They begin when a screen opens. A pending pack request alone does not start the cooldown.
+
+If a manual preview is blocked, check global rules, individual rules and cooldowns before changing command permissions. Use [Troubleshooting](/frameui/troubleshooting/) for an ordered checklist.

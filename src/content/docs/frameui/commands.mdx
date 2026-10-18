@@ -1,0 +1,49 @@
+---
+title: Commands and Permissions
+description: FrameUI command syntax, independent permissions, aliases, console support and examples.
+---
+
+## Commands
+
+| Command | Permission | Default | Purpose |
+| --- | --- | --- | --- |
+| `/frameui` or `/frameui help` | `frameui.command.help` | Everyone | Show the help panel. |
+| `/frameui effects [category] [page]` | `frameui.command.effects` | Operator | Browse the catalog. |
+| `/frameui preview <effect>` | `frameui.command.preview` | Operator | Preview a named effect or `random`. |
+| `/frameui stop` | `frameui.command.stop` | Everyone | Close your active or pending effect. |
+| `/frameui editor` | `frameui.command.editor` | Operator | Open your personal connected Studio session. |
+| `/frameui status` | `frameui.command.status` | Operator | Show active screens, pending resource packs and loaded effect count. |
+| `/frameui reload` | `frameui.command.reload` | Operator | Validate and apply configuration, effects, messages and addons. |
+
+`/frameui list` aliases `effects`; `/frameui studio` aliases `editor`. Aliases use the same permission as their primary command. The preview command requires an effect argument; use `/frameui preview random` for an eligible random candidate.
+
+## Catalog Categories
+
+```text
+/frameui effects all 1
+/frameui effects animations 1
+/frameui effects presets 1
+/frameui effects mine 1
+```
+
+**Animations** contains 50 template effects. **Presets** contains 10 ready-made compositions. **Mine** contains custom server effects. Add the page number after the category, or use a page number on its own to browse all effects.
+
+## Chat Interaction
+
+Bare `/frameui` shows information without starting a screen or requesting a pack. Help rows suggest command text. Catalog category/page controls navigate immediately, and effect rows run a preview when the player has preview permission. Available help rows reflect the sender's permissions and whether a command needs a player.
+
+Previews and stop require an in-game player. Help, the catalog, status and reload can be used from the console. Use the editor command in game for a personal connection.
+
+## Grant Access Deliberately
+
+Permissions are independent. Granting `frameui.command.effects` does not allow previews; granting `frameui.command.editor` does not allow reload or status.
+
+Studio access allows a player to manage custom effects on the server, including saving and confirmed permanent deletion. Give it to trusted designers. Removing this permission also blocks existing personal Studio sessions.
+
+Operator status and preview permission do not bypass [effect filters or cooldowns](/frameui/filters/). A custom node such as `frameui.effect.vip` is an effect eligibility rule; it does not grant command access.
+
+## Reload Behavior
+
+`/frameui reload` validates a candidate configuration before applying it. A rejected reload leaves the last accepted runtime state active. Read the reported filename and YAML key, correct the file and retry.
+
+A successful reload closes active and pending effects and rebuilds the generated resource pack. Host and public-URL changes require a restart. See [Configuration](/frameui/configuration/config/).

@@ -1,0 +1,64 @@
+---
+title: Troubleshooting
+description: Resolve FrameUI resource-pack failures, blocked previews, missing automatic events, invalid reloads and connected Studio problems.
+---
+
+## First Checks
+
+Confirm Paper 26.3 and Java 25, then inspect the startup log. Use an operator account and run:
+
+```text
+/frameui status
+/frameui preview aurora
+/frameui stop
+```
+
+Record the exact error, effect ID and relevant log lines when asking for help. Keep personal Studio links private.
+
+## The Pack Does Not Load
+
+- Accept the required server resource pack in your Minecraft server settings.
+- With the default relay enabled, verify that the server can make outbound HTTPS connections. The default loopback direct URL does not need to be public in this mode.
+- With the relay disabled, make sure `resource-pack.public-url` is reachable from the player's computer. A URL that works on the server computer alone is insufficient.
+- After changing pack content, accept the refreshed pack. If hosting the ZIP externally, replace that hosted ZIP too.
+
+Restart after host or public-URL changes. `/frameui reload` does not rebind the host.
+
+## A Manual Preview Is Blocked
+
+Check `frameui.command.preview`, the exact ID and `enabled`. Then check both `global-filters` and the effect's `filters`: required/denied permissions, current world, game mode, time, weather, trigger eligibility and cooldowns. An administrator does not bypass those filters.
+
+Use `/frameui effects all 1` to find IDs. `/frameui preview random` can only select eligible effects. Catalog permission alone does not grant preview permission.
+
+## Automatic Effects Never Play
+
+Open **Events → When to play** or inspect `play-on` in the saved server file. Default automatic assignments are empty. A browser draft must be imported or saved before it affects the server.
+
+For legacy pools, check both the `loading` switch and the relevant `automatic` pool. For plugin events, check the integration state, native event ID, target name, world filters and actual successful local teleport. A pending TPA is not a teleport.
+
+## Reload Is Rejected
+
+FrameUI keeps the last accepted runtime state when validation fails. Fix the filename and key reported by the error, then reload again. Common causes include:
+
+- An ID that does not match the filename, duplicate IDs or an unknown template.
+- Unknown YAML keys or invalid values.
+- `minimum-ticks` smaller than entrance, or maximum smaller than minimum.
+- `show-hands: true` combined with `hide-hud: true`.
+- Missing, oversized or invalid PNG files.
+- A pool or addon assignment referencing an unknown effect.
+
+See the [effect schema](/frameui/configuration/effects/). A successful reload closes current and pending screens.
+
+## Studio Cannot Save
+
+Keep your player online and retain `frameui.command.editor`. Personal links expire after 30 minutes; `/frameui editor` creates a replacement and invalidates the old link. Open the new link instead of reusing the old tab's connection.
+
+If the server effect changed elsewhere, reopen it before saving so you have its current revision. Export a ZIP first if you need to preserve an unsaved draft. Relay unavailability affects connected saves and relay pack delivery; standalone editing and ZIP export remain available.
+
+## The Preview Differs in Minecraft
+
+Studio is a browser simulation using the effect renderer, sample caption values and a captured player view. The gallery videos are Studio renders, not live gameplay recordings. Test the final design in Minecraft, including captions, aspect ratio, hand/HUD visibility, transitions and cleanup. Rendering mods and unsupported clients may differ.
+
+## A Translation Did Not Change
+
+Custom values in `messages.yml` override translations. Update the matching `languages/<code>.yml` entry for translated defaults, and check that the selected language is valid. Effect titles and captions do not translate automatically.

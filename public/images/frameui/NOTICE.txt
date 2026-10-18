@@ -1,0 +1,12 @@
+FrameUI documentation previews
+
+Effect artwork and rendered previews: Copyright (c) 2026 Berke Akcen.
+Studio icon: Copyright (C) 2026 Berke Akcen; GPL-3.0-only.
+FrameUI Studio source and license: https://github.com/Despical/FrameUIStudio
+
+The previews use the default Minecraft bitmap font and a captured Minecraft
+player view to illustrate rendering. Minecraft assets remain copyright
+Mojang AB / Microsoft and are not covered by the Studio source license.
+
+Videos are rendered in FrameUI Studio. They are illustrative previews,
+not live in-game recordings or a measurement of server loading progress.
