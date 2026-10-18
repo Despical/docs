@@ -1,0 +1,88 @@
+---
+title: "Creating Paintings"
+description: "Paint walls and floors with exact block dimensions, eight directions, transparency, family palettes and optional dithering."
+---
+
+## Command Shape
+
+```text
+/pp create <image> <direction> <height> [transparent] [palette] [dither]
+```
+
+| Argument | Meaning | Default |
+| --- | --- | --- |
+| `image` | A source file, or an unambiguous base name | Required |
+| `direction` | One of the wall or flat orientations below | Required |
+| `height` | Exact positive output block rows | Required |
+| `transparent` | Preserve low-alpha source positions | `true` |
+| `palette` | `all`, `concrete`, `wool` or `terracotta` | `all` |
+| `dither` | Apply Floyd-Steinberg diffusion | `false` |
+
+Options are positional. To set a later option, include the earlier ones. Boolean values must be `true` or `false`.
+
+---
+
+## Directions
+
+| Direction | Image right | Image up | Placement |
+| --- | --- | --- | --- |
+| `north` | East (+X) | Up (+Y) | North-facing wall |
+| `south` | West (-X) | Up (+Y) | South-facing wall |
+| `east` | South (+Z) | Up (+Y) | East-facing wall |
+| `west` | North (-Z) | Up (+Y) | West-facing wall |
+| `flat_northeast` | East (+X) | North (-Z) | Horizontal plane |
+| `flat_southeast` | East (+X) | South (+Z) | Horizontal plane |
+| `flat_northwest` | West (-X) | North (-Z) | Horizontal plane |
+| `flat_southwest` | West (-X) | South (+Z) | Horizontal plane |
+
+The origin is the bottom-left image position, not the center. Flat art keeps all output blocks at the origin's Y level. Its `height` argument is a row count along the image-up direction, rather than vertical world height.
+
+Names ignore case, underscores and hyphens. Legacy spellings such as `North`, `Up_North` and `FlatNorthEast` remain accepted.
+
+---
+
+## Example Workflows
+
+### Opaque Concrete Logo
+
+```text
+/pp preview logo.png 32 concrete false false
+/pp create logo.png north 32 false concrete false
+```
+
+This fills transparent source areas with the configured background, restricts output to concrete and disables dithering.
+
+### Transparent Dithered Wall
+
+```text
+/pp preview portrait.png 96 all true true
+/pp create portrait.png west 96 true all true
+```
+
+The estimate and creation commands order their optional arguments differently. In the estimate they are `palette`, `dither`, `transparent`; in creation they are `transparent`, `palette`, `dither`.
+
+### Wool Floor Art
+
+```text
+/pp preview emblem.png 48 wool false true
+/pp create emblem.png flat_northeast 48 true wool false
+```
+
+Choose a Y level with clear terrain. A floor painting still checks world limits and its horizontal chunk footprint.
+
+---
+
+## Placement Checks
+
+Before world mutation the service checks:
+
+- No other world operation is active.
+- The captured world still exists and the requesting player has not changed worlds during preparation.
+- The region fits build height, world border, coordinate and chunk limits.
+- The undo journal count and recorded-block budgets have enough capacity.
+- No retained journal reserves an overlapping region.
+- No selected opaque position contains a block entity.
+
+World capture runs incrementally, then the complete recovery journal is written before blocks are placed. If a block changes after capture, the painting preserves the conflict rather than overwriting it. Completion reports how many conflicts were skipped.
+
+The plugin does not call a region-protection integration or consume survival materials. Give creation permission only to trusted editors.
