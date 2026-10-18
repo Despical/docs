@@ -48,3 +48,11 @@ Player-context messages passed through the chat manager can use PlaceholderAPI w
 <Aside type="tip">
 For support, include Item Upgrader, server, and Java versions, the relevant recipe, the held item's exact metadata, installed addon versions, console errors, and reproduction steps.
 </Aside>
+
+## Are Spigot, Folia or every Minecraft version supported?
+
+The build targets Paper 1.20.4 and its command dependency uses Paper Adventure audiences directly. A broad version range and Spigot/Folia compatibility are not established by this build. Legacy item helpers and `api-version: 1.13` do not prove runtime support. Test the exact server release and integrations.
+
+## Will reload replace my customized messages?
+
+No. Missing settings inherit bundled defaults in memory, while explicit empty chat values remain disabled. Chat accepts MiniMessage or legacy colors per template. Menu names/lore use legacy colors. See [Messages](/item-upgrader/configuration/messages/) for argument and PlaceholderAPI safety.
