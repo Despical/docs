@@ -1,0 +1,236 @@
+---
+title: "config.yml"
+description: "Configure Pixel Painter image/world limits, per-tick work, undo capacity, alpha handling, material filters, progress bars and trusted download hosts."
+---
+
+## Load and Reload
+
+The file is `plugins/PixelPainter/config.yml`. Edit it and run `/pp reload` to validate replacement settings together with messages and palette colors. Invalid supported value types or ranges reject the reload and retain the previous active resources.
+
+Missing settings use defaults. Running jobs and image preparations retain the settings captured when they started. New jobs use the newly published values.
+
+---
+
+## Image and Region Limits
+
+| Key | Default | Accepted range | Meaning |
+| --- | --- | --- | --- |
+| `limits.max-height` | 512 | 1–2048 | Requested output block rows |
+| `limits.max-blocks` | 131072 | 1–1048576 | Resized width × height, including transparent positions |
+| `limits.max-source-pixels` | 16777216 | 1–67108864 | Original image width × height before full decode |
+| `limits.max-file-mb` | 16 | 1–64 | Local/download source size in MiB |
+| `limits.max-chunks` | 128 | 1–512 | Horizontal chunks intersecting the reserved region |
+
+World build height, border and coordinate limits apply in addition to these settings. Height uses exact rows, not the version 1 doubling rule. For flat art, rows extend along a horizontal axis.
+
+Changing the requested height also changes width through the source aspect ratio. A wide source may exceed the area or chunk limit well before it reaches the height limit.
+
+---
+
+## Per-Tick Budget
+
+```yaml
+performance:
+  blocks-per-tick: 500
+```
+
+The range is **1–5000**. One world job runs at a time. The value bounds scanned pixels or processed block entries per tick; higher values allow more work in a tick, while lower values spread the job across more ticks.
+
+Chunk acquisition loads at most one chunk per tick separately from that loop. Newly generated chunks can still take significant time. The region stays loaded with plugin chunk tickets until the operation ends.
+
+Two background workers and eight waiting task slots handle image/file operations. These executor sizes are implementation constants rather than config settings.
+
+---
+
+## Undo Capacity
+
+```yaml
+undo:
+  max-history: 32
+  max-stored-blocks: 524288
+```
+
+| Key | Range | Behavior |
+| --- | --- | --- |
+| `max-history` | 1–256 | Maximum retained complete journals across players |
+| `max-stored-blocks` | 1–4194304 | Maximum total recorded changes |
+
+New creation checks capacity conservatively using selected pixel counts before scanning. Actual journals omit transparent positions and blocks already matching the output. Capacity is not a rolling history: old records are not evicted to make room.
+
+Successfully undo older paintings to release their journal, storage budget and reserved region. Raising these values increases recovery memory and storage use.
+
+---
+
+## Alpha and Background
+
+```yaml
+images:
+  alpha-threshold: 128
+  background: '#FFFFFF'
+```
+
+`alpha-threshold` accepts **0–255**. With `transparent=true`, pixels below it preserve terrain. Fully transparent pixels are always skipped even at zero. It does not apply to opaque compositing.
+
+`background` is a quoted six-digit sRGB hex color. With `transparent=false`, transparent and partial-alpha source pixels are composited over it before color matching.
+
+---
+
+## Global Material Filters
+
+```yaml
+palette:
+  include: []
+  exclude: []
+```
+
+Lists are normalized to uppercase names. Empty `include` means all available entries from `palette.yml`; `exclude` removes candidates. Every explicit inclusion must remain available after exclusion, otherwise loading fails. An empty final palette also fails.
+
+Example allowlist:
+
+```yaml
+palette:
+  include: [WHITE_CONCRETE, BLACK_CONCRETE, PALE_OAK_PLANKS]
+  exclude: []
+```
+
+Command families are selected inside the global set. For example, a global wood-only allowlist leaves the `concrete` family empty.
+
+---
+
+## Progress and Trusted Hosts
+
+```yaml
+progress:
+  enabled: true
+
+downloads:
+  allowed-hosts:
+    - i.imgur.com
+    - raw.githubusercontent.com
+```
+
+Progress applies to new world jobs. The private bossbar is removed on completion, cancellation, disconnect or shutdown. Its green color and continuous overlay are currently implementation settings, while stage labels and text come from `messages.yml`.
+
+Download hosts are exact trusted names, without schemes, paths or wildcards. HTTPS and port 443 are required; credentials and local destinations are rejected. Redirect destinations must also be listed. An empty list disables downloads while preserving local sources. See [download details](/pixel-painter/image-files/).
+
+---
+
+## Upgrading from Version 1
+
+If the old `Custom-Materials-Enabled` key exists, the original file is copied once to `config-v1.backup.yml`. An enabled legacy `Custom-Materials` list is used when a modern include list is empty.
+
+Legacy names must exist in the active palette. Unsupported explicit inclusions reject loading. `FULL_MATERIAL_LIST` is no longer the color source; numeric colors live in `palette.yml`.
+
+Existing config files are not replaced during startup. Add `downloads.allowed-hosts` explicitly to an old config when downloads are needed. Missing numeric settings use modern defaults.
+
+---
+
+## Bundled Configuration
+
+<details>
+<summary>Show the complete default config.yml</summary>
+
+```yaml
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                                                             #
+#                                 PixelPainter                                #
+#                                 by Despical                                 #
+#                                                                             #
+#                   https://docs.despical.dev/pixel-painter                   #
+#                                                                             #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Reload these settings with /pp reload. A failed reload keeps the last valid settings.
+# Painting jobs and image requests retain the limits and palette captured when they start.
+# Requires Paper 1.21.11 or newer and Java 25.
+
+limits:
+  # Maximum requested output height, in block rows. Range: 1..2048.
+  # Width is calculated from the source aspect ratio; height is never doubled.
+  # Vertical paintings must also fit between the world's minimum and maximum build heights.
+  max-height: 512
+
+  # Maximum output image area: calculated width multiplied by requested height.
+  # Range: 1..1048576. Transparent pixels count toward this allocation limit too.
+  # Raising this increases image-processing memory, scan time and potential undo storage.
+  max-blocks: 131072
+
+  # Maximum decoded source area, in pixels. Range: 1..67108864.
+  # Checked from image metadata before allocating the full decoded image.
+  # This limits the original file's dimensions, independently of output block dimensions.
+  max-source-pixels: 16777216
+
+  # Maximum source/download file size, in MiB (1 MiB = 1048576 bytes). Range: 1..64.
+  # Applies to local images as well as network downloads; a small compressed file must
+  # still satisfy max-source-pixels when its decoded dimensions are checked.
+  max-file-mb: 16
+
+  # Maximum horizontal chunks intersecting one painting or restoration. Range: 1..512.
+  # Chunk tickets keep the entire region loaded until the operation ends.
+  # Newly generated chunks may cause longer ticks even with a low block budget.
+  max-chunks: 128
+
+performance:
+  # Maximum pixels scanned or block changes processed per server tick. Range: 1..5000.
+  # One world operation runs at a time. Lower values spread work over more ticks;
+  # higher values finish sooner but allow more world reads/writes in a single tick.
+  # Chunk acquisition is separate and loads at most one chunk per tick.
+  blocks-per-tick: 500
+
+undo:
+  # Maximum complete recovery journals retained across all players. Range: 1..256.
+  # Journals survive restarts and cancelled/partial paintings. Reaching this limit
+  # rejects new paintings instead of silently deleting older recovery data.
+  # Successfully undo an older painting to release its journal and reserved region.
+  max-history: 32
+
+  # Maximum total recorded block changes across all retained journals. Range: 1..4194304.
+  # New work reserves enough space for its selected pixels before scanning starts.
+  # Actual journals omit transparent pixels and blocks that already match the output.
+  # Increasing this limit raises memory use during startup recovery and normal operation.
+  max-stored-blocks: 524288
+
+images:
+  # Minimum alpha kept when transparent=true. Range: 0..255.
+  # Alpha below this value preserves the existing block. Fully transparent pixels
+  # are always preserved, including when this threshold is zero.
+  # This option does not apply when transparent=false is passed to a command.
+  alpha-threshold: 128
+
+  # Background color used to composite an image when transparent=false.
+  # Use a quoted six-digit sRGB hex value. It fills fully transparent pixels and
+  # contributes to partially transparent pixels before block-color matching.
+  background: '#FFFFFF'
+
+palette:
+  # Optional allowlist of material names from palette.yml; empty selects all entries.
+  # Names are case-insensitive. Explicit inclusions must exist on the running server
+  # and remain available after exclusions; otherwise the reload is rejected.
+  # Named command palettes (concrete/wool/terracotta) apply within these global filters.
+  # Example: [WHITE_CONCRETE, BLACK_CONCRETE, PALE_OAK_PLANKS]
+  include: []
+
+  # Materials removed from the active palette before matching image colors.
+  # Exclusion takes precedence. Excluding an explicitly included material rejects reload.
+  # Use this to avoid specific textures, transparent blocks or unwaxed copper variants.
+  exclude: []
+
+progress:
+  # Show a private progress bossbar to the player who started the operation.
+  # Covers chunk loading, terrain capture, painting and restoration. The bar is
+  # removed on completion, cancellation, disconnect or plugin shutdown.
+  enabled: true
+
+downloads:
+  # Exact trusted host names accepted by /pp download. HTTPS on port 443 is required.
+  # Wildcards, HTTP, URL credentials and local/private network destinations are rejected.
+  # Every redirect destination must also appear here. Up to four redirects are followed.
+  # Trust the owners of these hosts and add only image providers you control or trust.
+  # Downloads use connection/read timeouts, a transfer deadline and the image limits above.
+  # An empty list disables network downloads while keeping local image files available.
+  allowed-hosts:
+    - i.imgur.com
+    - raw.githubusercontent.com
+```
+
+</details>
