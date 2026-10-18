@@ -7,8 +7,13 @@ import { Badge, Steps } from "@astrojs/starlight/components";
 
 ## Requirements
 
-* **Java:** Java 21 or newer.
-* **Server:** Spigot or Paper. The current distribution supports Minecraft 1.8 through 1.21.11.
+* **Java:** Java 21 or newer, also meeting your server's own Java requirement.
+* **Server:** The build targets Paper 1.20.4 API, and Command Framework 1.6.5 directly calls Paper Adventure audiences. Spigot and Folia compatibility are not established.
+
+The descriptor retains `api-version: 1.13`. Neither that value nor legacy compatibility helpers establish a tested Minecraft version range. Validate the exact server release and custom-item provider versions before using valuable items.
+
+## Optional Integrations
+
 * **Vault plus an economy provider** <Badge text="Optional" variant="tip" />: Required only for paid upgrades.
 * **PlaceholderAPI** <Badge text="Optional" variant="tip" />: Allows external placeholders inside supported player messages.
 * **Oraxen, ItemsAdder, or EcoItems** <Badge text="Optional" variant="tip" />: Install only the custom-item providers used by your recipes.
