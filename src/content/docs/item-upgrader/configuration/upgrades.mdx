@@ -18,7 +18,7 @@ Every direct child under `upgrades` is a named recipe. Recipe keys are used by t
 | Key | Default | Purpose |
 |:--|:--|:--|
 | `to.item` | Required | Result material or custom item. |
-| `to.name` | Provider/default name | Result display name. Supports `%price%` and `%chance%`. |
+| `to.name` | Empty | Result display name. Supports `%price%` and `%chance%`. |
 | `to.lore` | Empty | Result lore. Supports `%price%`, `%needed_coins%`, and `%chance%`. |
 | `to.amount` | `1` | Result stack amount. Minimum is one. |
 | `to.item-flags` | Empty | Bukkit item flags applied to the result. |
@@ -34,9 +34,9 @@ Supported item flags include `HIDE_ENCHANTS`, `HIDE_ATTRIBUTES`, `HIDE_UNBREAKAB
 | Key | Purpose |
 |:--|:--|
 | `chance` | Success threshold from the random 1-100 roll. Values below one are normalized to one. |
-| `coin` | Vault price withdrawn only after success. A missing economy makes balance checks and withdrawals inactive. |
+| `coin` | Non-negative Vault price withdrawn only after success; negative values become zero. A missing economy makes balance checks and withdrawals inactive. |
 | `enchantments` | Result enchantments in `NAME:LEVEL` format. Modern namespaced lookups are attempted when legacy names do not resolve. |
-| `reset-enchants` | When false, source enchantments are copied and merged into the result. When true, only configured result enchantments remain. |
+| `reset-enchants` | Defaults to false when omitted. When false, source enchantments are copied and merged into the result. When true, only configured result enchantments remain. |
 | `disallowed-enchantments` | Source enchantments that block the menu before an attempt. |
 
 When both the source and result define the same enchantment and merging is enabled, the item builder preserves the effective higher level.
