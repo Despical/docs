@@ -1,0 +1,68 @@
+---
+title: "Core Concepts"
+description: "Understand Pixel Painter source pixels, exact block dimensions, selected material counts, orientation and durable undo journals."
+---
+
+## Source Image and Painting
+
+A **source image** is a PNG or JPEG file in `plugins/PixelPainter/images/`. A **painting** is the block output selected from that file. Deleting a source file does not delete an existing painting or its recovery journal.
+
+Source dimensions are pixels; output dimensions are Minecraft blocks. The height argument controls exact output rows. Width is rounded to the nearest aspect-preserving integer, with a minimum of one block.
+
+```text
+Source: 1920 × 960 pixels
+Requested height: 64 blocks
+Output: 128 × 64 blocks = 8192 pixel positions
+```
+
+The output area limit counts all positions, including transparent ones. The source byte/pixel limits apply before resizing, so choosing a tiny output does not permit an oversized source file.
+
+---
+
+## Pixels, Materials and Changes
+
+| Count | Meaning |
+| --- | --- |
+| Output area | Width multiplied by height, including transparent pixels |
+| Painted pixels | Positions that select a material after transparency processing |
+| Material count | Number of selected pixels using a particular material |
+| Journal changes | Positions whose original data differs from the painting's target data |
+| Changed blocks | World writes actually applied by a completed or partial operation |
+
+An estimate describes selected pixels. If some target blocks already match the image, the job does not save or rewrite them. Journal counts therefore need not equal the estimate, and an interrupted job need not have applied every journal entry.
+
+Materials are not removed from player inventories. Counts help plan or compare artwork; this is an administrative editing tool.
+
+---
+
+## Transparency
+
+With `transparent=true`, a pixel below `images.alpha-threshold` preserves its current block. Fully transparent pixels are always preserved, including when the threshold is zero. This does not clear terrain to air.
+
+With `transparent=false`, the source is composited over `images.background` before matching colors. Transparent areas become painted background pixels. JPEG has no alpha channel, so its source pixels are opaque.
+
+---
+
+## Orientation and Origin
+
+The **origin** is the bottom-left block at the player's captured position. An orientation defines an image-right vector and an image-up vector. Source row zero maps to the far end of the image-up vector, preserving top-to-bottom image order.
+
+Vertical names describe the outward normal of the wall. Flat names describe the directions in which image-right and image-up extend. See the [direction table](/pixel-painter/creating-paintings/#directions).
+
+---
+
+## Palette and Dithering
+
+A **palette entry** pairs a Bukkit material with a representative sRGB color. Oklab distance finds perceptually close entries. A command family such as `concrete` filters the globally configured palette.
+
+**Dithering** spreads color error into nearby pixels. It creates gradients from several block colors rather than choosing the same nearest block for every similar source pixel. It can help photographs and smooth artwork, but may add unwanted texture to simple logos.
+
+---
+
+## Job and Journal
+
+A **job** is the active server-thread operation. Only one world job runs at a time, including periods when it waits for journal I/O. Image requests use separate bounded workers.
+
+A **journal** is a durable recovery record created before painting starts. It stores ownership, world, bounds and original/target block data. It remains after successful painting, cancellation or restart until conflict-free restoration removes it.
+
+Saved bounds reserve the painting region. They are checked as inclusive boxes, so even transparent positions within that box participate in overlap prevention.
