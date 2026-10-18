@@ -73,7 +73,7 @@ const links = (config.social || [])
                 class:list={["sl-flex", brand && "brand-link", brand && `brand-${brand}`]}
             >
                 <span class="sr-only">{label}</span>
-                <IconCustom name={icon} class="icon" size="20px" />
+                <IconCustom name={icon} class="icon" size={icon === "frameui-studio" ? "24px" : "20px"} />
             </a>
         ))}
     </>
