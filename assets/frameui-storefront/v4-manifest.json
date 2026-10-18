@@ -1,0 +1,42 @@
+{
+  "fps": 20,
+  "loop": 0,
+  "quality": 90,
+  "completeSourceCycles": true,
+  "cover": {
+    "main": [
+      "nether-forge",
+      "cherry-valley",
+      "overworld"
+    ],
+    "thumbnails": [
+      [
+        "nebula",
+        "warp",
+        "starfield"
+      ],
+      [
+        "prism",
+        "ripple",
+        "hexagon"
+      ],
+      [
+        "matrix",
+        "fireflies",
+        "sakura"
+      ]
+    ]
+  },
+  "motion": [
+    "warp",
+    "nebula",
+    "ripple",
+    "sakura"
+  ],
+  "themes": [
+    "cherry-valley",
+    "overworld",
+    "nether-forge"
+  ],
+  "studio": "frameui"
+}
