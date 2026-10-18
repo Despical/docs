@@ -3,9 +3,11 @@ title: Your First Effect
 description: Build your first FrameUI loading screen from a template, adjust its design and events, and install it on a Minecraft server.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 ## Choose a Starting Point
 
-Open [Studio](https://frameui.despical.dev/) or run `/frameui editor` in Minecraft for a connected session. The effect library has three categories:
+Open <a href="https://frameui.despical.dev/" target="_blank" rel="noopener noreferrer">Studio</a> or run `/frameui editor` in Minecraft for a connected session. The effect library has three categories:
 
 | Category | Contents |
 | --- | --- |
@@ -17,12 +19,14 @@ Use search to find a design. Choose **Aurora** for an animated background or **F
 
 ## Make It Yours
 
-1. In **Design**, change the display name.
-2. Select a caption on the canvas or through the caption field. Edit its text and color in the component inspector.
-3. Choose a custom palette, background layout or uploaded image.
-4. Drag elements on the preview and use their handles to resize them.
-5. Open **Motion** to adjust the total duration or individual phases.
-6. Use the play, restart and timeline controls to watch the entrance and exit.
+<Steps>
+    1. In **Design**, change the display name.
+    2. Select a caption on the canvas or through the caption field. Edit its text and color in the component inspector.
+    3. Choose a custom palette, background layout or uploaded image.
+    4. Drag elements on the preview and use their handles to resize them.
+    5. Open **Motion** to adjust the total duration or individual phases.
+    6. Use the play, restart and timeline controls to watch the entrance and exit.
+</Steps>
 
 Editing a bundled template creates your own design; the original remains available. Give it an effect ID such as `lobby-welcome` under **Design → File details**. The ID becomes the YAML filename and preview command argument.
 

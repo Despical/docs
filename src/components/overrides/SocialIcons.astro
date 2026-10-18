@@ -10,6 +10,7 @@ const isSourceAccess = normalizedPath === "/source-access";
 const project = currentTopic
     ? new URL(currentTopic.link, Astro.url).pathname.split("/").filter(Boolean)[0]
     : undefined;
+const openExternalLinksInNewTab = ["frameui", "frameui-studio"].includes(project || "");
 const freePlugins = new Set(["kotl", "tnt-run", "command-framework", "whack-me", "particle-text", "maze-engine", "port-bridge"]);
 const pluginProjects = new Set([
     ...freePlugins,
@@ -38,7 +39,9 @@ const links = (config.social || [])
     .map((link) => {
         const index = link.label.indexOf(":");
         const label = index !== -1 ? link.label.substring(index + 1) : link.label;
-        const icon = label === "SpigotMC"
+        const icon = ["Studio", "Open Studio"].includes(label)
+            ? "frameui-studio"
+            : label === "SpigotMC"
             ? "spigotmc"
             : label === "BuiltByBit"
                 ? "builtbybit"
@@ -62,7 +65,13 @@ const links = (config.social || [])
     links.length > 0 && (
     <>
         {links.map(({ label, href, icon, brand }) => (
-            <a {href} rel="me" class:list={["sl-flex", brand && "brand-link", brand && `brand-${brand}`]}>
+            <a
+                {href}
+                target={openExternalLinksInNewTab ? "_blank" : undefined}
+                rel={openExternalLinksInNewTab ? "me noopener noreferrer" : "me"}
+                title={label}
+                class:list={["sl-flex", brand && "brand-link", brand && `brand-${brand}`]}
+            >
                 <span class="sr-only">{label}</span>
                 <IconCustom name={icon} class="icon" size="20px" />
             </a>

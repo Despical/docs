@@ -3,6 +3,8 @@ title: Getting Started
 description: Install FrameUI on Paper 26.3, verify resource-pack delivery and create your first automatic loading screen.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 ## Requirements
 
 | Requirement | Supported setup |
@@ -17,11 +19,13 @@ Bedrock/Geyser clients and rendering mods have not been qualified. Check the fin
 
 ## Install the Plugin
 
-1. Stop the server and place `FrameUI.jar` in `plugins/`.
-2. Start the server. FrameUI creates `plugins/FrameUI/` with configuration, effects, images, languages and addon settings.
-3. Join with an operator account and accept the required resource pack.
-4. Run `/frameui`, then `/frameui preview aurora`.
-5. Run `/frameui stop` to close an active or pending preview.
+<Steps>
+    1. Stop the server and place `FrameUI.jar` in `plugins/`.
+    2. Start the server. FrameUI creates `plugins/FrameUI/` with configuration, effects, images, languages and addon settings.
+    3. Join with an operator account and accept the required resource pack.
+    4. Run `/frameui`, then `/frameui preview aurora`.
+    5. Run `/frameui stop` to close an active or pending preview.
+</Steps>
 
 The default maintained connection handles Studio and resource-pack delivery. **You do not need to open an inbound port or change the loopback pack URL for this default setup.** The direct `resource-pack.public-url` is used when `editor.relay.enabled` is `false`.
 
@@ -41,11 +45,13 @@ Selecting an effect row in the catalog runs its preview when you have preview pe
 
 Automatic event assignments are empty by default. A working manual preview does not automatically enable join or teleport playback.
 
-1. Run `/frameui editor` and open your personal link.
-2. Select an animation or preset and customize it.
-3. Open **Events → When to play** and select **Join**, **Teleport** or **World change**.
-4. Click **Import to server**. Editing a bundled design creates a custom copy.
-5. Accept the refreshed pack, then trigger the selected event.
+<Steps>
+    1. Run `/frameui editor` and open your personal link.
+    2. Select an animation or preset and customize it.
+    3. Open **Events → When to play** and select **Join**, **Teleport** or **World change**.
+    4. Click **Import to server**. Editing a bundled design creates a custom copy.
+    5. Accept the refreshed pack, then trigger the selected event.
+</Steps>
 
 Existing custom effects use **Save to server**. Filters and cooldowns still apply to automatic effects and manual previews. See [Automatic Playback](/frameui/automatic-playback/).
 
