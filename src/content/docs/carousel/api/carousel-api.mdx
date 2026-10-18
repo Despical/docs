@@ -1,95 +1,68 @@
 ---
 title: Developer API
-description: Learn how to integrate with Carousel and use its custom event system.
+description: Integrate using an authorized binary and Carousel's synchronous rider events.
 ---
 
 import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
 
-The **Carousel** API allows developers to hook into the plugin's lifecycles and modify player interactions. All custom events in the plugin inherit from the base `CarouselEvent` class.
+Carousel exposes its registry, live ride settings and cancellable Bukkit rider events. Integrations run on the server thread. Source access is private; using a binary dependency does not grant source redistribution rights.
 
----
+## Binary Dependency
 
-## Dependency Setup
-
-To start using the API, you need to add the **Carousel** JAR file to your project's dependencies. Create a folder named `libs` in your project's root directory and place the `carousel-x.x.x.jar` file inside it.
+Place your authorized `carousel-2.0.4.jar` in your integration's `libs/` directory. Use a compile-only dependency; do not shade or redistribute Carousel inside another plugin.
 
 <Tabs>
-    <TabItem label="Gradle (Groovy)">
+    <TabItem label="Gradle Groovy">
         ```groovy
         dependencies {
-        compileOnly files('libs/carousel-x.x.x.jar')
-    }
+            compileOnly files('libs/carousel-2.0.4.jar')
+        }
         ```
     </TabItem>
-
-    <TabItem label="Gradle (Kotlin)">
+    <TabItem label="Gradle Kotlin">
         ```kotlin
         dependencies {
-        compileOnly(files("libs/carousel-x.x.x.jar"))
-    }
-        ```
-    </TabItem>
-
-    <TabItem label="Maven">
-        ```xml
-        <dependency>
-            <groupId>dev.despical</groupId>
-            <artifactId>carousel</artifactId>
-            <version>LATEST</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/libs/carousel-x.x.x.jar</systemPath>
-        </dependency>
+            compileOnly(files("libs/carousel-2.0.4.jar"))
+        }
         ```
     </TabItem>
 </Tabs>
 
-<Aside type="caution">
-    Don't forget to add `Carousel` to the `depend` or `softdepend` list in your **plugin.yml** file to ensure it loads before your plugin.
-</Aside>
+Declare the runtime dependency in your integration's `plugin.yml`:
 
 ```yaml
-# plugin.yml
-name: YourPlugin
-version: 1.0.0
-main: your.package.Main
 depend: [Carousel]
 ```
 
----
+Use `softdepend` only for an optional integration and guard every Carousel API reference when the plugin is unavailable.
 
-## Base Event Class
-
-Every event provided by the **Carousel** API extends the `CarouselEvent` class. This ensures consistent access to the carousel instance data across all interactions.
+## Registry Access
 
 ```java
-public abstract class CarouselEvent extends Event {
+import dev.despical.carousel.CarouselPlugin;
+import dev.despical.carousel.core.Carousel;
 
-    private static final HandlerList HANDLER_LIST = new HandlerList();
+CarouselPlugin carouselPlugin = CarouselPlugin.getInstance();
+Carousel ride = carouselPlugin.getCarouselRegistry().getCarousel("spawn");
 
-    protected final Carousel carousel;
-
-    public CarouselEvent(Carousel carousel) {
-        this.carousel = carousel;
-    }
-
-    public Carousel getCarousel() {
-        return carousel;
-    }
-
-    @NotNull
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLER_LIST;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLER_LIST;
-    }
+if (ride != null) {
+    String id = ride.getName();
 }
 ```
 
-### Next Steps
+The ID accessor is **`getName()`**, not `getId()`. Registry IDs are case-sensitive. Lookups return null when absent; collections are immutable snapshots containing live references.
 
-Explore the specific events triggered during player interactions:
-* **[CarouselMountEvent](/carousel/api/carousel-events/carousel-mount-event)**: Called when a player attempts to mount a horse that is part of a **Carousel**.
-* **[CarouselDismountEvent](/carousel/api/carousel-events/carousel-dismount-event)**: Called when a player dismounts a horse that is part of a **Carousel**.
+Calls such as `start()`, `stop()` and `restart()` manage transient entities. Settings setters do not validate, save or restart automatically. Registry registration/unregistration also does not persist data. For an intentional settings change, use the exposed storage service to save the registered ride and restart it if needed.
+
+<Aside type="caution" title="Lifecycle and Thread Ownership">
+Use the API only after Carousel is enabled, on the Bukkit server thread. A reload replaces registry instances: resolve a fresh ride instead of retaining stale references. Do not move entities, modify settings or publish rider events asynchronously.
+</Aside>
+
+## Rider Events
+
+- [CarouselMountEvent](/carousel/api/carousel-events/carousel-mount-event/): after access and saddle checks, before normal mounting feedback.
+- [CarouselDismountEvent](/carousel/api/carousel-events/carousel-dismount-event/): before normal dismount feedback.
+
+Both extend `dev.despical.carousel.api.event.CarouselEvent`, expose `getCarousel()` and `getPlayer()`, and implement Bukkit `Cancellable`. Cancel the concrete event to prevent its normal underlying interaction and feedback. Forced teardown/disconnect paths may still detach passengers.
+
+Authorized collaborators can generate local reference documentation with `gradlew.bat javadocJar`. This guide does not publish Carousel source or register a public Javadoc site.
