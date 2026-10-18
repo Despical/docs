@@ -52,6 +52,11 @@ export default defineConfig({
                 },
                 {
                     icon: "github",
+                    label: "pixel-painter:GitHub",
+                    href: "https://github.com/Despical/PixelPainter",
+                },
+                {
+                    icon: "github",
                     label: "maze-engine:GitHub",
                     href: "https://github.com/Despical/MazeEngine",
                 },
@@ -1467,6 +1472,55 @@ export default defineConfig({
                                     {label: "Javadocs", link: "https://javadoc.despical.dev/portbridge/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                     {label: "Source Code", link: "https://github.com/Despical/PortBridge", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                     {label: "Issue Tracker", link: "https://github.com/Despical/PortBridge/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        label: "Pixel Painter",
+                        id: "pixel-painter",
+                        link: "/pixel-painter/",
+                        icon: "pixel-painter",
+                        items: [
+                            {
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/pixel-painter/getting-started/"},
+                                    {label: "Core Concepts", link: "/pixel-painter/concepts/"},
+                                    {label: "Creating Paintings", link: "/pixel-painter/creating-paintings/"},
+                                    {label: "Image Files and Downloads", link: "/pixel-painter/image-files/"},
+                                    {label: "Palettes and Dithering", link: "/pixel-painter/palettes-and-dithering/"},
+                                ],
+                            },
+                            {
+                                label: "Administration",
+                                items: [
+                                    {label: "Commands", link: "/pixel-painter/commands/"},
+                                    {label: "Permissions", link: "/pixel-painter/permissions/"},
+                                    {label: "Operations and Recovery", link: "/pixel-painter/operations-and-recovery/"},
+                                ],
+                            },
+                            {
+                                label: "Configuration",
+                                items: [
+                                    {label: "config.yml", link: "/pixel-painter/configuration/config/"},
+                                    {label: "messages.yml", link: "/pixel-painter/configuration/messages/"},
+                                    {label: "palette.yml", link: "/pixel-painter/configuration/palette/"},
+                                ],
+                            },
+                            {
+                                label: "Reference",
+                                items: [
+                                    {label: "Developer Reference", link: "/pixel-painter/developers/"},
+                                    {label: "Troubleshooting", link: "/pixel-painter/troubleshooting/"},
+                                    {label: "FAQ", link: "/pixel-painter/misc/faq/"},
+                                ],
+                            },
+                            {
+                                label: "Resources",
+                                items: [
+                                    {label: "Source Code", link: "https://github.com/Despical/PixelPainter", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                    {label: "Issue Tracker", link: "https://github.com/Despical/PixelPainter/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                 ],
                             },
                         ],
