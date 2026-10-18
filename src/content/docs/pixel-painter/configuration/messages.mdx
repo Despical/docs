@@ -1,0 +1,85 @@
+---
+title: "messages.yml"
+description: "Customize Pixel Painter MiniMessage templates, literal placeholders, operation feedback, chat cards, hover explanations and command help."
+---
+
+## File and Validation
+
+Edit `plugins/PixelPainter/messages.yml`, then run `/pp reload`. The loader merges bundled defaults with configured overrides and validates every configured value as text with strict MiniMessage syntax.
+
+Missing keys use the bundled template. Unknown string keys can be stored, but have no effect unless a renderer asks for them. A non-text value or malformed template rejects the reload; the previous messages stay active.
+
+Use quoted YAML strings and balanced MiniMessage tags. Put line breaks inside a message with `<newline>`.
+
+---
+
+## Literal and Rich Placeholders
+
+Dynamic strings are supplied as unparsed placeholders, so a source name or error value cannot inject new formatting. Rich placeholders contain Adventure components supplied by the renderer.
+
+| Placeholder | Typical use |
+| --- | --- |
+| `<image>` | Recorded or requested source name |
+| `<id>` | Recovery journal ID |
+| `<blocks>` | Applied, selected or recorded block count, depending on the message |
+| `<conflicts>` | Preserved later edits |
+| `<width>`, `<height>` | Output blocks or original source pixels according to context |
+| `<skipped>` | Transparent output positions in an estimate |
+| `<percent>` | Current stage percentage |
+| `<page>`, `<pages>` | Page navigation |
+| `<material>`, `<count>` | Material rows or additional material-type count |
+| `<usage>` | Command syntax after an argument-count error |
+| `<reason>` | Reload validation failure |
+| `<world>`, `<origin>` | Journal hover details |
+| `<stage>` | Rich configured stage label |
+| `<command>`, `<description>` | Rich help content |
+| `<previous>`, `<next>` | Rich page-navigation controls |
+
+Keep the placeholders used by a template when translating it. Counts are contextual: the completion template reports applied writes, while a history row describes journal entries.
+
+---
+
+## Common Feedback
+
+```yaml
+prefix: '<#8BD5CA>PixelPainter</#8BD5CA><#606A7B>:</#606A7B> '
+preparing: '<#B8C2D4>Preparing your request...</#B8C2D4>'
+reloaded: '<#91B78A>Settings, messages and palette reloaded.</#91B78A>'
+error-permission: '<#FF5555>You do not have permission to use this command.</#FF5555>'
+```
+
+`Messages.send` prepends `prefix`. Panel headings and rows are rendered separately, so changing `prefix` does not rebrand every card automatically.
+
+Operation templates include `queued`, `completed`, `cancelled`, `undo-started`, `undone`, `undo-conflicts`, `nothing-changed` and `operation-failed`. Source feedback includes `downloaded`, `deleted` and `specs`.
+
+---
+
+## Panels and Navigation
+
+Each help, source, history, materials or estimate panel has configured titles, descriptions, rows and footers. The default presentation uses mint accents, slate body text and cyan controls; panel titles are bold.
+
+```yaml
+help-title: '<#DCE3EE><bold>Pixel Painter Commands</bold></#DCE3EE>'
+help-row: '  <#606A7B>•</#606A7B> <command> <#606A7B>·</#606A7B> <#B8C2D4><description></#B8C2D4>'
+help-footer: '<#A8B8C9>Hover for details. Click to fill in a command.</#A8B8C9>'
+```
+
+Click behavior is attached by code. Help, image and history rows suggest commands; page buttons run navigation commands. Replacing the visible label does not change the command argument contract or grant extra permissions.
+
+The renderer displays eight entries per page. Help hover details are wrapped for readability. These layout limits are implementation settings, not YAML keys.
+
+---
+
+## Help Text and Progress
+
+`help-<action>` contains a short row description. `detail-<action>` contains the longer explanation shown on hover. Actions include `create`, `preview`, `undo`, `cancel`, `list`, `specs`, `history`, `materials`, `download`, `delete`, `reload` and `help`.
+
+`progress` combines the current source, stage and percentage. Stage keys are `stage-chunks`, `stage-scan`, `stage-save`, `stage-build` and `stage-undo`. These labels change wording; they do not alter how work is scheduled.
+
+---
+
+## Keep Error Meaning Accurate
+
+The error group covers permissions, argument syntax, source validation, dimensions, trusted hosts, worker saturation, world/bounds checks, block entities, overlapping journals and reload failures.
+
+When customizing messages, preserve the distinction between cancellation and restoration, source-file deletion and painting removal, and rejected reloads versus successful publication. A message should not claim a world/file mutation that the operation did not perform.
