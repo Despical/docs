@@ -18,8 +18,7 @@
 <p align="center">
   <a href="https://docs.despical.dev/">Read the Docs</a> ·
   <a href="https://javadoc.despical.dev/">Javadocs</a> ·
-  <a href="https://hub.despical.dev/">Plugin Hub</a> ·
-  <a href="https://discord.gg/uXVU8jmtpU">Discord</a>
+  <a href="https://hub.despical.dev/">Plugin Hub</a>
 </p>
 
 ---
