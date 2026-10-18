@@ -1,0 +1,56 @@
+---
+title: "Frequently Asked Questions"
+description: "Answers about previews, survival costs, resource packs, source images, height changes, optional integrations and persistent recovery."
+---
+
+## Does Pixel Painter Need a Resource Pack?
+
+No. It places existing Minecraft materials in the world. Palette values describe colors; they do not replace textures.
+
+## Is `/pp preview` a Visual World Preview?
+
+It is a material estimate in chat. It shows dimensions, transparency and selected-material counts, without placing preview blocks or reserving a region.
+
+## Does Painting Consume Inventory Materials?
+
+No. Pixel Painter is an administrative world-editing tool. The estimate counts selected materials but does not take blocks from inventories.
+
+## Does It Respect WorldGuard or Other Region Plugins?
+
+There is no dedicated region-protection integration. World borders, build height, journal ownership and overlap are checked internally. Give mutation permissions only to trusted editors and select an appropriate area.
+
+## Can I Use It from the Console?
+
+Help, source listing, palette listing and reload work from the console. Painting, estimates, image inspection, downloads, source deletion and undo/history require a player. See the [command table](/pixel-painter/commands/).
+
+## Why Does Height Behave Differently from Version 1?
+
+Version 2 uses the exact requested block rows. Version 1 doubled height internally. Width still preserves the source aspect ratio, so an 8-row command now requests eight rows rather than sixteen.
+
+## Can Old Undo Records Be Migrated?
+
+Version 1 stored undo in memory, so there are no persistent records to migrate. Version 2 writes checked binary journals and reloads them after a restart.
+
+## What Happens If I Delete a Source Image?
+
+The file disappears from the source browser. Already placed blocks and saved journals remain. Undo does not need the original PNG/JPEG.
+
+## Can I Paint over an Older Painting?
+
+The service rejects any overlap with a retained journal's inclusive region. Undo that painting successfully first to release the area. Transparent pixels do not carve holes in the reserved bounding box.
+
+## Are All 335 Materials Available on Every Server?
+
+The bundled palette has 335 material keys. Entries absent from the server registry are skipped. Global include/exclude filters and named command families can reduce the active selection further.
+
+## Why Do Some Blocks Look Different from the Source Color?
+
+Matching uses representative texture averages. Different block faces, biome tint, lighting, translucency and copper weathering affect the world appearance. Restrict the palette to concrete or exclude materials that do not fit the artwork.
+
+## Does Undo Restore Chests and Their Contents?
+
+Painting refuses to overwrite selected block entities. It records ordinary block data such as direction and waterlogging, not block-entity NBT. A chest under a transparent preserved pixel remains untouched.
+
+## Does Cancellation Restore Everything Automatically?
+
+No. It stops further world work and keeps any complete journal. Use `/pp undo <id>` to restore partial placement. Started file operations finish independently.
