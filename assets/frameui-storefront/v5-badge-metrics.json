@@ -1,0 +1,122 @@
+[
+  {
+    "label": "NETHER FORGE",
+    "fontSize": 23,
+    "textWidth": 196,
+    "textHeight": 19,
+    "width": 228,
+    "height": 39,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "CHERRY VALLEY",
+    "fontSize": 23,
+    "textWidth": 209,
+    "textHeight": 19,
+    "width": 241,
+    "height": 39,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "OVERWORLD",
+    "fontSize": 23,
+    "textWidth": 166,
+    "textHeight": 19,
+    "width": 198,
+    "height": 39,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "NEBULA",
+    "fontSize": 19,
+    "textWidth": 85,
+    "textHeight": 15,
+    "width": 117,
+    "height": 35,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "WARP",
+    "fontSize": 19,
+    "textWidth": 65,
+    "textHeight": 14,
+    "width": 97,
+    "height": 34,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "STARFIELD",
+    "fontSize": 19,
+    "textWidth": 118,
+    "textHeight": 16,
+    "width": 150,
+    "height": 36,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "PRISM",
+    "fontSize": 19,
+    "textWidth": 68,
+    "textHeight": 16,
+    "width": 100,
+    "height": 36,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "RIPPLE",
+    "fontSize": 19,
+    "textWidth": 76,
+    "textHeight": 14,
+    "width": 108,
+    "height": 34,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "HEXAGON",
+    "fontSize": 19,
+    "textWidth": 104,
+    "textHeight": 16,
+    "width": 136,
+    "height": 36,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "MATRIX",
+    "fontSize": 19,
+    "textWidth": 85,
+    "textHeight": 14,
+    "width": 117,
+    "height": 34,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "FIREFLIES",
+    "fontSize": 19,
+    "textWidth": 111,
+    "textHeight": 16,
+    "width": 143,
+    "height": 36,
+    "paddingX": 16,
+    "paddingY": 10
+  },
+  {
+    "label": "SAKURA",
+    "fontSize": 19,
+    "textWidth": 87,
+    "textHeight": 16,
+    "width": 119,
+    "height": 36,
+    "paddingX": 16,
+    "paddingY": 10
+  }
+]
