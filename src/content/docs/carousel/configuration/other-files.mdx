@@ -1,33 +1,30 @@
 ---
-title: Other Files
-description: Overview of internal data files managed automatically by Carousel.
+title: Saved Data and Backups
+description: data.yml fields, reload behavior, missing worlds and entity recovery.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+## data.yml
 
-While **Carousel** provides configuration files for general customization, it also manages an internal data file that acts as the plugin's "memory." This file is structured specifically for machine reading and live data access.
+`plugins/Carousel/data.yml` stores entries under `carousels.<id>`. Commands and editor actions save changes immediately. External integrations changing Java settings must save explicitly.
 
-<Aside type="danger">
-    **DO NOT MANUALLY EDIT:** Manual modification of this file is strictly prohibited. Editing it while the server is running can cause data corruption, broken carousels, or plugin crashes. Use in-game commands or menus to modify your setups instead.
-</Aside>
+| Saved fields | Purpose |
+| --- | --- |
+| `location` | Serialized world and center position. |
+| `amount`, `ticks`, `degreeIncrease`, `radius`, `stepHeight`, `maxHeight` | Horse count and animation. |
+| `leash`, `leashHeight`, `leashOffset` | Holder visibility and placement. |
+| `small`, `inventoryEnabled`, `allowRiding`, `saddlesEnabled` | Appearance and access. |
+| `rainbowGlow`, `glowColor` | Rainbow or fixed scoreboard glow. |
 
----
+Stop the server before manual edits and back up first. Use commands/editor controls during normal operation so live and saved settings agree. The file does not store entity UUIDs or a persistent running/stopped flag.
 
-## Managed Files Overview
+## Loading
 
-| File Path  | Primary Function                                                                     | Management Method                           |
-|:-----------|:-------------------------------------------------------------------------------------|:--------------------------------------------|
-| `data.yml` | Stores the precise **location and settings** of every created carousel in the world. | Managed via `/carousel` commands and menus. |
+Valid entries start on enable and reload. Invalid or unavailable-world locations are skipped with a warning and remain saved. Load the missing world before reloading. Loading bounds amount/ticks and normalizes non-finite or negative movement bounds; an unknown glow color disables fixed glow.
 
----
+`destroy` keeps saved data, so the ride returns on enable/reload. `delete` removes its entry. Incomplete manual entries do not necessarily inherit all new-ride defaults; preserve complete records.
 
-## Detailed Breakdown
----
+## Entity Recovery
 
-### data.yml
+Startup and `/carousel purge` scan loaded-world entities for the exact internal custom-name marker. They do not force-load every chunk. Do not assign that marker to unrelated entities. Purge also removes active ride entities; reload saved rides to recreate them.
 
-This is the critical system file for your active carousels. It contains the exact coordinates, assigned ID, and customized settings for every single carousel instance you have created on your server.
-
-* **What it stores:** It holds the exact state of each carousel, including mechanical properties (like `amount` of horses, `radius`, `ticks`, `degreeIncrease`, `stepHeight`) and visual properties (like `rainbowGlow`, `leash` offsets, `saddlesEnabled`, and `allowRiding`).
-* **Why you shouldn't touch it:** The plugin keeps a live cache of carousel data in the server's memory to maintain high performance and smooth animations. If you modify this file while the server is running, the plugin will overwrite your changes with its own cached data upon saving, causing your manual edits to be lost forever.
-* **How to update:** Always use the `/carousel edit <id>` interactive GUI or the `/carousel setting` commands to manage your carousels safely while the server is running. If you absolutely must edit this file manually, you **must shut down the server completely** first. After the server is offline, you can make your changes and then start it back up.
+Back up world files and `data.yml` together before renaming worlds, migrating servers or testing new server versions.
