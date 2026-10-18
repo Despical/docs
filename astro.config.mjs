@@ -1384,8 +1384,7 @@ export default defineConfig({
                                 label: "Resources",
                                 items: [
                                     {label: "Troubleshooting", link: "/frameui/troubleshooting/"},
-                                    {label: "Studio Documentation", link: "https://docs.despical.dev/frameui-studio/"},
-                                    {label: "Open Studio", link: "https://frameui.despical.dev/"},
+                                    {label: "Studio Documentation", link: "https://docs.despical.dev/frameui-studio/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                 ],
                             },
                         ],
@@ -1416,9 +1415,8 @@ export default defineConfig({
                                 label: "Resources",
                                 items: [
                                     {label: "Troubleshooting", link: "/frameui-studio/troubleshooting/"},
-                                    {label: "Plugin Documentation", link: "https://docs.despical.dev/frameui/"},
-                                    {label: "Open Studio", link: "https://frameui.despical.dev/"},
-                                    {label: "Source Code", link: "https://github.com/Despical/FrameUIStudio"},
+                                    {label: "Plugin Documentation", link: "https://docs.despical.dev/frameui/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                    {label: "Source Code", link: "https://github.com/Despical/FrameUIStudio", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                 ],
                             },
                         ],

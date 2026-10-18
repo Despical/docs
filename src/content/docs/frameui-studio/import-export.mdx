@@ -3,6 +3,8 @@ title: Import and Export
 description: Import FrameUI YAML or Studio ZIPs, export complete designs with PNG assets and install effects manually.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 ## Export a Complete Effect
 
 Click **Export effect** to download a ZIP containing one effect definition, its optional image and installation instructions:
@@ -19,11 +21,13 @@ The image folder is only needed when the definition references an image. The exa
 
 ## Install Manually
 
-1. Back up any existing definition with the same ID.
-2. Extract into `plugins/FrameUI/`, merging `effects/` and `images/` with the existing folders.
-3. Run `/frameui reload` and resolve any reported validation error.
-4. Accept the refreshed resource pack.
-5. Run `/frameui preview lobby-welcome` using your effect's actual ID.
+<Steps>
+    1. Back up any existing definition with the same ID.
+    2. Extract into `plugins/FrameUI/`, merging `effects/` and `images/` with the existing folders.
+    3. Run `/frameui reload` and resolve any reported validation error.
+    4. Accept the refreshed resource pack.
+    5. Run `/frameui preview lobby-welcome` using your effect's actual ID.
+</Steps>
 
 A new ID creates a separate effect. The same ID replaces an existing file when you manually overwrite it. Do not replace the whole `effects/` folder with the single exported folder.
 

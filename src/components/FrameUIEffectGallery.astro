@@ -11,9 +11,9 @@ import effects from '../data/frameui-effects.json';
     <div class="effect-grid">
         {effects.map(effect => (
             <article class="effect-card" data-effect-card data-category={effect.category} data-search={`${effect.name} ${effect.id}`.toLowerCase()}>
-                <video controls playsinline preload="none" poster={`/images/frameui/${effect.id}.webp`} width="640" height="360" aria-label={`${effect.name} animated Studio preview`}>
-                    <source src={`/images/frameui/${effect.id}.mp4`} type="video/mp4" />
-                    <a href={`/images/frameui/${effect.id}.mp4`}>Watch {effect.name}</a>
+                <video controls playsinline preload="none" poster={`/images/frameui/${effect.id}.webp?v=1080p`} width="1920" height="1080" aria-label={`${effect.name} animated Studio preview`}>
+                    <source src={`/images/frameui/${effect.id}.mp4?v=1080p`} type="video/mp4" />
+                    <a href={`/images/frameui/${effect.id}.mp4?v=1080p`}>Watch {effect.name}</a>
                 </video>
                 <div class="effect-info">
                     <h3>{effect.name}</h3>

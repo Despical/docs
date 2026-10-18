@@ -3,12 +3,16 @@ title: Connect Your Server
 description: Connect FrameUI Studio through a private personal link, import designs, save revisions and permanently delete custom server effects.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 ## Open a Personal Session
 
-1. Join a server running FrameUI with `frameui.command.editor`.
-2. Run `/frameui editor` and open the personal link in chat.
-3. Keep the Minecraft account online while editing.
-4. Select or create a design and choose **Import to server**.
+<Steps>
+    1. Join a server running FrameUI with `frameui.command.editor`.
+    2. Run `/frameui editor` and open the personal link in chat.
+    3. Keep the Minecraft account online while editing.
+    4. Select or create a design and choose **Import to server**.
+</Steps>
 
 The default setup uses an outbound HTTPS connection and needs no inbound port. Standalone Studio has a **Connect server** action explaining how to obtain the personal link; opening the public website alone does not grant access to your server.
 
