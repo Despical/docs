@@ -3,34 +3,46 @@ title: messages.yml
 description: Customize Item Upgrader command feedback and the upgrade and confirmation menu layouts.
 ---
 
-`messages.yml` contains the `messages`, `upgrade-menu`, and `confirmation-menu` sections. Legacy `&` colors are supported. When PlaceholderAPI is installed, supported player messages are passed through it.
+`messages.yml` contains chat `messages`, `help` and `version` headings, plus `upgrade-menu` and `confirmation-menu` layouts. Chat values accept MiniMessage or legacy `&`/`§` colors. Use one format per value. Inventory item names and lore retain legacy colors.
+
+Existing customized files are read without rewriting them. Missing settings inherit bundled defaults in memory; an empty chat value disables that message. Invalid YAML, incompatible setting types, row counts or confirmation slots reject the message reload and retain the previous message configuration.
+
+PlaceholderAPI expands tokens in player-context chat when installed. Its output may contain legacy colors but cannot introduce MiniMessage events. Numbered arguments are literal text, so a player name or command usage cannot inject tags. Item Upgrader does not register a PlaceholderAPI expansion.
 
 ## Player Messages
 
 The default keys cover command usage, permission denial, player-only commands, unknown players, empty hands, unsupported items, insufficient money, failed and successful rolls, enchantment conflicts, blocked worlds, reload completion, insufficient source amount, and addon loading delay.
 
-`messages.not-enough-amount` uses Java message-format tokens:
+`messages.not-enough-amount` uses literal numbered tokens:
 
 ```text
 {0} required source amount
 {1} current held amount
 ```
 
-Keep apostrophes escaped or doubled if you add them to a message that uses `{0}` or `{1}`.
+Apostrophes are literal and do not need doubling. Existing `messages.correct-usage` values using `%usage%` still work; new defaults use `{0}`. Unknown numbered tokens remain visible instead of raising a formatting error.
+
+```yaml
+messages:
+  item-upgraded: "<dark_gray>• <green>Your item was upgraded successfully."
+  not-enough-amount: "<red>You need {0} source items; you are holding {1}."
+```
+
+The help panel uses permission-filtered command rows with descriptive hover text and click-to-suggest actions for players. Console help includes descriptions as plain rows. Headings, argument guidance and the tip are configured under `help`; the environment heading is under `version`.
 
 ## Upgrade Menu
 
 | Key | Purpose |
 |:--|:--|
-| `upgrade-menu.rows` | Inventory height from one to six rows. |
+| `upgrade-menu.rows` | Inventory height from three to six rows; fixed preview controls need three rows. |
 | `upgrade-menu.title` | Menu title. |
 | `upgrade-menu.fill-item` | Optional item used to fill empty cells. Leave its material empty to disable. |
 | `upgrade-menu.block-item` | Close or cancel item shown in the bottom center. |
 
-The source preview is placed at column 3 of the middle row, and the result preview at column 7. The menu blocks ordinary inventory movement and shift-clicking.
+The source preview is placed at column 3 of the second row, and the result preview at column 7 of that row. The menu blocks ordinary inventory movement and shift-clicking.
 
 ## Confirmation Menu
 
-`confirmation-menu.rows` and `title` define the inventory. The `confirm-item` and `cancel-item` entries support material, name, lore, and a zero-based inventory `slot`.
+`confirmation-menu.rows` (one to six) and `title` define the inventory. Each button slot must be inside the configured row count. The `confirm-item` and `cancel-item` entries support material, name, lore, and a zero-based inventory `slot`.
 
 Custom provider items are supported in menu materials with `oraxen:`, `itemsadder:`, and `ecoitems:` prefixes.
