@@ -11,7 +11,7 @@ A failed roll consumes the recipe's reserved `from.amount` and gives no result. 
 
 ## Economy
 
-`coin` is checked through Vault before the chance roll. If the balance is too low, the menu closes and returns the reserved source item. The configured amount is withdrawn only after a successful roll.
+`coin` is normalized to zero or higher and checked through Vault before the chance roll. If the balance is too low, the menu closes and returns the reserved source item. The configured amount is withdrawn only after a successful roll.
 
 When Vault or an economy provider is unavailable, Item Upgrader treats the balance as unavailable and skips both the insufficient-balance check and withdrawal. Install and verify both plugins before using non-zero prices.
 
@@ -20,3 +20,5 @@ When Vault or an economy provider is unavailable, Item Upgrader treats the balan
 Result names and lore can display `%price%` and `%chance%`. Lore also accepts `%needed_coins%` for compatibility with existing configurations.
 
 These values are display substitutions only. The `coin` and `chance` fields remain authoritative.
+
+The current withdrawal path delegates to Vault without a transactional rollback if the provider rejects a withdrawal after the balance check. Verify your provider on the target server before enabling valuable paid recipes.
