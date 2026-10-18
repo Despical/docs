@@ -17,7 +17,8 @@ When a player runs `/itemupgrader`, the plugin evaluates the held item before an
 7. Remove the recipe's source amount from the main hand while the protected preview menu is open.
 8. Check the player's Vault balance when the result is clicked.
 9. Open the confirmation menu when enabled.
-10. Roll a random number from 1 through 100 and compare it with `chance`.
+10. Recheck ingredients and the Vault balance immediately before the attempt.
+11. Roll a random number from 1 through 100 and compare it with `chance`.
 </Steps>
 
 ## Success
@@ -30,7 +31,7 @@ The reserved source item is lost, no result is given, and the failure message an
 
 ## Closing a Menu
 
-Closing or cancelling before a roll returns the reserved source amount. The menu tracks its handoff to the confirmation screen so that the item is not duplicated or lost during the transition.
+Closing or cancelling before a roll returns the reserved source amount. The menu tracks its handoff to the confirmation screen to avoid double restoration. Returned items merge into the hand or main inventory; overflow drops at the player location. Reload and plugin disable also close active upgrade menus so their close handlers can restore reserved items.
 
 <Aside type="caution">
 Always test upgrades with disposable items on a staging server. A failed chance roll is intentionally destructive to the source amount.
