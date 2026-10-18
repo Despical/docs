@@ -1,76 +1,37 @@
 ---
 title: Getting Started
-description: Install the Carousel Minecraft plugin on Paper or Spigot. Learn requirements, installation steps, and first configuration to create your first rideable carousel.
+description: Install Carousel and understand its Java and server requirements.
 ---
 
-import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+import { Aside, Steps } from '@astrojs/starlight/components';
 
-Welcome to **Carousel**! This guide provides a quick and easy walkthrough of the system requirements and step-by-step installation process needed to get the plugin running on your Minecraft server.
+## Requirements
 
----
+- **Java 21 or newer**, also meeting the server's own Java requirement.
+- **Spigot or Paper** with traditional Bukkit scheduling. Folia is not supported.
+- An authorized binary from [Hub](https://hub.despical.dev/plugins/carousel), [SpigotMC](https://www.spigotmc.org/resources/carousel.116224/) or [BuiltByBit](https://builtbybit.com/resources/carousel.50204/).
 
-## Prerequisites
-
-Before installing the plugin, ensure your server environment meets the following requirements:
-
-* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
-* **Server Software:** Spigot, [**Paper**](https://papermc.io/), or any compatible fork (e.g., Purpur).
-* **Minecraft Version:** 1.8 - 26.2 (Latest versions recommended).
-* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin like [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) to manage user access.
-
----
+The build compiles against Paper **1.16.5**. Its `api-version: 1.13` metadata and compatibility helpers do not establish a tested range from Minecraft 1.8 through future versions. Validate the exact server release, especially mounted movement and leashes.
 
 ## Installation
 
-Setting up **Carousel** is straightforward. Follow these simple steps to get started:
-
 <Steps>
-    1.  **Download the Plugin:** Get the latest **Carousel** build from [Hub](https://hub.despical.dev/plugins/carousel), [SpigotMC](https://www.spigotmc.org/resources/carousel.116224/) or [BuiltByBit](https://builtbybit.com/resources/carousel.50204/).
-    2.  **Upload to Server:** Stop your server and place the `carousel-x.x.x.jar` file into your server's `plugins/` directory.
-    3.  **Restart Server:** Start your server. The plugin will automatically generate the default configuration files.
-    4.  **Verify Installation:** Check your console to ensure the plugin is loaded correctly:
+
+1. Stop the server and place the authorized `carousel-2.0.4.jar` in `plugins/`.
+2. Start the server and check the console for initialization errors.
+3. Review `plugins/Carousel/config.yml`, `messages.yml` and `data.yml`.
+4. As an operator in game, run `/carousel create spawn`, followed by `/carousel edit spawn`.
+
 </Steps>
 
-```bash
-[INFO]: [Carousel] Loading Carousel vX.X.X
-[INFO]: [Carousel] Enabling Carousel vX.X.X.
-[INFO]: [Carousel] Initialization finished in XXXms.
-[INFO]: [Carousel] Join our Discord server: [https://discord.gg/uXVU8jmtpU](https://discord.gg/uXVU8jmtpU)
-```
+New rides start immediately and save their settings. Valid saved rides start again on enable or `/carousel reload`. Back up data and worlds before migrations.
 
----
+## Optional Plugins
 
-## First-Run Configuration
+**PlaceholderAPI** expands player message tokens when installed. World-manager soft dependencies establish load ordering for their worlds. WorldGuard is declared as a soft dependency, but there is no region-protection hook; protect administration with permissions.
 
-After the first restart, a new folder will be created at `/plugins/Carousel/`. This folder contains everything you need to customize your plugin:
-
-* `config.yml`: Main plugin settings and general behaviors.
-* `messages.yml`: Full control over every string and translation shown to players.
-
-<Aside type="tip">
-    For the best performance and experience, we recommend using [**Paper**](https://papermc.io/) or its forks. Always check your console during the first boot to ensure everything loads smoothly.
+<Aside type="note" title="Administration">
+Most commands require an in-game player. Only the root command, help and reload also accept the console. Administrative nodes default to operators; riding is open unless a custom riding permission is configured.
 </Aside>
 
----
-
-## Basic Command Structure
-
-While you'll spend most of your time using the interactive GUI, here are the essential commands to get you started:
-
-| Command                 | Permission        | Description                                                                 |
-|:------------------------|:------------------|:----------------------------------------------------------------------------|
-| `/carousel create <id>` | `carousel.create` | Creates a new carousel instance with the specified ID.                      |
-| `/carousel edit <id>`   | `carousel.edit`   | Opens the interactive GUI editor to visually customize your carousel.       |
-| `/carousel list`        | `carousel.list`   | Displays a list of all created carousel instances currently on the server.  |
-| `/carousel help`        | `carousel.help`   | Displays a comprehensive list of all available commands and their usage.    |
-
----
-
-## Next Steps
-
-Now that the plugin is installed and running, it's time to dive deeper:
-
-* **[Creating Carousels](/carousel/creating-carousels)**: Learn how to spawn, configure, and manage your carousels.
-* **[**Carousel** Behavior](/carousel/mechanics/carousel-behavior)**: Fine-tune the physics, rotation speed, and vertical motion.
-* **[Commands](/carousel/commands/admin)**: Review the complete list of administrative commands and permissions.
-* **[Developer API](/carousel/api/carousel-api)**: Hook into custom events to build your own integrations.
+Continue with [creating carousels](/carousel/creating-carousels/), [commands](/carousel/commands/admin/) and [configuration](/carousel/configuration/config/).
