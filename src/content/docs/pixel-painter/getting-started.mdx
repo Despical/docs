@@ -1,0 +1,84 @@
+---
+title: "Getting Started"
+description: "Install Pixel Painter 2.0, add a PNG or JPEG, estimate block counts and create or undo your first painting."
+---
+
+## Requirements
+
+| Component | Requirement |
+| --- | --- |
+| Server | Paper for Minecraft 1.21.11 or later |
+| Java | 25 or later |
+| Plugin guide | Pixel Painter 2.0.0 |
+| Source files | PNG or JPEG (`.png`, `.jpg`, `.jpeg`) |
+| Command access | Server operator or explicit `pp.*` child permissions |
+
+Pixel Painter runs world operations on the traditional Paper server thread. Folia and Spigot are not supported. No resource pack or external editing plugin is required.
+
+---
+
+## Install
+
+1. Obtain a Pixel Painter JAR matching this guide. When building the current source, use `gradlew.bat clean build` on Windows or `./gradlew clean build` elsewhere with Java 25.
+2. Stop the server and copy `pixel-painter-2.0.0.jar` into `plugins/`. Use the shaded plugin JAR, rather than the `-plain`, `-sources` or `-javadoc` artifacts.
+3. Start the server. Pixel Painter creates missing resources without replacing existing configuration.
+4. Check the console for `PixelPainter ready`, then run `/pp help` in game as an operator.
+
+The data directory contains:
+
+```text
+plugins/PixelPainter/
+  config.yml
+  messages.yml
+  palette.yml
+  images/
+  undo/
+```
+
+`images/` holds source files. `undo/` holds original/target block data for recovery. Keep both in server backups.
+
+---
+
+## Add Your First Image
+
+Copy a readable PNG or JPEG such as `portrait.png` into `plugins/PixelPainter/images/`. Lowercase names with letters, digits, hyphens and underscores are convenient. Spaces and nested directories are not accepted.
+
+```text
+/pp list
+/pp specs portrait.png
+/pp preview portrait.png 64 all true true
+```
+
+The estimate selects the complete block palette, enables dithering and preserves low-alpha pixels. Height is **64 actual block rows**. Width follows the source aspect ratio; for a 2:1 image, the result is 128 blocks wide and 64 blocks high.
+
+`preview` displays counts in chat. It does not create an in-world preview or reserve terrain.
+
+---
+
+## Create a Wall
+
+Choose a clear region and stand at the intended **bottom-left block**. For a north-facing wall, image columns extend east and image rows extend upward.
+
+```text
+/pp create portrait.png north 64 true all true
+```
+
+The origin is captured when you send the command. Moving afterward does not move the painting, but changing worlds before preparation finishes rejects it. The requested area must fit the world border, build height and configured chunk budget.
+
+A private progress bar tracks world work. The completion message includes a recovery ID. Painting refuses to overwrite a block entity such as a chest or sign, and it rejects regions overlapping an existing recovery journal.
+
+---
+
+## Undo or Cancel
+
+```text
+/pp history
+/pp undo
+/pp cancel
+```
+
+`undo` selects the newest journal you can access; supply an ID to choose another one. Operators normally also have `pp.admin`, so they can access other players' journals. A trusted builder without that node only sees their own history.
+
+`cancel` stops further world work but does not automatically remove already placed blocks. Restore them with `/pp undo <id>`. Download and source-file deletion operations finish once started.
+
+Continue with [directions and placement](/pixel-painter/creating-paintings/), [color matching](/pixel-painter/palettes-and-dithering/) and [terrain recovery](/pixel-painter/operations-and-recovery/).
