@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-description: Install FrameUI on Paper 26.3, verify resource-pack delivery and create your first automatic loading screen.
+description: Install FrameUI on Paper 1.21.11 through 26.3, verify resource-pack delivery and create your first automatic loading screen.
 ---
 
 import { Steps } from '@astrojs/starlight/components';
@@ -9,13 +9,15 @@ import { Steps } from '@astrojs/starlight/components';
 
 | Requirement | Supported setup |
 | --- | --- |
-| Server | Paper 26.3 |
-| Java | Java 25 or newer |
-| Client | Vanilla first-person Minecraft 26.3 is the target |
+| Server | Paper 1.21.11 through 26.3, including both endpoints |
+| Java | Java 25 or newer on the server, including Paper 1.21.11 |
+| Client | Matching vanilla first-person Minecraft Java Edition 1.21.11 through 26.3, inclusive |
 | Resource pack | Players must accept the FrameUI pack |
 | Connected editor | Outbound HTTPS access from the Minecraft server |
 
 Bedrock/Geyser clients and rendering mods have not been qualified. Check the finished effect in the client configuration your players use.
+
+The supported release range includes **1.21.11, 26.1, 26.1.1, 26.1.2, 26.2 and 26.3**. The generated resource pack automatically selects the appropriate shader files for the player's client version.
 
 ## Install the Plugin
 
