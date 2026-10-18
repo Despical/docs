@@ -12,5 +12,5 @@
 <text x="74" y="292" fill="#f2eee5" font-size="64" font-weight="bold">Make every arrival</text><text x="74" y="370" fill="#d5b877" font-size="64" font-weight="bold">part of your world.</text>
 <text x="78" y="434" fill="#bac4d0" font-size="23">Design your own effects. Preview live. Save to your server.</text>
 <g fill="#171e27" stroke="#d5b877" stroke-opacity=".35"><rect x="78" y="500" width="245" height="58" rx="12"/><rect x="339" y="500" width="254" height="58" rx="12"/><rect x="609" y="500" width="237" height="58" rx="12"/></g>
-<g fill="#e7dfcc" font-size="19"><text x="105" y="537">50 animation templates</text><text x="367" y="537">10 ready-made designs</text><text x="639" y="537">Browser editor</text></g>
+<g fill="#e7dfcc" font-size="17"><text x="105" y="537">50 animation templates</text><text x="367" y="537">10 ready-made designs</text><text x="639" y="537">Browser editor</text></g>
 <g fill="none" stroke="#d5b877"><rect x="1100" y="185" width="350" height="240" rx="20" stroke-opacity=".18"/><rect x="1124" y="209" width="302" height="192" rx="12" stroke-opacity=".3"/><path d="M1160 266v-20h25m180 0h25v20m0 80v20h-25m-180 0h-25v-20" stroke-width="4"/><path d="M1194 292h160m-160 25h116" stroke-width="8" stroke-linecap="round" stroke-opacity=".8"/><circle cx="1380" cy="333" r="7" fill="#d5b877"/></g></g></svg>
