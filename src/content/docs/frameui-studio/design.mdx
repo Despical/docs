@@ -15,11 +15,15 @@ Select the title, subtitle or detail directly on the canvas, or select its field
 
 Captions are plain text. `{player}`, `{world}`, `{source-world}` and `{effect}` are plugin placeholders. Studio uses sample values; live PlaceholderAPI values must be checked in Minecraft. A translated editor interface does not translate your captions.
 
+Use **Design → Additional elements → Add text** for additional independent captions. You can add up to **12 extra text objects** alongside the title, subtitle and detail. Each has its own text, color, entrance animation, position and size. Select an object on the canvas or in the additional-elements list; **Remove element** deletes only that object. Undo restores it.
+
 ## Images
 
 Upload PNG or JPEG artwork, then use **Edit image** or select it on the canvas. Choose **cover** to fill the area or **contain** to keep the whole image visible. Control opacity, position, scale, stretch, delay and reveal animation.
 
 Studio exports the image as PNG alongside the effect YAML. The plugin accepts PNGs up to **8 MiB** and **2048 × 2048** pixels. Keep the exported image with its matching definition; YAML alone does not include the image bytes.
+
+Use **Add image** under **Additional elements** to add another picture instead of replacing the preset's image. Up to **8 extra pictures** can have independent fitting, opacity, entrance animation, position and size. All referenced PNGs travel with the exported ZIP and connected-server saves. Keep the complete ZIP below **9 MiB**; the generated server resource pack also has a **32 MiB** budget shared by all effects.
 
 Transparent artwork works well for logos and overlays. Replacing an image leaves its composition controls available, so you can reuse a preset with your own branding.
 

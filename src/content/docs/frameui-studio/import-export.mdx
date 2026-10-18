@@ -7,7 +7,7 @@ import { Steps } from '@astrojs/starlight/components';
 
 ## Export a Complete Effect
 
-Click **Export effect** to download a ZIP containing one effect definition, its optional image and installation instructions:
+Click **Export effect** to download a ZIP containing one effect definition, all its referenced images and installation instructions:
 
 ```text
 effects/
@@ -17,7 +17,7 @@ images/
 INSTALL.txt
 ```
 
-The image folder is only needed when the definition references an image. The exact PNG name can differ; keep the file at the `appearance.image` path recorded in the YAML.
+The image folder is only needed when the definition references an image. The exact PNG names can differ; keep every file at the path recorded in `appearance.image` or `elements.objects.<id>.image` in the YAML.
 
 ## Install Manually
 
@@ -35,7 +35,7 @@ If the generated resource pack is hosted externally, upload the rebuilt ZIP afte
 
 ## Import into Studio
 
-Use **Import** to open `.yml`, `.yaml` or a Studio `.zip`. A ZIP can carry its referenced PNG. A YAML file contains settings and an image path, not the image itself; choose the matching image if it is missing.
+Use **Import** to open `.yml`, `.yaml` or a Studio `.zip`. A ZIP carries all referenced PNGs, including additional image objects. A YAML file contains settings and an image path, not the image itself; choose the matching image if it is missing.
 
 Imported content is a browser draft until exported or explicitly imported/saved to the connected server. Review event bindings, filters, name and ID before publishing it to your server.
 
