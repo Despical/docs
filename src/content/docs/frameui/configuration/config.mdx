@@ -63,3 +63,7 @@ For a deliberately self-hosted connection, disable `editor.relay.enabled`, enabl
 ## Apply Changes
 
 Run `/frameui reload` for languages, filters, messages, effect rules and addon settings. Invalid candidates preserve the running state. A successful reload closes active and pending screens. Restart after changing host or public-URL settings. Clients need the refreshed resource pack after appearance or image changes.
+
+## bStats Metrics
+
+FrameUI 1.0.1 and later report aggregate usage statistics through [bStats](https://bstats.org/plugin/bukkit/FrameUI%20by%20Despical/34803). To disable reporting, set `enabled: false` in `plugins/bStats/config.yml` and restart the server. This shared bStats setting is separate from FrameUI's `config.yml`. FrameUI adds no custom charts or player identifiers.
