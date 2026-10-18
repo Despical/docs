@@ -1,50 +1,43 @@
 ---
 title: messages.yml
-description: Customize all in-game messages and text outputs for Carousel.
+description: MiniMessage chat panels, legacy-compatible templates, literal arguments and PlaceholderAPI.
 ---
 
-The `messages.yml` file gives you full control over every string of text your players and admins see. From simple chat notifications to command errors, everything is fully customizable.
+The file is `plugins/Carousel/messages.yml`. Missing keys inherit defaults without overwriting your file. Empty strings suppress messages; mount and dismount feedback is empty by default.
 
----
+## Formatting
 
-## Color Code Support
-
-**Carousel** supports both modern HEX color codes and traditional legacy color formatting, allowing you to create visually appealing messages for your server.
-
-* **HEX Colors:** Use the `<#RRGGBB>` format for custom RGB colors (e.g., `<#FF5555>Your Text Here`).
-* **Legacy Color Codes:** Standard Minecraft color codes using the `&` symbol are fully supported (e.g., `&a` for green, `&l` for **bold**, `&n` for underlined).
-
----
-
-## Common Placeholders
-
-Throughout the messages file, you can use numbered placeholders to inject dynamic data into your text depending on the context of the action.
-
-* `{0}`, `{1}`: These represent dynamic variables such as the specific carousel ID, correct command usage, or a list of active carousels.
-
----
-
-## Configuration Examples
-
-Here is how you can implement these color codes, placeholders, and empty strings in your file:
+New templates use [Adventure MiniMessage](https://docs.papermc.io/adventure/minimessage/format/):
 
 ```yaml
-# Example using legacy color codes and numbered placeholders
-created-carousel: "&aYou have successfully created a new carousel named {0}!"
-
-# Example using color codes for an error message
-already-started: "&cThis carousel is already started!"
-
-# Example leaving a message empty to completely disable it
-mount: ""
+commands:
+  created-carousel: "<green>Created and started carousel <white>{0}</white>.</green>"
+  no-permission: "<red>You do not have permission to use this command.</red>"
+carousel:
+  mount: "<gray>Enjoy the ride, <aqua>%player_name%</aqua>!</gray>"
+  dismount: ""
 ```
 
----
+Legacy `&a`, `&c` and similar templates still work. Use one formatting system per template; do not mix legacy codes and MiniMessage tags. Parsing is lenient, so unknown tags may remain visible.
 
-## Applying Changes
+Numbered arguments such as `{0}` and `{1}` are inserted literally. IDs and command syntax cannot introduce colors or click actions. Apostrophes remain ordinary text. Use arguments in visible text, not inside MiniMessage tag attributes.
 
-One of the best features of the message system is that you don't need to restart your server to see changes. Simply modify the file, save it, and use the reload command in-game or from the console to see your updates instantly:
+## PlaceholderAPI
 
-```bash
-/carousel reload
-```
+When installed, PlaceholderAPI expands `%...%` tokens in templates for players. Console output has no player context. Expansion results may include legacy colors, but do not become MiniMessage markup. Tokens inside numbered argument values remain literal.
+
+## Groups
+
+| Group | Content |
+| --- | --- |
+| `commands` | Errors, changes, cleanup, reload and root information. |
+| `carousel` | Riding permission feedback and optional rider messages. |
+| `editor` | Chat feedback for editor actions and bounds. |
+| `panels` | Help, list and environment headings, descriptions, rows and footers. |
+| `details` | Hover descriptions for commands. |
+
+Inventory titles, item names and lore retain their built-in legacy formatting. Panel interactions are attached by the renderer: clicks suggest a command without immediately changing a ride.
+
+## Reload
+
+Use `/carousel reload`. Malformed YAML and non-text message values are rejected before replacing active messages. Read the console error, repair the file and retry. A message-file validation failure retains existing messages and does not restart rides; successful reload also restarts saved rides.
