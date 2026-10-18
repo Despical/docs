@@ -1,0 +1,92 @@
+---
+title: "Operations and Recovery"
+description: "Understand painting stages, tick limits, cancellation, durable undo journals, ownership, conflicts and restart recovery."
+---
+
+## One World Job at a Time
+
+Pixel Painter permits one active world job across the server. The slot remains occupied while that job waits for a journal write or deletion. A second creation or undo request receives a busy message.
+
+Each job captures its operational settings. A successful reload affects future requests; it does not change a running job's limits or an image preparation's palette.
+
+| Stage | Work |
+| --- | --- |
+| Loading region | Acquire one chunk ticket per tick and keep the region loaded |
+| Capturing terrain | Scan selected positions, reject block entities and record differences |
+| Saving journal | Write and flush recovery data before any painting mutation |
+| Painting | Apply bounded changes while checking the captured original state |
+| Restoring | Compare current blocks with recorded painting targets and restore originals |
+
+`performance.blocks-per-tick` limits pixels or entries processed per tick. Chunk generation can still be expensive, so prefer pre-generated regions for large paintings. Image decoding, resizing, matching and journal I/O use background workers; live Bukkit block access remains on the server thread.
+
+---
+
+## Journal Contents
+
+Each complete file in `plugins/PixelPainter/undo/` has a twelve-character hexadecimal ID and a `.ppu` extension. It records:
+
+- The creating player's UUID and target world UUID.
+- Source image name, creation time and inclusive reserved bounds.
+- Each changed position's original and intended canonical block data.
+
+Original properties include orientation, stair half and waterlogging. Block-entity NBT is not stored because painting rejects selected positions containing block entities.
+
+The journal is saved before placement. It can therefore contain entries the job never applied if work was interrupted. Restoration checks actual world data instead of assuming the whole painting was completed.
+
+---
+
+## Restore Terrain
+
+```text
+/pp history
+/pp undo
+/pp undo 012345abcdef
+/pp undo portrait.png
+```
+
+The ID above is an example. Use a real ID from history or a completion message. An omitted selector chooses the newest journal accessible to the player. An image selector chooses the newest accessible journal with that recorded source name.
+
+Operators typically have `pp.admin`, so their newest accessible journal may belong to another player. Use an explicit ID when administering a shared server.
+
+| Current block | Result |
+| --- | --- |
+| Matches the original data | Already restored; no write needed |
+| Matches the recorded painting target | Restore original block data |
+| Has changed to another state | Preserve the later change and count a conflict |
+| Is now a block entity | Preserve it and count a conflict |
+
+Conflict-free restoration deletes the journal. If conflicts remain, it stays available for retry. Retained bounds still reserve the region. Do not delete recovery files merely to bypass overlap checks.
+
+---
+
+## Cancel and Disconnect
+
+```text
+/pp cancel
+```
+
+Cancellation stops further work. It does not automatically restore blocks already placed. Use the journal ID with `/pp undo` to recover them.
+
+If a journal write is already in progress, the service waits for its result before releasing the job slot. A completed journal is retained even when cancellation wins that race. A player disconnect also stops their world job and discards cancellable preparation results.
+
+File downloads and source deletion are different: once started, their disk operation finishes. A cancelled preparation result is not a promise that a file write has been rolled back.
+
+---
+
+## Restart Recovery
+
+A restart reloads complete journals into history. It does not automatically resume a partial painting or replay restoration. Inspect `/pp history` and explicitly undo the desired record.
+
+Interrupted temporary journal files are ignored. A malformed complete journal fails startup and remains on disk for maintenance. Preserve the file and logs before investigating; clearing the folder destroys recovery information.
+
+Back up world data and the complete Pixel Painter data directory together. A journal assumes its world UUID and recorded region still refer to the same terrain.
+
+---
+
+## Capacity and Overlap
+
+`undo.max-history` limits retained journal count; `undo.max-stored-blocks` limits recorded changes across all journals. New work is rejected when capacity is exhausted. Records are never silently evicted.
+
+A painting's inclusive bounding box cannot overlap any retained record in the same world, even one owned by another player. Successfully undo older work to release both its journal capacity and reserved area.
+
+Restoration also checks the current world border, build limits and chunk budget. If those settings changed after painting, restore a suitable border/budget before retrying.
