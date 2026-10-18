@@ -25,7 +25,7 @@ The final boolean controls which recipe item is given: `true` gives the original
 
 ## Reload Command
 
-Administrators with the `itemupgrader.reload` permission can reload the upgrade recipes, allowed worlds, menu permission, and configuration files without restarting the server.
+Administrators with the `itemupgrader.reload` permission can reload the upgrade recipes, allowed worlds, menu permission, and configuration files without restarting the server. Active upgrade menus close first so their reserved source items are restored. Customer YAML files are not rewritten.
 
 ```bash
 /itemupgrader reload
@@ -47,12 +47,18 @@ This command is only accessible to players.
 
 ## Help Command
 
-Administrators with the `itemupgrader.help` permission can display a list of available commands and their descriptions.
+Administrators with the `itemupgrader.help` permission can display commands allowed by the sender type, permission and operator rules. Players can hover for descriptions and click to suggest commands; console rows show the descriptions directly.
 
 ```bash
 /itemupgrader help
 ```
 
 <Aside type="tip">
-    For server administrators, granting the wildcard permission `itemupgrader.*` will provide access to every command listed on this page, together with tab completion and update notifications.
+    For server administrators, granting the wildcard permission `itemupgrader.*` will provide access to every command listed on this page, together with permission-filtered tab completion. Debug still requires operator status. The legacy `itemupgrader.updatenotify` node does not currently trigger player notifications; startup update results are logged to console.
 </Aside>
+
+## Permission Defaults
+
+All declared administrative nodes default to operators. The optional `upgrade-menu-perm` setting controls ordinary menu access independently of `itemupgrader.*`. Give non-operator staff only the specific nodes they need. The completion permission is `itemupgrader.tabcompleter`; suggestions are further filtered by each command's access rules.
+
+The item command is a configuration/testing helper. It gives a cloned recipe template, rather than performing an upgrade or charging a price. Test the actual menu to verify source/result amounts, inherited metadata and attempt rules.
