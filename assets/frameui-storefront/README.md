@@ -1,11 +1,12 @@
 # FrameUI storefront artwork
 
-The current `v5` panels use Verdana, navy backgrounds, teal surfaces and thin gold preview contours. Names are composited into the preview clips, so each badge follows the effect currently playing. The approved playback diagram continues to use `playback-v4.webp` unchanged.
+The current panels use Verdana, navy backgrounds, teal surfaces and thin gold preview contours. The `v6` cover adds the inclusive Minecraft 1.21.11–26.3 badge. Motion, themes and Studio retain their `v5` artwork, and the approved playback diagram retains `playback-v4.webp`. Names are composited into the preview clips, so each badge follows the effect currently playing.
 
 Run from the docs project root:
 
 ```sh
 FFMPEG_PATH=/path/to/ffmpeg node assets/frameui-storefront/render-v5.mjs
+FFMPEG_PATH=/path/to/ffmpeg node assets/frameui-storefront/render-cover-v6.mjs
 ```
 
 On the author's Windows machine, the script also recognizes the existing `ffmpeg-static` installation. It uses the project's `sharp` dependency for SVG rendering. Intermediate files remain in `.cache/frameui-storefront-v5/`. Older versioned sources remain available for reference.
@@ -18,4 +19,4 @@ The cover rotates three large designs and nine distinct effects across three sma
 
 Outputs are animated WebP at 20 fps, quality 90 and infinite loop. Identical frames may be combined by the encoder. `v5-manifest.json` records the featured effects; Aurora and Solar Flare are not featured.
 
-`topic-v5.bbcode` is the matching Hub description. It uses native `[hr]` separators and a single balanced center block around the uncropped live bStats signature. The signature remains hosted by bStats and updates there; it is not a static imitation of usage data.
+`topic-v6.bbcode` is the matching Hub description. It uses native `[hr]` separators and a single balanced center block around the uncropped live bStats signature. The signature remains hosted by bStats and updates there; it is not a static imitation of usage data.
