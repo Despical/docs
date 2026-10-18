@@ -1,0 +1,52 @@
+---
+title: "Permissions"
+description: "Configure Pixel Painter command access, trusted builder roles, ownership and cross-player administrative recovery."
+---
+
+## Defaults
+
+Every permission defaults to server operators. `pp.*` grants all command permissions and `pp.admin`. Other users need explicit permissions from the server's permission manager.
+
+Pixel Painter edits world blocks without survival inventory costs or an external region-protection check. Assign painting and download capabilities to trusted builders rather than treating them as ordinary player features.
+
+## Permission Nodes
+
+| Node | Purpose |
+| --- | --- |
+| `pp.*` | Grants all Pixel Painter commands and administrative access. |
+| `pp.help` | Browse available commands and their usage. |
+| `pp.create` | Create block paintings from local source images. |
+| `pp.howmanyblocks` | Estimate output dimensions, transparency and material counts. |
+| `pp.undo` | Browse and restore accessible painting recovery journals. |
+| `pp.cancel` | Cancel your image preparation or active world operation. |
+| `pp.list` | Browse available source image files. |
+| `pp.specs` | Inspect the original dimensions of a source image. |
+| `pp.materials` | Browse supported block colors and palette families. |
+| `pp.download` | Download images from configured trusted HTTPS hosts. |
+| `pp.delete` | Delete source image files without removing paintings or journals. |
+| `pp.reload` | Reload settings, message templates and block colors. |
+| `pp.admin` | View and undo other players' journals and cancel their world operations. |
+
+---
+
+## Ownership and Administration
+
+Creation records the player's UUID in the recovery journal. History and undo show records owned by that player unless they also have `pp.admin`.
+
+`pp.admin` permits cross-player journal access and cancellation, but is not a replacement for the command's action permission. For example, undoing someone else's work requires both `pp.undo` and `pp.admin`.
+
+Cross-player access does not bypass world limits, journal capacity, busy checks or region-overlap checks. A source file is shared within the plugin data folder; source-file operations do not use painting-journal ownership.
+
+---
+
+## Suggested Roles
+
+| Role | Suggested nodes |
+| --- | --- |
+| Reference reader | `pp.help`, `pp.list`, `pp.specs`, `pp.materials`, `pp.howmanyblocks` |
+| Trusted painter | Reference nodes plus `pp.create`, `pp.undo`, `pp.cancel` |
+| Source manager | Add `pp.download` and `pp.delete` only when source-file changes are appropriate |
+| Recovery administrator | `pp.undo`, `pp.cancel`, `pp.admin`, plus reference/history access |
+| Full administrator | `pp.*` |
+
+Changing configuration or trusted hosts requires `pp.reload` plus filesystem access to the server configuration. Granting a download permission alone does not authorize arbitrary hosts.
