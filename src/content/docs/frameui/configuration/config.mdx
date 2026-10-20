@@ -1,6 +1,6 @@
 ---
 title: config.yml
-description: FrameUI common settings, language selection, global filters, legacy pools and default or direct resource-pack delivery.
+description: FrameUI language selection, startup and administrator greetings, global filters and default or direct resource-pack delivery.
 ---
 
 `plugins/FrameUI/config.yml` controls shared behavior. Individual designs belong in `effects/<id>.yml`; chat text belongs in `messages.yml` and `languages/`.
@@ -9,6 +9,7 @@ description: FrameUI common settings, language selection, global filters, legacy
 
 ```yaml
 language: en
+startup-banner: true
 
 editor:
   public-url: 'https://frameui.despical.dev/'
@@ -39,16 +40,21 @@ This selects plugin messages and the initial language of personal Studio links. 
 
 ## Automatic Playback
 
-The default legacy switches are `false`, and all three pools are empty. Use per-effect **Events** selections in Studio for new designs. See [Automatic Playback](/frameui/automatic-playback/) before enabling legacy pools alongside explicit bindings.
+Use per-effect **Events → When to play** selections in Studio, or edit `play-on` in the effect file. New configurations do not include the old `loading` switches or `automatic` pools. Existing configurations containing these keys are still read for compatibility; custom files are not rewritten. See [Automatic Playback](/frameui/automatic-playback/).
 
-| Setting | Default | Meaning |
-| --- | --- | --- |
-| `loading.on-join` | `false` | Enable the legacy join pool. |
-| `loading.on-teleport` | `false` | Enable legacy teleport and world-change selection. |
-| `loading.teleport-distance` | `8` | Minimum same-world legacy teleport distance in blocks. |
-| `automatic.join-effects` | `[]` | Legacy join candidates. |
-| `automatic.teleport-effects` | `[]` | Legacy same-world teleport candidates. |
-| `automatic.world-change-effects` | `[]` | Legacy world-change candidates. |
+## Startup and Welcome Messages
+
+```yaml
+startup-banner: true
+```
+
+The default `true` shows the detailed colored console banner, including the version, effect count, documentation and Studio links. It also enables private join greetings for operators or players with `frameui.admin` who have not dismissed the panel.
+
+Set `startup-banner: false` to log only `Loaded <count> effects.` at startup and suppress automatic administrator join panels. The count reflects loaded definitions. This setting does not disable effects, resource-pack delivery or Studio.
+
+`/frameui welcome preview` still opens the panel manually when this setting is false, without changing a player's saved preference. `/frameui welcome show` and `hide` save only that player's automatic-greeting preference; `show` does not override the global setting or open a preview. **Never show again** is available on automatic greetings and saves the same preference as `hide`.
+
+Existing installations can add this key manually; omission defaults to `true`. Only YAML booleans `true` and `false` are accepted, not quoted strings. Reload to change future automatic join greetings; the console banner appears on the next startup. See [Welcome Controls](/frameui/commands/#welcome-controls).
 
 ## Global Filters
 
