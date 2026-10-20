@@ -1,0 +1,227 @@
+---
+title: rewards.yml
+description: Configure TNT Run command rewards for the top three, survival time, PvP kills, double jumps, records, and milestones.
+---
+
+`rewards.yml` connects TNT Run gameplay events to commands from Minecraft or other plugins. Reward the top three, calculate payments from survival time, or add bonuses for records and milestones.
+
+The file is generated automatically when missing. Every command list is empty by default, so installing the plugin does not start awarding currency or running example commands. Set `enabled: false` to disable all new reward dispatches without deleting your commands.
+
+---
+
+## Quick Start
+
+Add the commands you want to the corresponding lists in `plugins/TNTRun/rewards.yml`, then run `/tr reload`.
+
+```yaml
+enabled: true
+
+first-place:
+  - 'eco give %player% 100'
+second-place:
+  - 'eco give %player% 50'
+third-place:
+  - 'eco give %player% 25'
+
+survival-time:
+  interval-seconds: 10
+  amount-per-interval: 5
+  commands:
+    - 'eco give %player% %reward-amount%'
+```
+
+The `eco` examples require an installed plugin that provides that command. TNT Run runs your commands; it does not supply a separate currency system.
+
+These rewards stack. With this example, a winner who survives 65 seconds receives 100 for first place and 30 for survival, for a total of 130.
+
+---
+
+## Command Execution
+
+Commands run as the console by default. Prefix a command with `p:` to run it as the player instead. The prefix is case-insensitive, and a leading `/` is optional.
+
+```yaml
+game-end:
+  - 'say <#55FF55>%player% survived %survival-time% seconds in %arena%!'
+  - 'p:me finished a TNT Run game.'
+```
+
+Hex colors such as `<#55FF55>` are formatted before dispatch. Displaying the result depends on the command receiving the text.
+
+Commands execute on the next server tick. Their values and command lists are captured when the reward is earned, so a later statistic reset or configuration reload cannot change an already queued reward. A failing command is logged and does not prevent the remaining commands from running.
+
+Console commands can still run after the player disconnects. Player commands require the captured player to remain online. Remember that TNT Run restores inventories and experience when players leave; account for that restoration when using item or XP commands. Currency and permission rewards can be used without relying on the temporary arena inventory.
+
+Leave a list empty to disable an individual reward:
+
+```yaml
+double-jump: []
+```
+
+---
+
+## Reward Triggers
+
+| Configuration key | When it runs |
+|:--|:--|
+| `game-join` | After a player successfully joins the lobby as a participant. Spectator joins do not count. |
+| `game-start` | Once for each starting participant when the actual round begins. |
+| `game-quit` | When a participant leaves an active round early by command, kick, or disconnect. This includes eliminated players leaving before completion. Lobby exits and normal cleanup do not count. |
+| `game-end` | Once for each eligible participant on normal completion, after persistent statistics and records are updated. |
+| `first-place` | Final first-place player. The actual last survivor stays first. |
+| `second-place` | Final second-place player, if present. |
+| `third-place` | Final third-place player, if present. |
+| `participation` | Eligible participants outside the final top three. |
+| `survival-time` | One calculated payment per eligible participant at normal completion. |
+| `survival-milestone` | Each configured survival threshold reached while alive, once per threshold per round. |
+| `player-eliminated` | Once when a participant is eliminated, before last-survivor detection. |
+| `player-kill` | Direct lethal melee or projectile damage against another participant in a PvP-enabled arena. |
+| `double-jump` | Each successful double jump, after the cancellable API event and jump updates. |
+| `no-double-jump-win` | A winner who used no successful double jumps during the round. |
+| `personal-best` | Strictly improves the player's previous survival record across all arenas. |
+| `personal-arena-best` | Strictly improves the player's previous survival record in this arena. |
+| `arena-record` | The round's highest scorer, if the previous arena survival record is strictly beaten. |
+| `win-streak` | A winner reaches an exact configured consecutive-win count. |
+| `total-wins-milestone` | A winner reaches an exact configured total-win count. |
+| `games-played-milestone` | A participant reaches an exact configured games-played count on normal completion. |
+
+### Completion Eligibility and Standings
+
+Completion rewards are `game-end`, podium placements, `participation`, `survival-time`, records, `no-double-jump-win`, and career milestones.
+
+- Late spectator joins never earn participant rewards.
+- Eliminated participants remain eligible if they stay until normal completion.
+- Participants who leave early are removed from the final standings and arena record eligibility, and receive no completion rewards.
+- Administratively stopped games have no completion rewards. Already earned live rewards, such as kills and survival thresholds, remain earned.
+- Each occupied podium position has its own command list. A two-player game does not award third place.
+
+The winner is first; other players are ranked by survival score. Equal scores use stable UUID ordering. Podium commands use the same standings as the end-of-game summary.
+
+All configured reward types stack. For example, a first-place player can also earn `game-end`, `survival-time`, personal records, and a win-streak reward. `participation` applies only outside the top three.
+
+### PvP and Double Jumps
+
+`player-kill` counts a direct lethal hit or projectile in a PvP-enabled arena. Non-lethal or cancelled hits do not count. A later void fall is not attributed to an earlier attacker.
+
+Cancelled, exhausted, or otherwise unsuccessful double jumps do not count toward `double-jump` or prevent `no-double-jump-win`. Restoring a player's remaining jumps does not erase successful uses already recorded for that round.
+
+---
+
+## Survival Payments
+
+`survival-time` pays once at completion using:
+
+```text
+floor(seconds survived / interval-seconds) × amount-per-interval
+```
+
+With a 10-second interval and amount 5:
+
+| Seconds survived | Completed intervals | Payment |
+|:--|:--|:--|
+| 9 | 0 | 0; no survival payment command runs. |
+| 10 | 1 | 5 |
+| 65 | 6 | 30 |
+
+Use `%reward-amount%` in the commands. Survival seconds match TNT Run's round statistics. Partial intervals are discarded; decimal amounts are supported. `interval-seconds` must be a positive whole number, and `amount-per-interval` must be non-negative. Zero produces no payment. Invalid settings disable survival payments and log a warning while other reward types remain available.
+
+---
+
+## Milestone Rewards
+
+The four milestone types use a `thresholds` section instead of a direct command list. Keys must be positive whole numbers, and each threshold has its own commands.
+
+### Survival Thresholds
+
+```yaml
+survival-milestone:
+  thresholds:
+    30:
+      - 'eco give %player% 5'
+    60:
+      - 'eco give %player% 10'
+    120:
+      - 'say <#55FF55>%player% survived %threshold% seconds!'
+```
+
+These thresholds are checked while the player is alive. Each reached threshold runs at most once per round. If several thresholds are crossed together, all newly reached thresholds are processed in ascending order.
+
+### Wins and Games Played
+
+```yaml
+win-streak:
+  thresholds:
+    3:
+      - 'eco give %player% 30'
+    5:
+      - 'eco give %player% 50'
+
+total-wins-milestone:
+  thresholds:
+    10:
+      - 'eco give %player% 100'
+    50:
+      - 'eco give %player% 500'
+
+games-played-milestone:
+  thresholds:
+    10:
+      - 'eco give %player% 20'
+    100:
+      - 'eco give %player% 200'
+```
+
+Career thresholds are exact matches against updated statistics at normal completion. A player with 11 wins does not receive an old 10-win reward when rewards are enabled or reloaded. A win-streak threshold can be earned again after a loss resets the streak and the player reaches it in a new streak.
+
+TNT Run's existing games-played statistic includes early departures. Those departures never trigger `games-played-milestone`, and a threshold passed during an early departure is not paid retroactively at the next completed game.
+
+### Records
+
+Record rewards compare final survival seconds with the records captured at the start of the round. Equal times do not count as improvements. The first positive survival time can establish a personal record and earn its reward.
+
+`personal-best` and `personal-arena-best` can both run for the same player. `arena-record` has one recipient per completed round; tied new high scores use stable UUID ordering to select the record holder.
+
+---
+
+## Reward Placeholders
+
+| Placeholder | Value |
+|:--|:--|
+| `%player%` | Player name. |
+| `%uuid%` | Player UUID. |
+| `%arena%` | Arena ID. |
+| `%timer%` | Current game timer. Completion events use the ending countdown, not survival seconds. |
+| `%survival-time%` | Seconds survived, matching round survival statistics. |
+| `%placement%` | Final podium position: `1`, `2`, or `3`. `0` outside the podium or before final standings are available. |
+| `%players%` | Starting participant count; current lobby size for `game-join`. |
+| `%players-left%` | Players still alive when the reward was captured. |
+| `%kills%` | Direct PvP kills credited to this player during the round. |
+| `%double-jumps-used%` | Successful double jumps used during the round. |
+| `%double-jumps-left%` | Remaining double jumps. |
+| `%wins%` | Total recorded wins. |
+| `%games-played%` | Total recorded games, including early departures counted by existing statistics. |
+| `%win-streak%` | Current consecutive wins. |
+| `%personal-best%` | Personal survival record across all arenas, in seconds. |
+| `%personal-arena-best%` | Personal survival record in this arena, in seconds. |
+| `%arena-record%` | Arena survival record, in seconds. |
+| `%threshold%` | Triggering milestone number; `0` for other types. |
+| `%reward-amount%` | Calculated survival payment for `survival-time`; `0` for other types. |
+| `%victim%` | Eliminated player's name for `player-kill`; empty for other types. |
+
+Use these names exactly as shown. Reward placeholders with multiple words use hyphens, and are separate from [message and PlaceholderAPI placeholders](/tnt-run/placeholders/general).
+
+---
+
+## Applying Changes
+
+Save the file and run:
+
+```text
+/tr reload
+```
+
+Permission: `tntrun.admin.reload`.
+
+Reload refreshes commands, amounts, and thresholds without restarting the server. It preserves current round progress and does not repeat already claimed survival thresholds. Newly added lower survival thresholds can run on the next live tick if the player has reached them and has not claimed them during that round.
+
+Changes affect future reward triggers. Commands already queued keep their captured values and configuration, even if a reload disables rewards before those commands run.
