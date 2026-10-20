@@ -49,3 +49,13 @@ Effect names and captions are author-controlled content. They do not translate a
 A personal editor link opens in the accepted plugin language. The language selector in Studio can override it for that browser without changing server configuration, effect IDs, captions, images or exported YAML.
 
 Standalone Studio defaults to English and remembers an explicit language selection. Translations are bundled with Studio; they do not require a translation service.
+
+## Welcome Panels and Controls
+
+Welcome text and command-help descriptions are included in all 28 language catalogs. The `welcome.*` keys cover the ready message, link labels, usage and preference headings, action labels, hover text and enabled/disabled confirmations. The `commands.help-group-welcome`, `commands.help-desc-welcome-*` and `commands.help-detail-welcome-*` keys supply the help section.
+
+Preference confirmations use the shared `chat.separator`, a centered **Welcome Message** heading, the outcome and **Preview** plus **Enable** or **Disable** actions. Already-enabled and already-disabled responses have their own `welcome.already-shown` and `welcome.already-hidden` keys. The welcome usage heading and description reuse the styles from `commands.unknown-command-title` and `commands.unknown-command`.
+
+The renderer supplies click targets and the welcome banner's branding colors and layout. Editing a label does not change its action. **Never show again** appears only on automatic greetings; manual previews omit it. General command-usage placeholders receive one space on each side of `|` when rendered.
+
+Set `startup-banner: false` in `config.yml` to suppress automatic greetings, or let individual administrators use [Welcome Controls](/frameui/commands/#welcome-controls). Missing new message keys use bundled defaults without rewriting existing files.
