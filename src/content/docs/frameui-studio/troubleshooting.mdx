@@ -42,3 +42,13 @@ Import or save the design first; changing checkboxes in a draft does not apply t
 The browser uses sample data and a captured player view. Test the final result with the refreshed FrameUI resource pack in Minecraft, including aspect ratio, captions and HUD/hand settings. The gallery contains Studio-rendered previews, not gameplay captures.
 
 For plugin-side pack, reload or language issues, see [FrameUI Troubleshooting](/frameui/troubleshooting/).
+
+## Text Alignment or Styling Has No Visible Effect
+
+At `0` width/height, automatic boxes reserve alignment room and keep their bounds fixed. With explicit dimensions, text aligns inside that box; a box exactly matching the lettering may offer little movement. Increase the dimensions for a larger alignment area.
+
+Shadow color requires an enabled shadow and an offset above `0`. Outline color requires width above `0`. Background color requires opacity above `0`. Hover or focus the disabled field for its explanation. Disabled controls preserve their accepted values.
+
+## An Element Keeps Snapping Back
+
+Turn off the alignment icon beside **Loop**, or hold Alt during a drag. Guides can match the canvas edges/center and other elements. Focus an element and use arrow keys for precise nudges, or Shift plus an arrow for a larger step.
