@@ -7,7 +7,7 @@ import { Steps } from '@astrojs/starlight/components';
 
 ## Export a Complete Effect
 
-Click **Export effect** to download a ZIP containing one effect definition, all its referenced images and installation instructions:
+Choose **Transfer → Export effect** in the header to download a ZIP containing one effect definition, all its referenced images and installation instructions:
 
 ```text
 effects/
@@ -35,7 +35,7 @@ If the generated resource pack is hosted externally, upload the rebuilt ZIP afte
 
 ## Import into Studio
 
-Use **Import** to open `.yml`, `.yaml` or a Studio `.zip`. A ZIP carries all referenced PNGs, including additional image objects. A YAML file contains settings and an image path, not the image itself; choose the matching image if it is missing.
+Choose **Transfer → Import** to open `.yml`, `.yaml` or a Studio `.zip`. A ZIP carries all referenced PNGs, including additional image objects. A YAML file contains settings and an image path, not the image itself; choose the matching image if it is missing.
 
 Imported content is a browser draft until exported or explicitly imported/saved to the connected server. Review event bindings, filters, name and ID before publishing it to your server.
 
@@ -52,3 +52,9 @@ Built-in IDs are protected by connected import; create a custom copy. Revision c
 ## Keep Backups
 
 Browser storage is convenient for drafts but can be cleared or unavailable. Export completed work and any design you need to keep. Your browser library does not automatically synchronize to another device or server.
+
+## Transfer Menu
+
+The header's **Transfer** button groups local **Import** and **Export effect**. Export is unavailable while the inspector reports invalid settings; import remains available to open another definition.
+
+**Connect server**, **Import to server** and **Save to server** remain separate actions. Local import/export does not publish a design to Minecraft. YAML and ZIP exports preserve text styles, box dimensions, alignment and layer priorities; ZIPs also contain the referenced image assets.
