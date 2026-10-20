@@ -1696,6 +1696,10 @@ export default defineConfig({
                                         link: "/tnt-run/configuration/config",
                                     },
                                     {
+                                        label: "rewards.yml",
+                                        link: "/tnt-run/configuration/rewards",
+                                    },
+                                    {
                                         label: "block-removal.yml",
                                         link: "/tnt-run/configuration/block-removal",
                                     },
