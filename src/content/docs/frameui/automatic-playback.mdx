@@ -19,7 +19,7 @@ play-on: ['join', 'world-change']
 
 Use a filename and matching ID such as `lobby-arrival.yml` / `id: 'lobby-arrival'`. Keep the effect's `template` set to a valid [animation ID](/frameui/effects/). Run `/frameui reload` after manual changes.
 
-Per-effect `play-on` bindings work independently of the legacy `loading.on-join` and `loading.on-teleport` switches. You can leave those switches off when using explicit bindings. `command` cannot be an automatic binding.
+The `play-on` list controls automatic playback for each effect. `command` cannot be an automatic binding.
 
 ## Selection Rules
 
@@ -45,20 +45,3 @@ Plugin travel events must correspond to a real, successful local player teleport
 For proxy transfers, assign a **Join** effect on the destination server. A native addon event on one server does not render a screen on another server.
 
 See [Plugin Integrations](/frameui/integrations/) for exact event IDs and destination filters.
-
-## Older Configurations
-
-New `config.yml` files omit the old `loading` switches and `automatic` pools. Configure new effects through Studio or per-effect `play-on` bindings above. Existing setups can continue using their saved global pools without rewriting their custom configuration:
-
-```yaml
-loading:
-  on-join: true
-  on-teleport: false
-  teleport-distance: 8
-automatic:
-  join-effects: ['aurora', 'nebula']
-  teleport-effects: []
-  world-change-effects: []
-```
-
-An empty pool disables that legacy pool. `['*']` considers all eligible effects and must be used alone. Named pool entries must reference existing IDs. `on-teleport` also controls legacy world-change playback. The legacy distance threshold does not replace the filters used by explicit bindings.
