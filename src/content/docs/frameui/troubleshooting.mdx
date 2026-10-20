@@ -34,7 +34,7 @@ Use `/frameui effects all 1` to find IDs. `/frameui preview random` can only sel
 
 Open **Events → When to play** or inspect `play-on` in the saved server file. Default automatic assignments are empty. A browser draft must be imported or saved before it affects the server.
 
-For legacy pools, check both the `loading` switch and the relevant `automatic` pool. For plugin events, check the integration state, native event ID, target name, world filters and actual successful local teleport. A pending TPA is not a teleport.
+For plugin events, check the integration state, native event ID, target name, world filters and actual successful local teleport. A pending TPA is not a teleport.
 
 ## Reload Is Rejected
 
@@ -45,7 +45,7 @@ FrameUI keeps the last accepted runtime state when validation fails. Fix the fil
 - `minimum-ticks` smaller than entrance, or maximum smaller than minimum.
 - `show-hands: true` combined with `hide-hud: true`.
 - Missing, oversized or invalid PNG files.
-- A pool or addon assignment referencing an unknown effect.
+- An addon assignment referencing an unknown effect.
 
 See the [effect schema](/frameui/configuration/effects/). A successful reload closes current and pending screens.
 
