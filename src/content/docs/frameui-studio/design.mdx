@@ -11,11 +11,11 @@ Choose **Shader template** to retain an animation's background. Other layouts in
 
 ## Captions
 
-Select the title, subtitle or detail directly on the canvas, or select its field under **Design → Captions**. The inspector opens controls for that individual component, including text, color, placement, animation and scaling. Use **Effect settings** to return to the main inspector.
+Select the title, subtitle or detail directly on the canvas, or select its field under **Design → Text**. The inspector opens controls for that individual component, including text, color, placement, animation and scaling. Use **Effect settings** to return to the main inspector.
 
 Captions are plain text. `{player}`, `{world}`, `{source-world}` and `{effect}` are plugin placeholders. Studio uses sample values; live PlaceholderAPI values must be checked in Minecraft. A translated editor interface does not translate your captions.
 
-Use **Design → Additional elements → Add text** for additional independent captions. You can add up to **12 extra text objects** alongside the title, subtitle and detail. Each has its own text, color, entrance animation, position and size. Select an object on the canvas or in the additional-elements list; **Remove element** deletes only that object. Undo restores it.
+Use **Add text** beside the **Text** heading in Design for additional independent captions. You can add up to **12 extra text objects** alongside the title, subtitle and detail. Each has its own text, color, entrance animation, position and size. Select an object on the canvas or in the additional-elements list; **Remove element** deletes only that object. Undo restores it.
 
 ## Images
 
@@ -23,7 +23,7 @@ Upload PNG or JPEG artwork, then use **Edit image** or select it on the canvas. 
 
 Studio exports the image as PNG alongside the effect YAML. The plugin accepts PNGs up to **8 MiB** and **2048 × 2048** pixels. Keep the exported image with its matching definition; YAML alone does not include the image bytes.
 
-Use **Add image** under **Additional elements** to add another picture instead of replacing the preset's image. Up to **8 extra pictures** can have independent fitting, opacity, entrance animation, position and size. All referenced PNGs travel with the exported ZIP and connected-server saves. Keep the complete ZIP below **9 MiB**; the generated server resource pack also has a **32 MiB** budget shared by all effects.
+Use **Add image** beside the **Image** heading in Design to add another picture instead of replacing the preset's image. Up to **8 extra pictures** can have independent fitting, opacity, entrance animation, position and size. All referenced PNGs travel with the exported ZIP and connected-server saves. Keep the complete ZIP below **9 MiB**; the generated server resource pack also has a **32 MiB** budget shared by all effects.
 
 Transparent artwork works well for logos and overlays. Replacing an image leaves its composition controls available, so you can reuse a preset with your own branding.
 
@@ -44,3 +44,25 @@ Finishing touches include embers, petals, a scan line and a pulse emblem. Use th
 ## Player View
 
 Under **In-game → Player view**, control hands, HUD, movement and interactions. Showing hands requires the HUD to remain visible. Studio previews those choices against its captured player view; test the same combination in Minecraft.
+
+## Text Boxes and Typography
+
+The same typography controls apply to **Title**, **Subtitle**, **Extra line** and additional text objects. New text objects start with horizontal **Center** and vertical **Middle** alignment. Existing saved alignments are preserved.
+
+Expand **Text box** for width, height and padding in font units. A dimension of `0` sizes that axis automatically from the text, with a compact area for alignment. Alignment changes keep the box position and size fixed and move only its lettering. Explicit dimensions fix that axis independently of font size. The Studio preview clips lettering that exceeds a custom box at the box boundary.
+
+**Appearance** separates lettering color/opacity from background color/opacity. Background opacity `0` hides the background and disables its color control. Raise opacity to edit the color.
+
+Expand **Shadow & outline** for edge styling. Enable text shadow before changing its offset or color. Offset accepts decimals such as `0.5`; offset `0` disables shadow color because the lettering covers the shadow. Outline width must be above `0` to edit its color. Disabled settings retain their saved values.
+
+Variable buttons insert `{player}`, `{world}` or `{effect}` at the cursor. **Preview values** supplies a sample player and world only for Studio; exported text keeps its placeholders.
+
+## Alignment Guides
+
+The alignment icon beside **Loop** enables snapping while dragging. Guides mark the canvas center/edges or matching edges/centers of other elements. Switch it off for free placement, or hold **Alt** during a drag to bypass snapping temporarily. Arrow-key nudges remain precise.
+
+## Layer Priority
+
+Expand **Position & size** and change **Layer priority** to place text or an image in front of another element. Higher values draw in front; equal values retain the existing order. The indicator uses priority `15`, the base image defaults to `10`, and captions/text default to `20`.
+
+This controls composition order independently of the effect-selection priority. A layer-list panel, visibility switches and layer locking are not part of these controls.
