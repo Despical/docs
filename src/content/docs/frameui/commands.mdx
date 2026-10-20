@@ -14,6 +14,10 @@ description: FrameUI command syntax, independent permissions, aliases, console s
 | `/frameui editor` | `frameui.command.editor` | Operator | Open your personal connected Studio session. |
 | `/frameui status` | `frameui.command.status` | Operator | Show active screens, pending resource packs and loaded effect count. |
 | `/frameui reload` | `frameui.command.reload` | Operator | Validate and apply configuration, effects, messages and addons. |
+| `/frameui welcome` | `frameui.command.welcome` | Everyone | Open the welcome usage panel and its action buttons. |
+| `/frameui welcome preview` | `frameui.command.welcome` | Everyone | Preview the administrator welcome panel without changing your preference. |
+| `/frameui welcome show` | `frameui.command.welcome` | Everyone | Enable your automatic welcome panel and show a confirmation. |
+| `/frameui welcome hide` | `frameui.command.welcome` | Everyone | Disable your automatic welcome panel and show a confirmation. |
 
 `/frameui list` aliases `effects`; `/frameui studio` aliases `editor`. Aliases use the same permission as their primary command. The preview command requires an effect argument; use `/frameui preview random` for an eligible random candidate.
 
@@ -32,7 +36,19 @@ description: FrameUI command syntax, independent permissions, aliases, console s
 
 Bare `/frameui` shows information without starting a screen or requesting a pack. Help rows suggest command text. Catalog category/page controls navigate immediately, and effect rows run a preview when the player has preview permission. Available help rows reflect the sender's permissions and whether a command needs a player.
 
-Previews and stop require an in-game player. Help, the catalog, status and reload can be used from the console. Use the editor command in game for a personal connection.
+Effect previews, stop and all welcome controls require an in-game player. Help, the catalog, status and reload can be used from the console. Use the editor command in game for a personal connection.
+
+## Welcome Controls
+
+The welcome panel is available to operators or players with `frameui.admin`, which defaults to operators. `frameui.command.welcome` allows players to manage their own greeting preference; it does not grant administrator access or change another player's preference.
+
+- `welcome preview` displays only the panel. It works with `startup-banner: false` and with a saved dismissal, does not change the saved preference, and omits **Never show again**.
+- `welcome show` saves an enabled preference without displaying the welcome panel. The confirmation offers **Preview** and **Disable** buttons.
+- `welcome hide` saves a disabled preference. The confirmation offers **Preview** and **Enable** buttons. Repeating either preference command reports that the panel is already enabled or disabled.
+
+Bare `/frameui welcome` opens a red usage panel with **Preview**, **Enable** and **Disable** buttons. These controls execute their commands immediately. Preference and usage panels start with the shared separator; welcome usage colors follow the unknown-command title and description styles. Usage alternatives are spaced as `preview | hide | show`.
+
+On automatic greetings, **Never show again** runs `welcome hide`. The saved preference survives reconnects and server restarts. `startup-banner: false` disables all automatic administrator greetings regardless of a player's enabled preference; manual previews remain available. See [Startup and Welcome Messages](/frameui/configuration/config/#startup-and-welcome-messages).
 
 ## Grant Access Deliberately
 
