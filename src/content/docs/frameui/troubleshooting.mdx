@@ -62,3 +62,11 @@ Studio is a browser simulation using the effect renderer, sample caption values 
 ## A Translation Did Not Change
 
 Custom values in `messages.yml` override translations. Update the matching `languages/<code>.yml` entry for translated defaults, and check that the selected language is valid. Effect titles and captions do not translate automatically.
+
+## The Welcome Panel Does Not Appear
+
+Check that the player is an operator or has `frameui.admin`, then check `startup-banner` in `config.yml`. `false` suppresses automatic join greetings globally. A personal **Never show again** dismissal or `/frameui welcome hide` also suppresses that player's automatic greeting.
+
+Use `/frameui welcome preview` to display the panel immediately without changing either setting. Preview intentionally omits **Never show again**. `/frameui welcome show` restores the personal preference and displays a confirmation, not a preview; automatic greetings still require `startup-banner: true`. If the preference already matches, the command reports **already enabled** or **already disabled**.
+
+Welcome commands require an in-game player with `frameui.command.welcome`. A change to `startup-banner` needs `/frameui reload` for future joins. It does not reprint the console banner; restart to see startup output. In older installations, missing welcome message keys fall back to bundled defaults, so deleting custom message files is unnecessary.
