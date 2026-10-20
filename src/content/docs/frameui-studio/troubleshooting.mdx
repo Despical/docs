@@ -49,6 +49,14 @@ At `0` width/height, automatic boxes reserve alignment room and keep their bound
 
 Shadow color requires an enabled shadow and an offset above `0`. Outline color requires width above `0`. Background color requires opacity above `0`. Hover or focus the disabled field for its explanation. Disabled controls preserve their accepted values.
 
+## The Loading Indicator Blends into the Artwork
+
+Select **Loading indicator** in the element toolbar. Check its overall opacity, choose a contrasting **Background color**, raise **Background opacity**, and adjust **Background padding**. Color and padding remain disabled while background opacity is `0`. Increase **Layer priority** if another image covers the indicator; larger values appear in front.
+
+The background follows the indicator's layer and overall opacity. Setting indicator opacity to `0` hides both, while ambient decoration remains visible. The indicator is decorative, so its motion does not report actual server loading progress.
+
+For image backgrounds, the chosen color appears through transparent pixels. A fully opaque image covers the backing color.
+
 ## An Element Keeps Snapping Back
 
 Turn off the alignment icon beside **Loop**, or hold Alt during a drag. Guides can match the canvas edges/center and other elements. Focus an element and use arrow keys for precise nudges, or Shift plus an arrow for a larger step.

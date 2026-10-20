@@ -111,6 +111,34 @@ Image, text and indicator position, scale and stretch controls live in the same 
 
 Loading indicators are animated decoration; they do not measure the server's actual loading progress.
 
+### Indicator and Image Backgrounds
+
+These keys belong under `elements`:
+
+| Key | Default | Accepted values and behavior |
+| --- | --- | --- |
+| `progress-priority` | `15` | Integer from `-100` to `100`; higher draws in front. |
+| `progress-opacity` | `1` | `0` to `1`; affects the indicator and its background, without hiding ambient decoration. |
+| `progress-background` | `#081221` | Six-digit hex color behind the indicator. |
+| `progress-background-opacity` | `0` | `0` to `1`; `0` hides the background. |
+| `progress-padding` | `6` | `0` to `32` reference pixels at 640 × 360; decimals are supported. |
+| `image-background` | `#081221` | Six-digit hex color behind transparent pixels of the main image. |
+| `image-background-opacity` | `0` | `0` to `1`; shares the main image's placement, entrance and overall opacity. |
+
+```yaml
+elements:
+  progress: 'dots'
+  progress-priority: 25
+  progress-opacity: 1
+  progress-background: '#211622'
+  progress-background-opacity: 0.72
+  progress-padding: 7
+  image-background: '#081221'
+  image-background-opacity: 0
+```
+
+Additional image objects use their existing unprefixed `background` and `background-opacity` keys inside `elements.objects.<id>`, together with `opacity` and `priority`. An opaque image covers its background. Indicator backgrounds are not drawn when `progress` is `none`. All new backgrounds default to transparent, preserving saved designs that omit these keys.
+
 ## Player Presentation
 
 ```yaml
@@ -151,6 +179,6 @@ Automatic boxes follow text size and reserve alignment room. Alignment changes m
 
 ## Composition Priority
 
-`elements.image-priority`, `elements.title-priority`, `elements.subtitle-priority`, `elements.detail-priority` and an object's `priority` accept integers from `-100` to `100`. Higher values draw in front; equal priorities retain the established order. The indicator uses `15`, the base image defaults to `10`, and captions/text default to `20`.
+`elements.image-priority`, `elements.progress-priority`, `elements.title-priority`, `elements.subtitle-priority`, `elements.detail-priority` and an object's `priority` accept integers from `-100` to `100`. Higher values draw in front; equal priorities retain the established order. The indicator defaults to `15`, the base image and extra images default to `10`, and captions/text default to `20`. An element's background shares its priority and stays behind its own content.
 
 These values are independent of top-level effect `priority`, which selects effects rather than controlling drawing order. Studio preserves composition priorities and text styles in YAML, ZIPs and connected saves.
