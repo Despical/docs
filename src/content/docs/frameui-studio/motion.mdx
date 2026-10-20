@@ -37,3 +37,9 @@ Select an image, caption or indicator to open its controls. Image reveals includ
 Image delay is tied to its entrance reveal. Use the timeline to verify that the image has time to finish appearing before the effect releases. Background animation, image motion, caption motion and total duration are separate settings.
 
 For exact YAML limits and the relationship between minimum/maximum ticks, read [Effect Files](/frameui/configuration/effects/#timing).
+
+## Editing at a Specific Frame
+
+Selecting an element, moving it or changing its geometry pauses playback without seeking to another time. Choose the frame with the timeline first. At an effect's start or end, captions/pictures may be transparent because their animation has not entered or has already exited. Selection does not skip that phase.
+
+The alignment icon beside **Loop** controls layout snapping. It does not change duration, animation speed or the selected timeline position.
