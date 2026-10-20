@@ -124,3 +124,33 @@ presentation:
 Showing hands requires `hide-hud: false`. These settings apply while the screen is active. Always verify the final player view in Minecraft, including screen cleanup.
 
 See [Filters and Selection](/frameui/filters/) for the `filters` section and [Automatic Playback](/frameui/automatic-playback/) for `play-on`.
+
+## Text Style Reference
+
+Built-in caption styles use keys such as `captions.title-font-size`, `captions.subtitle-align-x` and `captions.detail-shadow-offset`. The prefixes are `title-`, `subtitle-` and `detail-`. Additional text uses the same unprefixed keys inside `elements.objects.<id>`.
+
+| Style key | Accepted values |
+| --- | --- |
+| `font-size` | `10` to `400` percent |
+| `box-width` | `0` to `1024` font units; `0` is automatic |
+| `box-height` | `0` to `256` font units; `0` is automatic |
+| `align-x` | `left`, `center`, `right` |
+| `align-y` | `top`, `middle`, `bottom` |
+| `padding` | `0` to `32` font units |
+| `opacity` | `0` to `1` for lettering |
+| `rotation` | `-180` to `180` degrees |
+| `background` | Six-digit hex color |
+| `background-opacity` | `0` to `1` |
+| `shadow` | Boolean |
+| `shadow-color` | Six-digit hex color |
+| `shadow-offset` | `0` to `8` font units, including decimals |
+| `outline-width` | Integer `0` to `3` font units |
+| `outline-color` | Six-digit hex color |
+
+Automatic boxes follow text size and reserve alignment room. Alignment changes move only the lettering. Explicit dimensions stay fixed when font size changes.
+
+## Composition Priority
+
+`elements.image-priority`, `elements.title-priority`, `elements.subtitle-priority`, `elements.detail-priority` and an object's `priority` accept integers from `-100` to `100`. Higher values draw in front; equal priorities retain the established order. The indicator uses `15`, the base image defaults to `10`, and captions/text default to `20`.
+
+These values are independent of top-level effect `priority`, which selects effects rather than controlling drawing order. Studio preserves composition priorities and text styles in YAML, ZIPs and connected saves.
