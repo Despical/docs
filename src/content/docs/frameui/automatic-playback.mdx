@@ -46,9 +46,9 @@ For proxy transfers, assign a **Join** effect on the destination server. A nativ
 
 See [Plugin Integrations](/frameui/integrations/) for exact event IDs and destination filters.
 
-## Legacy Pools
+## Older Configurations
 
-Existing setups can continue using the global pools:
+New `config.yml` files omit the old `loading` switches and `automatic` pools. Configure new effects through Studio or per-effect `play-on` bindings above. Existing setups can continue using their saved global pools without rewriting their custom configuration:
 
 ```yaml
 loading:
