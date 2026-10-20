@@ -33,6 +33,14 @@ Download the plugin from <a href="https://hub.despical.dev/plugins/frameui" targ
 
 The default maintained connection handles Studio and resource-pack delivery. **You do not need to open an inbound port or change the loopback pack URL for this default setup.** The direct `resource-pack.public-url` is used when `editor.relay.enabled` is `false`.
 
+## Manage the Welcome Message
+
+By default, startup prints a console banner and operators receive a private welcome panel after joining. It includes documentation and Studio links plus command shortcuts.
+
+Use `/frameui welcome` for clickable controls. **Preview** opens the greeting without changing your preference, **Disable** hides future automatic greetings for your account, and **Enable** restores that preference. **Never show again** on an automatic greeting also disables it for your account. Preferences survive reconnects and restarts.
+
+To suppress the detailed startup banner and all automatic administrator greetings, set `startup-banner: false` in `config.yml`. Startup then prints a short effect-count log. `/frameui welcome preview` remains available to administrators even with that setting disabled. See [Commands and Permissions](/frameui/commands/#welcome-controls).
+
 ## Browse the Effects
 
 ```text
