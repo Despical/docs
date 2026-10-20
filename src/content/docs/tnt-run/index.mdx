@@ -11,7 +11,7 @@ import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 **TNT Run** is a competitive Minecraft minigame where players run across layers of removable blocks while the floor disappears under their feet.
 The goal is simple: keep moving, use your double jumps carefully, avoid falling through every layer, and be the last player alive.
 
-Built for server owners who want a polished arena game, **TNT Run** includes setup menus, join signs, scoreboards, boss bars, spectator menus, per-arena records, statistics, PlaceholderAPI placeholders, and a developer API for custom integrations.
+Built for server owners who want a polished arena game, **TNT Run** includes setup menus, join signs, scoreboards, boss bars, spectator menus, per-arena records, statistics, configurable command rewards, PlaceholderAPI placeholders, and a developer API for custom integrations.
 
 ## Get Started
 
@@ -98,6 +98,12 @@ All **TNT Run** commands are grouped by purpose to keep server management clean 
         title="config.yml"
         description="Main configuration file controlling core gameplay behavior and plugin settings."
         href="/tnt-run/configuration/config"
+    />
+
+    <LinkCard
+        title="rewards.yml"
+        description="Reward the top three, survival time, PvP kills, records, and milestones with configurable commands."
+        href="/tnt-run/configuration/rewards"
     />
 
     <LinkCard
