@@ -27,6 +27,8 @@ Use **Add image** beside the **Image** heading in Design to add another picture 
 
 Transparent artwork works well for logos and overlays. Replacing an image leaves its composition controls available, so you can reuse a preset with your own branding.
 
+Both the main image and additional images have **Background color** and **Background opacity** under **Appearance**. The background fills transparent pixels behind that image and shares its position, entrance animation, opacity and layer. Opaque artwork covers its background. Raise background opacity above `0` to enable its color control.
+
 ## Move and Resize
 
 Select an element to show its bounds. Drag it to reposition it and use its corner handles to resize it. Selection opens that component's inspector. Position and scaling fields allow exact adjustments, including separate horizontal and vertical stretch.
@@ -38,6 +40,10 @@ The timeline is useful for checking where a moving element lands at different po
 ## Loading Indicators and Decoration
 
 Available indicators are a moving bar, segmented bar, pulsing dots and rotating ring. Position and size them like other components. They are decorative and do not reflect measured loading progress.
+
+Select **Loading indicator** in the element toolbar to open its controls. **Appearance** includes indicator opacity, background color, background opacity and background padding. A dark, partly transparent background helps dots and bars remain readable over detailed artwork. Padding adds space around the complete indicator in reference pixels at **640 × 360**, and accepts decimals from `0` to `32`.
+
+Indicator opacity affects the indicator and its background together. Background opacity changes only the backing area. At background opacity `0`, its color and padding controls are disabled while retaining their values. Choosing indicator style **None** disables its placement, size, opacity, background and layer controls. Ambient decoration remains independent of indicator opacity.
 
 Finishing touches include embers, petals, a scan line and a pulse emblem. Use them with a readable caption layout and enough time for the content to appear.
 
@@ -63,6 +69,8 @@ The alignment icon beside **Loop** enables snapping while dragging. Guides mark 
 
 ## Layer Priority
 
-Expand **Position & size** and change **Layer priority** to place text or an image in front of another element. Higher values draw in front; equal values retain the existing order. The indicator uses priority `15`, the base image defaults to `10`, and captions/text default to `20`.
+Use **Layer priority** under **Position & size** to place text, an image or the loading indicator in front of another element. Text components keep this group in an expandable section. Values are integers from `-100` to `100`; higher values draw in front and equal values retain the existing order. The indicator defaults to `15`, the base image and extra images default to `10`, and captions/text default to `20`. A preset may choose a different value, such as Cherry Valley's indicator at `25`.
+
+An element's background stays behind its own content and follows the same layer priority. Backgrounds do not have an independent layer number. These settings apply to Studio previews, YAML/ZIP exports and connected server saves.
 
 This controls composition order independently of the effect-selection priority. A layer-list panel, visibility switches and layer locking are not part of these controls.
