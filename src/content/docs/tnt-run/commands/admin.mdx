@@ -78,7 +78,8 @@ This command provides an organized overview of the plugin's functionality. The h
 Essential for server administrators with the `tntrun.admin.reload` permission to apply changes made to configuration files without requiring a server restart.
 
 This command performs a comprehensive synchronization, updating the plugin's internal state. It reloads the messages, config options,
-custom items, sounds, signs, events, and game manager data.
+custom items, sounds, signs, events, game manager data, and [reward commands and thresholds](/tnt-run/configuration/rewards).
+Reward reloads preserve current round progress and do not repeat claimed survival milestones. Already queued rewards retain their captured commands and values.
 
 ```bash
 /tntrun reload
