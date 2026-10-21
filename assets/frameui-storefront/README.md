@@ -9,7 +9,7 @@ FFMPEG_PATH=/path/to/ffmpeg node assets/frameui-storefront/render-v5.mjs
 FFMPEG_PATH=/path/to/ffmpeg node assets/frameui-storefront/render-cover-v6.mjs
 ```
 
-On the author's Windows machine, the script also recognizes the existing `ffmpeg-static` installation. It uses the project's `sharp` dependency for SVG rendering. Intermediate files remain in `.cache/frameui-storefront-v5/`. Older versioned sources remain available for reference.
+On the author's Windows machine, the script also recognizes the existing `ffmpeg-static` installation. It uses the project's `sharp` dependency for SVG rendering. Intermediate files remain in `.cache/frameui-storefront-v5/`. Only the current artwork sources are retained. `cover-v5.svg` is the input for the `v6` cover; `render-v4.mjs` is retained to regenerate the current `playback-v4.webp` diagram.
 
 Badge dimensions come from the alpha bounds of the actual rendered glyphs, rather than a character-count estimate. Each badge has 16 pixels of horizontal padding on both sides and 10 pixels above and below the text. `v5-badge-metrics.json` records the measured dimensions for every featured label.
 
