@@ -24,10 +24,10 @@ By using this plugin, you agree to the following mandatory **Terms of Service**:
 
 ## Which Java versions are supported?
 
-The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run **Warden Party**.
+The plugin targets **Java 21** bytecode. Use **Java 21 or newer** for Minecraft 1.21.11 and **Java 25** for Minecraft 26.x, which requires the newer runtime.
 
 <Aside type="note">
-    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
+    The server and optional integrations can require a newer Java runtime than the plugin's bytecode target. Follow their requirements too.
 </Aside>
 
 ---
@@ -36,13 +36,28 @@ The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Jav
 
 **Warden Party** supports modern server versions built around the Warden feature set:
 
-* **Supported Versions:** Full and native support for **1.21.11 - 26.2 and all newer versions**.
+* **Supported Versions:** **Minecraft 1.21.11 - 26.3** on Paper or a compatible fork.
+* **26.3 validation:** Warden Party 1.8.9 was checked on Paper 26.3 build 214 with Java 25 for startup, boss spawning, digging cooldown, registration and cleanup, including missing-integration fallback.
 
 <Aside type="caution">
-    Use a current 1.21+ Paper build. Older 1.20.x servers are not compatible with the Warden-focused mechanics this plugin relies on.
+    Use a supported Paper build. Older 1.20.x versions and future Minecraft versions are outside this release's declared range. Each optional integration must separately support your exact server version.
 </Aside>
 
 ---
+
+## Can I replace the Warden with a custom mob or model?
+
+Yes, since **1.8.9**. Set `wardens.<id>.appearance.type` to `MYTHICMOBS` for a MythicMobs mob ID or `MODELENGINE` for a model applied directly to the Warden. See the [MythicMobs setup](/warden-party/integrations/mythicmobs/) and [ModelEngine setup](/warden-party/integrations/modelengine/) for installation and examples.
+
+Only the selected mode's subsection is used. Vanilla mode needs neither plugin. Existing profiles without an appearance section keep their current behavior.
+
+## Why do I get a normal Warden after enabling an integration?
+
+Check the console warning: missing plugins, invalid IDs, unsupported mob bases, invalid levels and API errors fall back to a vanilla Warden. In MythicMobs mode, a mob that spawns successfully but fails to apply its model must be fixed in MythicMobs/ModelEngine and the client's resource pack.
+
+## Will MythicMobs death skills and drops handle rewards?
+
+Use [Warden Party reward commands](/warden-party/features/rewards-and-commands/). Player melee and arrow damage is cancelled and counted by Warden Party, and the base is despawned when that counter ends. Do not depend on vanilla-health thresholds or MythicMobs `~onDamaged`/`~onDeath` skills for encounter rewards. Custom-model rendering and arbitrary third-party skills still need testing with your own model pack.
 
 ## Why does `/wp summon` not work?
 
