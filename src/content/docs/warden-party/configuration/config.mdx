@@ -13,6 +13,7 @@ The `wardens` section defines one or more boss profiles by ID.
 
 Each profile can control:
 
+* Vanilla, MythicMobs or ModelEngine appearance
 * Display name and hologram text
 * Name and hologram offsets
 * Health mode and total health value
@@ -27,6 +28,34 @@ Each profile can control:
 The default entry is a template. Add your own IDs alongside it when you want multiple Warden variants.
 
 ---
+
+## Boss Appearance
+
+Since **1.8.9**, each `wardens.<id>.appearance` section chooses how that boss is created. Missing sections keep the `VANILLA` default.
+
+```yaml
+wardens:
+  default:
+    appearance:
+      type: VANILLA
+      mythicmobs:
+        mob-id: ""
+        level: 1
+      modelengine:
+        model-id: ""
+        hide-base-entity: true
+        override-hitbox: true
+```
+
+| Type | Behavior | Required plugin |
+| --- | --- | --- |
+| `VANILLA` | Normal Warden. | None |
+| `MYTHICMOBS` | Spawn `mythicmobs.mob-id` at the configured positive level. Model skills remain in MythicMobs. | MythicMobs 5.x; ModelEngine if the mob uses it |
+| `MODELENGINE` | Apply `modelengine.model-id` to a Warden. | ModelEngine 4.x |
+
+Only the subsection matching `type` is used. Missing plugins, blank/unknown IDs, unsupported mob bases and API errors produce a console warning and a vanilla Warden fallback. MythicMobs mode cannot detect whether a mob's model skill succeeded.
+
+Follow the [MythicMobs setup and example](/warden-party/integrations/mythicmobs/) or [direct ModelEngine setup](/warden-party/integrations/modelengine/) before enabling either mode. Keep the rest of the profile intact, adjust hologram offsets for the model, then use `/wp reload`. Existing bosses keep their appearance; `/wp reload --killWardens` removes them.
 
 ## Health Settings
 
