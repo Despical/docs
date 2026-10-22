@@ -1,0 +1,96 @@
+---
+title: MythicMobs
+description: Spawn MythicMobs bosses in Warden Party, including ModelEngine models, while keeping hit counters, rewards and Phantom phases.
+---
+
+import { Aside, Badge, Steps } from '@astrojs/starlight/components';
+
+## MythicMobs <Badge text="Optional" variant="tip" />
+
+Available since **Warden Party 1.8.9**. Choose a MythicMobs mob as the base of any boss profile. Warden Party keeps the encounter's hit counter, damage rankings, permissions, cooldowns, item filters, Phantom phase and reward commands.
+
+MythicMobs supplies the mob and its skills. If the mob applies a ModelEngine model on spawn, that model is carried into the Warden Party encounter automatically.
+
+## Installation
+
+<Steps>
+
+1. Install Warden Party 1.8.9 or newer and a **MythicMobs 5.x** release compatible with your exact Minecraft and Java versions.
+2. If the mob uses a custom model, also install a compatible **ModelEngine 4.x** release, import the model and distribute ModelEngine's generated resource pack to players.
+3. Restart the server so both integrations load before Warden Party.
+4. Create the mob definition below, reload MythicMobs with `/mm reload`, and test it independently with `/mm mobs spawn PartyBoss`.
+5. Set the Warden Party profile's appearance to `MYTHICMOBS`, reload Warden Party with `/wp reload`, then run `/wp summon default` in a non-peaceful world.
+
+</Steps>
+
+The integration uses the MythicMobs 5 API. Warden Party does not bundle either optional plugin or guarantee that every release of those plugins supports every Minecraft version.
+
+## Example MythicMobs definition
+
+Create `plugins/MythicMobs/Mobs/PartyBoss.yml`:
+
+```yaml title="plugins/MythicMobs/Mobs/PartyBoss.yml"
+PartyBoss:
+  Type: WARDEN
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+  Skills:
+    - model{mid=forest_guardian} @self ~onSpawn
+```
+
+`PartyBoss` is the **MythicMobs mob ID**. `forest_guardian` is the **ModelEngine model ID**. Replace the model ID with one you have already imported. Remove the entire `Skills` section if you want a MythicMobs mob without ModelEngine.
+
+The mob must produce a living Bukkit `Mob`, such as a Warden, Zombie, Skeleton or Phantom. Players, armor stands, display entities and other non-Mob bases are not supported. WardenParty remains the command and permission namespace even when the visible boss is a different creature.
+
+## Warden Party configuration
+
+Merge this section into an existing boss profile; it is a partial configuration, not a replacement for the whole file:
+
+```yaml title="plugins/WardenParty/config.yml"
+wardens:
+  default:
+    appearance:
+      type: MYTHICMOBS
+      mythicmobs:
+        mob-id: "PartyBoss"
+        level: 1
+```
+
+| Setting | Meaning |
+| --- | --- |
+| `appearance.type` | `MYTHICMOBS` spawns the named Mythic mob. `VANILLA` restores a normal Warden. |
+| `mythicmobs.mob-id` | Exact internal mob key from the MythicMobs file, not its display name or model ID. |
+| `mythicmobs.level` | Finite number greater than zero. Controls MythicMobs level scaling; it does not replace Warden Party's health counter. |
+
+`appearance.modelengine` is ignored in this mode. Configure model mechanics and animations inside MythicMobs instead. For a model applied directly to a normal Warden, use the separate [ModelEngine guide](/warden-party/integrations/modelengine/).
+
+## Combat and rewards
+
+Warden Party counts player melee and arrow hits against the registered base mob. Its configured health, item restrictions, cooldowns, permission checks and Phantom invulnerability still apply. Holograms, scheduled spawns, natural Warden replacements and leaderboard rewards also use the same boss profile.
+
+The profile's `ai-enabled`, `speed-amplifier`, `attack-damage`, `scale` and `allow-movement` settings are applied to supported base-entity attributes after MythicMobs creates the mob. For non-Warden mobs, `chance-to-target` uses the mob's normal target API; Warden bases keep their anger behavior. Adjust `offsets.name` and `offsets.hologram` for the model's height.
+
+<Aside type="caution" title="Use Warden Party reward commands">
+Player damage is cancelled at the Bukkit event level and counted by Warden Party. When the counter reaches zero, the mob is despawned. MythicMobs vanilla-health thresholds, `~onDamaged`/`~onDeath` skills and death drops should not be used as the source of Warden Party encounter rewards. Configure [Warden Party reward commands](/warden-party/features/rewards-and-commands/) instead.
+</Aside>
+
+Additional mobs summoned by MythicMobs skills belong to MythicMobs. They are not Warden Party Phantoms and need cleanup rules in your skills. Likewise, a ModelEngine sub-hitbox bound to a separate Mythic mob is not automatically a separate Warden Party boss.
+
+## Reloading and cleanup
+
+Appearance changes affect **newly spawned bosses**. `/wp reload` leaves existing bosses alive; `/wp reload --killWardens` removes them while reloading. Boss defeat, admin removal and plugin shutdown remove the registered base and its associated model. If another plugin removes the base, Warden Party clears its encounter on the next update without granting defeat rewards.
+
+Existing configurations do not need to be regenerated. Copy the `appearance` section into each profile you want to customize; profiles without it continue to spawn vanilla Wardens.
+
+## Troubleshooting
+
+| Symptom | Check |
+| --- | --- |
+| A normal Warden appears | Read the Warden Party console warning. Missing/disabled MythicMobs, an unknown mob ID, unsupported base type, invalid level or API error triggers a vanilla fallback. |
+| The mob appears without its model | Test `/mm mobs spawn PartyBoss`, check ModelEngine's model import and `~onSpawn` mechanic, then verify the player's resource pack. MythicMobs mode does not validate that a model was applied successfully. |
+| The model shows vanilla items | Install the generated ModelEngine resource pack and accept it on the client. |
+| A hit does not count | Check the base hitbox, item filters, hit permission, cooldown and Phantom phase. |
+| The mob disappears early | Review MythicMobs despawn settings, environmental damage and skills that kill, replace or remove the base entity. |
+
+For upstream configuration details, see the [MythicMobs API](https://wiki.mythiccraft.io/mythicmobs/API) and [ModelEngine MythicMobs mechanics](https://wiki.mythiccraft.io/modelengine/Skills/Mechanics).
