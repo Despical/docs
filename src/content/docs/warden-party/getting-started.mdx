@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-description: Install Warden Party on your Paper or Spigot Minecraft server. Set up your first Warden boss encounter, configure spawn rules, and automate rewards.
+description: Install Warden Party on Paper 1.21.11 through 26.3, configure your first boss and optionally enable MythicMobs or ModelEngine.
 ---
 
 import { Aside, Badge, Steps } from '@astrojs/starlight/components';
@@ -13,11 +13,13 @@ Welcome to **Warden Party**. This plugin lets you run configurable Warden boss e
 
 Before installing **Warden Party**, make sure your server meets these requirements:
 
-* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
+* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) for Minecraft 1.21.11. **Java 25** is required for Minecraft 26.x.
 * **Server Software:** [**Paper**](https://papermc.io/) or a Paper-compatible fork is required.
-* **Minecraft Version:** 26.2 is recommended.
+* **Minecraft Version:** **1.21.11 - 26.3**. Paper **26.3** is recommended and was checked with Warden Party 1.8.9.
 * [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) <Badge text="Optional" variant="tip" /> : Required only if you plan to use the built-in placeholders.
 * **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin such as [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) helps manage admin access cleanly.
+* **[MythicMobs](/warden-party/integrations/mythicmobs/)** <Badge text="Optional" variant="tip" /> : MythicMobs 5.x for spawning a custom mob base. Use a release compatible with your server version.
+* **[ModelEngine](/warden-party/integrations/modelengine/)** <Badge text="Optional" variant="tip" /> : ModelEngine 4.x for custom models, with its generated resource pack installed on clients.
 
 ---
 
@@ -40,6 +42,8 @@ On first startup, the plugin generates a dedicated folder containing two main fi
 
 * `config.yml`: Boss definitions, schedulers, natural spawn rules, reward commands, and combat settings.
 * `messages.yml`: Command feedback, permission warnings, cooldown messages, and placeholder fallback text.
+
+When upgrading from 1.8.8, replace the plugin JAR while the server is stopped and keep your configuration files. Bosses without an `appearance` section retain the normal Warden behavior. To use the new integrations, merge an example from the [MythicMobs](/warden-party/integrations/mythicmobs/) or [ModelEngine](/warden-party/integrations/modelengine/) guide into an existing profile; do not replace the entire profile with a partial snippet.
 
 ---
 
@@ -65,3 +69,5 @@ For a clean first test, use this order:
 * **[Admin Commands](/warden-party/commands/admin)**: Review the full command and permission surface.
 * **[config.yml](/warden-party/configuration/config)**: Start customizing boss variants, spawn logic, and reward commands.
 * **[Schedulers](/warden-party/features/schedulers)**: Automate recurring Warden events.
+* **[MythicMobs](/warden-party/integrations/mythicmobs/)**: Spawn a custom mob with optional model skills.
+* **[ModelEngine](/warden-party/integrations/modelengine/)**: Apply an imported model directly to a Warden.
