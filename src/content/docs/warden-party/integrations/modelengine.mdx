@@ -1,0 +1,85 @@
+---
+title: ModelEngine
+description: Apply a custom ModelEngine model directly to a Warden Party boss with setup steps, example configuration and troubleshooting.
+---
+
+import { Aside, Badge, Steps } from '@astrojs/starlight/components';
+
+## ModelEngine <Badge text="Optional" variant="tip" />
+
+Available since **Warden Party 1.8.9**. Direct ModelEngine mode attaches an imported model to a Warden. The base keeps Warden movement, anger and attacks while Warden Party handles health/hits, holograms, rewards, cooldowns and Phantom phases.
+
+MythicMobs is optional for this mode. If you need a Mythic mob's custom AI, skills or model animation setup, use [MythicMobs mode](/warden-party/integrations/mythicmobs/) instead.
+
+## Installation
+
+<Steps>
+
+1. Install Warden Party 1.8.9 or newer and a **ModelEngine 4.x** release compatible with your exact Minecraft and Java versions.
+2. Put your `.bbmodel` in `plugins/ModelEngine/blueprints/` and follow ModelEngine's [model import workflow](https://wiki.mythiccraft.io/modelengine/Modeling/Importing-a-Model). On current releases, `/meg reload models` imports the model and generates the pack; check the commands for your installed release.
+3. Distribute the generated resource pack through your server's resource-pack setup. Warden Party does not build, host or send this pack.
+4. Restart the server and configure the model ID in the boss profile below.
+5. Run `/wp reload`, then `/wp summon default` in a non-peaceful world. Check the model, main hitbox, hologram height and Phantom phase.
+
+</Steps>
+
+## Example configuration
+
+Merge this into the existing profile; keep the rest of its health, rewards, sounds and movement settings:
+
+```yaml title="plugins/WardenParty/config.yml"
+wardens:
+  default:
+    appearance:
+      type: MODELENGINE
+      modelengine:
+        model-id: "forest_guardian"
+        hide-base-entity: true
+        override-hitbox: true
+
+    # Example heights; adjust them for your own model.
+    offsets:
+      name: 3.6
+      hologram: 3.2
+```
+
+Replace `forest_guardian` with a loaded ModelEngine model ID, without the `.bbmodel` extension. This is not a MythicMobs mob ID.
+
+| Setting | Default | Meaning |
+| --- | --- | --- |
+| `appearance.type` | `VANILLA` | Choose `MODELENGINE` for direct model attachment, or `VANILLA` for a normal Warden. |
+| `modelengine.model-id` | Empty | ID of the imported model. Required in direct model mode. |
+| `modelengine.hide-base-entity` | `true` | Hide the original Warden so only the custom model is visible. |
+| `modelengine.override-hitbox` | `true` | Apply the model's main hitbox to the Warden. Set `false` to keep the vanilla hitbox. |
+
+The `appearance.mythicmobs` section is ignored in direct ModelEngine mode. Each boss profile can choose a different appearance, and that choice is shared by manual, scheduled and natural replacement spawns.
+
+## Size, movement and animations
+
+Configure the model's visual size and animation design in ModelEngine. Warden Party's `scale` setting changes the base entity attribute; it does not directly set ModelEngine render scale. Set suitable `offsets.name` and `offsets.hologram` so labels sit above the visible model.
+
+Direct mode uses ModelEngine's normal model behavior. It does not install MythicMobs attack skills, delayed custom attacks or a custom animation state machine. Use the [MythicMobs example](/warden-party/integrations/mythicmobs/#example-mythicmobs-definition) when your model pack provides those skills.
+
+<Aside type="note" title="Hit detection">
+Define an accessible main hitbox in your model. Player melee and arrow hits must reach the registered base entity for Warden Party to count them. Separate MythicMobs-bound sub-hitbox mobs are not automatically registered as Warden Party bosses.
+</Aside>
+
+## Safe fallback and cleanup
+
+If ModelEngine is missing or disabled, the model ID is empty or unknown, or the API fails, Warden Party logs a warning and spawns a normal Warden. A partially created model/base is removed before the fallback is created.
+
+Models are removed on boss defeat, `/wp kill`, `/wp killall`, `/wp reload --killWardens` and server shutdown. If another plugin removes the base, Warden Party cleans up its encounter on the next update. Plain `/wp reload` keeps active bosses; appearance changes take effect on the next spawn.
+
+Existing configs without an `appearance` section retain their normal Warden behavior. Add the section to the profiles you want to change rather than deleting your configuration.
+
+## Troubleshooting
+
+| Symptom | Check |
+| --- | --- |
+| A normal Warden appears | Read the console warning and confirm ModelEngine is enabled and the configured model ID exists. |
+| Both the model and Warden are visible | Set `hide-base-entity: true` and spawn a new boss after reloading. |
+| The model shows items or incorrect textures | Rebuild and distribute ModelEngine's generated resource pack, then update it on the client. |
+| Hits do not register | Check the model's main hitbox, hit permissions, item filters, cooldown and Phantom invulnerability. |
+| Name/hit counter is inside the model | Increase `offsets.name` and `offsets.hologram`. |
+
+See the upstream [ModelEngine API](https://wiki.mythiccraft.io/modelengine/API) and [apply/remove model example](https://wiki.mythiccraft.io/modelengine/API/Basic/Add-Remove-Model) for the APIs used by the integration.

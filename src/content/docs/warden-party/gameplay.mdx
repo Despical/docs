@@ -5,13 +5,15 @@ description: Learn how a Warden Party boss encounter flows from spawn to rewards
 
 **Warden Party** is built around **custom Warden boss encounters** rather than ordinary mob combat. Each configured boss entry can change health logic, movement rules, damage restrictions, Phantom behavior, sounds, and reward execution.
 
+Since **1.8.9**, a profile can also use a [MythicMobs base mob](/warden-party/integrations/mythicmobs/) or a [ModelEngine model](/warden-party/integrations/modelengine/). Player melee and arrow hits still go through Warden Party's encounter rules and reward tracking.
+
 ---
 
 ## Boss Lifecycle
 
 A **Warden Party** encounter usually follows this flow:
 
-1. A Warden is spawned manually, through a scheduler, or by replacing a naturally spawned Warden.
+1. The configured boss appearance is spawned manually, through a scheduler, or by replacing a naturally spawned Warden.
 2. Players damage the boss under the rules defined for that specific Warden ID.
 3. Damage and hit counts are tracked per player while optional reward commands can run during the fight.
 4. If the configured threshold is reached, the boss can spawn supporting Phantoms.

@@ -1,6 +1,6 @@
 ---
 title: Warden Party Documentation
-description: Warden Party is a configurable Minecraft boss plugin for Paper and Spigot featuring Warden encounters, scheduled events, natural spawns, multi-phase fights, and automated rewards.
+description: Warden Party is a configurable Minecraft boss plugin for Paper with MythicMobs and ModelEngine integration, scheduled events, multi-phase fights and automated rewards.
 tableOfContents: false
 ---
 
@@ -11,6 +11,8 @@ import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 **Warden Party** is a configurable Minecraft boss plugin built around custom Warden encounters, scheduled spawns, natural Warden replacement, reward commands, and a Phantom-based vulnerability phase.
 
 It is designed for servers that want a repeatable world boss experience without hard-coding each event by hand. You define boss variants, configure when and where they appear, control how players can damage them, and automate rewards for participation and top performers.
+
+Version **1.8.9** adds optional **MythicMobs** and **ModelEngine** appearances. Keep a vanilla Warden, spawn a Mythic mob with its own model skills, or attach an imported ModelEngine model directly to the Warden. Paper **26.3** is supported; use Java **25** for Minecraft 26.x.
 
 ## Get Started
 
@@ -85,6 +87,21 @@ These guides cover the systems that make **Warden Party** more than a simple sum
         title="Rewards & Commands"
         description="Run server commands on spawn, hit, death, vulnerability changes, and top-player rankings."
         href="/warden-party/features/rewards-and-commands"
+    />
+</CardGrid>
+
+## Integrations
+
+<CardGrid>
+    <LinkCard
+        title="MythicMobs"
+        description="Install the optional integration and spawn Mythic mobs with example definitions, model skills and Warden Party rewards."
+        href="/warden-party/integrations/mythicmobs"
+    />
+    <LinkCard
+        title="ModelEngine"
+        description="Apply a custom model directly to a Warden and configure its visibility, hitbox and hologram offsets."
+        href="/warden-party/integrations/modelengine"
     />
 </CardGrid>
 

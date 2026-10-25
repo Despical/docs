@@ -2181,6 +2181,19 @@ export default defineConfig({
                                 ],
                             },
                             {
+                                label: "Integrations",
+                                items: [
+                                    {
+                                        label: "MythicMobs",
+                                        link: "/warden-party/integrations/mythicmobs",
+                                    },
+                                    {
+                                        label: "ModelEngine",
+                                        link: "/warden-party/integrations/modelengine",
+                                    },
+                                ],
+                            },
+                            {
                                 label: "Placeholders",
                                 items: [
                                     {
