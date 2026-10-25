@@ -1,0 +1,62 @@
+---
+title: "Player Menus and Hunt Editor"
+description: "Navigate hunt progress, collection, reward previews, preferences, rankings and the administrator editor."
+---
+
+import ScreenshotGallery from '../../../components/ScreenshotGallery.astro';
+import gallery from '../../../data/easter-eggs-gallery.json';
+
+import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+Screenshots on this page were captured in Minecraft 26.3 with Easter Eggs 3.0.0. The demonstration hunt contains twenty placements; its name, progress, pending items and timing are example server data. Minecraft inventory labels follow the client language.
+
+## Player menus
+
+Open `/eggs` to browse hunts. Choose a hunt to view its progress and available actions. The collection view distinguishes found and unfound eggs. Timed hunts expose start and leave controls as appropriate.
+
+| Screen | How to reach it |
+| --- | --- |
+| Hunt list | /eggs |
+| Hunt progress and collection | Choose a hunt, or /eggs menu easter |
+| Rewards and pool chances | /eggs rewards easter |
+| Ranking selection and results | /eggs leaderboard |
+| Personal preferences | /eggs preferences |
+| Pending item rewards | /eggs inbox, when items are claimable |
+
+Preferences cover particles, sounds, nearby hints and progress bars. Feature-specific hunt settings still apply. Ranking views depend on config.yml; fastest results require timed completions and cycle rankings are unavailable for player-relative cooldown hunts.
+
+### Player screens
+
+<ScreenshotGallery label="Player menus" images={gallery.menus.filter(image => ['hunts', 'hunts-page-2', 'hunt-open', 'hunt', 'collection-view', 'preferences'].includes(image.id))} />
+
+### Rewards and rankings
+
+<ScreenshotGallery label="Rewards and rankings" images={gallery.menus.filter(image => ['rewards', 'rewards-easter', 'rewards-page-2', 'pending', 'leaderboard', 'board-hunts', 'board-results'].includes(image.id))} />
+
+## Administrator editor
+
+Open `/eggs admin`, then choose a hunt. Its dashboard links to:
+
+- **Add Eggs:** browse templates and receive placement heads.
+- **Placed Eggs:** inspect and manage existing placements.
+- **Egg Hints** and **Collection Order:** edit placement clues and ordering.
+- **Hunt Rules:** enable the hunt and configure collection behavior.
+- **Time Settings:** timer, offline timing and reward periods.
+- **Hints & Displays:** text clues, hot/cold feedback, visibility and progress bars.
+- **Reset & Removal:** attempt reset and removal tools with confirmation.
+
+Actions respect their individual command permissions. Choosing a template enters placement mode. Leave it with `/eggs admin edit off` before testing collection. Text input prompts include a cancel control.
+
+### Editor screens
+
+<ScreenshotGallery label="Administrator editors" images={gallery.menus.filter(image => ['admin', 'admin-hunt', 'templates', 'placements', 'placement', 'hint-eggs', 'order-eggs', 'admin-rules', 'admin-time', 'admin-feedback', 'admin-recovery', 'confirm'].includes(image.id))} />
+
+## Customize inventories
+
+`menus.yml` controls rows, content slots, navigation, titles, item names, lore and menu sounds. Inventory slot indexes are zero-based. Keep content and navigation positions within the configured inventory size and avoid overlapping controls.
+
+Reload with `/eggs admin reload` and open the relevant menu to verify the layout. Chat prompts and help text are configured separately in messages.yml.
+
+</EasterEggsGuide>

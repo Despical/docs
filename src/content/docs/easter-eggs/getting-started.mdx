@@ -1,70 +1,62 @@
 ---
-title: Getting Started
-description: Install the Easter Eggs Minecraft plugin on Paper or Spigot. Generate config files, learn the command structure, and start hiding eggs on your server in minutes.
+title: "Getting Started"
+description: "Install Easter Eggs 3.0.0 on Paper with Java 25 and place your first collectible egg."
 ---
 
-import { Aside, Steps, Badge } from '@astrojs/starlight/components';
+import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
 
-Welcome to **Easter Eggs**! This plugin allows you to hide interactive, collectible eggs around your world to keep your players entertained, featuring customizable rewards, cross-server syncing, and easy setup.
+<EasterEggsGuide>
 
----
+## Requirements
 
-## Prerequisites
+| Requirement | Supported setup |
+| --- | --- |
+| Server | Paper or a compatible fork, Minecraft 1.21.11 or later |
+| Java | Java 25 |
+| Storage | Built-in SQLite, or an existing MySQL database |
+| Optional integrations | PlaceholderAPI; Vault and an economy provider for money rewards |
 
-Before installing the plugin, ensure your server environment meets the following requirements:
+Folia and older Spigot installations are not supported by 3.0.0. Paper downloads the SQL drivers declared by the plugin, so allow internet access on the first startup.
 
-* **Java Version:** [Java 21](https://www.oracle.com/java/technologies/downloads/) or newer is required.
-* **Server Software:** Spigot, [**Paper**](https://papermc.io/), or any compatible fork (e.g., Purpur).
-* **Minecraft Version:** 1.8 - 26.3 (Latest versions recommended).
-* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin like [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) to manage user access.
+## Install
 
----
+1. Download the plugin from [Hub](https://hub.despical.dev/plugins/easter-eggs).
+2. Stop the server and put the plugin JAR in its `plugins/` directory.
+3. Start the server and check that Easter Eggs enables successfully.
+4. Join as an operator or grant the relevant [administrator permissions](/easter-eggs/commands/admin/).
 
-## Installation
+The plugin installs missing default files under `plugins/EasterEggs/` and preserves existing files. When updating a 2.x server, use the [migration guide](/easter-eggs/operations/) first.
 
-Setting up **Easter Eggs** is straightforward. Follow these simple steps to get started:
+## Place and collect your first egg
 
-<Steps>
-1.  **Download the Plugin:** Get the latest version of **Easter Eggs** from [Hub](https://hub.despical.dev/plugins/easter-eggs), [SpigotMC](https://www.spigotmc.org/resources/eastereggs.116086/) or [BuiltByBit](https://builtbybit.com/resources/easter-eggs.50201/).
-2.  **Upload to Server:** Place the `easter-eggs-x.x.x.jar` file into your server's `plugins/` directory.
-3.  **Restart Server:** Restart your server to generate the default configuration files.
-4.  **Verify Installation:** Type `/eastereggs` in-game to ensure the plugin is loaded correctly.
-</Steps>
+```text
+/eggs admin
+/eggs admin give easter painted-egg
+```
 
----
+The editor lets you choose a hunt and template. The give command selects both and gives you a placement head. Place that head where players should find it; the position becomes a tracked egg in the selected hunt.
 
-## First-Run Configuration
+Leave placement mode before testing collection:
 
-After the first restart, a new folder will be created at `/plugins/EasterEggs/`. This folder contains everything you need to customize your plugin:
+```text
+/eggs admin edit off
+/eggs
+```
 
-* `config.yml`: Main plugin settings, storage type selection, and general behaviors.
-* `messages.yml`: Full control over every string, title, and translation shown to players.
-* `mysql.yml`: Configure your database credentials if you are using MySQL for cross-server synchronization.
+Interact with the egg to collect it. Choose Easter in the player menu to see your progress, collection and rewards. For a timed hunt, run `/eggs start <hunt>` before collecting.
 
-<Aside type="tip">
-    Always check your console during the first boot. If there are any missing dependencies or version conflicts, the plugin will alert you there.
-</Aside>
+## Where to customize
 
----
+| File | Contents |
+| --- | --- |
+| `config.yml` | Storage, global effect limits, inbox timing and ranking options |
+| `hunts/*.yml` | Hunt rules, schedules, requirements and reward group references |
+| `templates/*.yml` | Textures, rendering, particle states and default hints |
+| `particle/*.yml` | Layered particle geometry and animation |
+| `rewards.yml` | Reward rules, actions and weighted pools |
+| `menus.yml` | Inventory layouts and labels |
+| `messages.yml` | MiniMessage text, chat panels and hover descriptions |
 
-## Basic Command Structure
+Run `/eggs admin reload` after editing. Invalid configuration is rejected and the current running configuration stays active. Storage connection changes require a restart.
 
-While you'll spend most of your time in the config files, here are the essential commands:
-
-| Command                          | Permission             | Description                                                                   |
-|:---------------------------------|:-----------------------|:------------------------------------------------------------------------------|
-| `/eastereggs <id>`               | `eastereggs.get`       | Gives you the specified Easter Egg item so you can place it in the world.     |
-| `/eastereggs removeall <egg id>` | `eastereggs.removeall` | Deletes every placed Easter Egg matching the specified ID from the server.    |
-| `/eastereggs list`               | `eastereggs.list`      | Shows a complete list of all currently configured **Easter Eggs** and their IDs.  |
-| `/eastereggs reload`             | `eastereggs.reload`    | Reloads all configurations, messages, and Easter Egg data without restarting. |
-| `/eastereggs help`               | `eastereggs.help`      | Displays a comprehensive list of all available commands and their usage.      |
-
----
-
-## Next Steps
-
-Now that the plugin is installed and running, it's time to hide some eggs:
-
-* **[Creating New Eggs](/easter-eggs/creating-new-eggs)**: Learn how to define, place, and configure your first custom Easter Egg.
-* **[Placeholders](/easter-eggs/placeholders/general)**: Hook into PlaceholderAPI to display player progress and total eggs found.
-* **[Database Setup](/easter-eggs/configuration/mysql)**: Sync player data across your entire network.
+</EasterEggsGuide>

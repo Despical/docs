@@ -1,0 +1,28 @@
+---
+title: "Configuration Guide"
+description: "Where to configure Easter Eggs storage, hunts, templates, particles, rewards, menus and messages."
+---
+
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+All files live in `plugins/EasterEggs/`. Missing defaults are installed without replacing existing files.
+
+| Reference | What it controls |
+| --- | --- |
+| [config.yml](/easter-eggs/configuration/config/) | Storage, effect budgets, preferences, inbox and rankings |
+| [Hunts](/easter-eggs/configuration/hunts/) | Availability, timing, repeat periods, collection and entry rules |
+| [Templates](/easter-eggs/configuration/templates/) | Textures, rendering, hints and particle states |
+| [Particles](/easter-eggs/configuration/particles/) | Animation presets with one or more geometric layers |
+| [Rewards](/easter-eggs/rewards/) | Actions, milestone rules and weighted pools |
+| [Menus](/easter-eggs/menus/) | Inventory navigation, layouts and labels |
+| [Messages](/easter-eggs/configuration/messages/) | Chat panels, MiniMessage text, buttons and hover descriptions |
+| [Database](/easter-eggs/configuration/mysql/) | SQLite and MySQL setup |
+| [Managed files](/easter-eggs/configuration/other-files/) | Persistent data and backups |
+
+After editing, run `/eggs admin reload`. The complete configuration candidate is validated before use. A failed reload keeps the current generation active; correct the reported file, key or reference and reload again.
+
+Changing the storage backend or connection requires a restart and does not copy data between databases. For 2.x files, follow [legacy migration](/easter-eggs/operations/).
+
+</EasterEggsGuide>

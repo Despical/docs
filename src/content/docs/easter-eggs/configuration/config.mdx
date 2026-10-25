@@ -1,63 +1,100 @@
 ---
-title: config.yml
-description: Detailed guide for the main configuration settings of Easter Eggs.
+title: "config.yml"
+description: "Global Easter Eggs 3.0.0 settings with current defaults for storage, particles, preferences, inbox timing and leaderboards."
 ---
 
-The `config.yml` file is the heart of **Easter Eggs**. It controls database management, global plugin behaviors, visual effects, and the definition of all your custom collectible eggs.
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
 
----
+<EasterEggsGuide>
 
-## General Settings
+`config.yml` controls global services. Hunt rules belong in `hunts/`; head appearances belong in `templates/`.
 
-* **`database`**: Defines how player statistics and found eggs are stored.
-* `flat`: Local storage using YAML files (**standard for small servers**).
-* `mysql`: External database storage (**recommended for large networks**).
-* **`auto-data-saving`**: The interval (in seconds) at which player data is automatically saved. Set to `0` to only save on server shutdown or plugin reload.
-* **`update-notifier`**: When enabled, the plugin will alert administrators if a new version is available upon joining the server.
+## Current defaults
 
-**Note:** Changing the database type requires a server restart and does not support automatic data migration.
+```yaml
+config-version: 3
+storage:
+  type: 'sqlite'
+  mysql:
+    host: 'localhost'
+    port: 3306
+    database: 'eastereggs'
+    username: 'root'
+    password: ''
+    ssl: true
+particles:
+  budget-per-player: 180
+  tick-interval: 2
+  view-distance: 24
+preferences:
+  sounds: true
+  proximity: true
+pending:
+  expire-after-seconds: 10800
+  reminder-seconds: 300
+  warning-seconds: 900
+leaderboard:
+  boards:
+    - 'GLOBAL'
+    - 'HUNT'
+    - 'CYCLE'
+    - 'FASTEST'
+  limit: 50
+boss-bar:
+  title: '<bold><hunt></bold> <#606A7B>•</#606A7B> <#FFE49A><bold><found>/<total></bold></#FFE49A> <#606A7B>•</#606A7B> <#FFFFFF><time></#FFFFFF>'
+  color: 'YELLOW'
+  overlay: 'PROGRESS'
+  always-visible: true
+  visible-seconds: 8
+proximity:
+  interval-millis: 3000
+  radius-blocks: 24
+  hot-radius-blocks: 5
+  warm-radius-blocks: 12
+metrics: true
+egg-sounds:
+  interaction-cooldown-millis: 1200
+  enabled: true
+  placed:
+    sound: 'minecraft:block.wood.place'
+    volume: 0.6
+    pitch: 1.0
+  found:
+    sound: 'minecraft:entity.experience_orb.pickup'
+    volume: 0.6
+    pitch: 1.3
+  already-found:
+    sound: 'minecraft:entity.villager.no'
+    volume: 0.6
+    pitch: 1.0
+  complete:
+    sound: 'minecraft:entity.player.levelup'
+    volume: 0.6
+    pitch: 1.0
+  unavailable:
+    sound: 'minecraft:entity.villager.no'
+    volume: 0.6
+    pitch: 1.0
+  edit-mode:
+    sound: 'minecraft:entity.villager.no'
+    volume: 0.6
+    pitch: 1.0
+  time-up:
+    sound: 'minecraft:block.note_block.bass'
+    volume: 0.8
+    pitch: 0.7
+```
 
----
+## Settings that affect gameplay
 
-## Easter Egg Definitions
+- `particles.budget-per-player` limits points emitted per viewer per tick. Zero disables emission; the reduced preference uses one quarter of the budget.
+- `particles.tick-interval` controls floating-head transform updates. Each particle preset separately sets its emission interval and view distance.
+- `pending.expire-after-seconds` defaults to three hours. Zero removes expiry for newly stored items; existing rows keep their original deadline.
+- `leaderboard.boards` enables GLOBAL, HUNT, CYCLE and FASTEST choices. An empty list hides all ranking choices.
+- `boss-bar` configures appearance. Enable `boss-bar: true` in a hunt as well; bundled hunts default to false.
+- `proximity` sets qualitative hot/warm/cold feedback. The hunt must enable `hints.hot-cold` and the player must allow proximity feedback.
+- `egg-sounds` controls placement and interaction sounds. Players may disable their own collection sounds.
 
-The `easter-eggs` section is where you define every collectible egg on your server. Each egg requires a unique ID (e.g., `green_present`) and a `texture` (Base64 head value). You can also override global settings for specific eggs:
+The bundled file includes supported ranges and comments for every setting. Reload ordinary settings with `/eggs admin reload`; restart after storage connection changes. Leave `config-version: 3` at its bundled value.
 
-* **`texture`**: The Base64 string for the custom skull texture. You can find these on sites like [Minecraft Heads](https://minecraft-heads.com).
-* **`messages`**: Override default messages for events like `new-egg-found`, `all-eggs-found`, and permission denials.
-* **`particles`**: Set custom particle effects for this specific egg (`found` and `not-found`).
-* **`commands`**: Execute specific commands based on player interactions. Prefix commands with `p:` to execute them as the player instead of the console.
-* **`permissions`**: Use the `whitelist` or `blacklist` lists to control exactly who can collect this specific egg.
-* **`persistent`**: If set to `false`, data won't be saved for this egg, allowing players to collect it repeatedly.
-* **`cooldown`**: A specific wait time (in seconds) just for this egg type.
-* **`remove-on-collect`**: If enabled, the egg block will be replaced with a specified material (e.g., `AIR`) once a player collects it.
-
----
-
-## Action Bar Radar
-
-The plugin features a built-in radar system that uses the action bar to notify players when they are near an Easter Egg.
-
-| Option           | Default | Description                                                               |
-|:-----------------|:--------|:--------------------------------------------------------------------------|
-| `enabled`        | `true`  | Toggles the action bar radar system on or off entirely.                   |
-| `radius`         | `9.5`   | The distance (in blocks) at which the radar detects nearby eggs.          |
-| `interval`       | `30`    | Ticks between message updates (20 ticks = 1 second).                      |
-| `sort`           | `true`  | Sorts nearby eggs so the closest one is targeted for the radar.           |
-| `only-not-found` | `true`  | If enabled, the radar ignores eggs the player has already collected.      |
-| `permission`     | `""`    | Require a specific permission to see the radar. Leave empty for everyone. |
-
----
-
-## Global Mechanics
-
-* **`general-cooldown`**: The time (in seconds) players must wait before collecting *any* other Easter Egg. Set to `0` for no cooldown.
-* **`commands.found-all-the-eggs`**: A list of global commands executed by the console when a player successfully finds every registered Easter Egg on the server. Useful for giving grand prizes.
-
----
-
-## Visuals & Audio
-
-* **`particles`**: Global settings for the particles displayed around placed eggs. You can adjust the `interval` (density), set a `distance-limit` for performance, or `disabled` them entirely.
-* **`sounds`**: Define the specific Minecraft sound effects played during various events (e.g., `ENTITY_PLAYER_LEVELUP` when finding a new egg). Set any value to `NONE` to mute that specific trigger.
-* **`fireworks`**: Controls the celebratory firework spawned when an egg is found. You can customize the `color` (RGB format like `255:0:0`), `type` (BALL, CREEPER, STAR, etc.), `power`, `flicker`, `trail`, and detonation delay.
+</EasterEggsGuide>

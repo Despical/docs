@@ -1,0 +1,36 @@
+---
+title: "In-game Gallery"
+description: "Real Minecraft screenshots and six-second animations for all twenty Easter Eggs 3.0.0 templates, plus player and administrator menus."
+---
+
+import EasterEggsGuide from '../../../components/EasterEggsGuide.astro';
+import EasterEggsGallery from '../../../components/EasterEggsGallery.astro';
+import GameScreenshot from '../../../components/GameScreenshot.astro';
+
+<EasterEggsGuide>
+
+## Twenty templates in Minecraft
+
+These screenshots and videos were captured in **Minecraft Java Edition 26.3**, running **Easter Eggs 3.0.0** on Paper. Each card shows one configured template with its live ambient particle preset. Play a clip to inspect its motion, or open the still image for a closer look.
+
+The demonstration gallery uses ten floating displays and ten placed heads. Rendering mode is configurable per template; the gallery arrangement is an example setup.
+
+<EasterEggsGallery />
+
+## Collection effects
+
+This recording shows a Painted Egg being collected, including its collection particle burst.
+
+<video controls loop muted playsinline preload="none" poster="/images/easter-eggs/templates/painted-egg.png" width="960" height="720" style="width: 100%; height: auto; border-radius: .65rem;" aria-label="Painted Egg collection effect in Minecraft">
+    <source src="/images/easter-eggs/collection-burst.webm" type="video/webm" />
+</video>
+
+## Gallery layout
+
+<GameScreenshot src="/images/easter-eggs/gallery-overview.png" alt="Twenty collectible head templates arranged in a Minecraft demonstration gallery" width={1920} height={1080} />
+
+## Menus and setup
+
+See the [menu guide](/easter-eggs/menus/) for twenty-five player and administrator screenshots, or follow [creating and placing eggs](/easter-eggs/creating-new-eggs/) to create your own hunt. Texture and display settings are covered in the [template reference](/easter-eggs/configuration/templates/), and animation settings in [particle presets](/easter-eggs/configuration/particles/).
+
+</EasterEggsGuide>

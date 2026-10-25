@@ -1,0 +1,114 @@
+---
+title: "Hunts"
+description: "Configure personal or shared hunts, ordering, timers, reset periods, schedules and entry requirements."
+---
+
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+Each `hunts/<id>.yml` file defines an independent hunt. Keep IDs stable: placements, progress, reward claims and prerequisite rules reference them.
+
+## Default Easter hunt
+
+```yaml
+name: '<#FF69B4>Easter'
+menu-order: 0
+icon: ''
+enabled: true
+ordered: false
+collection: 'PERSONAL'
+hide-collected: false
+protect: true
+boss-bar: false
+timed:
+  enabled: false
+  limit-seconds: 300
+  continue-offline: true
+repeat:
+  mode: 'ONCE'
+  cooldown-seconds: 3600
+  reset-time: '00:00'
+  reset-day: 'MONDAY'
+schedule:
+  enabled: false
+  timezone: 'UTC'
+  start: ''
+  end: ''
+requirements:
+  match: 'ALL'
+  rules: {}
+hints:
+  enabled: true
+  hot-cold: false
+  cooldown-seconds: 60
+rewards:
+  - 'common'
+  - 'seasonal-results'
+  - 'easter-surprise'
+  - 'spring-trail'
+  - 'special-egg'
+  - 'spring-gallery'
+```
+
+## Collection and timing
+
+| Setting | Behavior |
+| --- | --- |
+| `collection: PERSONAL` | Each player can discover every eligible egg |
+| `collection: SHARED` | An egg can be claimed by one player in the common reward period |
+| `ordered: true` | Collection follows placement order |
+| `hide-collected: true` | Hide collected eggs for the relevant player |
+| `protect: true` | Protect tracked placements against world changes |
+| `timed.enabled: true` | Require an explicit start and track attempt duration |
+| `timed.limit-seconds` | Attempt time limit; zero removes the deadline |
+| `timed.continue-offline` | Whether offline time counts toward a timed attempt |
+
+Timers require `/eggs start <hunt>`. Starting again or resetting an attempt does not recreate reward rights already claimed in that period.
+
+## Reward periods
+
+`repeat.mode` accepts ONCE, COOLDOWN, DAILY or WEEKLY. COOLDOWN uses the player's previous finish and a positive cooldown duration. DAILY and WEEKLY use `reset-time`, `reset-day` and `schedule.timezone`. SHARED collection cannot use player-relative COOLDOWN periods.
+
+## Scheduled availability
+
+```yaml
+schedule:
+  enabled: true
+  timezone: 'Europe/Istanbul'
+  start: '2026-12-01T00:00:00'
+  end: '2026-12-31T23:59:59'
+```
+
+Use ISO local date-times in the selected time zone, or UTC instants ending in Z. Schedule windows control availability; repeat periods separately control renewed reward rights. EVENT_RANK rewards require a scheduled event with an end.
+
+## Entry requirements
+
+Combine rules with `match: ALL` or `ANY`. Supported types are PERMISSION, COMPLETED_HUNT and PLACEHOLDER. Prerequisite references must exist and cannot form cycles.
+
+```yaml
+requirements:
+  match: 'ALL'
+  rules:
+    access:
+      type: 'PERMISSION'
+      value: 'events.spring'
+    prerequisite:
+      type: 'COMPLETED_HUNT'
+      value: 'global'
+    level:
+      type: 'PLACEHOLDER'
+      value: '%player_level%'
+      operator: 'AT_LEAST'
+      expected: '10'
+```
+
+Placeholder comparisons support EQUALS, NOT_EQUALS, AT_LEAST and AT_MOST and need a working PlaceholderAPI expansion for the chosen value.
+
+## Hints and display
+
+Text clues use `hints.enabled` and `hints.cooldown-seconds`. Hot/cold feedback additionally requires `hints.hot-cold: true`. It gives qualitative proximity feedback without a direction arrow. Per-hunt boss bars and player preferences also control what each player sees.
+
+The `rewards` list selects groups from [rewards.yml](/easter-eggs/rewards/). The optional icon is a serialized item supplied through the editor; leave it blank to use the default.
+
+</EasterEggsGuide>

@@ -1,0 +1,63 @@
+---
+title: "Particle Presets"
+description: "Create layered particle animations and preview the twenty bundled Easter Eggs presets."
+---
+
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+Each `particle/<id>.yml` file defines a reusable effect. Templates reference these IDs for unfound, found, locked and collect states. Reward PARTICLE actions also reference presets.
+
+## Example: pastel-ring
+
+```yaml
+duration-ticks: 0
+interval-ticks: 4
+view-distance: 24
+layers:
+  primary:
+    shape: 'RING'
+    particle: 'DUST_COLOR_TRANSITION'
+    points: 12
+    radius: 0.42
+    height: 0.16
+    speed: 0.06
+    offset: 0.04
+    color: '#F8BBD0'
+    end-color: '#B3E5FC'
+    size: 0.7
+  accent:
+    shape: 'ORBIT'
+    particle: 'DUST'
+    points: 3
+    radius: 0.315
+    height: 0.1
+    speed: -0.06
+    offset: 0.12
+    color: '#B3E5FC'
+    end-color: '#F8BBD0'
+    size: 0.45
+```
+
+Layers combine a geometric `shape` with a native Paper `particle`, point count, dimensions, speed and optional colors. Supported shapes are RING, HELIX, ORBIT, SPHERE, BURST, FIREFLIES, HEART, STAR, COLUMN and WAVE.
+
+`interval-ticks` controls emissions. `view-distance` limits visibility alongside the global search radius. `duration-ticks: 0` creates a continuous ambient preset; finite presets can be used for collection and reward bursts.
+
+## Preview and limits
+
+```text
+/eggs admin preview pastel-ring
+```
+
+The preview appears privately in front of you. Previews and ambient effects share the per-player budget in config.yml. Player particle preferences can reduce or disable effects, so check both the preset and viewer settings when an effect is missing.
+
+## Watch the effects
+
+The [in-game gallery](/easter-eggs/gallery/) records the ambient preset attached to every bundled template. Each six-second clip includes the live animation and the head appearance.
+
+## Bundled presets
+
+`blossom-drift`, `bubble-spiral`, `bunny-hearts`, `candy-burst`, `coral-ring`, `festive-spiral`, `frost-halo`, `ghost-wisps`, `gift-confetti`, `golden-halo`, `pastel-ring`, `pearl-orbit`, `pumpkin-flame`, `snow-flurry`, `spectral-orbit`, `spring-spiral`, `starburst`, `tidal-wave`, `treasure-sparkle`, `witch-spiral`.
+
+</EasterEggsGuide>

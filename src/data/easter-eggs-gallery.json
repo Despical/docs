@@ -1,0 +1,328 @@
+{
+  "minecraft": "26.3",
+  "pluginVersion": "3.0.0",
+  "templates": [
+    {
+      "id": "candy",
+      "name": "Candy",
+      "preset": "witch-spiral",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "carrot",
+      "name": "Carrot",
+      "preset": "golden-halo",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "easter-basket",
+      "name": "Easter Basket",
+      "preset": "blossom-drift",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "ghost",
+      "name": "Ghost",
+      "preset": "pumpkin-flame",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "gingerbread",
+      "name": "Gingerbread",
+      "preset": "starburst",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "gold-coin",
+      "name": "Gold Coins",
+      "preset": "treasure-sparkle",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "golden-egg",
+      "name": "Golden Egg",
+      "preset": "spring-spiral",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "ornament",
+      "name": "Christmas Ornament",
+      "preset": "gift-confetti",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "painted-egg",
+      "name": "Painted Egg",
+      "preset": "pastel-ring",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "pearl",
+      "name": "Pearl",
+      "preset": "bubble-spiral",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "present",
+      "name": "Wrapped Present",
+      "preset": "snow-flurry",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "pumpkin",
+      "name": "Pumpkin",
+      "preset": "spectral-orbit",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "seashell",
+      "name": "Seashell",
+      "preset": "tidal-wave",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "skull",
+      "name": "Skull",
+      "preset": "ghost-wisps",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "snow-globe",
+      "name": "Snow Globe",
+      "preset": "frost-halo",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "snowman",
+      "name": "Snowman",
+      "preset": "festive-spiral",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "spring-rabbit",
+      "name": "Spring Rabbit",
+      "preset": "bunny-hearts",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "starfish",
+      "name": "Starfish",
+      "preset": "coral-ring",
+      "rendering": "DISPLAY"
+    },
+    {
+      "id": "treasure-chest",
+      "name": "Sunken Treasure",
+      "preset": "pearl-orbit",
+      "rendering": "BLOCK"
+    },
+    {
+      "id": "witch-cauldron",
+      "name": "Witch Cauldron",
+      "preset": "candy-burst",
+      "rendering": "DISPLAY"
+    }
+  ],
+  "menus": [
+    {
+      "id": "hunts",
+      "title": "Hunt List",
+      "src": "/images/easter-eggs/menus/hunts.png",
+      "alt": "Easter Eggs 3.0.0 Hunt List menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "hunts-page-2",
+      "title": "Hunt List: Next Page",
+      "src": "/images/easter-eggs/menus/hunts-page-2.png",
+      "alt": "Easter Eggs 3.0.0 Hunt List: Next Page menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "hunt-open",
+      "title": "Free Exploration",
+      "src": "/images/easter-eggs/menus/hunt-open.png",
+      "alt": "Easter Eggs 3.0.0 Free Exploration menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "hunt",
+      "title": "Timed Hunt",
+      "src": "/images/easter-eggs/menus/hunt.png",
+      "alt": "Easter Eggs 3.0.0 Timed Hunt menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "collection-view",
+      "title": "Egg Collection",
+      "src": "/images/easter-eggs/menus/collection-view.png",
+      "alt": "Easter Eggs 3.0.0 Egg Collection menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "preferences",
+      "title": "Preferences",
+      "src": "/images/easter-eggs/menus/preferences.png",
+      "alt": "Easter Eggs 3.0.0 Preferences menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "pending",
+      "title": "Reward Inbox",
+      "src": "/images/easter-eggs/menus/pending.png",
+      "alt": "Easter Eggs 3.0.0 Reward Inbox menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "rewards",
+      "title": "Reward Preview",
+      "src": "/images/easter-eggs/menus/rewards.png",
+      "alt": "Easter Eggs 3.0.0 Reward Preview menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "rewards-easter",
+      "title": "Easter Rewards",
+      "src": "/images/easter-eggs/menus/rewards-easter.png",
+      "alt": "Easter Eggs 3.0.0 Easter Rewards menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "rewards-page-2",
+      "title": "Reward Pagination",
+      "src": "/images/easter-eggs/menus/rewards-page-2.png",
+      "alt": "Easter Eggs 3.0.0 Reward Pagination menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "leaderboard",
+      "title": "Ranking Choices",
+      "src": "/images/easter-eggs/menus/leaderboard.png",
+      "alt": "Easter Eggs 3.0.0 Ranking Choices menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "board-hunts",
+      "title": "Choose a Hunt",
+      "src": "/images/easter-eggs/menus/board-hunts.png",
+      "alt": "Easter Eggs 3.0.0 Choose a Hunt menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "board-results",
+      "title": "Player Rankings",
+      "src": "/images/easter-eggs/menus/board-results.png",
+      "alt": "Easter Eggs 3.0.0 Player Rankings menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "admin",
+      "title": "Hunt Editor",
+      "src": "/images/easter-eggs/menus/admin.png",
+      "alt": "Easter Eggs 3.0.0 Hunt Editor menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "admin-hunt",
+      "title": "Hunt Dashboard",
+      "src": "/images/easter-eggs/menus/admin-hunt.png",
+      "alt": "Easter Eggs 3.0.0 Hunt Dashboard menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "templates",
+      "title": "Egg Templates",
+      "src": "/images/easter-eggs/menus/templates.png",
+      "alt": "Easter Eggs 3.0.0 Egg Templates menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "placements",
+      "title": "Placed Eggs",
+      "src": "/images/easter-eggs/menus/placements.png",
+      "alt": "Easter Eggs 3.0.0 Placed Eggs menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "placement",
+      "title": "Egg Tools",
+      "src": "/images/easter-eggs/menus/placement.png",
+      "alt": "Easter Eggs 3.0.0 Egg Tools menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "hint-eggs",
+      "title": "Egg Hints",
+      "src": "/images/easter-eggs/menus/hint-eggs.png",
+      "alt": "Easter Eggs 3.0.0 Egg Hints menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "order-eggs",
+      "title": "Collection Order",
+      "src": "/images/easter-eggs/menus/order-eggs.png",
+      "alt": "Easter Eggs 3.0.0 Collection Order menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "admin-rules",
+      "title": "Hunt Rules",
+      "src": "/images/easter-eggs/menus/admin-rules.png",
+      "alt": "Easter Eggs 3.0.0 Hunt Rules menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "admin-time",
+      "title": "Time Settings",
+      "src": "/images/easter-eggs/menus/admin-time.png",
+      "alt": "Easter Eggs 3.0.0 Time Settings menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "admin-feedback",
+      "title": "Hints and Displays",
+      "src": "/images/easter-eggs/menus/admin-feedback.png",
+      "alt": "Easter Eggs 3.0.0 Hints and Displays menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "admin-recovery",
+      "title": "Reset and Removal",
+      "src": "/images/easter-eggs/menus/admin-recovery.png",
+      "alt": "Easter Eggs 3.0.0 Reset and Removal menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    },
+    {
+      "id": "confirm",
+      "title": "Confirmation",
+      "src": "/images/easter-eggs/menus/confirm.png",
+      "alt": "Easter Eggs 3.0.0 Confirmation menu captured in Minecraft 26.3",
+      "width": 520,
+      "height": 520
+    }
+  ]
+}

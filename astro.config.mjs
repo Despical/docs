@@ -396,109 +396,145 @@ export default defineConfig({
                 starlightImageZoom(),
                 starlightSidebarTopics([
                     {
-                        label: "Easter Eggs",
-                        link: "/easter-eggs/",
-                        icon: "easter-eggs",
-                        items: [
+                        "label": "Easter Eggs",
+                        "link": "/easter-eggs/",
+                        "icon": "easter-eggs",
+                        "items": [
                             {
-                                label: "Basics",
-                                items: [
+                                "label": "Basics",
+                                "items": [
                                     {
-                                        label: "Getting Started",
-                                        link: "/easter-eggs/getting-started",
+                                        "label": "Getting Started",
+                                        "link": "/easter-eggs/getting-started"
                                     },
                                     {
-                                        label: "Creating New Eggs",
-                                        link: "/easter-eggs/creating-new-eggs",
+                                        "label": "Creating and Placing Eggs",
+                                        "link": "/easter-eggs/creating-new-eggs"
                                     },
-                                ],
-                            },
-                            {
-                                label: "Commands",
-                                items: [
                                     {
-                                        label: "Admin Commands",
-                                        link: "/easter-eggs/commands/admin"
+                                        "label": "In-game Gallery",
+                                        "link": "/easter-eggs/gallery"
+                                    },
+                                    {
+                                        "label": "Menus and Editor",
+                                        "link": "/easter-eggs/menus"
                                     }
-                                ],
+                                ]
                             },
                             {
-                                label: "Configuration",
-                                items: [
+                                "label": "Commands",
+                                "items": [
                                     {
-                                        label: "config.yml",
-                                        link: "/easter-eggs/configuration/config"
+                                        "label": "Player Commands",
+                                        "link": "/easter-eggs/commands/"
                                     },
                                     {
-                                        label: "mysql.yml",
-                                        link: "/easter-eggs/configuration/mysql"
-                                    },
-                                    {
-                                        label: "messages.yml",
-                                        link: "/easter-eggs/configuration/messages"
-                                    },
-                                    {
-                                        label: "Other Files",
-                                        link: "/easter-eggs/configuration/other-files"
-                                    },
-                                ],
+                                        "label": "Administrator Commands",
+                                        "link": "/easter-eggs/commands/admin"
+                                    }
+                                ]
                             },
                             {
-                                label: "Placeholders",
-                                items: [
+                                "label": "Configuration",
+                                "items": [
                                     {
-                                        label: "General Placeholders",
-                                        link: "/easter-eggs/placeholders/general"
+                                        "label": "Overview",
+                                        "link": "/easter-eggs/configuration/"
                                     },
                                     {
-                                        label: "Leaderboard Placeholders",
-                                        link: "/easter-eggs/placeholders/leaderboard"
+                                        "label": "config.yml",
+                                        "link": "/easter-eggs/configuration/config"
                                     },
-                                ],
+                                    {
+                                        "label": "Hunts",
+                                        "link": "/easter-eggs/configuration/hunts"
+                                    },
+                                    {
+                                        "label": "Templates",
+                                        "link": "/easter-eggs/configuration/templates"
+                                    },
+                                    {
+                                        "label": "Particles",
+                                        "link": "/easter-eggs/configuration/particles"
+                                    },
+                                    {
+                                        "label": "Rewards",
+                                        "link": "/easter-eggs/rewards"
+                                    },
+                                    {
+                                        "label": "Database",
+                                        "link": "/easter-eggs/configuration/mysql"
+                                    },
+                                    {
+                                        "label": "Messages",
+                                        "link": "/easter-eggs/configuration/messages"
+                                    },
+                                    {
+                                        "label": "Managed Files",
+                                        "link": "/easter-eggs/configuration/other-files"
+                                    }
+                                ]
                             },
                             {
-                                label: "Developer API",
-                                collapsed: true,
-                                items: [
+                                "label": "Placeholders",
+                                "items": [
                                     {
-                                        label: "Easter Eggs API",
-                                        link: "/easter-eggs/api/easter-eggs-api",
+                                        "label": "Overview",
+                                        "link": "/easter-eggs/placeholders/"
                                     },
                                     {
-                                        label: "Player Events",
-                                        collapsed: true,
-                                        items: [
-                                            {
-                                                label: "FoundNewEggEvent",
-                                                link: "/easter-eggs/api/player-events/found-new-egg-event"
-                                            },
-                                        ],
+                                        "label": "General and Hunt Values",
+                                        "link": "/easter-eggs/placeholders/general"
                                     },
                                     {
-                                        label: "Easter Egg Events",
-                                        collapsed: true,
-                                        items: [
-                                            {
-                                                label: "EasterEggPlaceEvent",
-                                                link: "/easter-eggs/api/easter-egg-events/easter-egg-place-event"
-                                            },
-                                        ],
-                                    },
-                                ],
+                                        "label": "Leaderboards",
+                                        "link": "/easter-eggs/placeholders/leaderboard"
+                                    }
+                                ]
                             },
                             {
-                                label: "Miscellaneous",
-                                items: [
+                                "label": "Developer API",
+                                "collapsed": true,
+                                "items": [
                                     {
-                                        label: "FAQ",
-                                        link: "/easter-eggs/misc/faq",
+                                        "label": "API Guide",
+                                        "link": "/easter-eggs/api/"
                                     },
                                     {
-                                        label: "Source Access",
-                                        link: "/source-access",
+                                        "label": "EasterEggsApi Service",
+                                        "link": "/easter-eggs/api/easter-eggs-api"
                                     },
-                                ],
+                                    {
+                                        "label": "Collection Events",
+                                        "link": "/easter-eggs/api/player-events/found-new-egg-event"
+                                    },
+                                    {
+                                        "label": "Placement Events",
+                                        "link": "/easter-eggs/api/easter-egg-events/easter-egg-place-event"
+                                    }
+                                ]
                             },
+                            {
+                                "label": "Operations",
+                                "items": [
+                                    {
+                                        "label": "Upgrades and Recovery",
+                                        "link": "/easter-eggs/operations"
+                                    },
+                                    {
+                                        "label": "FAQ",
+                                        "link": "/easter-eggs/misc/faq"
+                                    },
+                                    {
+                                        "label": "Texture Reference",
+                                        "link": "/easter-eggs/asset-credits"
+                                    },
+                                    {
+                                        "label": "Source Access",
+                                        "link": "/source-access"
+                                    }
+                                ]
+                            }
                         ]
                     },
                     {

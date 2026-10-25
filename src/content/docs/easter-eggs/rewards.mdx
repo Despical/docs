@@ -1,0 +1,113 @@
+---
+title: "Rewards"
+description: "Configure reward triggers, actions, weighted pools, durable claims and the item inbox."
+---
+
+import GameScreenshot from '../../../components/GameScreenshot.astro';
+
+import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+Define rules under `groups` in `rewards.yml`. Hunts and templates select groups using their `rewards` lists. Rules need both the global `enabled` switch and their own enabled state.
+
+## Fixed rewards
+
+```yaml
+enabled: true
+groups:
+  spring-prizes:
+    first-discovery:
+      trigger: 'FIRST_FIND'
+      actions:
+        - type: 'XP'
+          amount: 5
+    finish:
+      trigger: 'HUNT_COMPLETE'
+      actions:
+        - type: 'ITEM'
+          value: 'DIAMOND'
+          amount: 2
+```
+
+Add `spring-prizes` to the hunt's rewards list. Rule IDs form durable claim identities, so keep them stable when changing cosmetic text.
+
+## Triggers
+
+| Trigger | Eligibility |
+| --- | --- |
+| FIRST_FIND | First discovery in the reward period |
+| EGG_FOUND | Each eligible egg discovery |
+| COUNT | Reach the configured discovery count |
+| PERCENT | Reach a percentage threshold, 1 through 100 |
+| EVERY | Each configured interval of discoveries |
+| TYPE_COMPLETE | Complete the relevant template's placements |
+| HUNT_COMPLETE | Finish the hunt |
+| PLACEMENT | Finish at the configured position |
+| PERSONAL_BEST | Improve the player's timed record |
+| SERVER_BEST | Improve the server's timed record |
+| EVENT_RANK | Receive the configured rank after a scheduled event ends |
+
+Use `threshold` for count, percentage, interval, placement or rank conditions. An optional `template` limits a rule to a template. Record rewards require meaningful timed results; event ranks need a scheduled end.
+
+## Weighted pools
+
+```yaml
+groups:
+  spring-surprise:
+    lucky-find:
+      trigger: 'EGG_FOUND'
+      random-enabled: true
+      actions: []
+      pool:
+        common:
+          weight: 4
+          actions:
+            - type: 'ITEM'
+              value: 'CARROT'
+              amount: 2
+        rare:
+          weight: 1
+          actions:
+            - type: 'ITEM'
+              value: 'DIAMOND'
+              amount: 1
+```
+
+Merge this group into the existing groups section. Positive weights are relative: 4 and 1 produce 80% and 20% chances. Enable `random-enabled` to use the pool. Fixed actions and a chosen pool entry can both be part of one rule. Players see pool chances in `/eggs rewards <hunt>`.
+
+## In-game reward preview
+
+The reward menu shows available rules and their progress. Hover a reward in game to read its actions and weighted pool details; these screenshots show the inventory layout.
+
+<GameScreenshot src="/images/easter-eggs/menus/rewards-easter.png" alt="Easter Eggs reward menu with milestone and pool reward cards" width={520} height={520} />
+
+## Actions
+
+| Type | Value and amount |
+| --- | --- |
+| ITEM | Material in value; integer amount from 1 through 2304 |
+| XP | Experience points in amount, up to 1,000,000 |
+| MONEY | Amount paid through Vault and an economy provider |
+| COMMAND | Console command in value |
+| PLAYER_COMMAND | Command executed with the player's permissions |
+| MESSAGE / BROADCAST | MiniMessage text for the player / online players |
+| TITLE | Title and optional subtitle separated with a vertical bar |
+| ACTIONBAR | MiniMessage action bar |
+| SOUND | Sound identifier |
+| PARTICLE | Particle preset ID |
+| FIREWORK | Particle and sound celebration |
+
+Commands can use values such as `%player%`; the full available reward context is supplied by the earning event. A COMMAND value starting with `p:` is also interpreted as a player command.
+
+## Claims and inbox
+
+<GameScreenshot src="/images/easter-eggs/menus/pending.png" alt="Easter Eggs item reward inbox with three example pending rewards" width={520} height={520} />
+
+Reward rights are committed with progress and are not renewed by retrying, leaving or resetting an attempt within the same reward period. Use DAILY, WEEKLY or COOLDOWN repeat policies for recurring rewards.
+
+Only overflowing **item** rewards enter `/eggs inbox`. Commands, money, XP and presentation effects do not become inbox entries. The default expiry is three hours; reminders and warning timing live in config.yml.
+
+Crashes or external failures may leave an uncertain delivery for operator review. Follow [delivery recovery](/easter-eggs/operations/#uncertain-deliveries) before retrying it.
+
+</EasterEggsGuide>

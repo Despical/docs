@@ -1,0 +1,64 @@
+---
+title: "Upgrades, Migration and Recovery"
+description: "Upgrade from Easter Eggs 2.x with explicit legacy imports, consistent backups and delivery recovery."
+---
+
+import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+## Upgrade from 2.x
+
+3.0.0 requires Paper 1.21.11 or later and Java 25. Its files, commands and API differ from 2.x. Prepare a copy of the server and back up the original plugin directory and database before upgrading.
+
+1. Stop the old server and preserve its complete EasterEggs folder outside the new active folder. Back up legacy MySQL separately if used.
+2. Install 3.0.0 and allow it to generate its configuration and storage.
+3. Keep players offline. Run the matching import from the server console:
+
+```text
+eggs admin migrate flat C:/backups/EasterEggs-2.x
+# For legacy MySQL player data, use instead:
+eggs admin migrate mysql C:/backups/EasterEggs-2.x
+```
+
+4. Inspect the backup's `migration-report.txt`. Imported hunts are disabled until explicitly enabled.
+5. Review imported templates and positions. Recreate the intended permissions, messages, rewards, cooldowns and removal behavior in the new schema, then enable the reviewed hunts.
+
+The source folder must contain the old config.yml and must be separate from the active plugin folder. Migration backs up the source, rejects repeated successful imports and does not modify the source files or legacy MySQL tables. It does not generate reward actions or automatically translate all legacy behavior.
+
+## Backups and storage changes
+
+Back up configuration and persistent data together. Stop the server before copying SQLite files. Selecting another storage backend does not migrate the current data. Test restoration in an isolated server before using it for recovery.
+
+## Reloading
+
+```text
+/eggs admin reload
+```
+
+Reload validates all configuration before replacing the running generation. If the candidate fails, the current generation remains active. Fix the reported file, value or reference and retry. Storage connection changes require a full restart.
+
+## Attempts and reward periods
+
+`/eggs admin reset <hunt> <player UUID|all> confirm` resets attempts while retaining durable discoveries and claimed reward rights. It is not a way to award the same period's prizes again. Configure a repeat policy when rewards should renew.
+
+## Uncertain deliveries
+
+```text
+/eggs admin deliveries
+```
+
+An external command or economy operation may have happened before a crash prevented its completion record. Inspect the actual external effect, then resolve that delivery ID:
+
+```text
+/eggs admin deliveries <id> done confirm
+/eggs admin deliveries <id> retry confirm
+```
+
+Choose done when the effect already happened. Choose retry when it should be executed again. These commands update durable delivery state; retry allows the delivery worker to execute the action again and can duplicate an external effect if the original succeeded.
+
+## Pending item rewards
+
+Players claim item overflow with `/eggs inbox`. Expiry, reminder and warning defaults are in config.yml. Changing the expiry duration affects newly stored entries; existing ones retain their recorded deadline.
+
+</EasterEggsGuide>

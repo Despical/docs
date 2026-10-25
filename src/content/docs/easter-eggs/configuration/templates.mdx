@@ -1,0 +1,76 @@
+---
+title: "Egg Templates"
+description: "Twenty bundled head templates, block and display rendering, hint overrides and particle states."
+---
+
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+
+<EasterEggsGuide>
+
+Templates describe reusable appearances in `templates/<id>.yml`. The filename supplies the ID. A placement keeps its own UUID and hunt even when multiple eggs use the same template.
+
+```yaml
+name: '<gold>Painted Egg'
+texture: '1237cdf6fd4cd4203e68e633d1f38dfe769971127d638843bd516aa97f793f0'
+hint: 'A splash of spring color is waiting nearby.'
+display:
+  mode: 'BLOCK'
+  scale: 1.0
+  spin: 2.0
+  bob: 0.1
+  height: 0.5
+particles:
+  unfound: 'pastel-ring'
+  found: ''
+  locked: ''
+  collect: 'bunny-hearts'
+rewards: []
+```
+
+## Rendering settings
+
+| Key | Meaning |
+| --- | --- |
+| `texture` | Mojang texture hash or Base64 textures property |
+| `display.mode` | BLOCK for a skull block; DISPLAY for an item display and interaction hitbox |
+| `display.scale` | Floating display size, 0.1 through 4 |
+| `display.spin` | Rotation in degrees per tick, -30 through 30; zero stops rotation |
+| `display.bob` | Vertical bob amplitude in blocks, 0 through 1 |
+| `display.height` | Floating display base offset in blocks, 0 through 3 |
+| `hint` | Default clue, overridden by a placement-specific hint |
+| `rewards` | Additional group IDs from rewards.yml |
+
+Spin, bob, scale and height apply to DISPLAY mode. Template particle states are `unfound`, `found`, `locked` and `collect`; an empty string disables that state. Each nonempty value must reference a [particle preset](/easter-eggs/configuration/particles/).
+
+## In-game previews
+
+Browse the [twenty-template gallery](/easter-eggs/gallery/) to inspect every texture and its ambient animation. Rendering mode can be changed independently of the texture.
+
+## Bundled templates
+
+| Template ID | Display name | Ambient preset |
+| --- | --- | --- |
+| `candy` | Candy | `witch-spiral` |
+| `carrot` | Carrot | `golden-halo` |
+| `easter-basket` | Easter Basket | `blossom-drift` |
+| `ghost` | Ghost | `pumpkin-flame` |
+| `gingerbread` | Gingerbread | `starburst` |
+| `gold-coin` | Gold Coins | `treasure-sparkle` |
+| `golden-egg` | Golden Egg | `spring-spiral` |
+| `ornament` | Christmas Ornament | `gift-confetti` |
+| `painted-egg` | Painted Egg | `pastel-ring` |
+| `pearl` | Pearl | `bubble-spiral` |
+| `present` | Wrapped Present | `snow-flurry` |
+| `pumpkin` | Pumpkin | `spectral-orbit` |
+| `seashell` | Seashell | `tidal-wave` |
+| `skull` | Skull | `ghost-wisps` |
+| `snow-globe` | Snow Globe | `frost-halo` |
+| `snowman` | Snowman | `festive-spiral` |
+| `spring-rabbit` | Spring Rabbit | `bunny-hearts` |
+| `starfish` | Starfish | `coral-ring` |
+| `treasure-chest` | Sunken Treasure | `pearl-orbit` |
+| `witch-cauldron` | Witch Cauldron | `candy-burst` |
+
+Use `/eggs admin give <hunt> <template>` to select and receive a placement head. See [creating eggs](/easter-eggs/creating-new-eggs/) for a complete example.
+
+</EasterEggsGuide>

@@ -1,84 +1,50 @@
 ---
-title: FAQ
-description: Quick answers regarding licensing, requirements, and technical details for Easter Eggs.
+title: "FAQ and Troubleshooting"
+description: "Troubleshoot Easter Eggs 3.0.0 installation, editing mode, missing effects, rewards and legacy migration."
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
 
-Welcome to the Frequently Asked Questions section. Here you can find quick answers about licensing, prerequisites, and technical resources for the **Easter Eggs** plugin.
+<EasterEggsGuide>
 
----
+## Which servers are supported?
 
-## What is the license for the Easter Eggs plugin?
+Use Paper or a compatible fork for Minecraft 1.21.11 or later, with Java 25. 3.0.0 does not support Folia or the old 1.8-to-modern Spigot range. See [installation](/easter-eggs/getting-started/).
 
-The **Easter Eggs** plugin is **Closed Source** and proprietary. **All rights are reserved by Berke 'Despical' Akçen.**
+## Why are there no eggs after installation?
 
-By using this plugin, you agree to the following mandatory **Terms of Service**:
+Bundled files define hunts, templates and effects; they do not create world placements. Use `/eggs admin` or `/eggs admin give easter painted-egg`, then place the head.
 
-* All payments are final and non-refundable.
-* Redistribution, sharing, or resale of this plugin is strictly prohibited.
-* You are not permitted to modify, decompile, or reverse-engineer any part of the plugin's source code.
-* Support is provided exclusively to legitimate customers through official channels.
+## Why can I place eggs but not collect them?
 
----
+Leave placement mode with `/eggs admin edit off`. Then check the collect permission, hunt availability, entry requirements, ordering, shared claims and whether a timed attempt needs `/eggs start <hunt>`.
 
-## Which Java versions are supported?
+## Why are particles or boss bars missing?
 
-The plugin is compiled using **Java Development Kit (JDK) 21**. Therefore, **Java 21 or newer** is strictly required to run **Easter Eggs**.
+Check player preferences, the global particle budget and view distance, the template's state preset and the hunt's boss-bar setting. Boss bars and hot/cold feedback are off in the bundled hunts until enabled.
 
-<Aside type="note">
-    We adopt the latest stable Java versions to ensure the best performance and security. If you are using an older version of Java, the plugin will fail to load.
-</Aside>
+## Why is my inbox empty?
 
----
+Only item rewards that could not fit become pending items. The inbox command is still available with permission, but empty inbox menu shortcuts are hidden. Items may also have passed their configured expiry deadline.
 
-## Which Minecraft versions are supported?
+## Why did a retry or reset not award prizes again?
 
-**Easter Eggs** supports a wide range of versions to ensure maximum compatibility for your server:
+Attempt state and reward rights are separate. Claimed rewards remain claimed within the same reward period. Configure a repeat policy for renewed rewards.
 
-* **Supported Versions:** Minecraft **1.8 - 26.3**. Use **Easter Eggs 2.4.0 or newer** for Paper 26.3.
+## Why do money rewards fail?
 
-<Aside type="caution">
-    Sub-versions like 1.20.4 or 1.21.8 are not officially supported. Please ensure you are on the final minor release of your chosen major version.
-</Aside>
+MONEY requires Vault and a working economy provider. Installing Vault alone does not create an economy. Check the provider and [uncertain deliveries](/easter-eggs/operations/#uncertain-deliveries) before retrying a payment.
 
----
+## Where is mysql.yml?
 
-## Does the plugin support PlaceholderAPI?
+3.0.0 uses `storage.mysql` inside config.yml. Switching backends does not copy existing data. See [database setup](/easter-eggs/configuration/mysql/).
 
-**Yes.** **Easter Eggs** provides a comprehensive set of placeholders to display player statistics and global egg data. You can use these in any compatible plugin like Tab, Scoreboard, or Holographic Displays.
+## Can I keep my 2.x data?
 
-We have categorized our placeholders into two main sections:
+Use the explicit legacy importer from the console with no players online. Review its report and disabled imported hunts before enabling them. See [migration](/easter-eggs/operations/).
 
-* **General Placeholders:** For individual player stats (found, left) and global egg info.
-  * 👉 [View General Placeholders](/easter-eggs/placeholders/general)
-* **Leaderboard Placeholders:** For creating Top 10 lists and ranking displays based on collected eggs.
-  * 👉 [View Leaderboard Placeholders](/easter-eggs/placeholders/leaderboard)
+## What happens when a reload fails?
 
----
+The current running configuration remains active. Correct the reported file, value or reference, then reload again. Storage changes need a restart.
 
-## How is the performance?
-
-**Easter Eggs** is designed with high performance in mind. All heavy operations, such as database saving, cross-server synchronization, and configuration loading, are handled asynchronously. The internal caching system is highly optimized to ensure that even with thousands of eggs placed across multiple worlds, your server's TPS remains completely stable.
-
----
-
-## What are the available sound names?
-
-The plugin utilizes the **XSeries** library for sound compatibility across supported Minecraft versions. Use the XSeries sound names in your configuration files.
-
-[**List of All Available XSound Names**](https://github.com/CryptoMorin/XSeries/blob/master/core/src/main/java/com/cryptomorin/xseries/XSound.java#L69)
-
----
-
-## What are the available particle effect names?
-
-The plugin utilizes **ParticleLib** to manage and display particle effects. You can find the list of supported particle names here:
-
-[**List of All Available Particle Effects**](https://github.com/Despical/ParticleLib/blob/master/src/main/java/dev/despical/particle/ParticleEffect.java#L51)
-
----
-
-## Can I create my own custom eggs?
-
-Absolutely! While the plugin comes with a few examples by default, you can fully create and customize an unlimited number of unique **Easter Eggs** via the `config.yml` file. If you have a unique idea for a mechanic or reward, feel free to share it in our Discord server!
+</EasterEggsGuide>

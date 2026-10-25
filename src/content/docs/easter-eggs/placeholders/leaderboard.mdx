@@ -1,46 +1,23 @@
 ---
-title: Leaderboard Placeholders
-description: How to display player rankings and top statistics using Easter Eggs placeholders.
+title: "Leaderboard Placeholders"
+description: "Display enabled global, hunt, cycle and fastest rankings through PlaceholderAPI."
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
 
-Leaderboard placeholders allow you to display your server's top-performing players on scoreboards, holograms, or custom in-game menus.
+<EasterEggsGuide>
 
-<Aside type="caution">
-    To use these placeholders, the **PlaceholderAPI** plugin must be installed on your server.
-</Aside>
+Enable the desired board in `config.yml` under `leaderboard.boards`. Replace rank with a one-based position up to the configured limit, and hunt with a configured hunt ID.
 
----
+| Board | Example name placeholder |
+| --- | --- |
+| Global discoveries | %eastereggs_leaderboard:global:1:name% |
+| Hunt discoveries | %eastereggs_leaderboard:hunt:easter:1:name% |
+| Current reward period | %eastereggs_leaderboard:cycle:easter:1:name% |
+| Fastest timed completion | %eastereggs_leaderboard:fastest:easter:1:name% |
 
-## Leaderboard Syntax
+Replace the final `name` with `value` or `uuid` to obtain the score/duration or player UUID. Discovery values are counts; fastest values are raw milliseconds and lower is better.
 
-To fetch leaderboard data, use the following format:
-`%eastereggs_leaderboard:<statistic>:<position>:<type>%`
+FASTEST is available only for timed hunts with positive completion durations. CYCLE is omitted for player-relative COOLDOWN hunts. Disabled boards and positions without a result have no published entry. Rankings refresh asynchronously and may lag a recent completion.
 
-### Parameters
-
-| Argument      | Description                                                                  |
-|:--------------|:-----------------------------------------------------------------------------|
-| `<statistic>` | The stat to be ranked (e.g., `eggs_collected`).                              |
-| `<position>`  | The rank position to display (1, 2, 3...).                                   |
-| `<type>`      | The type of data to return (`name` for the username, `value` for the score). |
-
----
-
-## Available Statistics
-
-Currently, there is only one primary statistic available for the leaderboard system:
-
-* `eggs_collected` — Total number of **Easter Eggs** successfully collected by the player.
-
----
-
-## Usage Examples
-
-| Goal                                            | Placeholder                                             |
-|:------------------------------------------------|:--------------------------------------------------------|
-| Name of the 1st place collector                 | `%eastereggs_leaderboard:eggs_collected:1:name%`        |
-| Amount of eggs found by the 1st place collector | `%eastereggs_leaderboard:eggs_collected:1:value%`       |
-| Name of the player in 3rd place                 | `%eastereggs_leaderboard:eggs_collected:3:name%`        |
-| Amount of eggs found by the 5th place player    | `%eastereggs_leaderboard:eggs_collected:5:value%`       |
+</EasterEggsGuide>

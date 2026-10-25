@@ -1,51 +1,32 @@
 ---
-title: messages.yml
-description: Customize all in-game messages, titles, subtitles, action bars, and text outputs.
+title: "Messages and Chat Panels"
+description: "Customize MiniMessage text, interactive help, hover descriptions, action bars and panel layout."
 ---
 
-The `messages.yml` file gives you full control over every string of text your players see. From simple chat notifications to action bar alerts, everything is fully customizable.
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
 
----
+<EasterEggsGuide>
 
-## Color Code Support
+`messages.yml` controls player feedback and interactive chat panels. Inventory titles and item text live separately in `menus.yml`.
 
-**Easter Eggs** supports both modern HEX color codes and traditional legacy color formatting, allowing you to create visually appealing messages for your players.
+## MiniMessage
 
-* **HEX Colors:** Use the `<#RRGGBB>` format for custom RGB colors (e.g., `<#FF5555>Your Text Here`).
-* **Legacy Color Codes:** Standard Minecraft color codes using the `&` symbol are fully supported (e.g., `&a` for green, `&l` for **bold**, `&n` for underlined).
-
----
-
-## Common Placeholders
-
-Throughout the messages file, you can use various placeholders to inject dynamic data into your text.
-
-* `%prefix%`: Uses the primary plugin prefix.
-* `%player%`: Displays the name of the player interacting with the egg.
-* `%egg_id%`: Displays the specific ID of the Easter Egg.
-
-*Some specific messages, like progress indicators, also use numbered placeholders like `{0}` for your found eggs and `{1}` for total eggs.*
-
----
-
-## Configuration Examples
-
-Here is how you can implement these color codes and placeholders in your file:
+Use MiniMessage tags such as `<gold>`, `<bold>` and hex colors. Quote YAML strings that contain markup. Dynamic tags such as `<hunt>`, `<found>`, `<total>` and `<time>` depend on the message being rendered; use the bundled comments for the supported values in each entry.
 
 ```yaml
-# Example using legacy color codes and numbered placeholders
-new-egg-found: "&a&lYou found an Easter Egg! &e&l(&a&l{0}&e&l/&a&l{1}&a&l)"
-
-# Example using HEX colors and standard placeholders
-egg-already-found: "<#FF5555>You have already found the %egg_id% Easter Egg, %player%!"
+found: '<#8BD5CA>You found an egg in <hunt>! <found>/<total></#8BD5CA>'
 ```
 
----
+This illustrates message formatting; edit the corresponding existing message key in your generated file. Legacy numbered placeholders and old 2.x message sections are not the 3.0.0 schema.
 
-## Applying Changes
+## Help and prompts
 
-One of the best features of the message system is that you don't need to restart your server to see changes. Simply modify the file, save it, and use the reload command in-game or from the console to see your updates instantly:
+Player help and administrator help have separate pages, command descriptions, hover text and clickable buttons. Help filters entries by each command's permission. Editor text prompts include a cancel button that returns to the relevant menu.
 
-```bash
-/eastereggs reload
-```
+Keep the supplied command placeholders intact when translating button labels or hover text. Configure the existing panel and layout sections rather than inserting manual spaces to align translated text.
+
+## Apply changes
+
+Run `/eggs admin reload`. If validation fails, the current running configuration remains active. Correct the reported value and reload again. Use `/eggs help` and `/eggs admin help` to check both help panels after translating.
+
+</EasterEggsGuide>

@@ -1,128 +1,41 @@
 ---
-title: Easter Eggs Documentation
-description: Easter Eggs is a Minecraft plugin for Paper and Spigot — hide interactive, collectible eggs with custom rewards, cross-server sync, and full configuration support.
-tableOfContents: false
+title: "Easter Eggs"
+description: "Easter Eggs 3.0.0: seasonal hunts, collectible heads, animated particles, rewards and inventory editors for Paper."
 ---
 
-import { CardGrid, LinkCard } from "@astrojs/starlight/components";
+import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
 
-## Easter Eggs 🥚
+<EasterEggsGuide>
 
-The complete guide to the **Easter Eggs** plugin. Learn how to install, configure, and master every feature to keep your players entertained by adding cool, interactive **Easter Eggs** to your server.
+Easter Eggs turns your world into a collection of treasure hunts. Version **3.0.0** provides six bundled hunts, twenty head templates, twenty layered particle presets, player menus and administrator editors.
 
-## What's New in 2.4.0
+Use **Paper 1.21.11 or later and Java 25**. Each hunt has its own progress, collection rules, reward period and optional timer. Bundled templates provide appearances; administrators choose every placement.
 
-* Added support for Paper 26.3.
-* Fixed custom egg textures failing to load on Paper 26.3, including heads in the management menu.
-* Fixed shutdown errors when plugin initialization is interrupted.
+## See it in game
 
-Existing configuration files and player data can be kept when updating. Stop your server, replace the plugin JAR with `easter-eggs-2.4.0.jar`, and start it again. Use the Java version required by your server; Paper 26.3 requires Java 25 or newer.
+The [in-game gallery](/easter-eggs/gallery/) includes a screenshot and a six-second particle animation for each of the twenty bundled templates. The [menu guide](/easter-eggs/menus/) shows the player screens and administrator editors.
 
-## Get Started
+## Start here
 
-<CardGrid>
-    <LinkCard
-        title="Getting Started"
-        description="A step-by-step guide to installing the plugin and creating your first Easter Egg."
-        href="/easter-eggs/getting-started"
-    />
+- [Install and place your first egg](/easter-eggs/getting-started/).
+- [Create and edit eggs](/easter-eggs/creating-new-eggs/).
+- [Browse commands and permissions](/easter-eggs/commands/).
+- [Configure hunts, templates and effects](/easter-eggs/configuration/).
+- [Build reward groups and weighted pools](/easter-eggs/rewards/).
+- [Use player menus and administrator editors](/easter-eggs/menus/).
 
-    <LinkCard
-        title="Creating New Eggs"
-        description="Learn how to define, configure, and place custom Easter Eggs in your world."
-        href="/easter-eggs/creating-new-eggs"
-    />
-</CardGrid>
+## Bundled hunts
 
-## Commands
+Global, Easter, Scuba, Halloween, Christmas and Enchanted are installed on first startup. They use personal collection and one-time reward periods by default. Timers, schedules, hot/cold feedback and boss bars can be enabled per hunt.
 
-<CardGrid>
-    <LinkCard
-        title="Admin Commands"
-        description="Administrative commands for managing eggs, player data, and plugin settings."
-        href="/easter-eggs/commands/admin"
-    />
-</CardGrid>
+Heads can be placed as native blocks or floating displays with rotation and bobbing. Players can adjust their particles, sounds, proximity feedback and progress bars. Item rewards that do not fit go to a persistent reward inbox.
 
-## Configuration Files
+## Updating from 2.x
 
-**Easter Eggs** offers extensive configuration, allowing you to customize messages, database storage, and plugin behavior.
+3.0.0 changes the configuration layout, commands, storage and developer API. Follow the [upgrade and operations guide](/easter-eggs/operations/) before replacing a 2.x installation. Legacy imports are explicit, backed up and reported; old configuration behavior is not automatically translated.
 
-<CardGrid>
-    <LinkCard
-        title="config.yml"
-        description="Main configuration file controlling core gameplay behavior and plugin settings."
-        href="/easter-eggs/configuration/config"
-    />
+## References
 
-    <LinkCard
-        title="mysql.yml"
-        description="Guide on setting up MySQL for data storage and cross-server synchronization."
-        href="/easter-eggs/configuration/mysql"
-    />
+[PlaceholderAPI](/easter-eggs/placeholders/), [developer API](/easter-eggs/api/), [troubleshooting](/easter-eggs/misc/faq/) and [bundled texture reference](/easter-eggs/asset-credits/).
 
-    <LinkCard
-        title="messages.yml"
-        description="Customize all in-game messages, titles, subtitles, and text outputs used by Easter Eggs."
-        href="/easter-eggs/configuration/messages"
-    />
-
-    <LinkCard
-        title="Other Files"
-        description="Automatically managed internal files used by the Easter Eggs plugin."
-        href="/easter-eggs/configuration/other-files"
-    />
-</CardGrid>
-
-## Placeholders
-
-**Easter Eggs** provides built-in placeholders and full **PlaceholderAPI** support, allowing you to display egg hunt progress and player data across your server.
-
-<CardGrid>
-    <LinkCard
-        title="General Placeholders"
-        description="Placeholders for egg discovery states and player-related data."
-        href="/easter-eggs/placeholders/general"
-    />
-
-    <LinkCard
-        title="Leaderboard Placeholders"
-        description="Placeholders specifically designed to display leaderboard rankings and statistics."
-        href="/easter-eggs/placeholders/leaderboard"
-    />
-</CardGrid>
-
-## Developer API
-
-Integrate the plugin with your code, listen for custom events, and manage player data through our API.
-
-<CardGrid>
-    <LinkCard
-        title="Player Events"
-        description="Documentation for events related to player actions and statistics."
-        href="/easter-eggs/api/player-events/found-new-egg-event"
-    />
-    <LinkCard
-        title="Easter Egg Events"
-        description="Events triggered by discovering, interacting with, and managing Easter Eggs."
-        href="/easter-eggs/api/easter-egg-events/easter-egg-place-event"
-    />
-</CardGrid>
-
----
-
-## Miscellaneous
-
-<CardGrid>
-    <LinkCard
-        title="FAQ"
-        description="Answers to frequently asked questions and troubleshooting common issues."
-        href="/easter-eggs/misc/faq"
-    />
-
-    <LinkCard
-        title="Source Access"
-        description="Connect your accounts and access eligible private repositories through the Plugin Hub."
-        href="/source-access"
-    />
-</CardGrid>
+</EasterEggsGuide>

@@ -1,174 +1,79 @@
 ---
-title: Creating New Eggs
-description: Learn how to create, configure, and place custom Easter Eggs on your Minecraft server.
+title: "Creating and Placing Eggs"
+description: "Choose a hunt and reusable template, place collectible heads and edit their hints and collection order."
 ---
 
-import { Steps, Aside, Badge } from '@astrojs/starlight/components';
+import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
 
-This guide explains how to add new **Easter Eggs** to your server configuration and place them in your world.
+<EasterEggsGuide>
 
-## Creating a New Easter Egg
+An egg has three parts: a **hunt** containing its rules, a reusable **template** containing its appearance, and a **placement** with its own UUID, world position, order and optional hint. Reusing a template does not merge the discoveries of separate placements.
 
-Before you can place a custom egg in the game, you need to define it in the `config.yml` file. Locate the `easter-eggs` section to add your new entry.
+## Place an existing template
 
-Here is a minimal example of a new egg definition:
-
-```yaml title="config.yml"
-easter-eggs:
-  # This ID (green_present) acts as the unique identifier.
-  green_present:
-    # The texture is the only REQUIRED field.
-    texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDA4Y2U3ZGViYTU2YjcyNmE4MzJiNjExMTVjYTE2MzM2MTM1OWMzMDQzNGY3ZDVlM2MzZmFhNmZlNDA1MiJ9fX0="
+```text
+/eggs admin give easter painted-egg
 ```
 
-<Aside type="tip">
-    You can find thousands of custom head textures on websites like [Minecraft-Heads](https://minecraft-heads.com).
-    Simply copy the **Value** string found under the **"For Developers"** section of any head.
-</Aside>
+Place the supplied head in the world. You can also use `/eggs admin place` to place the current selection at your feet. Use `/eggs admin edit off` before collecting.
 
----
+The [hunt editor](/easter-eggs/menus/) exposes templates, placed eggs, rules, time settings, hints and collection order.
 
-## Placing the Egg
+## Browse the bundled appearances
 
-Once your egg is defined in the configuration, follow these steps to add it to your world.
+See the [in-game gallery](/easter-eggs/gallery/) for all twenty templates and their particle animations.
 
-<Steps>
+## Create a template
 
-1.  **Get the Easter Egg Item**
-
-    Run the following command in-game to receive the egg item. Replace `green_present` with the ID you defined in the config.
-
-    ```bash
-    /eggs green_present
-    ```
-
-2.  **Place the Egg**
-
-    Place the egg anywhere in your world. It immediately becomes interactable and ready for players to collect.
-
-3.  **Test It**
-
-    Right-click the egg you just placed to verify it works.
-
-    - 🎉 You should see particle effects.
-    - 🔊 You should hear a sound.
-    - 💬 You should receive a chat message confirming you found it.
-
-</Steps>
-
----
-
-## Configuration Attributes
-
-You can customize every aspect of an egg, from the rewards to the visual effects. Below are the all available options for the `easter-eggs` section.
-
-### 🖼️ Texture <Badge text="Required" variant="success" />
-
-Defines the visual appearance of the block using a Base64 encoded string.
+Copy `templates/painted-egg.yml` to a new filename such as `templates/spring-prize.yml`. The filename supplies the template ID. Keep its texture or replace it with a Mojang texture hash or Base64 textures property.
 
 ```yaml
-texture: "BASE64_STRING_HERE"
-```
-
-### 💬 Messages <Badge text="Optional" variant="tip" />
-
-You can override the default language messages for specific **Easter Eggs**.
-
-| Attribute | Description | Internal Placeholders |
-| :--- | :--- | :--- |
-| `new-egg-found` | Sent when a player collects this egg for the first time. | `{0}` found count, `{1}` total count |
-| `egg-already-found` | Sent when a player interacts with an egg they have already collected. | `{0}` found count, `{1}` total count |
-| `all-eggs-found` | Sent when collecting this egg completes the entire collection. | `{0}` found count, `{1}` total count |
-| `has-blacklisted-perm` | Sent to players who are restricted from collecting this egg due to the blacklist. | None |
-| `no-whitelisted-perm` | Sent to players who lack the required whitelisted permission to collect this egg. | None |
-
-<Aside type="tip">
-    **PlaceholderAPI Support**
-    All message fields above fully support **PlaceholderAPI**.
-    Even if a message lists "None" for internal placeholders, you can still use standard PAPI placeholders (e.g., `%player_name%`, `%server_online%`).
-</Aside>
-
-### 📜 Executing Commands <Badge text="Optional" variant="tip" />
-
-You can define specific commands to be executed when players interact with an Easter Egg.
-
-* **Console Commands:** By default, all commands are executed by the console.
-* **Player Commands:** To make the player execute the command (e.g., for chat macros or GUI openers), prefix the command with `p:`
-
-**Available Placeholders:**
-* `%player%` - The name of the player interacting with the egg.
-* `%egg_id%` - The ID of the specific egg.
-
-#### Command Triggers
-
-The following hooks are available to trigger commands based on the interaction result:
-
-| Attribute | Trigger Condition |
-| :--- | :--- |
-| `new-egg-found` | Executed when a player successfully collects the egg for the **first time**. |
-| `egg-already-found` | Executed when a player interacts with an egg they have **already collected**. |
-| `all-eggs-found` | Executed when collecting **this specific egg** results in the player completing the entire collection. |
-| `has-blacklisted-perm` | Executed when a player tries to collect the egg but is blocked by a **blacklisted permission**. |
-| `no-whitelisted-perm` | Executed when a player tries to collect the egg but lacks the required **whitelisted permission**. |
-
-#### Example Configuration
-
-```yaml
-commands:
-  new-egg-found:
-    - "give %player% diamond 1"        # Console gives a diamond to the player
-    - "p:say I found a hidden egg!"    # Player says a message in chat
-
-  egg-already-found:
-    - "msg %player% &cYou already looted this prize!"
-
-  all-eggs-found:
-    - "broadcast &a&l%player% has found all the Easter Eggs!"
-    - "crate give key legendary %player%"
-```
-
-### 🔒 Permissions <Badge text="Optional" variant="tip" />
-
-Control exactly who can collect this specific egg.
-
-* **Whitelist:** Only players with **at least one** of these permissions can collect the egg.
-* **Blacklist:** Players with **any** of these permissions are blocked from collecting the egg.
-
-```yaml
-permissions:
-  whitelist:
-    - "eggs.collection.vip"
-  blacklist: []
-```
-
-### ✨ Particles <Badge text="Optional" variant="tip" />
-
-You can define ambient particle effects that spawn continuously around the Easter Egg to make it easier (or harder) to spot.
-
-* **`not-found`**: The particle effect shown to players who have **not yet found** this egg. (Default: `VILLAGER_HAPPY`)
-* **`found`**: The particle effect shown to players who have **already collected** this egg. (Default: `CRIT`)
-
-Set any value to `NONE` to disable that specific state.
-
-```yaml
+name: '<gold>Painted Egg'
+texture: '1237cdf6fd4cd4203e68e633d1f38dfe769971127d638843bd516aa97f793f0'
+hint: 'A splash of spring color is waiting nearby.'
+display:
+  mode: 'BLOCK'
+  scale: 1.0
+  spin: 2.0
+  bob: 0.1
+  height: 0.5
 particles:
-  found: CRIT
-  not-found: VILLAGER_HAPPY
+  unfound: 'pastel-ring'
+  found: ''
+  locked: ''
+  collect: 'bunny-hearts'
+rewards: []
 ```
 
-<Aside type="note">
-    Global settings (spawn rate, view distance, etc.) for these particles are configured under the `particles` section.
-</Aside>
+Run `/eggs admin reload`, then select your new template:
 
-### ⏱️ Miscellaneous Settings <Badge text="Optional" variant="tip" />
+```text
+/eggs admin give easter spring-prize
+```
 
-Advanced settings for behavior control.
+Template files do not place eggs automatically. Configure the effect IDs under `particles` in [particle presets](/easter-eggs/configuration/particles/); reward group IDs refer to [rewards.yml](/easter-eggs/rewards/).
 
-| Attribute | Default | Description                                                                                                         |
-| :--- | :--- |:--------------------------------------------------------------------------------------------------------------------|
-| `persistent` | `true` | If `false`, data is not saved to the database. Progress is kept in memory but resets upon server restart or reload. |
-| `cooldown` | `0` | Time in seconds a player must wait before collecting the egg again.                                                 |
-| `action-bar-disabled`| `false`| If `true`, hides action bar messages when the player is near an egg.                                                       |
-| `remove-on-collect`| |                                                                      |
-| └ `enabled` | `false` | If `true`, the block is replaced with the material specified in `convert-to` after being collected.                                                              |
-| └ `convert-to` | `AIR` | The material to replace the egg with (e.g., `AIR`, `STONE`).                                                        |
+## Floating eggs
+
+Set `display.mode` to `DISPLAY` to use an item display and interaction hitbox. `BLOCK` uses a classic skull block. Scale, spin, bob and height apply to floating displays; spin is degrees per tick and may be negative.
+
+```text
+/eggs admin set templates spring-prize display.mode DISPLAY
+/eggs admin set templates spring-prize display.spin 2.0
+```
+
+## Edit a placement
+
+Look at an egg within six blocks before using a targeted command:
+
+| Command | Result |
+| --- | --- |
+| `/eggs admin hint A clue beside the old oak` | Set a placement-specific clue |
+| `/eggs admin order 1` | Set a nonnegative collection order |
+| `/eggs admin move` | Move the targeted egg to your position, retaining its identity |
+| `/eggs admin copy` | Create a placement at your position with a new identity |
+| `/eggs admin remove confirm` | Remove the targeted placement |
+
+Ordering affects collection when the hunt enables `ordered`. A placement hint overrides the template hint. Copying creates a separate discovery; moving retains the original identity and discovery history.
+
+</EasterEggsGuide>

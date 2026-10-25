@@ -1,40 +1,26 @@
 ---
-title: System Files
-description: Overview of internal data files managed automatically by Easter Eggs.
+title: "Managed Files and Backups"
+description: "Understand Easter Eggs configuration folders, persistent storage and legacy migration backups."
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
 
-While **Easter Eggs** provides several configuration files for customization, it also manages internal data files that act as the plugin's "memory." These files are structured specifically for machine reading and high-speed data access.
+<EasterEggsGuide>
 
-<Aside type="danger">
-    **DO NOT MANUALLY EDIT:** Manual modification of these files is strictly prohibited. Editing them while the server is running can cause data corruption, loss of placed eggs, or plugin crashes. Use in-game commands or menus to modify your setups instead.
-</Aside>
+## Editable configuration
 
----
+`config.yml`, `messages.yml`, `menus.yml`, `rewards.yml`, `hunts/`, `templates/` and `particle/` are the current editable configuration. Missing defaults are installed without replacing existing files.
 
-## Managed Files Overview
+## Persistent data
 
-| File Path       | Primary Function                                                         | Management Method                            |
-|:----------------|:-------------------------------------------------------------------------|:---------------------------------------------|
-| `locations.yml` | Stores the precise **location** of every placed Easter Egg in the world. | Managed via `/eastereggs` commands and menu. |
-| `data.yml`      | Stores individual **player statistics** (collected eggs).                | Used only when `database: flat` is selected. |
+SQLite uses `easter-eggs.db`; MySQL stores the corresponding `ee_*` tables in the configured database. Placements, player progress, discoveries, reward rights, delivery state, pending items and preferences are durable data. Do not edit these tables while the plugin is running.
 
----
+Back up the configuration and database together. Stop the server before copying a SQLite installation. Preserve SQLite journal files if present.
 
-## Detailed Breakdown
----
+## Legacy files
 
-### locations.yml
+The 2.x `data/locations.yml`, `data/stats.yml` and `mysql.yml` are import sources, not active 3.0.0 configuration. Migration copies the source to a backup and writes `migration-report.txt`. Imported hunts remain disabled until reviewed.
 
-This is the most critical system file for your world setup. It contains the exact coordinate, world name, and assigned ID for every single Easter Egg you have placed on your server.
+See [operations and migration](/easter-eggs/operations/) before upgrading or restoring data.
 
-* **Why you shouldn't touch it:** A single missing comma or an incorrectly formatted coordinate will prevent the eggs from loading properly, meaning players won't be able to find or interact with them.
-* **How to update:** Always place the eggs physically in-game, and use the `/eastereggs removeall` command or the `/eastereggs menu` interface to delete locations safely.
-
-### data.yml
-
-When your server is configured to use the `flat` database mode, all player statistics and their collection progress are recorded here.
-
-* **Why you shouldn't touch it:** The plugin keeps a live cache of player data in the server's memory to maintain high performance. If you modify this file while the server is running, the plugin will eventually overwrite your changes with its own cached data, causing your manual edits to be lost forever.
-* **How to update:** If you absolutely must edit this file manually, you **must shut down the server completely** first. After the server is offline, you can make your changes and then start it back up. Alternatively, use the `/eastereggs resetstats` command to manage player data safely while the server is running.
+</EasterEggsGuide>
