@@ -1,0 +1,110 @@
+---
+title: Events
+description: Easter Eggs Bukkit events for collecting, placing, and removing eggs, hunt attempts and records, availability changes, and reward delivery, with cancellation rules and examples.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Easter Eggs fires regular Bukkit events, all synchronously on the server thread. They come in two kinds:
+
+- **Pre-events** are cancellable and fire **before** an operation is attempted. Allowing one does not guarantee success; the operation may still be rejected afterwards, for example by order rules or a database error.
+- **Post-events** fire **after** the result is committed to the database. They cannot be cancelled and never roll anything back.
+
+Event accessors use record style, for example `event.egg()` and `event.progress()`. Do not block in listeners; the database work happens elsewhere.
+
+| Package | Events |
+| --- | --- |
+| `dev.despical.eastereggs.api.event.egg` | `EggCollectEvent`, `EggCollectedEvent`, `EggPlaceEvent`, `EggPlacedEvent`, `EggRemoveEvent`, `EggRemovedEvent` |
+| `dev.despical.eastereggs.api.event.hunt` | `HuntStartEvent`, `ProgressChangedEvent`, `HuntCompletedEvent`, `HuntFailedEvent`, `HuntEndedEvent`, `HuntRecordEvent`, `HuntAvailabilityEvent` |
+| `dev.despical.eastereggs.api.event.reward` | `RewardDeliverEvent`, `RewardDeliveredEvent` |
+
+---
+
+## Egg Events
+
+| Event | Kind | Data | Fired |
+| --- | --- | --- | --- |
+| `EggCollectEvent` | Pre, cancellable | `getPlayer()`, `egg()` | A player tries to collect an egg |
+| `EggCollectedEvent` | Post | `getPlayer()`, `egg()`, `progress()` | The discovery and its reward claims are saved. `progress()` may already be `COMPLETED` |
+| `EggPlaceEvent` | Pre, cancellable | `getPlayer()`, `egg()` | An administrator places, moves, copies, or edits the order or clue of an egg. Moves keep the UUID; copies have a new one |
+| `EggPlacedEvent` | Post | `getPlayer()`, `egg()` | That change is saved and visible |
+| `EggRemoveEvent` | Pre, cancellable | `getPlayer()`, `egg()` | An administrator removes an egg |
+| `EggRemovedEvent` | Post | `getPlayer()`, `egg()` | The removal is saved. Discoveries and claims are kept |
+
+When a listener cancels a placement, removal, or start, the player sees **Action Cancelled** and nothing changes. A cancelled collection is silent, so send your own message if the player should know why.
+
+```java
+import dev.despical.eastereggs.api.event.egg.EggCollectEvent;
+import org.bukkit.GameMode;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+
+public final class NoSpectatorCollecting implements Listener {
+
+    @EventHandler(ignoreCancelled = true)
+    public void onCollect(EggCollectEvent event) {
+        if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) {
+            event.setCancelled(true);
+        }
+    }
+}
+```
+
+---
+
+## Hunt Events
+
+| Event | Kind | Data | Fired |
+| --- | --- | --- | --- |
+| `HuntStartEvent` | Pre, cancellable | `getPlayer()`, `hunt()` | A timed hunt is started or retried, or an untimed hunt is about to start automatically on a first discovery |
+| `ProgressChangedEvent` | Post | `getPlayer()`, `progress()` | An online player's attempt changed: started, egg found, completed, failed, or left |
+| `HuntCompletedEvent` | Post | `getPlayer()`, `progress()` | The player found every egg in the hunt |
+| `HuntFailedEvent` | Post | `getPlayer()`, `progress()` | A timed attempt ran out of time, including when detected at login |
+| `HuntEndedEvent` | Post | `getPlayer()`, `progress()` | Any attempt ended: check `progress().status()` for `COMPLETED`, `FAILED`, or `ABANDONED` |
+| `HuntRecordEvent` | Post | `getPlayer()`, `progress()`, `serverRecord()` | A timed completion set a personal record, and a second time if it is also a server record (personal first) |
+| `HuntAvailabilityEvent` | Post, not a player event | `hunt()`, `available()` | A hunt opened or closed because of `enabled` or its schedule. Not fired for the initial state at startup |
+
+```java
+import dev.despical.eastereggs.api.event.hunt.HuntRecordEvent;
+import net.kyori.adventure.text.Component;
+
+@EventHandler
+public void onRecord(HuntRecordEvent event) {
+    if (!event.serverRecord()) {
+        return;
+    }
+
+    long millis = event.progress().elapsed(System.currentTimeMillis());
+
+    getServer().broadcast(Component.text(event.getPlayer().getName() + " set a new record in "
+        + event.progress().hunt() + ": " + millis / 1000.0 + "s"));
+}
+```
+
+---
+
+## Reward Events
+
+These describe a single queued **action**, such as one command or one item stack, not the earning of the reward.
+
+| Event | Kind | Data | Fired |
+| --- | --- | --- | --- |
+| `RewardDeliverEvent` | Pre, cancellable | `getPlayer()`, `type()`, `value()` | Right before an action runs. `type()` is the action type such as `COMMAND`; `value()` is its configured value |
+| `RewardDeliveredEvent` | Post | `getPlayer()`, `type()`, `outcome()` | The result is saved: `DONE`, `CANCELLED`, or `UNCERTAIN` |
+
+Cancelling `RewardDeliverEvent` permanently marks that action as `CANCELLED`. It is not retried, and the reward claim remains earned. `UNCERTAIN` means the action failed or its outcome is unknown; an administrator resolves it with [`/eggs admin deliveries`](/easter-eggs/operations/#uncertain-deliveries). A `DONE` item action may have left overflow in the player's inbox.
+
+```java
+import dev.despical.eastereggs.api.event.reward.RewardDeliverEvent;
+
+@EventHandler(ignoreCancelled = true)
+public void onDeliver(RewardDeliverEvent event) {
+    if (event.type().equals("MONEY") && event.getPlayer().getWorld().getName().equals("creative")) {
+        event.setCancelled(true);
+    }
+}
+```
+
+<Aside>
+Reward events are separate from the hunt transaction. To react to a reward being **earned**, listen to `EggCollectedEvent` or `HuntCompletedEvent` instead.
+</Aside>
