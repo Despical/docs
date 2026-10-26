@@ -1,64 +1,112 @@
 ---
-title: "Upgrades, Migration and Recovery"
-description: "Upgrade from Easter Eggs 2.x with explicit legacy imports, consistent backups and delivery recovery."
+title: Operations and Recovery
+description: Safe reloads and validation, startup checks, uncertain reward deliveries, resetting attempts, and removing hunts in Easter Eggs.
 ---
 
-import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
+import { Aside } from "@astrojs/starlight/components";
 
-<EasterEggsGuide>
+## Reloading Safely
 
-## Upgrade from 2.x
+`/eggs admin reload` reads every file, validates the complete configuration, and only then replaces the running one. Every editor change and `/eggs admin set`, `create`, `clone`, or `delete` goes through the same check.
 
-3.0.0 requires Paper 1.21.11 or later and Java 25. Its files, commands and API differ from 2.x. Prepare a copy of the server and back up the original plugin directory and database before upgrading.
+When a change is rejected:
 
-1. Stop the old server and preserve its complete EasterEggs folder outside the new active folder. Back up legacy MySQL separately if used.
-2. Install 3.0.0 and allow it to generate its configuration and storage.
-3. Keep players offline. Run the matching import from the server console:
+- the running configuration stays exactly as it was;
+- for commands and editor changes, the edited file is restored to its previous content;
+- the error names the file and the problem, for example `templates/pearl.yml: unknown particle pearl-glow`.
 
-```text
-eggs admin migrate flat C:/backups/EasterEggs-2.x
-# For legacy MySQL player data, use instead:
-eggs admin migrate mysql C:/backups/EasterEggs-2.x
-```
+A successful reload keeps active attempts, running timers, discoveries, earned claims, and queued rewards. Menus open at the time are refreshed.
 
-4. Inspect the backup's `migration-report.txt`. Imported hunts are disabled until explicitly enabled.
-5. Review imported templates and positions. Recreate the intended permissions, messages, rewards, cooldowns and removal behavior in the new schema, then enable the reviewed hunts.
+### Common Validation Errors
 
-The source folder must contain the old config.yml and must be separate from the active plugin folder. Migration backs up the source, rejects repeated successful imports and does not modify the source files or legacy MySQL tables. It does not generate reward actions or automatically translate all legacy behavior.
+| Error | Cause |
+| --- | --- |
+| `unknown reward group` | A hunt or template lists a group missing from `rewards.yml` |
+| `unknown particle` | A template state or `PARTICLE` action names a missing preset |
+| `unknown prerequisite`, `Cyclic hunt prerequisite` | A `COMPLETED_HUNT` requirement names a missing hunt, or hunts require each other |
+| `Unknown reward item` | An `ITEM` action uses an unknown or non-item material |
+| `texture must be a Mojang hash or Base64 texture property` | A template texture is malformed |
+| `Particle requires unsupported data` | A layer uses a particle that needs extra data |
+| `navigation slots overlap`, `invalid or overlapping slots` | A `menus.yml` slot is outside the inventory or used twice |
+| `still references a removed hunt or template` | A placed egg uses a hunt or template whose file was removed |
+| `Storage settings require a restart` | `config.yml` storage settings were changed while running |
 
-## Backups and storage changes
+---
 
-Back up configuration and persistent data together. Stop the server before copying SQLite files. Selecting another storage backend does not migrate the current data. Test restoration in an isolated server before using it for recovery.
+## Startup Checks
 
-## Reloading
+On startup the plugin:
 
-```text
-/eggs admin reload
-```
+1. Refuses to start if `config.yml` belongs to an older version (`config-version` is not `3`). See [Migrating Legacy Data](/easter-eggs/migration/).
+2. Restores any missing bundled file. Existing files are never overwritten.
+3. Validates the full configuration and connects to the database.
+4. Pauses timers of offline-paused attempts that were running when the server last stopped.
+5. Moves interrupted reward actions and inbox claims to the uncertain state, and logs how many need inspection.
+6. Refuses to start if a placed egg refers to a missing hunt or template.
 
-Reload validates all configuration before replacing the running generation. If the candidate fails, the current generation remains active. Fix the reported file, value or reference and retry. Storage connection changes require a full restart.
+Whenever startup fails, the plugin disables itself and leaves all files and data unchanged. The console shows the reason.
 
-## Attempts and reward periods
+---
 
-`/eggs admin reset <hunt> <player UUID|all> confirm` resets attempts while retaining durable discoveries and claimed reward rights. It is not a way to award the same period's prizes again. Configure a repeat policy when rewards should renew.
+## Uncertain Deliveries
 
-## Uncertain deliveries
+A reward action becomes `UNCERTAIN` when its outcome cannot be confirmed, for example:
+
+- the server stopped while the action was running;
+- a command was not handled by any plugin;
+- a `MONEY` action found no working Vault economy.
+
+Uncertain actions are never retried automatically, so a crash cannot pay a player twice. Startup logs a warning such as `3 interrupted reward operations require administrator inspection`.
 
 ```text
 /eggs admin deliveries
 ```
 
-An external command or economy operation may have happened before a crash prevented its completion record. Inspect the actual external effect, then resolve that delivery ID:
+lists up to 50 uncertain deliveries with their IDs. Check whether the effect actually happened, for example in your economy or permission plugin's logs, then resolve each one:
 
 ```text
-/eggs admin deliveries <id> done confirm
-/eggs admin deliveries <id> retry confirm
+/eggs admin deliveries 3f1c0b9e-6d1a-4c55-9a51-0c8d3b1f2e47 retry confirm
+/eggs admin deliveries 3f1c0b9e-6d1a-4c55-9a51-0c8d3b1f2e47 done confirm
 ```
 
-Choose done when the effect already happened. Choose retry when it should be executed again. These commands update durable delivery state; retry allows the delivery worker to execute the action again and can duplicate an external effect if the original succeeded.
+| Choice | Effect |
+| --- | --- |
+| `retry` | The action is queued again and delivered the next time the player is online |
+| `done` | The action is marked delivered and will not run again |
 
-## Pending item rewards
+<Aside>
+Interrupted inbox claims are handled the same way: they are quarantined instead of being handed out a second time.
+</Aside>
 
-Players claim item overflow with `/eggs inbox`. Expiry, reminder and warning defaults are in config.yml. Changing the expiry duration affects newly stored entries; existing ones retain their recorded deadline.
+---
 
-</EasterEggsGuide>
+## Resetting Attempts
+
+```text
+/eggs admin reset <hunt> <player-uuid|all> confirm
+```
+
+The **Reset Attempts** button in a hunt's **Reset & Removal** screen does the same for everyone. A reset ends the selected attempts and clears their found eggs, so players can collect the hunt again from zero, including players who had completed it.
+
+A reset does **not** remove discoveries history, completions, records, or earned claims. Rewards already earned in the current period are therefore not paid again. To give players a fresh set of rewards, use a [repeating reward period](/easter-eggs/hunt-rules/#reward-periods) instead.
+
+The command takes a player UUID. Find it in your server's `usercache.json` or with a player-lookup command from another plugin.
+
+---
+
+## Removing Eggs and Hunts
+
+- Removing an egg deletes the placement but keeps its discoveries, claims, and leaderboard history.
+- A hunt can be deleted only after all of its eggs are removed and no other hunt requires it.
+- If you delete a template or preset file that a placed egg or template still uses, the next reload is rejected and the running configuration keeps it.
+- Bundled files you delete are restored at the next startup; disable a bundled hunt with `enabled: false` instead.
+
+---
+
+## Upgrading
+
+Before replacing the plugin JAR:
+
+1. Back up the `plugins/EasterEggs` folder and, for MySQL, the database. See [Storage](/easter-eggs/storage/#backups).
+2. Read the release notes for configuration changes.
+3. Restart the server rather than reloading the plugin with a third-party plugin manager.
