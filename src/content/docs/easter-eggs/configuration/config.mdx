@@ -1,18 +1,24 @@
 ---
-title: "config.yml"
-description: "Global Easter Eggs 3.0.0 settings with current defaults for storage, particles, preferences, inbox timing and leaderboards."
+title: config.yml
+description: Reference for Easter Eggs config.yml, covering storage, particle budgets, preference defaults, the reward inbox, leaderboards, boss bar, proximity feedback, metrics, and egg sounds.
 ---
 
-import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+import { Aside } from "@astrojs/starlight/components";
 
-<EasterEggsGuide>
-
-`config.yml` controls global services. Hunt rules belong in `hunts/`; head appearances belong in `templates/`.
-
-## Current defaults
+`plugins/EasterEggs/config.yml` holds server-wide settings. Hunts, templates, effects, rewards, menus, and messages each have their own files. Apply changes with `/eggs admin reload`; storage settings and `metrics` need a full restart.
 
 ```yaml
+# Bundled configuration generation. Keep this at 3.
 config-version: 3
+```
+
+`config-version` identifies the current configuration layout. A folder whose `config.yml` has a different value is treated as a legacy installation and the plugin refuses to start; see [Migrating Legacy Data](/easter-eggs/migration/). Changing the number does not convert anything.
+
+---
+
+## storage
+
+```yaml
 storage:
   type: 'sqlite'
   mysql:
@@ -22,17 +28,77 @@ storage:
     username: 'root'
     password: ''
     ssl: true
+```
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `type` | `sqlite` | `sqlite` stores everything in `plugins/EasterEggs/easter-eggs.db`. `mysql` uses the server below |
+| `mysql.host` | `localhost` | Database host name or IP address, not a JDBC URL |
+| `mysql.port` | `3306` | TCP port, 1 to 65535 |
+| `mysql.database` | `eastereggs` | Existing database; letters, digits, and `_`. The plugin creates its `ee_*` tables but not the database |
+| `mysql.username` | `root` | Account with permission to create tables and indexes and to read and write rows |
+| `mysql.password` | `''` | Keep it quoted. An empty string means an empty password |
+| `mysql.ssl` | `true` | `true` requires a trusted certificate and matching host name (`VERIFY_IDENTITY`); `false` disables TLS |
+
+<Aside type="caution">
+Storage settings are read once at startup. While the server runs, a reload that changes them is rejected with "Storage settings require a restart" and nothing is applied; edit them while the server is stopped. Switching `type` does **not** copy data between backends. See [Storage](/easter-eggs/storage/).
+</Aside>
+
+---
+
+## particles
+
+```yaml
 particles:
   budget-per-player: 180
   tick-interval: 2
   view-distance: 24
+```
+
+| Key | Range | Description |
+| --- | --- | --- |
+| `budget-per-player` | 0 to 1000 | Maximum particle points sent to one player per tick, shared by ambient effects, collection effects, and previews. `0` disables particles. The `REDUCED` density uses a quarter |
+| `tick-interval` | 1 to 20 | How often floating display eggs update their rotation and bobbing, in ticks |
+| `view-distance` | 1 to 64 | Search radius in blocks for ambient egg effects around each player. Each preset also has its own `view-distance` |
+
+Particle emission frequency is set per preset with `interval-ticks`.
+
+---
+
+## preferences
+
+```yaml
 preferences:
   sounds: true
   proximity: true
+```
+
+Server defaults for players whose preference is still **inherited**. `sounds` enables collection, menu, and reward sounds; `proximity` enables hot and cold feedback where a hunt allows it. Players override them in `/eggs preferences`. See [Hints and Preferences](/easter-eggs/hints-and-preferences/#player-preferences).
+
+---
+
+## pending
+
+```yaml
 pending:
   expire-after-seconds: 10800
   reminder-seconds: 300
   warning-seconds: 900
+```
+
+Settings for the [reward inbox](/easter-eggs/rewards/#reward-inbox), which only holds item rewards that did not fit in an inventory.
+
+| Key | Range | Description |
+| --- | --- | --- |
+| `expire-after-seconds` | 0 to 31536000 | Lifetime of a newly stored item. `10800` is three hours; `0` never expires. Existing items keep their original deadline |
+| `reminder-seconds` | 10 to 86400 | Minimum time between reminders for an online player with claimable items |
+| `warning-seconds` | 0 to 31536000 | Remaining time below which the reminder becomes an expiry warning. `0` disables warnings |
+
+---
+
+## leaderboard
+
+```yaml
 leaderboard:
   boards:
     - 'GLOBAL'
@@ -40,61 +106,98 @@ leaderboard:
     - 'CYCLE'
     - 'FASTEST'
   limit: 50
+```
+
+| Board | Ranks by |
+| --- | --- |
+| `GLOBAL` | All-time discoveries across every hunt |
+| `HUNT` | All-time discoveries in each hunt |
+| `CYCLE` | Discoveries in the current reward period of each hunt; not available for `COOLDOWN` hunts |
+| `FASTEST` | Best completion time in each timed hunt |
+
+Remove a board to hide it from menus and [placeholders](/easter-eggs/placeholders/#leaderboards); an empty list disables rankings. `limit` (1 to 1000) is the number of rows loaded per board.
+
+---
+
+## boss-bar
+
+```yaml
 boss-bar:
   title: '<bold><hunt></bold> <#606A7B>•</#606A7B> <#FFE49A><bold><found>/<total></bold></#FFE49A> <#606A7B>•</#606A7B> <#FFFFFF><time></#FFFFFF>'
   color: 'YELLOW'
   overlay: 'PROGRESS'
   always-visible: true
   visible-seconds: 8
+```
+
+Appearance of the progress bar. It is only shown for hunts with `boss-bar: true`, and players can hide it.
+
+| Key | Description |
+| --- | --- |
+| `title` | MiniMessage text. `<hunt>` keeps the hunt's own colors; `<found>`, `<total>`, and `<time>` are plain values. `<time>` is the elapsed time, or the remaining time in a timed hunt with a limit |
+| `color` | `PINK`, `BLUE`, `RED`, `GREEN`, `YELLOW`, `PURPLE`, or `WHITE` |
+| `overlay` | `PROGRESS`, `NOTCHED_6`, `NOTCHED_10`, `NOTCHED_12`, or `NOTCHED_20` |
+| `always-visible` | `true` keeps the bar on screen. `false` shows it briefly after joining, starting, or progress |
+| `visible-seconds` | 1 to 300. Display time when `always-visible` is `false` |
+
+---
+
+## proximity
+
+```yaml
 proximity:
   interval-millis: 3000
   radius-blocks: 24
   hot-radius-blocks: 5
   warm-radius-blocks: 12
+```
+
+Hot and cold feedback for hunts with `hints.hot-cold: true`. No exact distance or direction is ever shown.
+
+| Key | Range | Description |
+| --- | --- | --- |
+| `interval-millis` | 1000 to 60000 | Minimum time between messages for one player |
+| `radius-blocks` | 1 to 128 | Search radius; beyond it nothing is shown. Between `warm-radius-blocks` and this value is **cold** |
+| `hot-radius-blocks` | 1 to `warm-radius-blocks` | Closer than this is **hot** |
+| `warm-radius-blocks` | `hot-radius-blocks` to `radius-blocks` | Closer than this is **warm** |
+
+---
+
+## metrics
+
+```yaml
 metrics: true
+```
+
+Sends anonymous usage statistics to [bStats](https://bstats.org/). Restart after changing it.
+
+---
+
+## egg-sounds
+
+```yaml
 egg-sounds:
   interaction-cooldown-millis: 1200
   enabled: true
-  placed:
-    sound: 'minecraft:block.wood.place'
-    volume: 0.6
-    pitch: 1.0
   found:
     sound: 'minecraft:entity.experience_orb.pickup'
     volume: 0.6
     pitch: 1.3
-  already-found:
-    sound: 'minecraft:entity.villager.no'
-    volume: 0.6
-    pitch: 1.0
-  complete:
-    sound: 'minecraft:entity.player.levelup'
-    volume: 0.6
-    pitch: 1.0
-  unavailable:
-    sound: 'minecraft:entity.villager.no'
-    volume: 0.6
-    pitch: 1.0
-  edit-mode:
-    sound: 'minecraft:entity.villager.no'
-    volume: 0.6
-    pitch: 1.0
-  time-up:
-    sound: 'minecraft:block.note_block.bass'
-    volume: 0.8
-    pitch: 0.7
 ```
 
-## Settings that affect gameplay
+| Key | Description |
+| --- | --- |
+| `interaction-cooldown-millis` | 0 to 10000. Repeated clicks on the same egg within this time are silently ignored, including messages and sounds. `0` disables it |
+| `enabled` | Master switch for the cues below. Player sound preferences are respected as well |
 
-- `particles.budget-per-player` limits points emitted per viewer per tick. Zero disables emission; the reduced preference uses one quarter of the budget.
-- `particles.tick-interval` controls floating-head transform updates. Each particle preset separately sets its emission interval and view distance.
-- `pending.expire-after-seconds` defaults to three hours. Zero removes expiry for newly stored items; existing rows keep their original deadline.
-- `leaderboard.boards` enables GLOBAL, HUNT, CYCLE and FASTEST choices. An empty list hides all ranking choices.
-- `boss-bar` configures appearance. Enable `boss-bar: true` in a hunt as well; bundled hunts default to false.
-- `proximity` sets qualitative hot/warm/cold feedback. The hunt must enable `hints.hot-cold` and the player must allow proximity feedback.
-- `egg-sounds` controls placement and interaction sounds. Players may disable their own collection sounds.
+Each cue has `sound`, `volume` (0.0 to 1.0), and `pitch` (0.5 to 2.0). `sound` is a namespaced sound key, including resource-pack sounds, or `none` for silence.
 
-The bundled file includes supported ranges and comments for every setting. Reload ordinary settings with `/eggs admin reload`; restart after storage connection changes. Leave `config-version: 3` at its bundled value.
-
-</EasterEggsGuide>
+| Cue | Default sound | Played when |
+| --- | --- | --- |
+| `placed` | `minecraft:block.wood.place` | A new egg or copy is saved |
+| `found` | `minecraft:entity.experience_orb.pickup` | An egg is discovered, except the last one |
+| `already-found` | `minecraft:entity.villager.no` | An egg already found, or in a completed hunt, is clicked |
+| `complete` | `minecraft:entity.player.levelup` | The last egg is found; replaces `found` |
+| `unavailable` | `minecraft:entity.villager.no` | Collection is refused, for example wrong order or a closed hunt |
+| `edit-mode` | `minecraft:entity.villager.no` | An egg is clicked while in edit mode |
+| `time-up` | `minecraft:block.note_block.bass` | A timed attempt expires, including expiry noticed at login |
