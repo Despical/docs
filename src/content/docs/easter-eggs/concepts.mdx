@@ -1,0 +1,86 @@
+---
+title: Core Concepts
+description: How Easter Eggs separates hunts, templates, particle presets, and placed eggs, and how attempts, reward periods, and durable claims fit together.
+---
+
+Easter Eggs keeps a few ideas deliberately separate. Knowing them makes every configuration file and menu easier to read.
+
+## Content Model
+
+| Concept | Where it lives | What it defines |
+| --- | --- | --- |
+| **Hunt** | `hunts/<id>.yml` | An event with its own rules, progress, rewards, and rankings |
+| **Template** | `templates/<id>.yml` | A reusable appearance: head texture, default clue, rendering, and particle states |
+| **Particle preset** | `particle/<id>.yml` | A layered effect used by templates, previews, and `PARTICLE` rewards |
+| **Placed egg** | Database | One collectible in the world: a permanent UUID, its hunt, template, block position, order number, and optional clue |
+| **Reward group** | `rewards.yml` | Named rules attached to hunts and templates |
+
+The **file name is the stable ID** for hunts, templates, and presets. IDs use lowercase letters, digits, `_`, and `-`, start with a letter or digit, and are at most 48 characters long.
+
+A placed egg belongs to exactly one hunt and uses exactly one template. Templates are not tied to a hunt: the same Pearl template can appear in Scuba and in a custom hunt. A placed egg's identity is independent of its position, so **moving an egg keeps its discovery history**, while **copying creates a new collectible**.
+
+---
+
+## Attempts and Progress
+
+Each player has, per hunt, a current **attempt** that records the eggs found in it and its lifecycle state:
+
+| State | Meaning |
+| --- | --- |
+| `ACTIVE` | The attempt is running and eggs can be collected |
+| `COMPLETED` | Every egg placed in the hunt was found |
+| `FAILED` | A timed attempt reached its time limit |
+| `ABANDONED` | The player left a timed attempt with `/eggs leave` |
+
+Untimed hunts start an attempt automatically on the first valid discovery. Timed hunts require an explicit start from the menu or `/eggs start <hunt>`, and starting again after a failure or leave begins a **retry**.
+
+Completion is measured against the number of eggs currently placed in the hunt. Adding eggs to a hunt after players finished does not reopen their completed attempts.
+
+---
+
+## Reward Periods and Claims
+
+A **reward period** (also called a *cycle*) decides when rewards can be earned again. It is configured per hunt with `repeat.mode`:
+
+| Mode | A new period begins |
+| --- | --- |
+| `ONCE` | Never; the hunt is a one-time event (default) |
+| `DAILY` | At `reset-time` every day in the hunt's time zone |
+| `WEEKLY` | At `reset-time` on `reset-day` every week |
+| `COOLDOWN` | `cooldown-seconds` after the player completes the hunt |
+
+Every reward a player earns is recorded as a **durable claim** keyed by player, hunt, period, and rule. A claim can only be earned once per period, regardless of reloads, logouts, retries, or server restarts.
+
+**A retry is not a new period.** A retry of a timed hunt starts with an empty collection and a fresh timer, but eggs and milestones already rewarded in the current period are not paid again, and completion rewards are only granted for the first completion in the period. Only a new reward period renews those rights. Totals, discoveries, and records survive across periods.
+
+---
+
+## Collection Modes
+
+| Mode | Behavior |
+| --- | --- |
+| `PERSONAL` | Every player finds every egg independently (default) |
+| `SHARED` | Each egg goes to the first player who collects it in the current period; others see it as already claimed |
+
+Shared hunts are a server-local race stored in your database. They support `ONCE`, `DAILY`, and `WEEKLY` periods but not the player-relative `COOLDOWN`.
+
+---
+
+## Visual States
+
+Each template assigns a particle preset to four states, evaluated **per viewer**:
+
+| State | Shown when |
+| --- | --- |
+| `unfound` | The viewer has not found the egg and the hunt is available |
+| `found` | The viewer has already found the egg |
+| `locked` | The hunt is disabled, outside its schedule, or the viewer fails its entry requirements |
+| `collect` | A one-shot private effect played at the moment of collection |
+
+With `hide-collected: true`, an egg is hidden only from the player who found it. This is a personal visibility change; the egg remains in the world for everyone else, unlike a shared hunt where the egg is claimed for the period.
+
+---
+
+## Validation and Reloads
+
+Configuration is validated on startup, on `/eggs admin reload`, and after every editor or command change. A rejected change never replaces the running configuration; the error names the file and field. A successful reload keeps progress, timers, and earned claims. See [Operations and Recovery](/easter-eggs/operations/).
