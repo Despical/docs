@@ -1,0 +1,130 @@
+---
+title: API Getting Started
+description: Add Easter Eggs as a dependency, load the EasterEggsApi Bukkit service, and read hunts, templates, placements, progress, preferences, and leaderboards without blocking the server.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Easter Eggs registers `dev.despical.eastereggs.api.EasterEggsApi` in Bukkit's service manager once it has fully started. Everything the API returns is an immutable record or a copied collection, so you can keep values and pass them to other threads. Live services, repositories, and other classes outside the `api` package are internal and may change.
+
+## Dependency
+
+The API ships inside the plugin JAR. Add the JAR as a compile-only dependency; do not shade it.
+
+```groovy
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT'
+    compileOnly files('libs/easter-eggs-<version>.jar')
+}
+```
+
+Declare the dependency in your `plugin.yml`, or use `softdepend` if Easter Eggs is optional for your plugin:
+
+```yaml
+depend: [EasterEggs]
+```
+
+The plugin targets Java 25.
+
+---
+
+## Load the Service
+
+```java
+import dev.despical.eastereggs.api.EasterEggsApi;
+
+public final class MyPlugin extends JavaPlugin {
+
+    private EasterEggsApi eggs;
+
+    @Override
+    public void onEnable() {
+        eggs = getServer().getServicesManager().load(EasterEggsApi.class);
+
+        if (eggs == null) {
+            getLogger().warning("Easter Eggs is not available");
+            return;
+        }
+
+        eggs.hunts().forEach(hunt -> getLogger().info(hunt.id() + ": " + hunt.totalEggs() + " eggs"));
+    }
+}
+```
+
+The service is withdrawn when Easter Eggs disables. After a full Easter Eggs restart, load it again instead of keeping the old reference.
+
+---
+
+## Methods
+
+| Method | Returns | Thread |
+| --- | --- | --- |
+| `hunts()` | `List<HuntInfo>` for every configured hunt | Server thread |
+| `templates()` | `List<TemplateInfo>` sorted by ID | Server thread |
+| `eggs(String hunt)` | `List<PlacedEgg>` in collection order; empty for an unknown hunt | Server thread |
+| `cachedProgress(UUID player, String hunt)` | `Optional<HuntProgress>` for an online, loaded player | Server thread |
+| `preferences(UUID player)` | `PlayerPreferences`; inherited defaults for players who are not loaded | Server thread |
+| `progress(UUID player, String hunt)` | `CompletionStage<Optional<HuntProgress>>` read from the database, also for offline players | Any; completes on the storage thread |
+| `leaderboard(String hunt, String cycle, boolean fastest, int limit)` | `CompletionStage<List<LeaderboardEntry>>` | Any; completes on the storage thread |
+
+For `leaderboard`, pass `null` as `hunt` for all hunts and `null` as `cycle` for all time. With `fastest` set to `true`, entries are ranked by lowest completion time in milliseconds; otherwise by discovery count. `limit` is clamped to 1 to 1000.
+
+<Aside type="caution">
+Never call `join()` or `get()` on a returned stage from the server thread. The stages complete on Easter Eggs' storage thread; switch back to the server thread with the scheduler before touching players, worlds, or inventories.
+</Aside>
+
+```java
+UUID id = player.getUniqueId();
+
+eggs.progress(id, "easter").whenComplete((progress, error) ->
+    getServer().getScheduler().runTask(this, () -> {
+        Player online = getServer().getPlayer(id);
+
+        if (error != null || online == null) {
+            return;
+        }
+
+        int found = progress.map(value -> value.found().size()).orElse(0);
+        online.sendMessage("Easter eggs found: " + found);
+    }));
+```
+
+```java
+eggs.leaderboard("enchanted", null, true, 3).thenAccept(entries ->
+    getServer().getScheduler().runTask(this, () -> entries.forEach(entry ->
+        getLogger().info("#" + entry.position() + " " + entry.name() + " " + entry.value() / 1000.0 + "s"))));
+```
+
+---
+
+## Records
+
+All records live in `dev.despical.eastereggs.api.model`.
+
+| Record | Components |
+| --- | --- |
+| `HuntInfo` | `id`, `name` (MiniMessage), `enabled`, `available` (schedule currently open), `timed`, `timeLimitSeconds` (`0` for none), `totalEggs` |
+| `TemplateInfo` | `id`, `name` (MiniMessage), `texture`, `hint`, `displayMode` (`BLOCK` or `DISPLAY`), `stateEffects` (map from `UNFOUND`, `FOUND`, `LOCKED`, `COLLECT` to preset IDs; unset states are absent) |
+| `PlacedEgg` | `id` (permanent UUID), `hunt`, `template`, `position`, `order`, `hint` (placement clue, empty if unset) |
+| `EggPosition` | `world` (name), `x`, `y`, `z` (block coordinates) |
+| `HuntProgress` | `player`, `hunt`, `cycle`, `attempt`, `startedAt`, `pausedMillis`, `pausedAt`, `finishedAt`, `status`, `found` (set of placement UUIDs) |
+| `LeaderboardEntry` | `player`, `name`, `value` (count or milliseconds), `position` (one-based) |
+| `PlayerPreferences` | `particles` (`INHERIT`, `FULL`, `REDUCED`, `OFF`), `sounds`, `proximity`, `bossBar` (`INHERIT`, `ON`, `OFF`) |
+
+`AttemptStatus` is `ACTIVE`, `COMPLETED`, `FAILED`, or `ABANDONED`. Timestamps are epoch milliseconds; `0` means unset. `HuntProgress.elapsed(long now)` returns the attempt's running time in milliseconds, excluding offline pauses and stopping at the finish. `PlayerPreferences.Toggle.resolve(boolean fallback)` turns an `INHERIT` value into the given default.
+
+`cycle` is the [reward period](/easter-eggs/concepts/#reward-periods-and-claims) key: `once` for one-time hunts, a date-based key for daily and weekly hunts, and a per-player key for cooldown hunts. Treat it as an opaque string.
+
+```java
+for (HuntInfo hunt : eggs.hunts()) {
+    if (!hunt.enabled() || !hunt.available()) {
+        continue;
+    }
+
+    eggs.cachedProgress(player.getUniqueId(), hunt.id()).ifPresent(progress ->
+        player.sendMessage(hunt.id() + ": " + progress.found().size() + "/" + hunt.totalEggs()
+            + " (" + progress.status() + ")"));
+}
+```
+
+Continue with [Events](/easter-eggs/api/events/) to react to discoveries, placements, attempts, and reward deliveries.
