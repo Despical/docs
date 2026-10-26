@@ -1,0 +1,102 @@
+---
+title: Migrating Legacy Data
+description: Import egg types, egg locations, and player discoveries from an older Easter Eggs installation using flat-file or MySQL storage, with an automatic backup and report.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+The current version uses a new configuration layout, database schema, command set, and developer API. Older installations are **not** converted automatically. Instead, an administrator imports the old data once with a console command. The import is backed up, reported, and safe to attempt again after a failure.
+
+## What Is Imported
+
+| Legacy data | Becomes |
+| --- | --- |
+| Each egg type in the old `config.yml` `easter-eggs` section | One template and one hunt, both with the ID `legacy-<hash>` and the old type name as display name |
+| Each texture | The new template's `texture` |
+| Each location in `data/locations.yml` | A placed egg in the matching hunt, with a stable UUID and increasing order |
+| Each player's collected eggs (`data/stats.yml`, or the old MySQL stats table) | Discoveries in the matching hunt; players who found every egg of a type are marked as completed |
+
+Not imported: rewards, messages, permissions, commands, cooldowns, and removal behavior. They remain in the backup for reference. **No rewards are paid** for imported history, and imported completions have no time, so they never count as records.
+
+Imported hunts are created **disabled**, as one-time hunts without rewards. Review them, attach reward groups, merge or rename as you like, and enable them explicitly.
+
+---
+
+## Steps
+
+<Steps>
+
+1. Stop the server and back up the whole server folder.
+2. Rename the old plugin folder, for example `plugins/EasterEggs` to `plugins/EasterEggs-legacy`. If you start the new version on the old folder by mistake, nothing is changed: the console prints these steps, including the exact import command for your installation, and the plugin stays disabled.
+3. Replace the plugin JAR and start the server. A fresh `plugins/EasterEggs` folder is created.
+4. Make sure no players are online, then run the import **from the console**:
+
+   ```text
+   eggs admin migrate flat EasterEggs-legacy
+   ```
+
+   Use `mysql` instead of `flat` if the old installation stored player data in MySQL:
+
+   ```text
+   eggs admin migrate mysql EasterEggs-legacy
+   ```
+
+5. Wait for **Migration Complete**. Every administrator command is refused while the import runs.
+6. Read the report, review the generated `hunts/legacy-*.yml` and `templates/legacy-*.yml` files, and enable the hunts you want.
+
+</Steps>
+
+A relative folder is looked up in the server folder first and then in `plugins/`, so `EasterEggs-legacy` and `plugins/EasterEggs-legacy` both work. Absolute paths and paths with spaces are accepted.
+
+Before anything is copied, the command checks that the folder exists, contains the old `config.yml` and `data/locations.yml`, is not the active plugin folder, and matches the selected mode. If a check fails, the console explains what is wrong and nothing is imported.
+
+---
+
+## Modes
+
+| Mode | Player data is read from |
+| --- | --- |
+| `flat` | `data/stats.yml` in the legacy folder |
+| `mysql` | The table named by `stats-table` in the legacy folder's `mysql.yml`, using its `address`, `user`, and `password` |
+
+If the old `config.yml` says `database: mysql`, you must choose `mysql`. The MySQL connection is read-only and never creates or changes the old database. A copy of the read rows is saved as `mysql-export.yml` in the backup.
+
+---
+
+## Backup and Report
+
+Before reading anything, the legacy folder is copied to `plugins/EasterEggs/backups/legacy-<timestamp>-<id>/`. The original folder and any legacy MySQL tables are never modified.
+
+The backup contains `migration-report.txt`:
+
+```text
+SUCCESS
+Templates/hunts: 4
+Placements: 87
+Players: 152
+Matched discoveries: 2311
+Unmatched historical entries: 6
+Imported hunts are DISABLED. Review and enable explicitly.
+```
+
+**Unmatched** entries are player discoveries whose type or location no longer exists in the legacy location list.
+
+---
+
+## Safety Checks
+
+The import stops with the reason in the console, and leaves the source untouched, when:
+
+- it is not run from the console, or players are online;
+- the folder has no `config.yml`, no `easter-eggs` section, or no `data/locations.yml`;
+- the folder already uses the current format;
+- the same folder was already imported in the same mode;
+- a location is malformed, duplicated, or already used by an existing placed egg;
+- a generated `legacy-*` hunt or template file already exists;
+- the legacy MySQL address is not a `jdbc:mysql://` URL or the table name is invalid.
+
+Problems found before the backup is made are reported in the console only. Problems found later are also written to `migration-report.txt` as `FAILED`, and the console names that file.
+
+<Aside>
+Each source folder and mode can be imported successfully only once, so running the command twice cannot duplicate placements or discoveries. After a failure, fix the reported problem and run it again. If the failure happened after the `legacy-*` hunt and template files were generated, delete those files first; the import refuses to overwrite them.
+</Aside>
