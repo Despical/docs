@@ -1,0 +1,158 @@
+---
+title: rewards.yml
+description: Reference for Easter Eggs rewards.yml, covering groups, rules, triggers, thresholds, action types, weighted pools, placeholders, and the bundled reward groups.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+`plugins/EasterEggs/rewards.yml` defines every reward. How rewards are earned, recorded, and delivered is explained in [Rewards](/easter-eggs/rewards/); this page is the file reference.
+
+## Structure
+
+```yaml
+enabled: true
+
+groups:
+  my-group:            # group ID, listed in hunts/*.yml or templates/*.yml
+    my-rule:           # rule ID; the stable identity is my-group.my-rule
+      enabled: true
+      trigger: 'COUNT'
+      threshold: 5
+      template: ''
+      actions:
+        - type: 'ITEM'
+          value: 'EMERALD'
+          amount: 1
+      random-enabled: false
+      pool: {}
+```
+
+`enabled` at the top is a master switch for new rewards. Actions already queued are still delivered when it is `false`.
+
+### Rule Keys
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `enabled` | `true` | Disabled rules stay in the file and in the reward menu but grant nothing |
+| `trigger` | `EGG_FOUND` | When the rule is earned. See [triggers](/easter-eggs/rewards/#triggers) |
+| `threshold` | `1` | Number used by `COUNT`, `EVERY`, `PERCENT` (1 to 100), `PLACEMENT`, and `EVENT_RANK` (1 to 1000000). Ignored by other triggers |
+| `template` | `''` | Restrict the rule to discoveries of one template ID |
+| `actions` | `[]` | Fixed actions, up to 32, always granted together |
+| `random-enabled` | `false` | Add one weighted option from `pool` to the fixed actions |
+| `pool` | | Named options, each with `weight` (1 to 1000000) and `actions` |
+
+Group and rule IDs follow the same rules as other IDs: lowercase letters, digits, `_`, and `-`.
+
+<Aside type="caution">
+The rule ID is part of every earned claim. Renaming a group or rule lets players earn it again. Keep IDs stable once players have started.
+</Aside>
+
+---
+
+## Actions
+
+Each action is a map with `type` and, depending on the type, `value` and `amount`.
+
+| Type | `value` | `amount` | Effect |
+| --- | --- | --- | --- |
+| `COMMAND` | Command without `/` | | Runs as the console. A value starting with `p:` runs as the player instead |
+| `PLAYER_COMMAND` | Command without `/` | | Runs as the player, with the player's permissions |
+| `ITEM` | Material name, such as `DIAMOND` | 1 to 2304 | Gives items in normal stacks; overflow goes to the [inbox](/easter-eggs/rewards/#reward-inbox) |
+| `XP` | | 0 to 1000000 | Gives experience **points**, not levels |
+| `MONEY` | | Positive number | Deposits money through Vault. Requires an economy plugin |
+| `MESSAGE` | MiniMessage text | | Chat panel sent to the player |
+| `BROADCAST` | MiniMessage text | | Chat panel sent to every online player |
+| `TITLE` | `Title\|Subtitle` in MiniMessage | | Title and optional subtitle, separated by `\|` |
+| `ACTIONBAR` | MiniMessage text | | Action-bar message |
+| `SOUND` | Sound key, such as `minecraft:entity.player.levelup` | | Plays a sound to the player if their sounds are enabled |
+| `PARTICLE` | Particle preset ID | | Plays a preset privately at the player |
+| `FIREWORK` | | | Firework sparks and a blast sound at the player. No firework entity is spawned and no damage is dealt |
+
+Unknown item materials and particle presets are rejected when the file loads. A `COMMAND` or `PLAYER_COMMAND` that is not handled, or a `MONEY` action without a working economy, is marked as an [uncertain delivery](/easter-eggs/operations/#uncertain-deliveries).
+
+```yaml
+actions:
+  - type: 'COMMAND'
+    value: 'lp user %player% permission settemp cosmetics.bunnyhat true 7d'
+  - type: 'COMMAND'
+    value: 'p:spawn'
+  - type: 'MONEY'
+    amount: 250
+  - type: 'TITLE'
+    value: '<gold>Hunt complete!|<gray>%hunt% finished in %time%s'
+  - type: 'SOUND'
+    value: 'minecraft:ui.toast.challenge_complete'
+  - type: 'PARTICLE'
+    value: 'gift-confetti'
+```
+
+### Placeholders
+
+Values are captured when the reward is earned and do not change afterwards.
+
+| Placeholder | Value |
+| --- | --- |
+| `%player%` | Player name |
+| `%uuid%` | Player UUID |
+| `%hunt%` | Hunt ID |
+| `%cycle%` | Reward period identifier |
+| `%egg%` | Placement UUID; empty for season ranking rewards |
+| `%template%` | Template ID; empty for season ranking rewards |
+| `%found%` | Discovery count after the triggering discovery |
+| `%total%` | Number of eggs in the hunt at that moment |
+| `%threshold%` | The rule's `threshold` |
+| `%placement%` | Completion or season rank; `0` otherwise |
+| `%time%` | Elapsed attempt time in seconds, with two decimals |
+
+In commands they are replaced as plain text. In `MESSAGE`, `BROADCAST`, `TITLE`, and `ACTIONBAR` they are inserted as unformatted values, so a player name cannot inject MiniMessage tags.
+
+---
+
+## Weighted Pools
+
+```yaml
+spring-pool:
+  trigger: 'EGG_FOUND'
+  random-enabled: true
+  actions: []
+  pool:
+    common:
+      weight: 70
+      actions:
+        - type: 'ITEM'
+          value: 'CARROT'
+          amount: 2
+    rare:
+      weight: 25
+      actions:
+        - type: 'ITEM'
+          value: 'GOLD_NUGGET'
+          amount: 3
+    special:
+      weight: 5
+      actions:
+        - type: 'ITEM'
+          value: 'DIAMOND'
+          amount: 1
+```
+
+Exactly one option is chosen each time the rule is earned, with a chance of its weight divided by the total weight: 70%, 25%, and 5% here. All actions of the chosen option are granted together, in addition to the rule's fixed `actions`. With `random-enabled: false`, the pool is ignored.
+
+---
+
+## Bundled Groups
+
+| Group | Used by | Contents |
+| --- | --- | --- |
+| `common` | Every bundled hunt | XP per egg, a first-discovery message, an emerald at 5 eggs, XP at 50%, and 2 diamonds plus a firework on completion. Disabled examples: every 10 eggs, template completion, first to third finisher (3, 2, 1 diamonds), personal and server records |
+| `seasonal-results` | Easter, Scuba, Halloween, Christmas | 5, 3, and 1 diamonds for ranks 1 to 3 when a scheduled hunt ends |
+| `easter-surprise` | Easter | Weighted pool on every egg: carrots, gold nuggets, or a diamond |
+| `scuba-surprise` | Scuba | Weighted pool on every egg: prismarine shards, a gold ingot, or a nautilus shell |
+| `special-egg` | Every bundled hunt; Golden Egg, Pearl, and Sunken Treasure templates | Weighted lucky find: XP or an emerald |
+| `global-trail` | Global | 12 themed milestones from first find to completion, several with weighted bundles |
+| `spring-trail` | Easter | 15 themed milestones |
+| `ocean-trail`, `haunted-trail`, `winter-trail` | Scuba, Halloween, Christmas | 6 themed milestones each |
+| `arcane-trail` | Enchanted | 8 themed milestones |
+| `spring-gallery`, `ocean-gallery`, `haunted-gallery`, `winter-gallery`, `arcane-gallery` | Their seasonal hunt | 2 to 4 extra percentage milestones that fill the reward menu's pages |
+
+All bundled rewards are items, XP, messages, or fireworks, so they work without any other plugin. The trail milestones use `FIRST_FIND`, `COUNT`, `PERCENT`, and `HUNT_COMPLETE` triggers; options marked as weighted bundles appear as a mystery Ender Chest in the reward menu.
