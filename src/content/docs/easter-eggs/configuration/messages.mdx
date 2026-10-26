@@ -1,32 +1,89 @@
 ---
-title: "Messages and Chat Panels"
-description: "Customize MiniMessage text, interactive help, hover descriptions, action bars and panel layout."
+title: messages.yml
+description: Reference for Easter Eggs messages.yml, covering MiniMessage chat panels, panel titles, placeholders, buttons, hovers, and the interactive help pages.
 ---
 
-import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+`plugins/EasterEggs/messages.yml` holds every chat message, panel title, clickable button, hover text, and help page. Inventory text is in [menus.yml](/easter-eggs/configuration/menus/). Apply changes with `/eggs admin reload`.
 
-<EasterEggsGuide>
+## Format
 
-`messages.yml` controls player feedback and interactive chat panels. Inventory titles and item text live separately in `menus.yml`.
+- Text uses [MiniMessage](https://docs.advntr.dev/minimessage/format.html): `<bold>`, `<#B8C2D4>`, gradients, and `<newline>`.
+- A message can be a single string or a list of lines.
+- An empty string or `[]` disables that message.
+- **Missing keys inherit the bundled default**, so you can delete everything you do not change.
+- Inside single-quoted YAML strings, write an apostrophe twice: `'hunt''s'`.
+- Keep named placeholders such as `<hunt>`, `<found>`, and `<reason>` unchanged. Values are inserted as plain text and cannot inject formatting.
 
-## MiniMessage
+## Panels
 
-Use MiniMessage tags such as `<gold>`, `<bold>` and hex colors. Quote YAML strings that contain markup. Dynamic tags such as `<hunt>`, `<found>`, `<total>` and `<time>` depend on the message being rendered; use the bundled comments for the supported values in each entry.
+Most messages are shown as a small panel: a separator line, a colored title, the body, and another separator.
 
 ```yaml
-found: '<#8BD5CA>You found an egg in <hunt>! <found>/<total></#8BD5CA>'
+panel-separator: '<#394555><strikethrough>                                                                        </strikethrough></#394555>'
+panel-title: '<#7FFFE1><bold>Easter Eggs</bold></#7FFFE1>'
+
+found: '<#B8C2D4>Found <egg>!</#B8C2D4> <#B8C2D4>(<found>/<total>)</#B8C2D4>'
+
+panel-titles:
+  found: '<#76F5A4><bold>Egg Discovered</bold></#76F5A4>'
 ```
 
-This illustrates message formatting; edit the corresponding existing message key in your generated file. Legacy numbered placeholders and old 2.x message sections are not the 3.0.0 schema.
+`panel-separator` can be set to `''` to hide the separator lines. `panel-title` is the fallback title; `panel-titles.<key>` sets the title for one message key.
 
-## Help and prompts
+---
 
-Player help and administrator help have separate pages, command descriptions, hover text and clickable buttons. Help filters entries by each command's permission. Editor text prompts include a cancel button that returns to the relevant menu.
+## Message Groups
 
-Keep the supplied command placeholders intact when translating button labels or hover text. Configure the existing panel and layout sections rather than inserting manual spaces to align translated text.
+| Keys | Used for |
+| --- | --- |
+| `loading`, `error`, `no-permission`, `player-only`, `action-cancelled` | General feedback. `<reason>` in `error` explains the problem |
+| `unknown-hunt`, `unknown-template`, `unknown-particle` | Invalid IDs |
+| `inactive`, `requirements`, `empty-hunt` | Hunt closed, entry requirements not met, or no eggs placed |
+| `found`, `complete`, `already-found`, `shared-taken`, `wrong-order` | Collection results |
+| `start-required`, `started`, `already-started`, `free-exploration`, `left`, `no-active-attempt`, `failed`, `completed-before`, `cooldown` | Attempt lifecycle |
+| `hint`, `hint-cooldown`, `no-hint` | Text hints |
+| `hot`, `warm`, `cold` | Hot and cold action-bar feedback |
+| `pending.reminder`, `pending.warning`, `pending.expired`, `pending.empty`, `pending.claimed`, `pending.full`, `pending.received` | Reward inbox |
+| `schedule.opened`, `schedule.closed` | Broadcasts when a scheduled hunt opens or closes |
+| `admin.*` | Editor and command feedback: prompts, placement results, reloads, resets, migration, and deliveries |
 
-## Apply changes
+Common placeholders include `<hunt>`, `<egg>`, `<found>`, `<total>`, `<time>`, `<hint>`, `<count>`, `<template>`, `<preset>`, `<reason>`, and `<report>`, depending on the message.
 
-Run `/eggs admin reload`. If validation fails, the current running configuration remains active. Correct the reported value and reload again. Use `/eggs help` and `/eggs admin help` to check both help panels after translating.
+---
 
-</EasterEggsGuide>
+## Buttons and Hovers
+
+Clickable chat buttons and their hover texts:
+
+```yaml
+buttons:
+  progress: '<#7ABFCC>[Progress]</#7ABFCC>'
+  retry: '<#7ABFCC>[Start again]</#7ABFCC>'
+  inbox: '<#7ABFCC>[Open rewards]</#7ABFCC>'
+
+hovers:
+  retry: '<#7ABFCC>Start a new eligible attempt.</#7ABFCC><newline><#B8C2D4>Existing earned rights are preserved.</#B8C2D4>'
+```
+
+Available buttons are `cancel-input`, `hunts`, `progress`, `retry`, `rewards`, `leaderboard`, `inbox`, `help`, `editor`, `previous`, `next`, and `disable-editor`. Each has a hover entry with the same name.
+
+---
+
+## Help Pages
+
+`help` builds the interactive `/eggs help` and `/eggs admin help` pages.
+
+```yaml
+help:
+  title: '<#DCE3EE><bold>Easter Eggs</bold></#DCE3EE>'
+  description: '<#B8C2D4>Hover for details. Click to open or fill a command.</#B8C2D4>'
+  row: '  <#606A7B>•</#606A7B> <command> <#606A7B>·</#606A7B> <#B8C2D4><description></#B8C2D4>'
+  navigation: '<previous>  <#8792A6><page> / <pages></#8792A6>  <next>'
+  player:
+    hint:
+      syntax: '/eggs hint [hunt]'
+      description: 'Request a text hint'
+      hover: '<#7FFFE1><bold>Need a Clue?</bold></#7FFFE1><newline>...'
+```
+
+`help.player.<command>` and `help.admin.<command>` set each command's displayed syntax, one-line description, and hover card. Only commands the reader has permission for are listed.
