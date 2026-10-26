@@ -1,0 +1,84 @@
+---
+title: Hints and Preferences
+description: Written clues, hot and cold proximity feedback, the progress boss bar, discovery sounds, and the personal preferences players can change.
+---
+
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import gallery from "../../../data/easter-eggs-gallery.json";
+
+export const shots = (ids) => ids.map((id) => gallery.menus.find((image) => image.id === id));
+
+Easter Eggs helps players without giving away locations: there is no distance counter and no direction arrow. Help comes as written clues and qualitative warmth.
+
+---
+
+## Text Hints
+
+Players request a clue with **Get a Hint** in the hunt menu or `/eggs hint <hunt>`.
+
+- The clue always describes the **first egg the player has not found yet** in [collection order](/easter-eggs/creating-hunts/#collection-order).
+- A placement's own clue (set with `/eggs admin hint <text>` or **Egg Hints**) overrides the template's default `hint`.
+- If neither is set, or every egg is found, the player sees **No Clue Available**.
+- `hints.cooldown-seconds` (default 60) limits how often each player can ask per hunt. `0` removes the limit.
+
+Disable clues for a hunt with `hints.enabled: false`. This also disables hot and cold feedback.
+
+```yaml
+hints:
+  enabled: true
+  hot-cold: false
+  cooldown-seconds: 60
+```
+
+---
+
+## Hot and Cold
+
+When enabled, nearby players get a periodic action-bar message based on the distance to the closest unfound egg they are eligible for:
+
+| Band | Default radius | Message key |
+| --- | --- | --- |
+| Hot | closer than 5 blocks | `hot` |
+| Warm | closer than 12 blocks | `warm` |
+| Cold | within 24 blocks | `cold` |
+
+Outside the search radius nothing is shown. Three switches must all allow it:
+
+1. The hunt: `hints.enabled: true` and `hints.hot-cold: true`.
+2. The server default: `preferences.proximity` in [config.yml](/easter-eggs/configuration/config/#proximity).
+3. The player's **Nearby Hints** preference.
+
+Radii and the minimum interval between messages are set in the `proximity` section of `config.yml`. The texts are in [messages.yml](/easter-eggs/configuration/messages/).
+
+---
+
+## Progress Boss Bar
+
+Set `boss-bar: true` in a hunt to show a bar while the player has an active attempt. It displays the hunt name, found and total eggs, and the elapsed time, or the remaining time for timed hunts with a limit. If several hunts qualify, the most recently started attempt is shown.
+
+The bar's title, color, overlay, and visibility window are configured in the [`boss-bar`](/easter-eggs/configuration/config/#boss-bar) section of `config.yml`. With `always-visible: false`, the bar appears for `visible-seconds` after joining, starting, or finding an egg. Bundled hunts keep the bar off.
+
+---
+
+## Sounds
+
+Discovery cues are configured in [`egg-sounds`](/easter-eggs/configuration/config/#egg-sounds): `found`, `complete` (replaces `found` for the last egg), `already-found`, `unavailable`, `edit-mode`, `placed`, and `time-up`. Repeated clicks on the same egg are silenced by `interaction-cooldown-millis`. Menu clicks and confirmations use the sounds in [menus.yml](/easter-eggs/configuration/menus/#sounds).
+
+---
+
+## Player Preferences
+
+`/eggs preferences`, or the button in the hunt list, opens four personal switches:
+
+| Preference | Effect | Server default |
+| --- | --- | --- |
+| **Particles** | Show or hide ambient, collection, and reward effects | On while `particles.budget-per-player` is above 0 |
+| **Sounds** | Discovery, menu, and reward sounds | `preferences.sounds` |
+| **Nearby Hints** | Hot and cold action-bar feedback | `preferences.proximity` |
+| **Progress Bar** | The hunt boss bar | On |
+
+<ScreenshotGallery label="Preferences menu" images={shots(["preferences"])} />
+
+Preferences are stored in the database and follow the player across restarts. Until a player changes a switch, it **inherits** the server default, so changing `config.yml` updates everyone who has not chosen otherwise. A preference can only turn off a feature the server or hunt enables; it never enables a disabled feature.
+
+The developer API also understands a `REDUCED` particle density, which uses a quarter of the per-player particle budget.
