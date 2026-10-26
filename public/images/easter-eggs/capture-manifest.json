@@ -1,0 +1,1880 @@
+{
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 60,
+  "singleClipCount": 20,
+  "singleDurationSeconds": 12,
+  "clips": [
+    {
+      "id": "candy",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2224145,
+      "sampleDifferences": [
+        0.6482404192386831,
+        0.8031573109567901,
+        0.543847254372428,
+        0.5543623006687243,
+        0.5563165509259259
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            10,
+            312,
+            1777,
+            798
+          ],
+          "coloredOrDarkPixels": 19758
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            10,
+            341,
+            1777,
+            798
+          ],
+          "coloredOrDarkPixels": 22373
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            28,
+            286,
+            1743,
+            798
+          ],
+          "coloredOrDarkPixels": 20149
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            28,
+            336,
+            1743,
+            798
+          ],
+          "coloredOrDarkPixels": 20111
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            28,
+            334,
+            1743,
+            798
+          ],
+          "coloredOrDarkPixels": 19207
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            28,
+            330,
+            1743,
+            798
+          ],
+          "coloredOrDarkPixels": 19714
+        }
+      ],
+      "camera": {
+        "azimuth": -13,
+        "distance": 3.5,
+        "elevation": 5.5
+      },
+      "sha256": "b9ca8259cd1b919ddf52aac83e2247bd66db51ec4a744b182043f7bb6039ccbf"
+    },
+    {
+      "id": "carrot",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2557039,
+      "sampleDifferences": [
+        0.5887670396090535,
+        0.6922902199074074,
+        0.6265491576646091,
+        0.679780574845679,
+        0.6229391718106996
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            343,
+            373,
+            1915,
+            685
+          ],
+          "coloredOrDarkPixels": 41882
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            343,
+            373,
+            1915,
+            685
+          ],
+          "coloredOrDarkPixels": 40726
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            464,
+            378,
+            1908,
+            685
+          ],
+          "coloredOrDarkPixels": 39426
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            464,
+            378,
+            1908,
+            685
+          ],
+          "coloredOrDarkPixels": 41981
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            464,
+            378,
+            1908,
+            685
+          ],
+          "coloredOrDarkPixels": 40128
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            464,
+            378,
+            1908,
+            685
+          ],
+          "coloredOrDarkPixels": 38972
+        }
+      ],
+      "camera": {
+        "azimuth": 20,
+        "distance": 2.3,
+        "elevation": 18
+      },
+      "sha256": "3e8668ab56c26a3bd1403a70b17b7fb906a97e1826bd91db8710ecb6f42724d1"
+    },
+    {
+      "id": "easter-basket",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2617866,
+      "sampleDifferences": [
+        1.1386935763888888,
+        1.8193307934670782,
+        1.843964441872428,
+        1.5431243569958848,
+        0.926001478909465
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            0,
+            420,
+            1779,
+            708
+          ],
+          "coloredOrDarkPixels": 28055
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            0,
+            448,
+            1779,
+            732
+          ],
+          "coloredOrDarkPixels": 31544
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            12,
+            400,
+            1756,
+            673
+          ],
+          "coloredOrDarkPixels": 27809
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            12,
+            442,
+            1756,
+            742
+          ],
+          "coloredOrDarkPixels": 32928
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            12,
+            450,
+            1709,
+            696
+          ],
+          "coloredOrDarkPixels": 28208
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            12,
+            376,
+            1709,
+            699
+          ],
+          "coloredOrDarkPixels": 32412
+        }
+      ],
+      "camera": {
+        "azimuth": -12,
+        "distance": 2.5,
+        "elevation": 12
+      },
+      "sha256": "d8211e47fc622ecdeab169cdd2fecd9bdc627cbd23bd60d2fc3141cc69b2598d"
+    },
+    {
+      "id": "ghost",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2841524,
+      "sampleDifferences": [
+        2.25166087962963,
+        3.0491243891460904,
+        2.7157090727880657,
+        2.1757460455246913,
+        1.929611947016461
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            194,
+            418,
+            1907,
+            695
+          ],
+          "coloredOrDarkPixels": 49913
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            194,
+            440,
+            1907,
+            715
+          ],
+          "coloredOrDarkPixels": 45964
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            128,
+            406,
+            1911,
+            661
+          ],
+          "coloredOrDarkPixels": 41954
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            128,
+            434,
+            1911,
+            714
+          ],
+          "coloredOrDarkPixels": 47347
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            128,
+            432,
+            1911,
+            690
+          ],
+          "coloredOrDarkPixels": 43145
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            128,
+            418,
+            1911,
+            680
+          ],
+          "coloredOrDarkPixels": 48205
+        }
+      ],
+      "camera": {
+        "azimuth": 18,
+        "distance": 2.65,
+        "elevation": 12
+      },
+      "sha256": "b7e31282863fec9c6cbad6c2270fd482ddc8e66c1f5e104e1bf5ff376c037a87"
+    },
+    {
+      "id": "gingerbread",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 1222168,
+      "sampleDifferences": [
+        0.3907835005144033,
+        0.5195325360082305,
+        0.43279610339506175,
+        0.413877154063786,
+        0.42625064300411525
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            0,
+            458,
+            1801,
+            747
+          ],
+          "coloredOrDarkPixels": 7653
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            0,
+            450,
+            1801,
+            747
+          ],
+          "coloredOrDarkPixels": 7644
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            465,
+            1802,
+            747
+          ],
+          "coloredOrDarkPixels": 7611
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            452,
+            1802,
+            747
+          ],
+          "coloredOrDarkPixels": 7762
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            446,
+            1802,
+            747
+          ],
+          "coloredOrDarkPixels": 7705
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            458,
+            1802,
+            747
+          ],
+          "coloredOrDarkPixels": 7557
+        }
+      ],
+      "camera": {
+        "azimuth": -16,
+        "distance": 2.8,
+        "elevation": 10
+      },
+      "sha256": "f1b878dd4c758bbb047daec50bfe3fade7c8cfdb418a43c5d9570c5924541228"
+    },
+    {
+      "id": "gold-coin",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 3554570,
+      "sampleDifferences": [
+        1.518655317644033,
+        1.8350546553497942,
+        1.7251707175925926,
+        1.3703602430555555,
+        1.2533908822016462
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            347,
+            320,
+            1911,
+            709
+          ],
+          "coloredOrDarkPixels": 40216
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            347,
+            406,
+            1911,
+            735
+          ],
+          "coloredOrDarkPixels": 38347
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            403,
+            342,
+            1915,
+            675
+          ],
+          "coloredOrDarkPixels": 33945
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            403,
+            372,
+            1915,
+            735
+          ],
+          "coloredOrDarkPixels": 39469
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            403,
+            396,
+            1919,
+            713
+          ],
+          "coloredOrDarkPixels": 41557
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            403,
+            356,
+            1919,
+            693
+          ],
+          "coloredOrDarkPixels": 40033
+        }
+      ],
+      "camera": {
+        "azimuth": 22,
+        "distance": 2.4,
+        "elevation": 15
+      },
+      "sha256": "c9c307107e5ad239b0525df17c606ca5349f400afa44d30a28cb2df7fed01529"
+    },
+    {
+      "id": "golden-egg",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 3256547,
+      "sampleDifferences": [
+        1.8864134837962963,
+        2.446278452932099,
+        2.102298257458848,
+        1.666655574845679,
+        1.727486657664609
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            8,
+            376,
+            1860,
+            713
+          ],
+          "coloredOrDarkPixels": 30785
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            8,
+            425,
+            1860,
+            753
+          ],
+          "coloredOrDarkPixels": 33313
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            392,
+            1829,
+            687
+          ],
+          "coloredOrDarkPixels": 29058
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            392,
+            1829,
+            744
+          ],
+          "coloredOrDarkPixels": 31426
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            436,
+            1829,
+            729
+          ],
+          "coloredOrDarkPixels": 32533
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            390,
+            1829,
+            694
+          ],
+          "coloredOrDarkPixels": 29948
+        }
+      ],
+      "camera": {
+        "azimuth": -18,
+        "distance": 2.4,
+        "elevation": 12
+      },
+      "sha256": "11b0259bb2f970009b9d967c07122db674c620663ce3a8a53a676c6c66eed586"
+    },
+    {
+      "id": "ornament",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 3334025,
+      "sampleDifferences": [
+        1.8013252314814814,
+        2.112297132201646,
+        1.9151117219650207,
+        1.6213667052469136,
+        1.7492208397633744
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            8,
+            384,
+            1904,
+            757
+          ],
+          "coloredOrDarkPixels": 26902
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            8,
+            454,
+            1904,
+            792
+          ],
+          "coloredOrDarkPixels": 27475
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            415,
+            1624,
+            741
+          ],
+          "coloredOrDarkPixels": 26218
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            446,
+            1624,
+            783
+          ],
+          "coloredOrDarkPixels": 27713
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            460,
+            1626,
+            769
+          ],
+          "coloredOrDarkPixels": 24970
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            418,
+            1626,
+            749
+          ],
+          "coloredOrDarkPixels": 27822
+        }
+      ],
+      "camera": {
+        "azimuth": -15,
+        "distance": 3.2,
+        "elevation": 8
+      },
+      "sha256": "6927ac46e7b9c62bd7fc071bd88307e4193f2fba768eb5ece2f52093bb1c4359"
+    },
+    {
+      "id": "painted-egg",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2035344,
+      "sampleDifferences": [
+        0.4026027199074074,
+        0.5688253922325103,
+        0.43974279835390945,
+        0.36326421039094653,
+        0.3830981545781893
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            25,
+            373,
+            1697,
+            685
+          ],
+          "coloredOrDarkPixels": 29341
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            25,
+            373,
+            1697,
+            685
+          ],
+          "coloredOrDarkPixels": 32307
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            24,
+            373,
+            1697,
+            685
+          ],
+          "coloredOrDarkPixels": 30354
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            24,
+            373,
+            1697,
+            685
+          ],
+          "coloredOrDarkPixels": 29794
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            24,
+            373,
+            1697,
+            685
+          ],
+          "coloredOrDarkPixels": 30503
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            24,
+            373,
+            1697,
+            685
+          ],
+          "coloredOrDarkPixels": 29901
+        }
+      ],
+      "camera": {
+        "azimuth": -18,
+        "distance": 2.3,
+        "elevation": 18
+      },
+      "sha256": "33cf88bd2e88a778d44b98862bbd2e2c95bf963ab56e6770427256b4aa216747"
+    },
+    {
+      "id": "pearl",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 3047648,
+      "sampleDifferences": [
+        1.3707302919238684,
+        1.5045240162037037,
+        1.2235996977880659,
+        1.1916774369855967,
+        1.27723331404321
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            233,
+            392,
+            1907,
+            700
+          ],
+          "coloredOrDarkPixels": 22435
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            233,
+            442,
+            1907,
+            727
+          ],
+          "coloredOrDarkPixels": 13916
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            249,
+            390,
+            1915,
+            689
+          ],
+          "coloredOrDarkPixels": 14458
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            249,
+            356,
+            1915,
+            728
+          ],
+          "coloredOrDarkPixels": 22443
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            249,
+            410,
+            1915,
+            710
+          ],
+          "coloredOrDarkPixels": 15242
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            249,
+            382,
+            1915,
+            686
+          ],
+          "coloredOrDarkPixels": 16765
+        }
+      ],
+      "camera": {
+        "azimuth": 16,
+        "distance": 2.5,
+        "elevation": 12
+      },
+      "sha256": "e94291bcc2d1872d29114c5b5330bc328dfc65e93de20f72c10b871124634f66"
+    },
+    {
+      "id": "present",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 3021445,
+      "sampleDifferences": [
+        1.881419592335391,
+        1.9603710133744856,
+        1.580434510030864,
+        1.5857867155349794,
+        1.7503420781893004
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            0,
+            353,
+            1672,
+            677
+          ],
+          "coloredOrDarkPixels": 13216
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            0,
+            353,
+            1672,
+            677
+          ],
+          "coloredOrDarkPixels": 16978
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            355,
+            1618,
+            677
+          ],
+          "coloredOrDarkPixels": 20742
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            355,
+            1618,
+            671
+          ],
+          "coloredOrDarkPixels": 17776
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            355,
+            1618,
+            677
+          ],
+          "coloredOrDarkPixels": 20695
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            355,
+            1618,
+            676
+          ],
+          "coloredOrDarkPixels": 21275
+        }
+      ],
+      "camera": {
+        "azimuth": -20,
+        "distance": 2.4,
+        "elevation": 20
+      },
+      "sha256": "e948c1552cde76d32a4ff4a095bcc4fb33bb825e27501f7f57676817f5694a84"
+    },
+    {
+      "id": "pumpkin",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 1955843,
+      "sampleDifferences": [
+        1.1479745370370371,
+        1.2238819765946503,
+        1.081190200617284,
+        1.072406121399177,
+        1.0413803690843622
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            154,
+            377,
+            1899,
+            678
+          ],
+          "coloredOrDarkPixels": 45624
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            154,
+            377,
+            1903,
+            678
+          ],
+          "coloredOrDarkPixels": 45931
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            284,
+            382,
+            1902,
+            679
+          ],
+          "coloredOrDarkPixels": 48445
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            284,
+            382,
+            1902,
+            679
+          ],
+          "coloredOrDarkPixels": 46532
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            284,
+            382,
+            1902,
+            679
+          ],
+          "coloredOrDarkPixels": 46898
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            284,
+            382,
+            1902,
+            679
+          ],
+          "coloredOrDarkPixels": 46715
+        }
+      ],
+      "camera": {
+        "azimuth": 20,
+        "distance": 2.4,
+        "elevation": 17
+      },
+      "sha256": "4d760412d498fa6a5c1ea64e7d9c19578e6aa4bf401353fd4e0c38461332b850"
+    },
+    {
+      "id": "seashell",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 1308678,
+      "sampleDifferences": [
+        0.23305459104938273,
+        0.33556086033950616,
+        0.19340743955761316,
+        0.2748659336419753,
+        0.26631221064814814
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            329,
+            356,
+            1902,
+            683
+          ],
+          "coloredOrDarkPixels": 33445
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            329,
+            356,
+            1902,
+            683
+          ],
+          "coloredOrDarkPixels": 34771
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            242,
+            355,
+            1919,
+            683
+          ],
+          "coloredOrDarkPixels": 33528
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            242,
+            355,
+            1919,
+            683
+          ],
+          "coloredOrDarkPixels": 34297
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            242,
+            355,
+            1919,
+            683
+          ],
+          "coloredOrDarkPixels": 34063
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            242,
+            355,
+            1919,
+            683
+          ],
+          "coloredOrDarkPixels": 33408
+        }
+      ],
+      "camera": {
+        "azimuth": 18,
+        "distance": 2.3,
+        "elevation": 20
+      },
+      "sha256": "2fb51f35abf93a6795585d3b1f48fec1769b631fe58a0721bebe0b7f58e09ad1"
+    },
+    {
+      "id": "skull",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 1205433,
+      "sampleDifferences": [
+        0.16409030992798354,
+        0.3496850887345679,
+        0.208979391718107,
+        0.2160157857510288,
+        0.1989789094650206
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            0,
+            406,
+            1904,
+            683
+          ],
+          "coloredOrDarkPixels": 12367
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            0,
+            406,
+            1904,
+            683
+          ],
+          "coloredOrDarkPixels": 11962
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            407,
+            1865,
+            683
+          ],
+          "coloredOrDarkPixels": 11834
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            407,
+            1865,
+            683
+          ],
+          "coloredOrDarkPixels": 12756
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            407,
+            1865,
+            683
+          ],
+          "coloredOrDarkPixels": 12188
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            407,
+            1865,
+            683
+          ],
+          "coloredOrDarkPixels": 12263
+        }
+      ],
+      "camera": {
+        "azimuth": -18,
+        "distance": 2.3,
+        "elevation": 14
+      },
+      "sha256": "e65d94999166f81c5f7309c0f459ef0ae40e85fb14dd0d46192803bc2741a6bd"
+    },
+    {
+      "id": "snow-globe",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2616108,
+      "sampleDifferences": [
+        1.6445024755658437,
+        1.8838197659465021,
+        1.5932598701131688,
+        1.005697337962963,
+        1.6203171617798353
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            0,
+            442,
+            1781,
+            691
+          ],
+          "coloredOrDarkPixels": 10711
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            0,
+            442,
+            1781,
+            742
+          ],
+          "coloredOrDarkPixels": 9177
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            442,
+            1744,
+            680
+          ],
+          "coloredOrDarkPixels": 11051
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            442,
+            1744,
+            723
+          ],
+          "coloredOrDarkPixels": 11876
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            442,
+            1744,
+            721
+          ],
+          "coloredOrDarkPixels": 11292
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            442,
+            1744,
+            681
+          ],
+          "coloredOrDarkPixels": 13178
+        }
+      ],
+      "camera": {
+        "azimuth": -16,
+        "distance": 2.5,
+        "elevation": 12
+      },
+      "sha256": "bbab47dd02c6df18e2c8b44b6bcc391f5b37368d427594dbd95ff8ce0615e8b7"
+    },
+    {
+      "id": "snowman",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2296429,
+      "sampleDifferences": [
+        0.7102412872942386,
+        0.8106455761316872,
+        0.5395789930555556,
+        0.6170984439300412,
+        0.7044685570987654
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            24,
+            328,
+            1884,
+            783
+          ],
+          "coloredOrDarkPixels": 19558
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            24,
+            336,
+            1884,
+            783
+          ],
+          "coloredOrDarkPixels": 18589
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            24,
+            322,
+            1808,
+            783
+          ],
+          "coloredOrDarkPixels": 17816
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            24,
+            353,
+            1808,
+            783
+          ],
+          "coloredOrDarkPixels": 15584
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            24,
+            312,
+            1808,
+            783
+          ],
+          "coloredOrDarkPixels": 19159
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            24,
+            352,
+            1808,
+            783
+          ],
+          "coloredOrDarkPixels": 18968
+        }
+      ],
+      "camera": {
+        "azimuth": -12,
+        "distance": 3.3,
+        "elevation": 8
+      },
+      "sha256": "c245c126c1c576f24ad3368b7b72797386952bf9c93ea7e011b483f5d0d8e89a"
+    },
+    {
+      "id": "spring-rabbit",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2248640,
+      "sampleDifferences": [
+        1.4036575681584362,
+        2.2802057613168722,
+        2.243539737654321,
+        1.4545974794238683,
+        1.0935087127057612
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            169,
+            358,
+            1919,
+            711
+          ],
+          "coloredOrDarkPixels": 33229
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            169,
+            427,
+            1919,
+            739
+          ],
+          "coloredOrDarkPixels": 34610
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            254,
+            400,
+            1915,
+            688
+          ],
+          "coloredOrDarkPixels": 37323
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            254,
+            414,
+            1915,
+            731
+          ],
+          "coloredOrDarkPixels": 31560
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            254,
+            416,
+            1915,
+            717
+          ],
+          "coloredOrDarkPixels": 35469
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            254,
+            382,
+            1915,
+            697
+          ],
+          "coloredOrDarkPixels": 34223
+        }
+      ],
+      "camera": {
+        "azimuth": 18,
+        "distance": 2.5,
+        "elevation": 12
+      },
+      "sha256": "05e862566a5fc3c8cc16758c7f062d9692dccc300986e52897a1bb5dfa271b35"
+    },
+    {
+      "id": "starfish",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 3133365,
+      "sampleDifferences": [
+        0.9200850372942386,
+        1.1444618055555555,
+        1.340698302469136,
+        1.3409638631687242,
+        0.9742330568415638
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            12,
+            362,
+            1680,
+            705
+          ],
+          "coloredOrDarkPixels": 19721
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            12,
+            362,
+            1680,
+            697
+          ],
+          "coloredOrDarkPixels": 27250
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            366,
+            1588,
+            657
+          ],
+          "coloredOrDarkPixels": 19000
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            366,
+            1588,
+            727
+          ],
+          "coloredOrDarkPixels": 26498
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            366,
+            1588,
+            667
+          ],
+          "coloredOrDarkPixels": 21788
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            366,
+            1588,
+            695
+          ],
+          "coloredOrDarkPixels": 21713
+        }
+      ],
+      "camera": {
+        "azimuth": -20,
+        "distance": 2.4,
+        "elevation": 20
+      },
+      "sha256": "5950e8a452fd8d53c0886fc6a07d8dc7f23dab4c2556c549a63d99c82d0d788d"
+    },
+    {
+      "id": "treasure-chest",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 955851,
+      "sampleDifferences": [
+        0.5693523341049382,
+        0.4441102430555556,
+        0.3212871334876543,
+        0.2897482638888889,
+        0.3077949781378601
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            440,
+            396,
+            1915,
+            679
+          ],
+          "coloredOrDarkPixels": 11506
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            440,
+            396,
+            1915,
+            679
+          ],
+          "coloredOrDarkPixels": 11678
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            424,
+            396,
+            1919,
+            679
+          ],
+          "coloredOrDarkPixels": 11084
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            424,
+            396,
+            1919,
+            679
+          ],
+          "coloredOrDarkPixels": 11467
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            424,
+            396,
+            1919,
+            679
+          ],
+          "coloredOrDarkPixels": 11548
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            424,
+            396,
+            1919,
+            679
+          ],
+          "coloredOrDarkPixels": 10563
+        }
+      ],
+      "camera": {
+        "azimuth": 20,
+        "distance": 2.4,
+        "elevation": 16
+      },
+      "sha256": "91238c4fd24a7360e950161c8e8026e14b5fe8548eaaa74ce53c24596d3284bc"
+    },
+    {
+      "id": "witch-cauldron",
+      "width": 1920,
+      "height": 1080,
+      "fps": 60.0,
+      "frames": 720,
+      "duration": 12.0,
+      "sizeBytes": 2496298,
+      "sampleDifferences": [
+        1.6909567901234568,
+        1.5479697145061728,
+        1.6735736561213992,
+        1.9123249421296296,
+        1.905091467335391
+      ],
+      "samples": [
+        {
+          "second": 0,
+          "coloredOrDarkBounds": [
+            16,
+            428,
+            1769,
+            779
+          ],
+          "coloredOrDarkPixels": 30062
+        },
+        {
+          "second": 2,
+          "coloredOrDarkBounds": [
+            16,
+            428,
+            1769,
+            727
+          ],
+          "coloredOrDarkPixels": 25553
+        },
+        {
+          "second": 4,
+          "coloredOrDarkBounds": [
+            0,
+            428,
+            1768,
+            745
+          ],
+          "coloredOrDarkPixels": 30364
+        },
+        {
+          "second": 6,
+          "coloredOrDarkBounds": [
+            0,
+            428,
+            1768,
+            766
+          ],
+          "coloredOrDarkPixels": 25864
+        },
+        {
+          "second": 8,
+          "coloredOrDarkBounds": [
+            0,
+            428,
+            1768,
+            725
+          ],
+          "coloredOrDarkPixels": 28457
+        },
+        {
+          "second": 10,
+          "coloredOrDarkBounds": [
+            0,
+            428,
+            1768,
+            762
+          ],
+          "coloredOrDarkPixels": 29525
+        }
+      ],
+      "camera": {
+        "azimuth": -18,
+        "distance": 2.7,
+        "elevation": 14
+      },
+      "sha256": "1aabbad6487625d1b7c52cdb8117346d0ddcbb0de044b8bd1ba5826197bd8280"
+    }
+  ],
+  "cinematic": {
+    "id": "easter-eggs-cinematic",
+    "width": 1920,
+    "height": 1080,
+    "fps": 60.0,
+    "frames": 8035,
+    "duration": 133.92,
+    "sizeBytes": 78030630,
+    "sampleDifferences": [
+      5.246187789351852,
+      3.5432552083333335,
+      10.742425250771605,
+      3.705057227366255,
+      5.419949202674897
+    ],
+    "samples": [
+      {
+        "second": 0,
+        "coloredOrDarkBounds": [
+          0,
+          322,
+          1711,
+          805
+        ],
+        "coloredOrDarkPixels": 18569
+      },
+      {
+        "second": 2,
+        "coloredOrDarkBounds": [
+          0,
+          336,
+          1919,
+          811
+        ],
+        "coloredOrDarkPixels": 17867
+      },
+      {
+        "second": 4,
+        "coloredOrDarkBounds": [
+          133,
+          341,
+          1918,
+          814
+        ],
+        "coloredOrDarkPixels": 19617
+      },
+      {
+        "second": 6,
+        "coloredOrDarkBounds": [
+          0,
+          458,
+          1908,
+          685
+        ],
+        "coloredOrDarkPixels": 36548
+      },
+      {
+        "second": 8,
+        "coloredOrDarkBounds": [
+          16,
+          474,
+          1919,
+          679
+        ],
+        "coloredOrDarkPixels": 36772
+      },
+      {
+        "second": 10,
+        "coloredOrDarkBounds": [
+          345,
+          434,
+          1919,
+          689
+        ],
+        "coloredOrDarkPixels": 39710
+      }
+    ],
+    "chapters": [
+      {
+        "id": "candy",
+        "name": "Candy",
+        "time": 0.2
+      },
+      {
+        "id": "carrot",
+        "name": "Carrot",
+        "time": 6.95
+      },
+      {
+        "id": "easter-basket",
+        "name": "Easter Basket",
+        "time": 13.7
+      },
+      {
+        "id": "ghost",
+        "name": "Ghost",
+        "time": 20.45
+      },
+      {
+        "id": "gingerbread",
+        "name": "Gingerbread",
+        "time": 27.2
+      },
+      {
+        "id": "gold-coin",
+        "name": "Gold Coins",
+        "time": 33.95
+      },
+      {
+        "id": "golden-egg",
+        "name": "Golden Egg",
+        "time": 40.7
+      },
+      {
+        "id": "ornament",
+        "name": "Christmas Ornament",
+        "time": 47.45
+      },
+      {
+        "id": "painted-egg",
+        "name": "Painted Egg",
+        "time": 54.2
+      },
+      {
+        "id": "pearl",
+        "name": "Pearl",
+        "time": 60.95
+      },
+      {
+        "id": "present",
+        "name": "Wrapped Present",
+        "time": 67.7
+      },
+      {
+        "id": "pumpkin",
+        "name": "Pumpkin",
+        "time": 74.45
+      },
+      {
+        "id": "seashell",
+        "name": "Seashell",
+        "time": 81.2
+      },
+      {
+        "id": "skull",
+        "name": "Skull",
+        "time": 87.95
+      },
+      {
+        "id": "snow-globe",
+        "name": "Snow Globe",
+        "time": 94.7
+      },
+      {
+        "id": "snowman",
+        "name": "Snowman",
+        "time": 101.45
+      },
+      {
+        "id": "spring-rabbit",
+        "name": "Spring Rabbit",
+        "time": 108.2
+      },
+      {
+        "id": "starfish",
+        "name": "Starfish",
+        "time": 114.95
+      },
+      {
+        "id": "treasure-chest",
+        "name": "Sunken Treasure",
+        "time": 121.7
+      },
+      {
+        "id": "witch-cauldron",
+        "name": "Witch Cauldron",
+        "time": 128.45
+      }
+    ]
+  },
+  "validation": {
+    "fullyDecodedVideoCount": 21,
+    "decodeErrors": 0,
+    "singleVisualChecks": "20/20; six time samples each; corrected block faces",
+    "cinematicVisualChecks": "20/20 stops,19/19 transition midpoints",
+    "browserPlaybackVerified": true,
+    "browserSearchVerified": true,
+    "previewUrl": "http://127.0.0.1:51686/"
+  }
+}

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "candy",
+    "name": "Candy",
+    "time": 0.2
+  },
+  {
+    "id": "carrot",
+    "name": "Carrot",
+    "time": 6.95
+  },
+  {
+    "id": "easter-basket",
+    "name": "Easter Basket",
+    "time": 13.7
+  },
+  {
+    "id": "ghost",
+    "name": "Ghost",
+    "time": 20.45
+  },
+  {
+    "id": "gingerbread",
+    "name": "Gingerbread",
+    "time": 27.2
+  },
+  {
+    "id": "gold-coin",
+    "name": "Gold Coins",
+    "time": 33.95
+  },
+  {
+    "id": "golden-egg",
+    "name": "Golden Egg",
+    "time": 40.7
+  },
+  {
+    "id": "ornament",
+    "name": "Christmas Ornament",
+    "time": 47.45
+  },
+  {
+    "id": "painted-egg",
+    "name": "Painted Egg",
+    "time": 54.2
+  },
+  {
+    "id": "pearl",
+    "name": "Pearl",
+    "time": 60.95
+  },
+  {
+    "id": "present",
+    "name": "Wrapped Present",
+    "time": 67.7
+  },
+  {
+    "id": "pumpkin",
+    "name": "Pumpkin",
+    "time": 74.45
+  },
+  {
+    "id": "seashell",
+    "name": "Seashell",
+    "time": 81.2
+  },
+  {
+    "id": "skull",
+    "name": "Skull",
+    "time": 87.95
+  },
+  {
+    "id": "snow-globe",
+    "name": "Snow Globe",
+    "time": 94.7
+  },
+  {
+    "id": "snowman",
+    "name": "Snowman",
+    "time": 101.45
+  },
+  {
+    "id": "spring-rabbit",
+    "name": "Spring Rabbit",
+    "time": 108.2
+  },
+  {
+    "id": "starfish",
+    "name": "Starfish",
+    "time": 114.95
+  },
+  {
+    "id": "treasure-chest",
+    "name": "Sunken Treasure",
+    "time": 121.7
+  },
+  {
+    "id": "witch-cauldron",
+    "name": "Witch Cauldron",
+    "time": 128.45
+  }
+]
