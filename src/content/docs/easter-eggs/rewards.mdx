@@ -1,113 +1,102 @@
 ---
-title: "Rewards"
-description: "Configure reward triggers, actions, weighted pools, durable claims and the item inbox."
+title: Rewards
+description: How Easter Eggs rewards are earned, recorded as durable claims, delivered as queued actions, and stored in the item inbox.
 ---
 
-import GameScreenshot from '../../../components/GameScreenshot.astro';
+import { Aside } from "@astrojs/starlight/components";
 
-import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
+Rewards are defined in [rewards.yml](/easter-eggs/configuration/rewards/) as **groups** of **rules**. Hunts list the groups they use, and templates can add extra groups for eggs of that template. This page explains what happens from the moment a reward is earned until it reaches the player.
 
-<EasterEggsGuide>
+---
 
-Define rules under `groups` in `rewards.yml`. Hunts and templates select groups using their `rewards` lists. Rules need both the global `enabled` switch and their own enabled state.
-
-## Fixed rewards
+## Where Rules Apply
 
 ```yaml
-enabled: true
-groups:
-  spring-prizes:
-    first-discovery:
-      trigger: 'FIRST_FIND'
-      actions:
-        - type: 'XP'
-          amount: 5
-    finish:
-      trigger: 'HUNT_COMPLETE'
-      actions:
-        - type: 'ITEM'
-          value: 'DIAMOND'
-          amount: 2
+# hunts/easter.yml
+rewards:
+  - 'common'
+  - 'seasonal-results'
+  - 'spring-trail'
+
+# templates/golden-egg.yml
+rewards:
+  - 'special-egg'
 ```
 
-Add `spring-prizes` to the hunt's rewards list. Rule IDs form durable claim identities, so keep them stable when changing cosmetic text.
+A discovery is checked against every rule in the hunt's groups **plus** the groups of the collected egg's template. A rule can also be limited to one template with `template: <template-id>`. Unknown group IDs are rejected when the configuration loads.
+
+---
 
 ## Triggers
 
-| Trigger | Eligibility |
-| --- | --- |
-| FIRST_FIND | First discovery in the reward period |
-| EGG_FOUND | Each eligible egg discovery |
-| COUNT | Reach the configured discovery count |
-| PERCENT | Reach a percentage threshold, 1 through 100 |
-| EVERY | Each configured interval of discoveries |
-| TYPE_COMPLETE | Complete the relevant template's placements |
-| HUNT_COMPLETE | Finish the hunt |
-| PLACEMENT | Finish at the configured position |
-| PERSONAL_BEST | Improve the player's timed record |
-| SERVER_BEST | Improve the server's timed record |
-| EVENT_RANK | Receive the configured rank after a scheduled event ends |
+| Trigger | Earned when | Earned at most |
+| --- | --- | --- |
+| `EGG_FOUND` | A placement is discovered for the first time in the period | Once per egg per period |
+| `FIRST_FIND` | The player's first discovery in the hunt's period | Once per period |
+| `COUNT` | The discovery count reaches exactly `threshold` | Once per period |
+| `PERCENT` | Progress crosses `threshold` percent (1 to 100) of the eggs currently placed | Once per period |
+| `EVERY` | The discovery count is a multiple of `threshold` | Once per multiple per period |
+| `TYPE_COMPLETE` | Every placement of the discovered egg's template in the hunt is found | Once per template per period |
+| `HUNT_COMPLETE` | The hunt is completed for the first time in the period | Once per period |
+| `PLACEMENT` | The completion is the `threshold`-th completion of the hunt in this period (1 = first finisher) | Once per period |
+| `PERSONAL_BEST` | A timed completion sets the player's first time or beats their best time | Once per distinct time |
+| `SERVER_BEST` | A timed completion sets the hunt's first time or beats the server's best time | Once per distinct time |
+| `EVENT_RANK` | The player finishes at rank `threshold` when a scheduled hunt ends | Once per season end |
 
-Use `threshold` for count, percentage, interval, placement or rank conditions. An optional `template` limits a rule to a template. Record rewards require meaningful timed results; event ranks need a scheduled end.
+The final egg can trigger both its discovery rules and the completion rules. `PERSONAL_BEST` and `SERVER_BEST` only apply to timed hunts and only to genuine improvements; an imported or unknown time of zero never counts. `EVENT_RANK` only fires for hunts with a [schedule end](/easter-eggs/hunt-rules/#season-rankings).
 
-## Weighted pools
+`COUNT`, `PERCENT`, and `EVERY` are evaluated only on first-time discoveries, so re-collecting eggs during a retry cannot reach a milestone twice.
 
-```yaml
-groups:
-  spring-surprise:
-    lucky-find:
-      trigger: 'EGG_FOUND'
-      random-enabled: true
-      actions: []
-      pool:
-        common:
-          weight: 4
-          actions:
-            - type: 'ITEM'
-              value: 'CARROT'
-              amount: 2
-        rare:
-          weight: 1
-          actions:
-            - type: 'ITEM'
-              value: 'DIAMOND'
-              amount: 1
-```
+---
 
-Merge this group into the existing groups section. Positive weights are relative: 4 and 1 produce 80% and 20% chances. Enable `random-enabled` to use the pool. Fixed actions and a chosen pool entry can both be part of one rule. Players see pool chances in `/eggs rewards <hunt>`.
+## Durable Claims
 
-## In-game reward preview
+When a rule matches, the plugin records a **claim** in the same database transaction as the discovery. The claim is keyed by player, hunt, reward period, and a stable rule identity (`group.rule`, plus the egg, template, interval, or time where relevant). A claim that already exists can never be earned again in that period, so rewards are not repeated by:
 
-The reward menu shows available rules and their progress. Hover a reward in game to read its actions and weighted pool details; these screenshots show the inventory layout.
+- reloads, restarts, or relogs;
+- timed retries in the same period;
+- moving an egg, because its identity is kept;
+- removing and re-adding the same rule, as long as its group and rule IDs are unchanged.
 
-<GameScreenshot src="/images/easter-eggs/menus/rewards-easter.png" alt="Easter Eggs reward menu with milestone and pool reward cards" width={520} height={520} />
+<Aside type="caution">
+Renaming a group or rule creates a **new** reward identity, which players can earn again. Keep IDs stable once a hunt is live; disable a rule with `enabled: false` instead of renaming it.
+</Aside>
 
-## Actions
+A new [reward period](/easter-eggs/hunt-rules/#reward-periods) renews every claim.
 
-| Type | Value and amount |
-| --- | --- |
-| ITEM | Material in value; integer amount from 1 through 2304 |
-| XP | Experience points in amount, up to 1,000,000 |
-| MONEY | Amount paid through Vault and an economy provider |
-| COMMAND | Console command in value |
-| PLAYER_COMMAND | Command executed with the player's permissions |
-| MESSAGE / BROADCAST | MiniMessage text for the player / online players |
-| TITLE | Title and optional subtitle separated with a vertical bar |
-| ACTIONBAR | MiniMessage action bar |
-| SOUND | Sound identifier |
-| PARTICLE | Particle preset ID |
-| FIREWORK | Particle and sound celebration |
+### Weighted Pools
 
-Commands can use values such as `%player%`; the full available reward context is supplied by the earning event. A COMMAND value starting with `p:` is also interpreted as a player command.
+A rule with `random-enabled: true` adds **exactly one** option from its `pool` to its fixed `actions` each time the claim is earned. Weights are relative: an option's chance is its weight divided by the sum of all weights. The draw happens once, when the claim is created, so the outcome cannot be rerolled by reconnecting. The reward menu shows every option with its chance.
 
-## Claims and inbox
+---
 
-<GameScreenshot src="/images/easter-eggs/menus/pending.png" alt="Easter Eggs item reward inbox with three example pending rewards" width={520} height={520} />
+## Delivery
 
-Reward rights are committed with progress and are not renewed by retrying, leaving or resetting an attempt within the same reward period. Use DAILY, WEEKLY or COOLDOWN repeat policies for recurring rewards.
+Earning a reward and delivering it are separate steps:
 
-Only overflowing **item** rewards enter `/eggs inbox`. Commands, money, XP and presentation effects do not become inbox entries. The default expiry is three hours; reminders and warning timing live in config.yml.
+1. The claim and its actions are written to a durable queue together with the discovery.
+2. While the player is online and loaded, queued actions are delivered in order, about twice per second.
+3. Each action is reserved, then executed, then marked `DONE`.
 
-Crashes or external failures may leave an uncertain delivery for operator review. Follow [delivery recovery](/easter-eggs/operations/#uncertain-deliveries) before retrying it.
+Actions earned by an offline player, such as season ranking rewards, wait in the queue until they join. Placeholder values such as `%found%` are captured when the reward is earned, so later progress does not change them.
 
-</EasterEggsGuide>
+Plugins can veto an individual action with [`RewardDeliverEvent`](/easter-eggs/api/events/#reward-events). A vetoed action is marked `CANCELLED`; it is not retried and the claim stays earned.
+
+### Uncertain Deliveries
+
+External effects such as commands, economy deposits, and inventory changes cannot be rolled back with the database. If an action fails, for example a command that is not handled or a missing economy provider, or if the server stops while an action is in progress, the action is marked `UNCERTAIN` instead of being retried automatically. This prevents double payouts after a crash.
+
+Startup logs how many interrupted operations need inspection. Review them with `/eggs admin deliveries` and resolve each one; see [Operations and Recovery](/easter-eggs/operations/#uncertain-deliveries).
+
+---
+
+## Reward Inbox
+
+Only `ITEM` rewards use the inbox. When an item does not fit in the player's inventory, the remaining stacks are stored in the database instead of being dropped, and the player receives **Rewards Saved**.
+
+- Open it with **Unclaimed rewards** in the hunt list or `/eggs inbox`. The button only appears while items are waiting.
+- Click an item to move it to your inventory. Items that still do not fit stay in the inbox.
+- Online players with waiting items are reminded every `pending.reminder-seconds`.
+- Items expire after `pending.expire-after-seconds` (default three hours, `0` for never). Within the last `pending.warning-seconds`, reminders become **Rewards Expiring**. Expired items are deleted, also while the player is offline, and the player is told how many expired.
+
+Commands, money, XP, and cosmetic actions never enter the inbox. Changing the expiry setting only affects newly stored items.
