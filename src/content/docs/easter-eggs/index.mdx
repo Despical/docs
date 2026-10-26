@@ -1,41 +1,101 @@
 ---
-title: "Easter Eggs"
-description: "Easter Eggs 3.0.0: seasonal hunts, collectible heads, animated particles, rewards and inventory editors for Paper."
+title: Easter Eggs Documentation
+description: Run seasonal treasure hunts with collectible heads, layered particle effects, timed challenges, durable rewards, inventory editors, leaderboards, and a public developer API.
+tableOfContents: false
 ---
 
-import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
+import GameScreenshot from "../../../components/GameScreenshot.astro";
 
-<EasterEggsGuide>
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
-Easter Eggs turns your world into a collection of treasure hunts. Version **3.0.0** provides six bundled hunts, twenty head templates, twenty layered particle presets, player menus and administrator editors.
+## Easter Eggs
 
-Use **Paper 1.21.11 or later and Java 25**. Each hunt has its own progress, collection rules, reward period and optional timer. Bundled templates provide appearances; administrators choose every placement.
+**Easter Eggs** turns your world into a set of treasure hunts. Hide collectible heads, let players discover them at their own pace or against the clock, and reward milestones, completions, records, and season rankings. Everything is managed from in-game editors, with every setting also available in commented YAML files.
 
-## See it in game
+<GameScreenshot src="/images/easter-eggs/gallery-overview.png" alt="Twenty Easter Eggs head templates arranged in a Minecraft demonstration gallery" width={1920} height={1080} />
 
-The [in-game gallery](/easter-eggs/gallery/) includes a screenshot and a six-second particle animation for each of the twenty bundled templates. The [menu guide](/easter-eggs/menus/) shows the player screens and administrator editors.
+Watch the [cinematic tour](/easter-eggs/gallery/) to see all twenty bundled templates with their particle effects, or browse each one in its own clip.
 
-## Start here
+Easter Eggs supports **Paper and compatible forks for Minecraft 1.21.11 and later** and requires **Java 25**. Folia is not supported. PlaceholderAPI and Vault are optional integrations; SQLite and MySQL drivers are downloaded by Paper, so no separate database plugin is needed.
 
-- [Install and place your first egg](/easter-eggs/getting-started/).
-- [Create and edit eggs](/easter-eggs/creating-new-eggs/).
-- [Browse commands and permissions](/easter-eggs/commands/).
-- [Configure hunts, templates and effects](/easter-eggs/configuration/).
-- [Build reward groups and weighted pools](/easter-eggs/rewards/).
-- [Use player menus and administrator editors](/easter-eggs/menus/).
+---
 
-## Bundled hunts
+## Download Easter Eggs
 
-Global, Easter, Scuba, Halloween, Christmas and Enchanted are installed on first startup. They use personal collection and one-time reward periods by default. Timers, schedules, hot/cold feedback and boss bars can be enabled per hunt.
+Download the latest plugin JAR from [Hub](https://hub.despical.dev/plugins/easter-eggs), [SpigotMC](https://www.spigotmc.org/resources/eastereggs.116086/), or [BuiltByBit](https://builtbybit.com/resources/easter-eggs.50201/), then follow the [installation guide](/easter-eggs/getting-started/).
 
-Heads can be placed as native blocks or floating displays with rotation and bobbing. Players can adjust their particles, sounds, proximity feedback and progress bars. Item rewards that do not fit go to a persistent reward inbox.
+Upgrading an older installation? Read [Migrating Legacy Data](/easter-eggs/migration/) before replacing the JAR. The new version refuses to start on an old configuration folder so that nothing is overwritten.
 
-## Updating from 2.x
+---
 
-3.0.0 changes the configuration layout, commands, storage and developer API. Follow the [upgrade and operations guide](/easter-eggs/operations/) before replacing a 2.x installation. Legacy imports are explicit, backed up and reported; old configuration behavior is not automatically translated.
+## What's Included
 
-## References
+| Bundled content | Details |
+| --- | --- |
+| **6 hunts** | Global, Easter, Scuba, Halloween, Christmas, and a timed Enchanted challenge |
+| **20 head templates** | Five per season: spring, summer ocean, autumn, and winter |
+| **20 particle presets** | Layered rings, spirals, orbits, bursts, hearts, stars, and waves |
+| **16 reward groups** | Milestones, weighted surprise pools, themed trails, and season rankings |
+| **Player menus** | Hunts, collection, rewards, rankings, preferences, and an item inbox |
+| **Administrator editor** | Placement, ordering, hints, rules, timing, feedback, and recovery screens |
 
-[PlaceholderAPI](/easter-eggs/placeholders/), [developer API](/easter-eggs/api/), [troubleshooting](/easter-eggs/misc/faq/) and [bundled texture reference](/easter-eggs/asset-credits/).
+---
 
-</EasterEggsGuide>
+## Start Hunting
+
+<CardGrid>
+    <LinkCard title="Getting Started" description="Install the plugin, review the generated files, and place your first egg." href="/easter-eggs/getting-started/" />
+    <LinkCard title="Core Concepts" description="Hunts, templates, placements, attempts, reward periods, and claims." href="/easter-eggs/concepts/" />
+    <LinkCard title="Creating Hunts and Placing Eggs" description="Create a hunt, choose templates, and place, move, copy, order, or remove eggs." href="/easter-eggs/creating-hunts/" />
+    <LinkCard title="Video Gallery" description="A cinematic tour and individual clips for all twenty bundled templates." href="/easter-eggs/gallery/" />
+</CardGrid>
+
+---
+
+## Hunts and Players
+
+<CardGrid>
+    <LinkCard title="Hunt Rules" description="Personal or shared collection, ordered trails, timers, reward periods, schedules, and entry requirements." href="/easter-eggs/hunt-rules/" />
+    <LinkCard title="Hints and Preferences" description="Text clues, hot and cold feedback, boss bars, and personal player preferences." href="/easter-eggs/hints-and-preferences/" />
+    <LinkCard title="Menus and Editor" description="Every player screen and administrator editor, with in-game screenshots." href="/easter-eggs/menus/" />
+    <LinkCard title="Rewards" description="Triggers, durable claims, weighted pools, delivery, and the item inbox." href="/easter-eggs/rewards/" />
+</CardGrid>
+
+---
+
+## Server Administration
+
+<CardGrid>
+    <LinkCard title="Commands" description="Every player and administrator command with arguments and examples." href="/easter-eggs/commands/" />
+    <LinkCard title="Permissions" description="Individual permission nodes for each command and for collecting eggs." href="/easter-eggs/permissions/" />
+    <LinkCard title="Storage" description="SQLite and MySQL backends, stored data, and backups." href="/easter-eggs/storage/" />
+    <LinkCard title="Operations and Recovery" description="Safe reloads, validation errors, uncertain deliveries, and attempt resets." href="/easter-eggs/operations/" />
+    <LinkCard title="Migrating Legacy Data" description="Import old egg types, locations, and player discoveries with a backup and report." href="/easter-eggs/migration/" />
+    <LinkCard title="PlaceholderAPI" description="Totals, per-hunt progress, and leaderboard placeholders." href="/easter-eggs/placeholders/" />
+</CardGrid>
+
+---
+
+## Configuration Files
+
+<CardGrid>
+    <LinkCard title="config.yml" description="Storage, particle budgets, preferences, inbox, leaderboards, boss bar, proximity, and sounds." href="/easter-eggs/configuration/config/" />
+    <LinkCard title="hunts/" description="One file per hunt: rules, timer, repeat policy, schedule, requirements, hints, and rewards." href="/easter-eggs/configuration/hunts/" />
+    <LinkCard title="templates/" description="Head textures, default clues, block or floating display, and particle states." href="/easter-eggs/configuration/templates/" />
+    <LinkCard title="particle/" description="Layered effect presets: shapes, particles, colors, timing, and view distance." href="/easter-eggs/configuration/particles/" />
+    <LinkCard title="rewards.yml" description="Reward groups, rules, triggers, actions, and weighted pools." href="/easter-eggs/configuration/rewards/" />
+    <LinkCard title="menus.yml and messages.yml" description="Inventory layouts and labels, chat text, help panels, and buttons." href="/easter-eggs/configuration/menus/" />
+</CardGrid>
+
+---
+
+## Developer API
+
+The public API exposes immutable hunt, template, placement, progress, and leaderboard snapshots through Bukkit's service manager, plus cancellable pre-events and committed post-events for collection, placement, attempts, records, and reward delivery.
+
+<CardGrid>
+    <LinkCard title="API Getting Started" description="Load the service, read snapshots, and query progress and rankings without blocking." href="/easter-eggs/api/getting-started/" />
+    <LinkCard title="Events" description="Veto collection, placement, starts, and deliveries, or observe committed results." href="/easter-eggs/api/events/" />
+    <LinkCard title="Troubleshooting" description="Startup refusals, rejected reloads, missing eggs, rewards, and placeholders." href="/easter-eggs/misc/faq/" />
+    <LinkCard title="Source Access" description="Request access to the source code repository." href="/source-access/" />
+</CardGrid>
