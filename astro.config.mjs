@@ -407,146 +407,68 @@ export default defineConfig({
                 starlightImageZoom(),
                 starlightSidebarTopics([
                     {
-                        "label": "Easter Eggs",
-                        "link": "/easter-eggs/",
-                        "icon": "easter-eggs",
-                        "items": [
+                        label: "Easter Eggs",
+                        id: "easter-eggs",
+                        link: "/easter-eggs/",
+                        icon: "easter-eggs",
+                        items: [
                             {
-                                "label": "Basics",
-                                "items": [
-                                    {
-                                        "label": "Getting Started",
-                                        "link": "/easter-eggs/getting-started"
-                                    },
-                                    {
-                                        "label": "Creating and Placing Eggs",
-                                        "link": "/easter-eggs/creating-new-eggs"
-                                    },
-                                    {
-                                        "label": "In-game Gallery",
-                                        "link": "/easter-eggs/gallery"
-                                    },
-                                    {
-                                        "label": "Menus and Editor",
-                                        "link": "/easter-eggs/menus"
-                                    }
-                                ]
+                                label: "Basics",
+                                items: [
+                                    {label: "Getting Started", link: "/easter-eggs/getting-started/"},
+                                    {label: "Core Concepts", link: "/easter-eggs/concepts/"},
+                                    {label: "Placing Eggs", link: "/easter-eggs/creating-hunts/"},
+                                    {label: "Video Gallery", link: "/easter-eggs/gallery/"},
+                                ],
                             },
                             {
-                                "label": "Commands",
-                                "items": [
-                                    {
-                                        "label": "Player Commands",
-                                        "link": "/easter-eggs/commands/"
-                                    },
-                                    {
-                                        "label": "Administrator Commands",
-                                        "link": "/easter-eggs/commands/admin"
-                                    }
-                                ]
+                                label: "Hunts and Players",
+                                items: [
+                                    {label: "Hunt Rules", link: "/easter-eggs/hunt-rules/"},
+                                    {label: "Hints and Preferences", link: "/easter-eggs/hints-and-preferences/"},
+                                    {label: "Menus and Editor", link: "/easter-eggs/menus/"},
+                                    {label: "Rewards", link: "/easter-eggs/rewards/"},
+                                ],
                             },
                             {
-                                "label": "Configuration",
-                                "items": [
-                                    {
-                                        "label": "Overview",
-                                        "link": "/easter-eggs/configuration/"
-                                    },
-                                    {
-                                        "label": "config.yml",
-                                        "link": "/easter-eggs/configuration/config"
-                                    },
-                                    {
-                                        "label": "Hunts",
-                                        "link": "/easter-eggs/configuration/hunts"
-                                    },
-                                    {
-                                        "label": "Templates",
-                                        "link": "/easter-eggs/configuration/templates"
-                                    },
-                                    {
-                                        "label": "Particles",
-                                        "link": "/easter-eggs/configuration/particles"
-                                    },
-                                    {
-                                        "label": "Rewards",
-                                        "link": "/easter-eggs/rewards"
-                                    },
-                                    {
-                                        "label": "Database",
-                                        "link": "/easter-eggs/configuration/mysql"
-                                    },
-                                    {
-                                        "label": "Messages",
-                                        "link": "/easter-eggs/configuration/messages"
-                                    },
-                                    {
-                                        "label": "Managed Files",
-                                        "link": "/easter-eggs/configuration/other-files"
-                                    }
-                                ]
+                                label: "Administration",
+                                items: [
+                                    {label: "Commands", link: "/easter-eggs/commands/"},
+                                    {label: "Permissions", link: "/easter-eggs/permissions/"},
+                                    {label: "Storage", link: "/easter-eggs/storage/"},
+                                    {label: "Operations and Recovery", link: "/easter-eggs/operations/"},
+                                    {label: "Migrating Legacy Data", link: "/easter-eggs/migration/"},
+                                ],
                             },
                             {
-                                "label": "Placeholders",
-                                "items": [
-                                    {
-                                        "label": "Overview",
-                                        "link": "/easter-eggs/placeholders/"
-                                    },
-                                    {
-                                        "label": "General and Hunt Values",
-                                        "link": "/easter-eggs/placeholders/general"
-                                    },
-                                    {
-                                        "label": "Leaderboards",
-                                        "link": "/easter-eggs/placeholders/leaderboard"
-                                    }
-                                ]
+                                label: "Configuration",
+                                items: [
+                                    {label: "config.yml", link: "/easter-eggs/configuration/config/"},
+                                    {label: "Hunt Files", link: "/easter-eggs/configuration/hunts/"},
+                                    {label: "Template Files", link: "/easter-eggs/configuration/templates/"},
+                                    {label: "Particle Presets", link: "/easter-eggs/configuration/particles/"},
+                                    {label: "rewards.yml", link: "/easter-eggs/configuration/rewards/"},
+                                    {label: "menus.yml", link: "/easter-eggs/configuration/menus/"},
+                                    {label: "messages.yml", link: "/easter-eggs/configuration/messages/"},
+                                    {label: "PlaceholderAPI", link: "/easter-eggs/placeholders/"},
+                                ],
                             },
                             {
-                                "label": "Developer API",
-                                "collapsed": true,
-                                "items": [
-                                    {
-                                        "label": "API Guide",
-                                        "link": "/easter-eggs/api/"
-                                    },
-                                    {
-                                        "label": "EasterEggsApi Service",
-                                        "link": "/easter-eggs/api/easter-eggs-api"
-                                    },
-                                    {
-                                        "label": "Collection Events",
-                                        "link": "/easter-eggs/api/player-events/found-new-egg-event"
-                                    },
-                                    {
-                                        "label": "Placement Events",
-                                        "link": "/easter-eggs/api/easter-egg-events/easter-egg-place-event"
-                                    }
-                                ]
+                                label: "Developer API",
+                                items: [
+                                    {label: "Getting Started", link: "/easter-eggs/api/getting-started/"},
+                                    {label: "Events", link: "/easter-eggs/api/events/"},
+                                ],
                             },
                             {
-                                "label": "Operations",
-                                "items": [
-                                    {
-                                        "label": "Upgrades and Recovery",
-                                        "link": "/easter-eggs/operations"
-                                    },
-                                    {
-                                        "label": "FAQ",
-                                        "link": "/easter-eggs/misc/faq"
-                                    },
-                                    {
-                                        "label": "Texture Reference",
-                                        "link": "/easter-eggs/asset-credits"
-                                    },
-                                    {
-                                        "label": "Source Access",
-                                        "link": "/source-access"
-                                    }
-                                ]
-                            }
-                        ]
+                                label: "Miscellaneous",
+                                items: [
+                                    {label: "Troubleshooting", link: "/easter-eggs/misc/faq/"},
+                                    {label: "Texture Reference", link: "/easter-eggs/asset-credits/"},
+                                    {label: "Source Access", link: "/source-access/"},
+                                ],
+                            },
+                        ],
                     },
                     {
                         label: "Carousel",
