@@ -1,0 +1,106 @@
+---
+title: Commands
+description: Every Easter Eggs player and administrator command with arguments, permissions, and examples.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+The main command is `/eggs`; `/eastereggs` and `/ee` are aliases. Angle brackets indicate required arguments, square brackets optional ones. Tab completion suggests hunts, templates, presets, setting keys, and only the commands you are allowed to use.
+
+## In-Game Help
+
+`/eggs help [page]` and `/eggs admin help [page]` open interactive chat panels. Hover a command for details and click it to fill your chat input. An unknown subcommand opens the help panel. Help text is customized under `help` in [messages.yml](/easter-eggs/configuration/messages/).
+
+---
+
+## Player Commands
+
+| Command | Purpose | Permission |
+| --- | --- | --- |
+| `/eggs` | Open the hunt list | `eastereggs.menu` |
+| `/eggs menu [hunt]` | Open the hunt list, or one hunt's page | `eastereggs.menu` |
+| `/eggs help [page]` | Show player command help | `eastereggs.help` |
+| `/eggs start <hunt>` | Start or retry a timed hunt | `eastereggs.start` |
+| `/eggs leave <hunt>` | Abandon your active timed attempt | `eastereggs.leave` |
+| `/eggs hint <hunt>` | Request a clue for your next unfound egg | `eastereggs.hint` |
+| `/eggs rewards <hunt>` | Browse the hunt's rewards and your progress toward them | `eastereggs.rewards` |
+| `/eggs leaderboard [hunt]` | Browse rankings, optionally for one hunt | `eastereggs.leaderboard` |
+| `/eggs preferences` | Change particles, sounds, nearby hints, and progress bar | `eastereggs.preferences` |
+| `/eggs inbox` | Claim item rewards that did not fit in your inventory | `eastereggs.inbox` |
+
+All player commands except `help` require a player. `start` and `leave` apply only to timed hunts; for untimed hunts they explain that the hunt is free exploration. Collecting eggs requires `eastereggs.collect`.
+
+```text
+/eggs menu easter
+/eggs start enchanted
+/eggs hint scuba
+/eggs leaderboard halloween
+```
+
+---
+
+## Administrator Commands
+
+All administrator commands start with `/eggs admin`. Each one has its own permission, `eastereggs.admin.<command>`; see [Permissions](/easter-eggs/permissions/).
+
+### Editor and Placement
+
+These require a player. Commands marked **targeted** act on the egg you are looking at within six blocks.
+
+| Command | Purpose |
+| --- | --- |
+| `/eggs admin` | Open the Hunt Editor |
+| `/eggs admin help [page]` | Show administrator command help |
+| `/eggs admin give <hunt> <template>` | Select a hunt and template, receive a placement head, and enter edit mode |
+| `/eggs admin place` | Place the selected egg at the block you are standing in |
+| `/eggs admin edit off` | Leave edit mode so you can collect eggs again |
+| `/eggs admin move` | **Targeted.** Move the egg to your position, keeping its identity and history |
+| `/eggs admin copy` | **Targeted.** Create a new egg at your position from the targeted one |
+| `/eggs admin order <number>` | **Targeted.** Set the collection order number (0 or higher) |
+| `/eggs admin hint <text>` | **Targeted.** Set this placement's clue, overriding the template clue |
+| `/eggs admin remove confirm` | **Targeted.** Remove the egg |
+| `/eggs admin preview <preset>` | Play a particle preset privately in front of you for about ten seconds |
+
+```text
+/eggs admin give scuba pearl
+/eggs admin order 3
+/eggs admin hint Look beneath the old pier.
+/eggs admin preview treasure-sparkle
+```
+
+### Configuration
+
+These also work from the console.
+
+| Command | Purpose |
+| --- | --- |
+| `/eggs admin create <id> <name>` | Create `hunts/<id>.yml` with default settings |
+| `/eggs admin delete <hunt> confirm` | Delete a hunt that has no placed eggs and is not referenced elsewhere |
+| `/eggs admin set <hunts\|templates\|particle> <id> <key> <value>` | Change one YAML key; the value is parsed as YAML and validated |
+| `/eggs admin clone <hunts\|templates\|particle> <source> <new-id>` | Copy a definition into a new file; hunt clones do not copy placed eggs |
+| `/eggs admin reload` | Validate and apply every configuration file |
+
+```text
+/eggs admin create treasure <gold>Treasure Trail
+/eggs admin set hunts treasure ordered true
+/eggs admin set hunts treasure rewards [common, special-egg]
+/eggs admin clone templates golden-egg silver-egg
+/eggs admin reload
+```
+
+`set` writes the file and reloads it. If the resulting configuration is invalid, the file is restored and the error is shown. Changes to `config.yml` storage settings are refused until a restart; see [Operations and Recovery](/easter-eggs/operations/).
+
+### Recovery and Migration
+
+| Command | Purpose |
+| --- | --- |
+| `/eggs admin reset <hunt> <player-uuid\|all> confirm` | Clear attempts for one player or everyone in a hunt; earned claims are kept |
+| `/eggs admin deliveries` | List up to 50 reward actions whose delivery is uncertain |
+| `/eggs admin deliveries <id> <retry\|done> confirm` | Mark an uncertain delivery for another attempt, or as already delivered |
+| `/eggs admin migrate <flat\|mysql> <legacy-folder>` | Import legacy data; console only, with no players online |
+
+`reset` takes a player **UUID**, not a name. `migrate` and its requirements are explained in [Migrating Legacy Data](/easter-eggs/migration/); `reset` and `deliveries` in [Operations and Recovery](/easter-eggs/operations/).
+
+<Aside type="caution">
+`remove`, `delete`, `reset`, and `deliveries <id>` do nothing without the final `confirm` argument; they only display a confirmation request. While a migration is running, every administrator command is refused until its report is ready.
+</Aside>
