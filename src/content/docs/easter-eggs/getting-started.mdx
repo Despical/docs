@@ -1,62 +1,105 @@
 ---
-title: "Getting Started"
-description: "Install Easter Eggs 3.0.0 on Paper with Java 25 and place your first collectible egg."
+title: Getting Started
+description: Install Easter Eggs on Paper with Java 25, review the generated configuration, and place and collect your first egg.
 ---
 
-import EasterEggsGuide from "../../../components/EasterEggsGuide.astro";
-
-<EasterEggsGuide>
+import { Aside, FileTree, Steps } from "@astrojs/starlight/components";
 
 ## Requirements
 
-| Requirement | Supported setup |
+| Component | Requirement |
 | --- | --- |
-| Server | Paper or a compatible fork, Minecraft 1.21.11 or later |
-| Java | Java 25 |
-| Storage | Built-in SQLite, or an existing MySQL database |
-| Optional integrations | PlaceholderAPI; Vault and an economy provider for money rewards |
+| [Paper](https://papermc.io/downloads/paper) or a compatible fork | Minecraft **1.21.11 and later** |
+| [Java](https://adoptium.net/temurin/releases/?version=25) | **Java 25** |
+| [PlaceholderAPI](https://wiki.placeholderapi.com/) | Optional; registers the `eastereggs` expansion and enables `PLACEHOLDER` entry requirements |
+| [Vault](https://www.spigotmc.org/resources/vault.34315/) with an economy plugin | Optional; required only for `MONEY` reward actions |
+| MySQL server | Optional; SQLite is used by default |
 
-Folia and older Spigot installations are not supported by 3.0.0. Paper downloads the SQL drivers declared by the plugin, so allow internet access on the first startup.
+Folia is not supported. The SQLite and MySQL JDBC drivers are declared as Paper libraries, so Paper downloads them on first startup; the server needs outbound access to Maven Central once.
+
+---
+
+## Download
+
+Download the latest plugin JAR from [Hub](https://hub.despical.dev/plugins/easter-eggs), [SpigotMC](https://www.spigotmc.org/resources/eastereggs.116086/), or [BuiltByBit](https://builtbybit.com/resources/easter-eggs.50201/). The file is named `easter-eggs-<version>.jar`.
+
+---
 
 ## Install
 
-1. Download the plugin from [Hub](https://hub.despical.dev/plugins/easter-eggs).
-2. Stop the server and put the plugin JAR in its `plugins/` directory.
-3. Start the server and check that Easter Eggs enables successfully.
-4. Join as an operator or grant the relevant [administrator permissions](/easter-eggs/commands/admin/).
+<Steps>
 
-The plugin installs missing default files under `plugins/EasterEggs/` and preserves existing files. When updating a 2.x server, use the [migration guide](/easter-eggs/operations/) first.
+1. Stop the server.
+2. If an older Easter Eggs installation exists, rename its `plugins/EasterEggs` folder (for example to `EasterEggs-legacy`) and read [Migrating Legacy Data](/easter-eggs/migration/). The plugin refuses to start on an old configuration folder.
+3. Place the JAR in the `plugins` directory and install PlaceholderAPI or Vault if you need them.
+4. Start the server with Java 25. A successful startup logs a line such as `Easter Eggs <version> ready: 6 hunts, 20 templates, 20 particle presets, 0 placements.`
+5. Join as an operator and run `/eggs admin help` to see the administrator commands available to you.
 
-## Place and collect your first egg
+</Steps>
+
+The first startup creates the following files. Missing bundled files are restored on every startup; files you have edited or deleted-and-replaced are never overwritten.
+
+<FileTree>
+- plugins/EasterEggs/
+  - config.yml storage, particles, preferences, inbox, leaderboards, sounds
+  - rewards.yml reward groups and rules
+  - menus.yml inventory layouts, titles, labels, and lore
+  - messages.yml chat messages, help panels, buttons, and hovers
+  - easter-eggs.db SQLite database (default backend)
+  - hunts/ one file per hunt
+    - global.yml
+    - easter.yml
+    - scuba.yml
+    - halloween.yml
+    - christmas.yml
+    - enchanted.yml
+  - templates/ twenty head templates
+  - particle/ twenty particle presets
+</FileTree>
+
+<Aside type="caution">
+Restoring missing defaults means a bundled hunt, template, or preset you delete comes back after a restart. To retire a bundled hunt, set `enabled: false` in its file instead of deleting it.
+</Aside>
+
+---
+
+## Place Your First Egg
+
+The bundled hunts contain no placements, because world locations are always your choice.
+
+<Steps>
+
+1. Run `/eggs admin` to open the **Hunt Editor**, then choose **Easter**.
+2. Click **Add Eggs** and pick a template, for example **Painted Egg**. A placement head is added to your inventory and **edit mode** turns on.
+3. Place the head like a normal block. The egg is saved with a permanent identity; the chat confirms the hunt and template.
+4. Repeat for a few more eggs. While edit mode is on, breaking an egg removes it and clicking an egg does not collect it.
+5. Run `/eggs admin edit off` to leave edit mode.
+
+</Steps>
+
+The same can be done with commands:
 
 ```text
-/eggs admin
 /eggs admin give easter painted-egg
-```
-
-The editor lets you choose a hunt and template. The give command selects both and gives you a placement head. Place that head where players should find it; the position becomes a tracked egg in the selected hunt.
-
-Leave placement mode before testing collection:
-
-```text
+/eggs admin place
 /eggs admin edit off
-/eggs
 ```
 
-Interact with the egg to collect it. Choose Easter in the player menu to see your progress, collection and rewards. For a timed hunt, run `/eggs start <hunt>` before collecting.
+`give` selects the hunt and template and hands you a placement head; `place` puts the selected egg at the block you are standing in. See [Creating Hunts and Placing Eggs](/easter-eggs/creating-hunts/) for moving, copying, ordering, clues, and removal.
 
-## Where to customize
+---
 
-| File | Contents |
-| --- | --- |
-| `config.yml` | Storage, global effect limits, inbox timing and ranking options |
-| `hunts/*.yml` | Hunt rules, schedules, requirements and reward group references |
-| `templates/*.yml` | Textures, rendering, particle states and default hints |
-| `particle/*.yml` | Layered particle geometry and animation |
-| `rewards.yml` | Reward rules, actions and weighted pools |
-| `menus.yml` | Inventory layouts and labels |
-| `messages.yml` | MiniMessage text, chat panels and hover descriptions |
+## Collect It
 
-Run `/eggs admin reload` after editing. Invalid configuration is rejected and the current running configuration stays active. Storage connection changes require a restart.
+Right-click the egg. Floating display eggs can also be hit to collect them. The Easter hunt is **untimed**, so the first valid discovery starts your attempt automatically. You receive a discovery message with your progress, the template's collection particles, and the configured rewards. The bundled `common` group grants a little XP for every egg, a message for your first discovery, and two diamonds on completion.
 
-</EasterEggsGuide>
+Run `/eggs` to open the hunt list, choose a hunt to see your progress and collection, and use **Rewards** to preview everything you can earn.
+
+---
+
+## Next Steps
+
+- Learn the vocabulary in [Core Concepts](/easter-eggs/concepts/).
+- Make a hunt ordered, timed, scheduled, or repeatable with [Hunt Rules](/easter-eggs/hunt-rules/).
+- Build reward groups in [rewards.yml](/easter-eggs/configuration/rewards/).
+- Switch to MySQL in [Storage](/easter-eggs/storage/) before players start collecting; changing the backend later does not move data.
