@@ -71,12 +71,9 @@ function timestamp(seconds: number) {
                     </span>
                     <span class="clip-meta">
                         <code>{clip.id}</code>
-                        <span class="clip-style">{clip.rendering === 'DISPLAY' ? 'Floating display' : 'Placed head'}</span>
+                        <span class="clip-separator" aria-hidden="true"></span>
+                        <span>{clip.rendering === 'DISPLAY' ? 'Floating display' : 'Placed head'}</span>
                     </span>
-                    <button type="button" class="jump" data-time={clip.chapter}>
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-                        Watch in the tour at {timestamp(clip.chapter)}
-                    </button>
                 </figcaption>
             </figure>
         ))}
@@ -101,7 +98,7 @@ function timestamp(seconds: number) {
     .chapter:hover { background: var(--sl-color-gray-6); color: var(--sl-color-white); }
     .chapter[aria-current='true'] { background: var(--sl-color-accent-low); color: var(--sl-color-white); }
     .chapter-time { font-family: var(--sl-font-mono); font-variant-numeric: tabular-nums; color: var(--sl-color-gray-3); }
-    .chapter:focus-visible, .theme-chip:focus-visible, .jump:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 2px; }
+    .chapter:focus-visible, .theme-chip:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 2px; }
 
     .gallery-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: 2rem 0 1rem; }
     .theme-filter { display: inline-flex; flex-wrap: wrap; padding: .2rem; border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; background: var(--sl-color-bg-nav); }
@@ -121,13 +118,9 @@ function timestamp(seconds: number) {
     .clip-heading { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
     .clip-heading strong { font-size: 1rem; color: var(--sl-color-white); }
     .clip-theme { font-size: .7rem; color: var(--sl-color-gray-3); text-transform: uppercase; letter-spacing: .06em; }
-    .clip-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
-    .clip-meta code { padding: .15rem .4rem; border-radius: .3rem; background: var(--sl-color-gray-6); color: var(--sl-color-gray-1); font-family: var(--sl-font-mono); font-size: .8rem; line-height: 1.4; }
-    .clip-style { color: var(--sl-color-gray-2); }
-    .clip-style::before { content: '·'; margin-right: .5rem; color: var(--sl-color-gray-4); }
-    .jump { display: inline-flex; align-items: center; gap: .35rem; align-self: flex-start; margin: 0; padding: 0; border: 0; background: none; color: var(--sl-color-text-accent); font: inherit; font-size: .85rem; cursor: pointer; }
-    .jump svg { width: .8rem; height: .8rem; fill: currentColor; }
-    .jump:hover { text-decoration: underline; text-underline-offset: .2em; }
+    .clip-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; color: var(--sl-color-gray-2); line-height: 1.4; }
+    .clip-meta code { padding: 0; background: none; color: var(--sl-color-gray-2); font-family: var(--sl-font-mono); font-size: .82rem; }
+    .clip-separator { width: .3rem; height: .3rem; border-radius: 50%; background: var(--sl-color-gray-4); }
     .no-results { margin: 1rem 0 0; color: var(--sl-color-gray-3); }
 
     @media (max-width: 50rem) {
@@ -154,11 +147,10 @@ function timestamp(seconds: number) {
             const empty = this.querySelector<HTMLElement>('.no-results');
             let theme = 'all';
 
-            const seek = (time: number, scroll: boolean) => {
+            const seek = (time: number) => {
                 if (!cinematic) return;
                 cinematic.currentTime = time;
                 cinematic.play().catch(() => {});
-                if (scroll) cinematic.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
 
             const highlight = () => {
@@ -170,9 +162,7 @@ function timestamp(seconds: number) {
                 chapters.forEach((chapter) => chapter.setAttribute('aria-current', String(chapter === active)));
             };
 
-            chapters.forEach((chapter) => chapter.addEventListener('click', () => seek(Number(chapter.dataset.time), false)));
-            this.querySelectorAll<HTMLButtonElement>('.jump').forEach((button) =>
-                button.addEventListener('click', () => seek(Number(button.dataset.time), true)));
+            chapters.forEach((chapter) => chapter.addEventListener('click', () => seek(Number(chapter.dataset.time))));
             cinematic?.addEventListener('timeupdate', highlight);
             cinematic?.addEventListener('seeked', highlight);
 
