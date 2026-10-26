@@ -1,76 +1,101 @@
 ---
-title: "Egg Templates"
-description: "Twenty bundled head templates, block and display rendering, hint overrides and particle states."
+title: Template Files
+description: Reference for templates/<id>.yml, covering head textures, default clues, block and floating display rendering, particle states, and template reward groups.
 ---
 
-import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+import { Aside } from "@astrojs/starlight/components";
 
-<EasterEggsGuide>
+A template is a reusable appearance. Each file in `plugins/EasterEggs/templates/` defines one, and its file name is the template ID. Templates do not place anything by themselves: administrators choose a hunt and a template when placing each egg. See them in motion in the [video gallery](/easter-eggs/gallery/).
 
-Templates describe reusable appearances in `templates/<id>.yml`. The filename supplies the ID. A placement keeps its own UUID and hunt even when multiple eggs use the same template.
+## Complete Example
 
 ```yaml
-name: '<gold>Painted Egg'
-texture: '1237cdf6fd4cd4203e68e633d1f38dfe769971127d638843bd516aa97f793f0'
-hint: 'A splash of spring color is waiting nearby.'
+name: '<gold>Golden Egg'
+texture: 'c679efc59e22fcf34f7448bf7ab6664f799c3dff656cf483098be36c9ae1'
+hint: 'Something golden catches the spring sunshine.'
+
 display:
-  mode: 'BLOCK'
+  mode: 'DISPLAY'
   scale: 1.0
-  spin: 2.0
-  bob: 0.1
-  height: 0.5
+  spin: 1.4
+  bob: 0.12
+  height: 0.65
+
 particles:
-  unfound: 'pastel-ring'
+  unfound: 'spring-spiral'
   found: ''
   locked: ''
   collect: 'bunny-hearts'
-rewards: []
+
+rewards:
+  - 'special-egg'
 ```
 
-## Rendering settings
+---
 
-| Key | Meaning |
-| --- | --- |
-| `texture` | Mojang texture hash or Base64 textures property |
-| `display.mode` | BLOCK for a skull block; DISPLAY for an item display and interaction hitbox |
-| `display.scale` | Floating display size, 0.1 through 4 |
-| `display.spin` | Rotation in degrees per tick, -30 through 30; zero stops rotation |
-| `display.bob` | Vertical bob amplitude in blocks, 0 through 1 |
-| `display.height` | Floating display base offset in blocks, 0 through 3 |
-| `hint` | Default clue, overridden by a placement-specific hint |
-| `rewards` | Additional group IDs from rewards.yml |
+## Keys
 
-Spin, bob, scale and height apply to DISPLAY mode. Template particle states are `unfound`, `found`, `locked` and `collect`; an empty string disables that state. Each nonempty value must reference a [particle preset](/easter-eggs/configuration/particles/).
-
-## In-game previews
-
-Browse the [twenty-template gallery](/easter-eggs/gallery/) to inspect every texture and its ambient animation. Rendering mode can be changed independently of the texture.
-
-## Bundled templates
-
-| Template ID | Display name | Ambient preset |
+| Key | Default | Description |
 | --- | --- | --- |
-| `candy` | Candy | `witch-spiral` |
-| `carrot` | Carrot | `golden-halo` |
-| `easter-basket` | Easter Basket | `blossom-drift` |
-| `ghost` | Ghost | `pumpkin-flame` |
-| `gingerbread` | Gingerbread | `starburst` |
-| `gold-coin` | Gold Coins | `treasure-sparkle` |
-| `golden-egg` | Golden Egg | `spring-spiral` |
-| `ornament` | Christmas Ornament | `gift-confetti` |
-| `painted-egg` | Painted Egg | `pastel-ring` |
-| `pearl` | Pearl | `bubble-spiral` |
-| `present` | Wrapped Present | `snow-flurry` |
-| `pumpkin` | Pumpkin | `spectral-orbit` |
-| `seashell` | Seashell | `tidal-wave` |
-| `skull` | Skull | `ghost-wisps` |
-| `snow-globe` | Snow Globe | `frost-halo` |
-| `snowman` | Snowman | `festive-spiral` |
-| `spring-rabbit` | Spring Rabbit | `bunny-hearts` |
-| `starfish` | Starfish | `coral-ring` |
-| `treasure-chest` | Sunken Treasure | `pearl-orbit` |
-| `witch-cauldron` | Witch Cauldron | `candy-burst` |
+| `name` | file name | MiniMessage name shown in menus and discovery messages |
+| `texture` | | Head texture. Either a Mojang texture hash (32 to 64 hex characters) or a Base64 `textures` property whose skin URL is on `textures.minecraft.net`. Keep it quoted |
+| `hint` | `Look carefully around the hunt.` | Default clue for eggs of this template. A placement's own clue overrides it |
+| `rewards` | `[]` | Extra reward group IDs applied when an egg of this template is discovered, in addition to the hunt's groups |
 
-Use `/eggs admin give <hunt> <template>` to select and receive a placement head. See [creating eggs](/easter-eggs/creating-new-eggs/) for a complete example.
+### display
 
-</EasterEggsGuide>
+| Key | Default | Range | Description |
+| --- | --- | --- | --- |
+| `mode` | `BLOCK` | `BLOCK`, `DISPLAY` | `BLOCK` places a real player-head block. `DISPLAY` shows a floating item display with an invisible interaction hitbox |
+| `scale` | `1.0` | 0.1 to 4.0 | Display size multiplier |
+| `spin` | `2` | -30 to 30 | Rotation in degrees per tick; negative values reverse, `0` stops |
+| `bob` | `0.1` | 0 to 1 | Vertical bobbing amplitude in blocks; `0` disables it |
+| `height` | `0.5` | 0 to 3 | Base height above the block, in blocks |
+
+`scale`, `spin`, `bob`, and `height` only affect `DISPLAY`. Update frequency is `particles.tick-interval` in [config.yml](/easter-eggs/configuration/config/#particles). Switching a template between modes keeps every placement's identity, discoveries, and claims; heads are converted the next time they render.
+
+### particles
+
+Each state names a preset from [particle/](/easter-eggs/configuration/particles/), or `''` for no effect. Unknown preset IDs are rejected at load.
+
+| State | Played |
+| --- | --- |
+| `unfound` | Continuously, to players who have not found the egg while the hunt is available |
+| `found` | Continuously, to players who found the egg; not shown if the hunt hides collected eggs |
+| `locked` | Continuously, while the hunt is disabled, outside its schedule, or the viewer fails its requirements |
+| `collect` | Once, privately to the collector, at the moment of discovery |
+
+Effects respect the per-player particle budget and each player's particle preference.
+
+---
+
+## Bundled Templates
+
+| ID | Name | Mode | `unfound` | `collect` | Rewards |
+| --- | --- | --- | --- | --- | --- |
+| `painted-egg` | Painted Egg | BLOCK | `pastel-ring` | `bunny-hearts` | |
+| `golden-egg` | Golden Egg | DISPLAY | `spring-spiral` | `bunny-hearts` | `special-egg` |
+| `spring-rabbit` | Spring Rabbit | DISPLAY | `bunny-hearts` | `bunny-hearts` | |
+| `carrot` | Carrot | BLOCK | `golden-halo` | `bunny-hearts` | |
+| `easter-basket` | Easter Basket | DISPLAY | `blossom-drift` | `bunny-hearts` | |
+| `treasure-chest` | Sunken Treasure | BLOCK | `pearl-orbit` | `treasure-sparkle` | `special-egg` |
+| `pearl` | Pearl | DISPLAY | `bubble-spiral` | `treasure-sparkle` | `special-egg` |
+| `seashell` | Seashell | BLOCK | `tidal-wave` | `treasure-sparkle` | |
+| `gold-coin` | Gold Coins | DISPLAY | `treasure-sparkle` | `treasure-sparkle` | |
+| `starfish` | Starfish | DISPLAY | `coral-ring` | `treasure-sparkle` | |
+| `pumpkin` | Pumpkin | BLOCK | `spectral-orbit` | `candy-burst` | |
+| `candy` | Candy | BLOCK | `witch-spiral` | `candy-burst` | |
+| `ghost` | Ghost | DISPLAY | `pumpkin-flame` | `candy-burst` | |
+| `skull` | Skull | BLOCK | `ghost-wisps` | `candy-burst` | |
+| `witch-cauldron` | Witch Cauldron | DISPLAY | `candy-burst` | `candy-burst` | |
+| `present` | Wrapped Present | BLOCK | `snow-flurry` | `gift-confetti` | |
+| `snow-globe` | Snow Globe | DISPLAY | `frost-halo` | `gift-confetti` | |
+| `snowman` | Snowman | BLOCK | `festive-spiral` | `gift-confetti` | |
+| `gingerbread` | Gingerbread | BLOCK | `starburst` | `gift-confetti` | |
+| `ornament` | Christmas Ornament | DISPLAY | `gift-confetti` | `gift-confetti` | |
+
+No bundled template sets `found` or `locked`. Texture identifiers are listed in the [texture reference](/easter-eggs/asset-credits/).
+
+<Aside>
+Create your own template by cloning one, `/eggs admin clone templates golden-egg silver-egg`, then change its `texture` and `name`. Texture hashes come from any head database; follow the original creator's terms when redistributing artwork.
+</Aside>
