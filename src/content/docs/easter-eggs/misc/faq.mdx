@@ -1,50 +1,130 @@
 ---
-title: "FAQ and Troubleshooting"
-description: "Troubleshoot Easter Eggs 3.0.0 installation, editing mode, missing effects, rewards and legacy migration."
+title: Troubleshooting
+description: Solutions for Easter Eggs startup refusals, rejected reloads, eggs that cannot be placed or collected, missing particles, rewards, and placeholders.
 ---
 
-import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+## Startup
 
-<EasterEggsGuide>
+### "Found data from an older Easter Eggs version"
 
-## Which servers are supported?
+The `plugins/EasterEggs` folder belongs to an older version. The console prints step-by-step instructions with the exact import command. In short: rename the folder, start the server to create a fresh one, then run the import described in [Migrating Legacy Data](/easter-eggs/migration/).
 
-Use Paper or a compatible fork for Minecraft 1.21.11 or later, with Java 25. 3.0.0 does not support Folia or the old 1.8-to-modern Spigot range. See [installation](/easter-eggs/getting-started/).
+### "Easter Eggs could not start; existing data was preserved"
 
-## Why are there no eggs after installation?
+Read the error above this line in the console. Common causes are an invalid configuration file, an unreachable MySQL server, wrong credentials, a TLS setting that does not match the database server (`storage.mysql.ssl`), or a placed egg whose hunt or template file was deleted. Nothing is changed while the plugin is disabled; fix the cause and restart.
 
-Bundled files define hunts, templates and effects; they do not create world placements. Use `/eggs admin` or `/eggs admin give easter painted-egg`, then place the head.
+### "interrupted reward operations require administrator inspection"
 
-## Why can I place eggs but not collect them?
+The server stopped while rewards were being delivered. Run `/eggs admin deliveries` and resolve each entry. See [Uncertain Deliveries](/easter-eggs/operations/#uncertain-deliveries).
 
-Leave placement mode with `/eggs admin edit off`. Then check the collect permission, hunt availability, entry requirements, ordering, shared claims and whether a timed attempt needs `/eggs start <hunt>`.
+### A deleted hunt or template came back
 
-## Why are particles or boss bars missing?
+Bundled files that are missing are restored on every startup. Set `enabled: false` in a bundled hunt instead of deleting it.
 
-Check player preferences, the global particle budget and view distance, the template's state preset and the hunt's boss-bar setting. Boss bars and hot/cold feedback are off in the bundled hunts until enabled.
+---
 
-## Why is my inbox empty?
+## Configuration
 
-Only item rewards that could not fit become pending items. The inbox command is still available with permission, but empty inbox menu shortcuts are hidden. Items may also have passed their configured expiry deadline.
+### My reload was rejected
 
-## Why did a retry or reset not award prizes again?
+The message names the file and the field. The previous configuration is still running, so nothing broke. Common errors are listed in [Operations and Recovery](/easter-eggs/operations/#common-validation-errors).
 
-Attempt state and reward rights are separate. Claimed rewards remain claimed within the same reward period. Configure a repeat policy for renewed rewards.
+### `/eggs admin set` stored the wrong type
 
-## Why do money rewards fail?
+The value is parsed as YAML. Quote text that contains `#` or `:`, such as colors, times, and dates: `'#FFC107'`, `'18:00'`. Write lists without quotes: `[common, special-egg]`.
 
-MONEY requires Vault and a working economy provider. Installing Vault alone does not create an economy. Check the provider and [uncertain deliveries](/easter-eggs/operations/#uncertain-deliveries) before retrying a payment.
+### I switched to MySQL and all progress is gone
 
-## Where is mysql.yml?
+Changing `storage.type` does not copy data. Switch back to `sqlite` to see the old data again. Choose the backend before players start collecting.
 
-3.0.0 uses `storage.mysql` inside config.yml. Switching backends does not copy existing data. See [database setup](/easter-eggs/configuration/mysql/).
+---
 
-## Can I keep my 2.x data?
+## Placing Eggs
 
-Use the explicit legacy importer from the console with no players online. Review its report and disabled imported hunts before enabling them. See [migration](/easter-eggs/operations/).
+### The placement head does nothing
 
-## What happens when a reload fails?
+Placement heads only work in edit mode and with `eastereggs.admin.place`. Edit mode turns on when you take a template from the editor or use `/eggs admin give`; it also ends when you log out. Take a new head from the editor.
 
-The current running configuration remains active. Correct the reported file, value or reference, then reload again. Storage changes need a restart.
+### "Choose an Empty Space" or "Spot Already Used"
 
-</EasterEggsGuide>
+The block must be air and not already used by another egg. Eggs are stored per block, so two eggs cannot share one.
+
+### "Visit This Area First"
+
+The target chunk is not loaded. Stand near the location and try again.
+
+### "Look at an egg within six blocks"
+
+`move`, `copy`, `order`, `hint`, and `remove` act on the egg you are looking at. Get closer and aim at the head or floating display.
+
+---
+
+## Collecting Eggs
+
+### Clicking an egg shows "Edit Mode Active"
+
+You are still in edit mode. Run `/eggs admin edit off` or click **[Turn Editing Off]**.
+
+### "Start Your Hunt"
+
+The hunt is timed. Start it from the hunt menu or with `/eggs start <hunt>`.
+
+### "Follow the Trail"
+
+The hunt is ordered. Use `/eggs hint <hunt>` for a clue to the next egg.
+
+### "Hunt Closed" or "Entry Requirements"
+
+The hunt is disabled, outside its schedule, or you do not meet its [requirements](/easter-eggs/hunt-rules/#entry-requirements). `PLACEHOLDER` requirements always fail without PlaceholderAPI.
+
+### "Hunt Already Complete"
+
+You completed this one-time hunt. Repeating hunts use `DAILY`, `WEEKLY`, or `COOLDOWN` [reward periods](/easter-eggs/hunt-rules/#reward-periods).
+
+### Nothing happens when clicking an egg
+
+Check that the player has `eastereggs.collect`, and that another plugin is not cancelling the interaction or `EggCollectEvent`. Rapid repeated clicks within `egg-sounds.interaction-cooldown-millis` are ignored on purpose.
+
+---
+
+## Visuals
+
+### No particles
+
+Check that `particles.budget-per-player` is above `0`, that the player's **Particles** preference is on, that the template state has a preset, and that the player is within both `particles.view-distance` and the preset's `view-distance`. Hidden collected eggs show no `found` effect.
+
+### Floating eggs are missing after a crash
+
+Display eggs are temporary entities that are recreated whenever their chunk loads. Leftover entities from an interrupted server are cleaned up automatically. Reload or rejoin the area to redraw them.
+
+### No hot and cold messages
+
+All of these are needed: `hints.enabled` and `hints.hot-cold` in the hunt, `preferences.proximity` in config.yml, and the player's **Nearby Hints** preference. Messages only appear within `proximity.radius-blocks` of an unfound egg.
+
+---
+
+## Rewards
+
+### A reward was not given again after a retry or reset
+
+This is intended. Claims are recorded per reward period, so retries and resets never repeat rewards. Use a [repeating period](/easter-eggs/hunt-rules/#reward-periods) for repeatable rewards.
+
+### Season ranking rewards were not paid
+
+`EVENT_RANK` rewards require `schedule.enabled: true` and a non-empty `schedule.end`. They are settled once after the end, and delivered when each winner is online.
+
+### A command reward did not run
+
+Commands must be written without `/` and must be handled by a plugin. An unhandled command is marked uncertain; see `/eggs admin deliveries`. `MONEY` requires Vault and an economy plugin.
+
+### Items disappeared from the inbox
+
+Inbox items expire after `pending.expire-after-seconds`. Players receive reminders and a warning before expiry.
+
+---
+
+## Placeholders
+
+### Placeholders show nothing
+
+Make sure PlaceholderAPI was installed before Easter Eggs enabled, then use `%eastereggs_...%` exactly as listed in [PlaceholderAPI](/easter-eggs/placeholders/). Player values exist only for online players. Leaderboard values refresh every ten seconds and only for boards enabled in `leaderboard.boards`.
