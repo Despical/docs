@@ -1,36 +1,21 @@
 ---
-title: "In-game Gallery"
-description: "Real Minecraft screenshots and six-second animations for all twenty Easter Eggs 3.0.0 templates, plus player and administrator menus."
+title: Video Gallery
+description: A cinematic tour and individual in-game recordings of all twenty bundled Easter Eggs head templates with their particle effects.
+tableOfContents: false
 ---
 
-import EasterEggsGuide from '../../../components/EasterEggsGuide.astro';
-import EasterEggsGallery from '../../../components/EasterEggsGallery.astro';
-import GameScreenshot from '../../../components/GameScreenshot.astro';
+import EasterEggsGallery from "../../../components/EasterEggsGallery.astro";
 
-<EasterEggsGuide>
-
-## Twenty templates in Minecraft
-
-These screenshots and videos were captured in **Minecraft Java Edition 26.3**, running **Easter Eggs 3.0.0** on Paper. Each card shows one configured template with its live ambient particle preset. Play a clip to inspect its motion, or open the still image for a closer look.
-
-The demonstration gallery uses ten floating displays and ten placed heads. Rendering mode is configurable per template; the gallery arrangement is an example setup.
+Every bundled template, recorded in Minecraft Java Edition on a Paper server at 1080p and 60 frames per second. The **cinematic tour** moves through all twenty templates in one take; use the chapter list to jump straight to one. Below it, each template has its own twelve-second clip showing its ambient particle effect up close.
 
 <EasterEggsGallery />
 
-## Collection effects
+---
 
-This recording shows a Painted Egg being collected, including its collection particle burst.
+## About the Recordings
 
-<video controls loop muted playsinline preload="none" poster="/images/easter-eggs/templates/painted-egg.png" width="960" height="720" style="width: 100%; height: auto; border-radius: .65rem;" aria-label="Painted Egg collection effect in Minecraft">
-    <source src="/images/easter-eggs/collection-burst.webm" type="video/webm" />
-</video>
+The recordings use the bundled template files without changes. Ten templates render as **placed heads** and ten as **floating displays** that rotate and bob; the rendering mode, scale, spin, bob, and height are set per template in [templates/](/easter-eggs/configuration/templates/). The effect shown is the template's `unfound` preset. The `collect` preset plays privately to the collecting player at the moment of discovery.
 
-## Gallery layout
+Preview any preset in your own world with `/eggs admin preview <preset>`, and tune it in [particle/](/easter-eggs/configuration/particles/). The templates are grouped by the season they were designed for, but any template can be placed in any hunt.
 
-<GameScreenshot src="/images/easter-eggs/gallery-overview.png" alt="Twenty collectible head templates arranged in a Minecraft demonstration gallery" width={1920} height={1080} />
-
-## Menus and setup
-
-See the [menu guide](/easter-eggs/menus/) for twenty-five player and administrator screenshots, or follow [creating and placing eggs](/easter-eggs/creating-new-eggs/) to create your own hunt. Texture and display settings are covered in the [template reference](/easter-eggs/configuration/templates/), and animation settings in [particle presets](/easter-eggs/configuration/particles/).
-
-</EasterEggsGuide>
+The [menu guide](/easter-eggs/menus/) shows the player screens and administrator editors.
