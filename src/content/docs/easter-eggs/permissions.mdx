@@ -1,0 +1,54 @@
+---
+title: Permissions
+description: Individual Easter Eggs permission nodes for collecting eggs, player commands, and every administrator action.
+---
+
+Every command and editor action checks its **own** permission. There is no wildcard node defined by the plugin, and opening a menu never grants the actions inside it: an administrator who can open the editor but lacks `eastereggs.admin.remove` cannot remove eggs from it. Help panels and tab completion only list commands the sender can run.
+
+Use your permission plugin's wildcard support, such as `eastereggs.admin.*` in LuckPerms, if you want to grant a whole group at once.
+
+## Player Permissions
+
+Granted to everyone by default.
+
+| Permission | Allows |
+| --- | --- |
+| `eastereggs.collect` | Discovering and collecting eggs |
+| `eastereggs.menu` | `/eggs` and `/eggs menu [hunt]` |
+| `eastereggs.help` | `/eggs help` |
+| `eastereggs.start` | Starting or retrying timed hunts |
+| `eastereggs.leave` | Abandoning an active timed attempt |
+| `eastereggs.hint` | Requesting text hints |
+| `eastereggs.rewards` | Browsing hunt rewards |
+| `eastereggs.leaderboard` | Browsing rankings |
+| `eastereggs.preferences` | Changing personal preferences |
+| `eastereggs.inbox` | Claiming pending item rewards |
+| `eastereggs.cancel` | Cancelling an editor chat prompt with its **[Cancel]** button |
+
+Entry to a specific hunt can additionally be restricted with a `PERMISSION` [requirement](/easter-eggs/hunt-rules/#entry-requirements), using any node you choose.
+
+## Administrator Permissions
+
+Granted to operators by default.
+
+| Permission | Allows |
+| --- | --- |
+| `eastereggs.admin.menu` | Opening the Hunt Editor with `/eggs admin` |
+| `eastereggs.admin.help` | `/eggs admin help` |
+| `eastereggs.admin.give` | Selecting a template and receiving a placement head |
+| `eastereggs.admin.place` | Placing eggs, with a placement head or `/eggs admin place` |
+| `eastereggs.admin.edit` | Turning edit mode off |
+| `eastereggs.admin.remove` | Removing eggs |
+| `eastereggs.admin.move` | Moving eggs while keeping their identity |
+| `eastereggs.admin.copy` | Duplicating eggs |
+| `eastereggs.admin.order` | Changing collection order |
+| `eastereggs.admin.hint` | Changing placement clues |
+| `eastereggs.admin.create` | Creating hunts |
+| `eastereggs.admin.delete` | Deleting empty, unreferenced hunts |
+| `eastereggs.admin.set` | Editing hunt, template, and particle settings, including editor toggles and hunt icons |
+| `eastereggs.admin.clone` | Cloning hunts, templates, and particle presets |
+| `eastereggs.admin.reload` | Reloading configuration |
+| `eastereggs.admin.preview` | Previewing particle presets |
+| `eastereggs.admin.reset` | Resetting hunt attempts |
+| `eastereggs.admin.deliveries` | Inspecting and resolving uncertain reward deliveries |
+| `eastereggs.admin.migrate` | Importing legacy data from the console |
