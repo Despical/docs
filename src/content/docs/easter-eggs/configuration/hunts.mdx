@@ -1,15 +1,13 @@
 ---
-title: "Hunts"
-description: "Configure personal or shared hunts, ordering, timers, reset periods, schedules and entry requirements."
+title: Hunt Files
+description: Reference for hunts/<id>.yml, covering every Easter Eggs hunt key with defaults, ranges, and the six bundled hunts.
 ---
 
-import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+Each file in `plugins/EasterEggs/hunts/` defines one hunt. The file name without `.yml` is the hunt's permanent ID; placements, progress, and claims refer to it. Behavior is explained in [Hunt Rules](/easter-eggs/hunt-rules/); this page lists the keys.
 
-<EasterEggsGuide>
+Create files with `/eggs admin create <id> <name>` or `/eggs admin clone hunts <source> <new-id>`, or copy one by hand and run `/eggs admin reload`. Omitted keys use the defaults below.
 
-Each `hunts/<id>.yml` file defines an independent hunt. Keep IDs stable: placements, progress, reward claims and prerequisite rules reference them.
-
-## Default Easter hunt
+## Complete Example
 
 ```yaml
 name: '<#FF69B4>Easter'
@@ -21,27 +19,33 @@ collection: 'PERSONAL'
 hide-collected: false
 protect: true
 boss-bar: false
+
 timed:
   enabled: false
   limit-seconds: 300
   continue-offline: true
+
 repeat:
   mode: 'ONCE'
   cooldown-seconds: 3600
   reset-time: '00:00'
   reset-day: 'MONDAY'
+
 schedule:
   enabled: false
   timezone: 'UTC'
   start: ''
   end: ''
+
 requirements:
   match: 'ALL'
   rules: {}
+
 hints:
   enabled: true
   hot-cold: false
   cooldown-seconds: 60
+
 rewards:
   - 'common'
   - 'seasonal-results'
@@ -51,64 +55,89 @@ rewards:
   - 'spring-gallery'
 ```
 
-## Collection and timing
+---
 
-| Setting | Behavior |
-| --- | --- |
-| `collection: PERSONAL` | Each player can discover every eligible egg |
-| `collection: SHARED` | An egg can be claimed by one player in the common reward period |
-| `ordered: true` | Collection follows placement order |
-| `hide-collected: true` | Hide collected eggs for the relevant player |
-| `protect: true` | Protect tracked placements against world changes |
-| `timed.enabled: true` | Require an explicit start and track attempt duration |
-| `timed.limit-seconds` | Attempt time limit; zero removes the deadline |
-| `timed.continue-offline` | Whether offline time counts toward a timed attempt |
+## General
 
-Timers require `/eggs start <hunt>`. Starting again or resetting an attempt does not recreate reward rights already claimed in that period.
+| Key | Default | Description |
+| --- | --- | --- |
+| `name` | file name | MiniMessage display name used in menus, messages, and the boss bar |
+| `menu-order` | `0` | Position in the hunt list, 0 to 1000000. Equal values sort by ID. New hunts are appended |
+| `icon` | `''` | Encoded item saved by dropping an item onto the dashboard hunt card. Empty uses the built-in themed icon |
+| `enabled` | `true` | Allows play, subject to schedule and requirements |
+| `ordered` | `false` | `true` requires eggs to be found in collection order |
+| `collection` | `PERSONAL` | `PERSONAL` or `SHARED`. `SHARED` cannot be combined with `COOLDOWN` |
+| `hide-collected` | `false` | Hide a found egg from the player who found it |
+| `protect` | `true` | Protect heads and their supporting blocks |
+| `boss-bar` | `false` | Show the progress boss bar for this hunt |
+| `rewards` | `[]` | Reward group IDs from `rewards.yml` |
 
-## Reward periods
+## timed
 
-`repeat.mode` accepts ONCE, COOLDOWN, DAILY or WEEKLY. COOLDOWN uses the player's previous finish and a positive cooldown duration. DAILY and WEEKLY use `reset-time`, `reset-day` and `schedule.timezone`. SHARED collection cannot use player-relative COOLDOWN periods.
+| Key | Default | Description |
+| --- | --- | --- |
+| `enabled` | `false` | Require an explicit start; record times and records |
+| `limit-seconds` | `300` | 0 to 31536000. `0` means no limit |
+| `continue-offline` | `true` | `true` keeps time running while logged out; `false` pauses it |
 
-## Scheduled availability
+## repeat
 
-```yaml
-schedule:
-  enabled: true
-  timezone: 'Europe/Istanbul'
-  start: '2026-12-01T00:00:00'
-  end: '2026-12-31T23:59:59'
-```
+| Key | Default | Description |
+| --- | --- | --- |
+| `mode` | `ONCE` | `ONCE`, `DAILY`, `WEEKLY`, or `COOLDOWN` |
+| `cooldown-seconds` | `3600` | Wait after completion before a new `COOLDOWN` period. Must be positive for `COOLDOWN` |
+| `reset-time` | `'00:00'` | `HH:mm` reset time for `DAILY` and `WEEKLY`, in `schedule.timezone` |
+| `reset-day` | `MONDAY` | Reset weekday for `WEEKLY` |
 
-Use ISO local date-times in the selected time zone, or UTC instants ending in Z. Schedule windows control availability; repeat periods separately control renewed reward rights. EVENT_RANK rewards require a scheduled event with an end.
+## schedule
 
-## Entry requirements
+| Key | Default | Description |
+| --- | --- | --- |
+| `enabled` | `false` | Apply the window below |
+| `timezone` | `UTC` | IANA zone ID, also used by `repeat` resets |
+| `start` | `''` | Opening time, inclusive. Local `'2027-04-01T12:00:00'` or absolute `'2027-04-01T09:00:00Z'`. Empty means no opening boundary |
+| `end` | `''` | Closing time, exclusive; must be after `start`. Empty means no closing boundary and no season ranking settlement |
 
-Combine rules with `match: ALL` or `ANY`. Supported types are PERMISSION, COMPLETED_HUNT and PLACEHOLDER. Prerequisite references must exist and cannot form cycles.
+## requirements
+
+| Key | Default | Description |
+| --- | --- | --- |
+| `match` | `ALL` | `ALL` or `ANY` |
+| `rules` | `{}` | Named rules. Each has `type` (`PERMISSION`, `COMPLETED_HUNT`, or `PLACEHOLDER`) and `value`. `PLACEHOLDER` also takes `operator` (`EQUALS`, `NOT_EQUALS`, `AT_LEAST`, `AT_MOST`) and `expected` |
 
 ```yaml
 requirements:
   match: 'ALL'
   rules:
-    access:
-      type: 'PERMISSION'
-      value: 'events.spring'
-    prerequisite:
-      type: 'COMPLETED_HUNT'
-      value: 'global'
-    level:
-      type: 'PLACEHOLDER'
-      value: '%player_level%'
-      operator: 'AT_LEAST'
-      expected: '10'
+    finished-easter:
+      type: COMPLETED_HUNT
+      value: 'easter'
+    rank:
+      type: PLACEHOLDER
+      value: '%luckperms_primary_group_name%'
+      operator: EQUALS
+      expected: 'vip'
 ```
 
-Placeholder comparisons support EQUALS, NOT_EQUALS, AT_LEAST and AT_MOST and need a working PlaceholderAPI expansion for the chosen value.
+## hints
 
-## Hints and display
+| Key | Default | Description |
+| --- | --- | --- |
+| `enabled` | `true` | Allow text hints for this hunt |
+| `hot-cold` | `false` | Allow hot and cold proximity feedback |
+| `cooldown-seconds` | `60` | 0 to 86400. Delay between hint requests per player |
 
-Text clues use `hints.enabled` and `hints.cooldown-seconds`. Hot/cold feedback additionally requires `hints.hot-cold: true`. It gives qualitative proximity feedback without a direction arrow. Per-hunt boss bars and player preferences also control what each player sees.
+---
 
-The `rewards` list selects groups from [rewards.yml](/easter-eggs/rewards/). The optional icon is a serialized item supplied through the editor; leave it blank to use the default.
+## Bundled Hunts
 
-</EasterEggsGuide>
+| ID | Name | Defaults | Reward groups |
+| --- | --- | --- | --- |
+| `global` | Global | Untimed, personal, one-time | `common`, `global-trail`, `special-egg` |
+| `easter` | Easter | Untimed, personal, one-time | `common`, `seasonal-results`, `easter-surprise`, `spring-trail`, `special-egg`, `spring-gallery` |
+| `scuba` | Scuba | Untimed, personal, one-time | `common`, `seasonal-results`, `scuba-surprise`, `ocean-trail`, `special-egg`, `ocean-gallery` |
+| `halloween` | Halloween | Untimed, personal, one-time | `common`, `seasonal-results`, `haunted-trail`, `special-egg`, `haunted-gallery` |
+| `christmas` | Christmas | Untimed, personal, one-time | `common`, `seasonal-results`, `winter-trail`, `special-egg`, `winter-gallery` |
+| `enchanted` | Enchanted | **Timed, 600-second limit**, personal, one-time | `common`, `arcane-trail`, `special-egg`, `arcane-gallery` |
+
+None has a schedule, requirements, boss bar, or placed eggs. Season ranking rewards in `seasonal-results` only pay out after you add a schedule end.
