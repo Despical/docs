@@ -1,77 +1,204 @@
 ---
 import gallery from '../data/easter-eggs-gallery.json';
+
+const themes = [
+    { id: 'all', label: 'All' },
+    { id: 'spring', label: 'Spring' },
+    { id: 'summer', label: 'Summer' },
+    { id: 'autumn', label: 'Autumn' },
+    { id: 'winter', label: 'Winter' },
+];
+
+const themeLabel = Object.fromEntries(themes.map((theme) => [theme.id, theme.label]));
+const { cinematic, clips } = gallery;
+
+function timestamp(seconds: number) {
+    const whole = Math.floor(seconds);
+
+    return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, '0')}`;
+}
 ---
 
-<egg-template-gallery>
+<egg-video-gallery class="not-content">
+    <section class="cinematic" aria-labelledby="egg-cinematic-title">
+        <div class="cinematic-player">
+            <video class="cinematic-video" controls playsinline preload="metadata" poster={cinematic.poster} width={cinematic.width} height={cinematic.height} aria-labelledby="egg-cinematic-title">
+                <source src={cinematic.src} type="video/mp4" />
+                <a href={cinematic.src}>Download the cinematic tour</a>
+            </video>
+        </div>
+        <div class="cinematic-chapters">
+            <div class="chapter-panel">
+                <p id="egg-cinematic-title" class="cinematic-title">Cinematic tour <span>{timestamp(cinematic.duration)} · {clips.length} templates</span></p>
+                <ol class="chapter-list">
+                    {clips.map((clip) => (
+                        <li>
+                            <button type="button" class="chapter" data-time={clip.chapter} data-id={clip.id}>
+                                <span class="chapter-time">{timestamp(clip.chapter)}</span>
+                                <span class="chapter-name">{clip.name}</span>
+                            </button>
+                        </li>
+                    ))}
+                </ol>
+            </div>
+        </div>
+    </section>
+
     <div class="gallery-toolbar">
-        <label for="egg-template-search">Find a template</label>
-        <input id="egg-template-search" type="search" placeholder="Name, template ID or particle preset" autocomplete="off" />
-        <span class="gallery-count" aria-live="polite">20 templates</span>
+        <div class="theme-filter" role="group" aria-label="Filter by season">
+            {themes.map((theme, index) => (
+                <button type="button" class="theme-chip" data-theme={theme.id} aria-pressed={index === 0 ? 'true' : 'false'}>{theme.label}</button>
+            ))}
+        </div>
+        <label class="search">
+            <span class="visually-hidden">Search templates</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+            <input type="search" placeholder="Search templates" autocomplete="off" />
+        </label>
     </div>
-    <div class="template-grid">
-        {gallery.templates.map((template) => (
-            <figure id={`template-${template.id}`} class="template-card" data-search={`${template.name} ${template.id} ${template.preset}`.toLowerCase()}>
-                <video controls loop muted playsinline preload="none" poster={`/images/easter-eggs/templates/${template.id}.png`} width="960" height="720" aria-label={`${template.name}: six-second in-game particle animation`}>
-                    <source src={`/images/easter-eggs/templates/${template.id}.webm`} type="video/webm" />
-                    <a href={`/images/easter-eggs/templates/${template.id}.webm`}>Watch the {template.name} recording</a>
+
+    <div class="clip-grid">
+        {clips.map((clip) => (
+            <figure id={`template-${clip.id}`} class="clip-card" data-theme={clip.theme} data-search={`${clip.name} ${clip.id}`.toLowerCase()}>
+                <video controls loop muted playsinline preload="none" poster={`/images/easter-eggs/posters/${clip.id}.jpg`} width={cinematic.width} height={cinematic.height} aria-label={`${clip.name}: ${gallery.clipDuration}-second in-game recording`}>
+                    <source src={`/images/easter-eggs/videos/${clip.id}.mp4`} type="video/mp4" />
+                    <a href={`/images/easter-eggs/videos/${clip.id}.mp4`}>Watch the {clip.name} recording</a>
                 </video>
                 <figcaption>
-                    <strong>{template.name}</strong>
-                    <code>{template.id}</code>
-                    <span>{template.rendering === 'DISPLAY' ? 'Floating display' : 'Placed head'} · {template.preset}</span>
-                    <a href={`/images/easter-eggs/templates/${template.id}.png`} target="_blank" rel="noreferrer">Open screenshot</a>
+                    <span class="clip-heading">
+                        <strong>{clip.name}</strong>
+                        <span class="clip-theme">{themeLabel[clip.theme]}</span>
+                    </span>
+                    <span class="clip-meta">
+                        <code>{clip.id}</code>
+                        <span class="clip-style">{clip.rendering === 'DISPLAY' ? 'Floating display' : 'Placed head'}</span>
+                    </span>
+                    <button type="button" class="jump" data-time={clip.chapter}>
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+                        Watch in the tour at {timestamp(clip.chapter)}
+                    </button>
                 </figcaption>
             </figure>
         ))}
     </div>
-    <p class="no-results" hidden>No templates match your search.</p>
-</egg-template-gallery>
+    <p class="no-results" hidden>No templates match your filter.</p>
+</egg-video-gallery>
 
 <style>
-    egg-template-gallery { display: block; margin-block: 1.5rem; }
-    .gallery-toolbar { display: grid; gap: .55rem; margin-bottom: 1.25rem; }
-    .gallery-toolbar label { font-weight: 600; }
-    .gallery-toolbar input { box-sizing: border-box; width: 100%; padding: .7rem .85rem; border: 1px solid var(--sl-color-gray-4); border-radius: .5rem; background: var(--sl-color-bg); color: var(--sl-color-text); font: inherit; }
-    .gallery-toolbar input:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 3px; }
-    .gallery-count { font-size: .85rem; color: var(--sl-color-gray-2); }
-    .template-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-    .template-card { min-width: 0; margin: 0; border: 1px solid var(--sl-color-gray-5); border-radius: .65rem; overflow: hidden; background: var(--sl-color-bg-nav); scroll-margin-top: 7rem; }
-    .template-card[hidden], .no-results[hidden] { display: none; }
-    .template-card video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #ddd; }
-    figcaption { display: grid; gap: .25rem; padding: .9rem 1rem; font-size: .85rem; }
-    figcaption strong { font-size: 1rem; }
-    figcaption code { width: fit-content; overflow-wrap: anywhere; }
-    figcaption span { color: var(--sl-color-gray-2); overflow-wrap: anywhere; }
-    figcaption a { width: fit-content; margin-top: .3rem; }
-    @media (max-width: 38rem) { .template-grid { grid-template-columns: 1fr; } }
+    egg-video-gallery { display: block; margin-block: 1.5rem; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+    .cinematic { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; border: 1px solid var(--sl-color-gray-5); border-radius: .75rem; overflow: hidden; background: var(--sl-color-bg-nav); }
+    .cinematic-player { min-width: 0; background: #000; }
+    .cinematic-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+    .cinematic-chapters { position: relative; min-height: 12rem; border-left: 1px solid var(--sl-color-gray-5); }
+    .chapter-panel { position: absolute; inset: 0; display: flex; flex-direction: column; }
+    .cinematic-title { margin: 0; padding: .75rem 1rem; font-weight: 600; color: var(--sl-color-white); border-bottom: 1px solid var(--sl-color-gray-5); }
+    .cinematic-title span { display: block; font-size: .8rem; font-weight: 400; color: var(--sl-color-gray-3); }
+    .chapter-list { flex: 1 1 0; min-height: 0; margin: 0; padding: .35rem; list-style: none; overflow-y: auto; }
+    .chapter-list li { margin: 0; }
+    .chapter { display: flex; gap: .65rem; width: 100%; margin: 0; padding: .35rem .6rem; border: 0; border-radius: .4rem; background: none; color: var(--sl-color-gray-2); font: inherit; font-size: .85rem; text-align: left; cursor: pointer; }
+    .chapter:hover { background: var(--sl-color-gray-6); color: var(--sl-color-white); }
+    .chapter[aria-current='true'] { background: var(--sl-color-accent-low); color: var(--sl-color-white); }
+    .chapter-time { font-family: var(--sl-font-mono); font-variant-numeric: tabular-nums; color: var(--sl-color-gray-3); }
+    .chapter:focus-visible, .theme-chip:focus-visible, .jump:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 2px; }
+
+    .gallery-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: 2rem 0 1rem; }
+    .theme-filter { display: inline-flex; flex-wrap: wrap; padding: .2rem; border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; background: var(--sl-color-bg-nav); }
+    .theme-chip { margin: 0; padding: .4rem .85rem; border: 0; border-radius: .45rem; background: none; color: var(--sl-color-gray-2); font: inherit; font-size: .85rem; line-height: 1.2; cursor: pointer; }
+    .theme-chip:hover { color: var(--sl-color-white); }
+    .theme-chip[aria-pressed='true'] { background: var(--sl-color-accent-low); color: var(--sl-color-white); box-shadow: inset 0 0 0 1px var(--sl-color-accent); }
+    .search { position: relative; display: flex; align-items: center; flex: 1 1 12rem; margin: 0; }
+    .search svg { position: absolute; left: .75rem; width: 1rem; height: 1rem; fill: none; stroke: var(--sl-color-gray-3); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+    .search input { box-sizing: border-box; width: 100%; height: 2.4rem; margin: 0; padding: 0 .75rem 0 2.2rem; border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; background: var(--sl-color-bg-nav); color: var(--sl-color-text); font: inherit; font-size: .9rem; }
+    .search input:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 2px; }
+
+    .clip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .clip-card { min-width: 0; margin: 0; border: 1px solid var(--sl-color-gray-5); border-radius: .65rem; overflow: hidden; background: var(--sl-color-bg-nav); scroll-margin-top: 7rem; }
+    .clip-card[hidden], .no-results[hidden] { display: none; }
+    .clip-card video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; }
+    figcaption { display: flex; flex-direction: column; gap: .6rem; padding: .9rem 1rem 1rem; font-size: .85rem; }
+    .clip-heading { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+    .clip-heading strong { font-size: 1rem; color: var(--sl-color-white); }
+    .clip-theme { font-size: .7rem; color: var(--sl-color-gray-3); text-transform: uppercase; letter-spacing: .06em; }
+    .clip-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+    .clip-meta code { padding: .15rem .4rem; border-radius: .3rem; background: var(--sl-color-gray-6); color: var(--sl-color-gray-1); font-family: var(--sl-font-mono); font-size: .8rem; line-height: 1.4; }
+    .clip-style { color: var(--sl-color-gray-2); }
+    .clip-style::before { content: '·'; margin-right: .5rem; color: var(--sl-color-gray-4); }
+    .jump { display: inline-flex; align-items: center; gap: .35rem; align-self: flex-start; margin: 0; padding: 0; border: 0; background: none; color: var(--sl-color-text-accent); font: inherit; font-size: .85rem; cursor: pointer; }
+    .jump svg { width: .8rem; height: .8rem; fill: currentColor; }
+    .jump:hover { text-decoration: underline; text-underline-offset: .2em; }
+    .no-results { margin: 1rem 0 0; color: var(--sl-color-gray-3); }
+
+    @media (max-width: 50rem) {
+        .cinematic { grid-template-columns: 1fr; }
+        .cinematic-chapters { min-height: 0; border-left: 0; border-top: 1px solid var(--sl-color-gray-5); }
+        .chapter-panel { position: static; }
+        .chapter-list { flex: none; max-height: 12rem; }
+    }
+    @media (max-width: 38rem) { .clip-grid { grid-template-columns: 1fr; } }
 </style>
 
 <script>
-    class EggTemplateGallery extends HTMLElement {
+    class EggVideoGallery extends HTMLElement {
         connectedCallback() {
             if (this.dataset.ready) return;
             this.dataset.ready = 'true';
+
+            const cinematic = this.querySelector<HTMLVideoElement>('.cinematic-video');
+            const chapters = Array.from(this.querySelectorAll<HTMLButtonElement>('.chapter'));
+            const videos = Array.from(this.querySelectorAll<HTMLVideoElement>('video'));
+            const cards = Array.from(this.querySelectorAll<HTMLElement>('.clip-card'));
+            const chips = Array.from(this.querySelectorAll<HTMLButtonElement>('.theme-chip'));
             const search = this.querySelector<HTMLInputElement>('input[type="search"]');
-            const count = this.querySelector<HTMLElement>('.gallery-count');
             const empty = this.querySelector<HTMLElement>('.no-results');
-            const cards = Array.from(this.querySelectorAll<HTMLElement>('.template-card'));
-            search?.addEventListener('input', () => {
-                const query = search.value.trim().toLowerCase();
+            let theme = 'all';
+
+            const seek = (time: number, scroll: boolean) => {
+                if (!cinematic) return;
+                cinematic.currentTime = time;
+                cinematic.play().catch(() => {});
+                if (scroll) cinematic.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            };
+
+            const highlight = () => {
+                if (!cinematic) return;
+                let active: HTMLButtonElement | undefined;
+                for (const chapter of chapters) {
+                    if (Number(chapter.dataset.time) <= cinematic.currentTime + 0.05) active = chapter;
+                }
+                chapters.forEach((chapter) => chapter.setAttribute('aria-current', String(chapter === active)));
+            };
+
+            chapters.forEach((chapter) => chapter.addEventListener('click', () => seek(Number(chapter.dataset.time), false)));
+            this.querySelectorAll<HTMLButtonElement>('.jump').forEach((button) =>
+                button.addEventListener('click', () => seek(Number(button.dataset.time), true)));
+            cinematic?.addEventListener('timeupdate', highlight);
+            cinematic?.addEventListener('seeked', highlight);
+
+            videos.forEach((video) => video.addEventListener('play', () => {
+                videos.forEach((other) => { if (other !== video) other.pause(); });
+            }));
+
+            const filter = () => {
+                const query = search?.value.trim().toLowerCase() ?? '';
                 let matches = 0;
                 cards.forEach((card) => {
-                    card.hidden = !card.dataset.search?.includes(query);
+                    card.hidden = (theme !== 'all' && card.dataset.theme !== theme) || !card.dataset.search?.includes(query);
                     if (card.hidden) card.querySelector('video')?.pause();
                     else matches++;
                 });
-                if (count) count.textContent = `${matches} ${matches === 1 ? 'template' : 'templates'}`;
                 if (empty) empty.hidden = matches > 0;
-            });
-            this.querySelectorAll('video').forEach((video) => {
-                video.addEventListener('play', () => {
-                    this.querySelectorAll('video').forEach((other) => { if (other !== video) other.pause(); });
-                });
-            });
+            };
+
+            chips.forEach((chip) => chip.addEventListener('click', () => {
+                theme = chip.dataset.theme ?? 'all';
+                chips.forEach((other) => other.setAttribute('aria-pressed', String(other === chip)));
+                filter();
+            }));
+            search?.addEventListener('input', filter);
         }
     }
-    if (!customElements.get('egg-template-gallery')) customElements.define('egg-template-gallery', EggTemplateGallery);
+
+    if (!customElements.get('egg-video-gallery')) customElements.define('egg-video-gallery', EggVideoGallery);
 </script>
