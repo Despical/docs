@@ -1,0 +1,63 @@
+---
+title: PlaceholderAPI
+description: Easter Eggs PlaceholderAPI placeholders for egg totals, per-hunt player progress, attempt status and time, and leaderboard positions.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+When [PlaceholderAPI](https://wiki.placeholderapi.com/) is installed, Easter Eggs registers the `eastereggs` expansion automatically; no eCloud download is needed. Placeholders read prepared snapshots and never wait for the database, so they are safe in scoreboards, tab lists, and hologram plugins.
+
+Replace `<hunt>` with a hunt ID such as `easter`, and `<position>` with a rank starting at `1`. Placeholders that do not exist, or rankings without enough players, return nothing.
+
+## Totals
+
+| Placeholder | Value |
+| --- | --- |
+| `%eastereggs_total%` | Eggs placed across all hunts |
+| `%eastereggs_total_type%` | Number of configured templates |
+| `%eastereggs_hunt:<hunt>:total%` | Eggs placed in one hunt |
+
+## Player Progress
+
+Available for online players and refreshed every second.
+
+| Placeholder | Value |
+| --- | --- |
+| `%eastereggs_total_found%` | Eggs found in the current attempts of all hunts |
+| `%eastereggs_total_left%` | Eggs placed minus eggs found, across all hunts |
+| `%eastereggs_hunt:<hunt>:found%` | Eggs found in the current attempt |
+| `%eastereggs_hunt:<hunt>:left%` | Eggs still to find |
+| `%eastereggs_hunt:<hunt>:percent%` | Progress from `0` to `100` |
+| `%eastereggs_hunt:<hunt>:status%` | `NOT_STARTED`, `ACTIVE`, `COMPLETED`, `FAILED`, or `ABANDONED` |
+| `%eastereggs_hunt:<hunt>:cycle%` | Current reward period identifier; empty before the first attempt |
+| `%eastereggs_hunt:<hunt>:time%` | Elapsed time such as `4m 12s`, or the remaining time while a timed attempt with a limit is active |
+
+Values describe the player's **current attempt** in the current reward period. A retry or a new period starts again from zero.
+
+## Leaderboards
+
+Refreshed every ten seconds for each board enabled in `leaderboard.boards`, up to `leaderboard.limit` positions.
+
+| Placeholder | Ranking |
+| --- | --- |
+| `%eastereggs_leaderboard:global:<position>:<field>%` | All-time discoveries across every hunt |
+| `%eastereggs_leaderboard:hunt:<hunt>:<position>:<field>%` | All-time discoveries in one hunt |
+| `%eastereggs_leaderboard:cycle:<hunt>:<position>:<field>%` | Discoveries in the current reward period |
+| `%eastereggs_leaderboard:fastest:<hunt>:<position>:<field>%` | Best completion time in a timed hunt |
+
+`<field>` is one of:
+
+| Field | Value |
+| --- | --- |
+| `name` | Last known player name |
+| `value` | Discovery count, or the completion time in **milliseconds** for `fastest` |
+| `uuid` | Player UUID |
+
+```text
+%eastereggs_leaderboard:global:1:name% - %eastereggs_leaderboard:global:1:value% eggs
+%eastereggs_leaderboard:fastest:enchanted:1:name% - %eastereggs_leaderboard:fastest:enchanted:1:value% ms
+```
+
+<Aside>
+`cycle` boards are not available for `COOLDOWN` hunts, whose periods are per player; for `ONCE` hunts they match the all-time ranking. `fastest` boards exist only for timed hunts. The plugin has no built-in holograms; use these placeholders with any hologram plugin that supports PlaceholderAPI.
+</Aside>
