@@ -1,0 +1,165 @@
+---
+title: Hunt Rules
+description: Configure availability, personal or shared collection, ordered trails, timed challenges, reward periods, schedules, entry requirements, protection, and visibility for each hunt.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Every hunt is independent. Its rules live in `hunts/<id>.yml`, and most of them can also be toggled from the hunt's dashboard in `/eggs admin`. The [hunt file reference](/easter-eggs/configuration/hunts/) lists every key with its range; this page explains how the rules behave together.
+
+---
+
+## Availability
+
+A player can collect eggs in a hunt only when **all** of these hold:
+
+1. `enabled: true`.
+2. The current time is inside the optional [schedule](#schedules).
+3. The player passes the optional [entry requirements](#entry-requirements).
+4. The player has `eastereggs.collect`.
+5. The hunt has at least one placed egg.
+
+A disabled or out-of-schedule hunt shows its eggs with the template's `locked` particle state, and collection is answered with **Hunt Closed**.
+
+---
+
+## Free and Ordered Collection
+
+With `ordered: false` (default), eggs can be found in any order.
+
+With `ordered: true`, players must find the **first egg they have not found yet** in [collection order](/easter-eggs/creating-hunts/#collection-order). Clicking any other egg shows **Follow the Trail**. Text hints always point to that next egg, which makes ordered hunts work well as a trail of clues.
+
+---
+
+## Personal and Shared Collection
+
+| `collection` | Behavior |
+| --- | --- |
+| `PERSONAL` | Every player has their own discoveries (default) |
+| `SHARED` | Each egg belongs to the first player who collects it in the current reward period. Later players see **Egg Claimed** |
+
+Shared ownership is stored in your database and is local to that server and database. Shared hunts require `repeat.mode` `ONCE`, `DAILY`, or `WEEKLY`; the player-relative `COOLDOWN` mode is rejected. When a new period begins, every egg can be claimed again.
+
+---
+
+## Timed Challenges
+
+```yaml
+timed:
+  enabled: true
+  limit-seconds: 600
+  continue-offline: true
+```
+
+| Behavior | Untimed hunt | Timed hunt |
+| --- | --- | --- |
+| Starting | Automatic on the first valid discovery | Explicit: **Start Hunt** in the menu or `/eggs start <hunt>` |
+| Leaving | Not possible; discoveries simply stay saved | **Leave Attempt** or `/eggs leave <hunt>` ends the attempt as abandoned |
+| Time limit | None | `limit-seconds`; `0` means no limit, only a stopwatch |
+| Retry | Not needed | Start again after failing or leaving; the collection starts empty |
+| Records | None | Personal and server best times, and the **Fastest Finish** leaderboard |
+
+The finish must happen **before** the limit; finishing exactly at the deadline is too late. When time runs out, the attempt is marked failed, the `time-up` sound plays, and no completion or record reward is granted.
+
+### Logging Out
+
+`continue-offline` decides what happens while a player is disconnected:
+
+- `true` (default): the timer keeps running. If the limit passed while the player was away, the attempt fails when they return.
+- `false`: the timer pauses at logout and resumes at login. A periodic heartbeat is stored so that a server crash also counts as paused time, rather than consuming the player's attempt.
+
+---
+
+## Reward Periods
+
+`repeat` decides when rewards can be earned again. A **retry is not a new period**: a failed or abandoned attempt can be retried immediately, but rewards already earned in the current period are not paid again.
+
+```yaml
+repeat:
+  mode: 'WEEKLY'
+  cooldown-seconds: 3600
+  reset-time: '18:00'
+  reset-day: 'FRIDAY'
+```
+
+| Mode | Behavior |
+| --- | --- |
+| `ONCE` | One-time event. After completing, players see **Hunt Already Complete** (default) |
+| `DAILY` | A new period begins every day at `reset-time` |
+| `WEEKLY` | A new period begins every week at `reset-time` on `reset-day` (`MONDAY` to `SUNDAY`) |
+| `COOLDOWN` | A new period begins `cooldown-seconds` after the player's completion. Until then the hunt counts as complete, and starting it shows **Next Attempt** with the remaining time |
+
+`reset-time` and `reset-day` are interpreted in `schedule.timezone`, even when the schedule itself is disabled. Daylight-saving changes never produce two periods for the same date.
+
+A new period starts with an empty collection and renews every reward right. Total discoveries, completions, and records are kept. The **Since Last Reset** leaderboard ranks the current period; it is not available for `COOLDOWN` hunts because their periods are per player.
+
+---
+
+## Schedules
+
+```yaml
+schedule:
+  enabled: true
+  timezone: 'Europe/Istanbul'
+  start: '2027-04-01T12:00:00'
+  end: '2027-04-21T00:00:00'
+```
+
+The start is inclusive and the end exclusive. Dates are local to `timezone` (an [IANA zone ID](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) such as `UTC` or `America/New_York`); an absolute UTC value such as `'2027-04-01T09:00:00Z'` is accepted too. Either boundary can be left empty.
+
+Availability is checked every ten seconds. When a hunt opens or closes, online players receive the **Season Open** or **Season Complete** message, and plugins receive a [`HuntAvailabilityEvent`](/easter-eggs/api/events/).
+
+### Season Rankings
+
+When a scheduled hunt **ends**, its final ranking is settled exactly once and `EVENT_RANK` rewards are queued. Untimed hunts rank by discoveries; timed hunts rank by the fastest known completion time. Ties are broken deterministically. An end that passed while the server was offline is settled after the next startup. A hunt without a schedule end never settles rankings.
+
+The bundled `seasonal-results` reward group gives 5, 3, and 1 diamonds to ranks 1, 2, and 3.
+
+---
+
+## Entry Requirements
+
+```yaml
+requirements:
+  match: 'ANY'
+  rules:
+    vip:
+      type: PERMISSION
+      value: 'server.hunts.vip'
+    veteran:
+      type: COMPLETED_HUNT
+      value: 'easter'
+    level:
+      type: PLACEHOLDER
+      value: '%player_level%'
+      operator: AT_LEAST
+      expected: '30'
+```
+
+| Type | Passes when |
+| --- | --- |
+| `PERMISSION` | The player has the permission in `value` |
+| `COMPLETED_HUNT` | The player has completed the hunt with ID `value` at least once |
+| `PLACEHOLDER` | The PlaceholderAPI value compared with `expected` using `operator` is true |
+
+Operators are `EQUALS`, `NOT_EQUALS`, `AT_LEAST`, and `AT_MOST`. The numeric operators require both sides to be finite numbers. `PLACEHOLDER` rules fail when PlaceholderAPI is not installed.
+
+`match: ALL` requires every rule, `match: ANY` requires one. `rules: {}` lets everyone in. Prerequisite hunts must exist, and circular prerequisites are rejected when the configuration loads. Players who fail the requirements see **Entry Requirements** and the hunt's eggs use the `locked` effect.
+
+---
+
+## Protection
+
+With `protect: true` (default), placed heads and the block beneath them cannot be broken, exploded, pushed by pistons, washed away by liquids, changed by entities, or disturbed by physics. Display eggs cannot be damaged. Administrators in edit mode can still remove eggs deliberately.
+
+With `protect: false`, the head block is not guarded. The egg record is not deleted when the block disappears; the plugin restores the head when the chunk renders it again.
+
+---
+
+## Hiding Found Eggs
+
+With `hide-collected: true`, an egg disappears only for the player who found it. Everyone else still sees it. This changes visibility only; it is unrelated to shared collection. Hidden eggs emit no `found` particles.
+
+<Aside>
+A hunt also has `menu-order` (position in the hunt list), `icon`, `boss-bar`, `hints`, and `rewards`. See [Hints and Preferences](/easter-eggs/hints-and-preferences/) and [Rewards](/easter-eggs/rewards/).
+</Aside>
