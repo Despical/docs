@@ -1,0 +1,88 @@
+---
+title: Storage
+description: How Easter Eggs stores placements, progress, claims, records, preferences, and pending rewards in SQLite or MySQL, and how to back them up.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+Easter Eggs keeps **definitions in YAML** and **state in a database**:
+
+| YAML files | Database |
+| --- | --- |
+| `config.yml`, `rewards.yml`, `menus.yml`, `messages.yml` | Placed eggs and their positions, order numbers, and clues |
+| `hunts/`, `templates/`, `particle/` | Attempts, discoveries, completions, and record times |
+| | Earned reward claims and the reward delivery queue |
+| | Pending inbox items and expiry notices |
+| | Player names and preferences |
+| | Shared-egg ownership, season settlements, and migration markers |
+
+Both backends are built in. Paper downloads the JDBC drivers listed in the plugin's `plugin.yml` on first startup.
+
+---
+
+## SQLite
+
+SQLite is the default and needs no setup. All data is in a single file, `plugins/EasterEggs/easter-eggs.db`, opened in write-ahead-log mode. Write-ahead logging creates `easter-eggs.db-wal` and `easter-eggs.db-shm` next to it while the server runs; they belong to the database.
+
+## MySQL
+
+Use MySQL to keep data on a dedicated database server.
+
+<Steps>
+
+1. Create an empty database, for example `eastereggs`, and an account that can create tables and indexes and read and write rows in it.
+2. Stop the server and fill in `storage.mysql` in [config.yml](/easter-eggs/configuration/config/#storage).
+3. Set `ssl: true` if the server presents a trusted certificate for its host name, otherwise `false`.
+4. Set `storage.type: 'mysql'` and start the server.
+
+</Steps>
+
+The plugin creates its own tables, all prefixed with `ee_`, in that database. It does not create the database itself.
+
+<Aside type="caution">
+Choose the backend before players start collecting. Changing `storage.type` later starts with an empty database; existing data is **not** copied between SQLite and MySQL. Storage settings are only read at startup.
+</Aside>
+
+`/eggs admin migrate mysql` is unrelated to these settings. It imports data from an old plugin version's MySQL table; see [Migrating Legacy Data](/easter-eggs/migration/).
+
+---
+
+## Tables
+
+| Table | Contents |
+| --- | --- |
+| `ee_eggs` | Placed eggs: UUID, hunt, template, world, block coordinates, order, and clue |
+| `ee_progress` | Each player's current attempt per hunt: period, attempt number, timer, status, and found eggs |
+| `ee_discoveries` | Every first discovery of an egg per player and period, used for rankings and rewards |
+| `ee_completions` | Completions per player and period, with the elapsed time used for records |
+| `ee_claims` | Earned reward claims |
+| `ee_dispatch` | Queued reward actions and their delivery state |
+| `ee_pending` | Inbox items with their expiry time |
+| `ee_expired` | Counts of expired inbox items not yet reported to the player |
+| `ee_players` | Player names and preferences |
+| `ee_shared` | Owners of eggs in shared hunts |
+| `ee_closed` | Scheduled hunts whose season ranking has been settled |
+| `ee_heartbeat` | Last running time, used to pause offline timers after a crash |
+| `ee_migrations` | Legacy sources that have already been imported |
+| `ee_schema` | Schema version |
+
+Edit tables only while the server is stopped, and only when you understand the consequences; the plugin assumes its records are consistent.
+
+---
+
+## How Writes Work
+
+All database work runs on one background thread, one transaction at a time, so the server tick never waits for the database. A discovery, its progress, its reward claims, and its queued actions are committed together: either all of them are saved or none.
+
+If the database cannot be reached at startup, the plugin disables itself without touching existing data.
+
+---
+
+## Backups
+
+Back up the database and the YAML files together, because placements in the database refer to hunt and template IDs in the files.
+
+- **SQLite:** stop the server, then copy the whole `plugins/EasterEggs` folder, including `easter-eggs.db` and any `-wal` file.
+- **MySQL:** use `mysqldump` or your host's backup tool on the database, and copy the `plugins/EasterEggs` folder.
+
+Restoring a database without the matching files fails safely: the plugin refuses to start if a placement refers to a hunt or template that no longer exists.
