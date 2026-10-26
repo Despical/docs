@@ -1,63 +1,120 @@
 ---
-title: "Particle Presets"
-description: "Create layered particle animations and preview the twenty bundled Easter Eggs presets."
+title: Particle Presets
+description: Reference for particle/<id>.yml, covering layered shapes, native particles, colors, timing, view distance, budgets, and the twenty bundled presets.
 ---
 
-import EasterEggsGuide from "../../../../components/EasterEggsGuide.astro";
+Each file in `plugins/EasterEggs/particle/` is one effect preset; its file name is the preset ID. Presets are used by [template](/easter-eggs/configuration/templates/#particles) states and by `PARTICLE` [reward actions](/easter-eggs/configuration/rewards/#actions).
 
-<EasterEggsGuide>
+Preview any preset privately in front of you with `/eggs admin preview <preset>`. A preview lasts about ten seconds and is visible only to you.
 
-Each `particle/<id>.yml` file defines a reusable effect. Templates reference these IDs for unfound, found, locked and collect states. Reward PARTICLE actions also reference presets.
-
-## Example: pastel-ring
+## Complete Example
 
 ```yaml
 duration-ticks: 0
 interval-ticks: 4
 view-distance: 24
+
 layers:
   primary:
-    shape: 'RING'
-    particle: 'DUST_COLOR_TRANSITION'
+    shape: 'ORBIT'
+    particle: 'DUST'
     points: 12
-    radius: 0.42
-    height: 0.16
-    speed: 0.06
-    offset: 0.04
-    color: '#F8BBD0'
-    end-color: '#B3E5FC'
+    radius: 0.44
+    height: 0.15
+    speed: 0.08
+    offset: 0.12
+    color: '#FFD54F'
+    end-color: '#FFFFFF'
     size: 0.7
   accent:
     shape: 'ORBIT'
     particle: 'DUST'
     points: 3
-    radius: 0.315
+    radius: 0.33
     height: 0.1
-    speed: -0.06
+    speed: -0.08
     offset: 0.12
-    color: '#B3E5FC'
-    end-color: '#F8BBD0'
+    color: '#FFFFFF'
+    end-color: '#FFD54F'
     size: 0.45
 ```
 
-Layers combine a geometric `shape` with a native Paper `particle`, point count, dimensions, speed and optional colors. Supported shapes are RING, HELIX, ORBIT, SPHERE, BURST, FIREFLIES, HEART, STAR, COLUMN and WAVE.
+---
 
-`interval-ticks` controls emissions. `view-distance` limits visibility alongside the global search radius. `duration-ticks: 0` creates a continuous ambient preset; finite presets can be used for collection and reward bursts.
+## Preset Keys
 
-## Preview and limits
+| Key | Default | Range | Description |
+| --- | --- | --- | --- |
+| `duration-ticks` | `0` | 0 to 1200 | Lifetime of the effect. `0` loops, which suits ambient states. A one-shot effect with `0` ends after 40 ticks; previews last 200 ticks |
+| `interval-ticks` | `4` | 1 to 200 | Emit the preset once every N ticks. Higher values send fewer particles without changing the shape |
+| `view-distance` | `24` | 1 to 64 | Maximum distance between the viewer and the effect. Ambient searches are also limited by `particles.view-distance` in config.yml |
+| `layers` | | 1 to 8 layers | Named layers, emitted in order and combined into one effect |
 
-```text
-/eggs admin preview pastel-ring
-```
+## Layer Keys
 
-The preview appears privately in front of you. Previews and ambient effects share the per-player budget in config.yml. Player particle preferences can reduce or disable effects, so check both the preset and viewer settings when an effect is missing.
+| Key | Default | Range | Description |
+| --- | --- | --- | --- |
+| `shape` | `RING` | see below | Geometry of the layer |
+| `particle` | `DUST` | Bukkit particle name | `DUST` and `DUST_COLOR_TRANSITION` use the color settings. Other particles are accepted only if they need no extra data, for example `END_ROD`, `FLAME`, `SOUL_FIRE_FLAME`, `SNOWFLAKE` |
+| `points` | `12` | 1 to 128 | Points sampled per emission |
+| `radius` | `0.6` | 0 to 8 | Horizontal size in blocks |
+| `height` | `0.8` | 0 to 8 | Vertical size in blocks |
+| `speed` | `0.08` | -2 to 2 | Animation phase change per tick; negative reverses, `0` is static |
+| `offset` | `0.5` | -4 to 8 | Vertical shift from the head center in blocks |
+| `color` | `#FFCA28` | `#RRGGBB` | Dust color, or the start color of a transition. Keep it quoted |
+| `end-color` | `#FFFFFF` | `#RRGGBB` | End color, used only by `DUST_COLOR_TRANSITION` |
+| `size` | `0.8` | 0.01 to 4 | Dust particle size |
 
-## Watch the effects
+Effects are centered on the egg. Placed heads use the block position plus a quarter block; floating displays follow their configured height and bobbing.
 
-The [in-game gallery](/easter-eggs/gallery/) records the ambient preset attached to every bundled template. Each six-second clip includes the live animation and the head appearance.
+### Shapes
 
-## Bundled presets
+| Shape | Geometry |
+| --- | --- |
+| `RING` | Horizontal circle that gently rises and falls |
+| `HELIX` | Two-turn spiral around the egg |
+| `ORBIT` | Circle whose points weave up and down |
+| `SPHERE` | Evenly distributed points on a sphere |
+| `BURST` | Points expanding outward and falling over the effect's lifetime |
+| `FIREFLIES` | Points drifting independently around the egg |
+| `HEART` | Heart outline in a vertical plane |
+| `STAR` | Five-pointed star outline |
+| `COLUMN` | Narrow column of points rising through `height` |
+| `WAVE` | Horizontal line rippling up and down |
 
-`blossom-drift`, `bubble-spiral`, `bunny-hearts`, `candy-burst`, `coral-ring`, `festive-spiral`, `frost-halo`, `ghost-wisps`, `gift-confetti`, `golden-halo`, `pastel-ring`, `pearl-orbit`, `pumpkin-flame`, `snow-flurry`, `spectral-orbit`, `spring-spiral`, `starburst`, `tidal-wave`, `treasure-sparkle`, `witch-spiral`.
+`BURST` and `COLUMN` use the effect's progress. With `duration-ticks: 0` their progress cycles every four seconds; with a positive duration they play once over that time.
 
-</EasterEggsGuide>
+---
+
+## Budgets
+
+Every point counts toward `particles.budget-per-player` in [config.yml](/easter-eggs/configuration/config/#particles), shared across all effects a player sees in the same tick. Eggs closest to the player are drawn first; when the budget is used up, the remaining points are skipped that tick. Only eggs in loaded chunks are processed, and players with particles turned off receive none.
+
+---
+
+## Bundled Presets
+
+| ID | Duration | Layers |
+| --- | --- | --- |
+| `blossom-drift` | looping | `FIREFLIES` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `bubble-spiral` | looping | `HELIX` with `DUST`, `ORBIT` with `DUST` |
+| `bunny-hearts` | 50 ticks | `HEART` with `DUST`, `ORBIT` with `DUST` |
+| `candy-burst` | 45 ticks | `BURST` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `coral-ring` | looping | `RING` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `festive-spiral` | looping | `HELIX` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `frost-halo` | looping | `RING` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `ghost-wisps` | looping | `WAVE` with `DUST`, `ORBIT` with `DUST` |
+| `gift-confetti` | 50 ticks | `BURST` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `golden-halo` | looping | `ORBIT` with `DUST`, `ORBIT` with `DUST` |
+| `pastel-ring` | looping | `RING` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `pearl-orbit` | looping | `ORBIT` with `END_ROD`, `ORBIT` with `DUST` |
+| `pumpkin-flame` | looping | `FIREFLIES` with `FLAME`, `ORBIT` with `DUST` |
+| `snow-flurry` | looping | `FIREFLIES` with `SNOWFLAKE`, `ORBIT` with `DUST` |
+| `spectral-orbit` | looping | `ORBIT` with `SOUL_FIRE_FLAME`, `ORBIT` with `DUST` |
+| `spring-spiral` | looping | `HELIX` with `DUST`, `ORBIT` with `DUST` |
+| `starburst` | 50 ticks | `STAR` with `END_ROD`, `ORBIT` with `DUST` |
+| `tidal-wave` | looping | `WAVE` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+| `treasure-sparkle` | 50 ticks | `STAR` with `DUST`, `ORBIT` with `DUST` |
+| `witch-spiral` | looping | `HELIX` with `DUST_COLOR_TRANSITION`, `ORBIT` with `DUST` |
+
+All bundled presets emit every 4 ticks within 24 blocks. When a preset with a duration is used as an ambient state, it keeps repeating; only the progress-based `BURST` and `COLUMN` shapes stay at their final position.
