@@ -1,0 +1,134 @@
+---
+title: Creating Hunts and Placing Eggs
+description: Create hunts, receive placement heads, and place, move, copy, order, clue, and remove eggs from the editor or with commands.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import gallery from "../../../data/easter-eggs-gallery.json";
+
+export const shots = (ids) => ids.map((id) => gallery.menus.find((image) => image.id === id));
+
+Every administrator action is available both in the **Hunt Editor** (`/eggs admin`) and as a command. Each action checks its own [permission](/easter-eggs/permissions/); opening the editor does not grant the actions inside it.
+
+<ScreenshotGallery label="Hunt editor and placement screens" images={shots(["admin", "admin-hunt", "templates", "placements", "placement"])} />
+
+---
+
+## Create a Hunt
+
+<Steps>
+
+1. Open `/eggs admin` and click **Create Hunt**, or run `/eggs admin create <id> <name>`.
+2. In the editor, type the ID and then the display name in chat. Each prompt has a **[Cancel]** button and expires if left unanswered.
+3. The new file `hunts/<id>.yml` is written with sensible defaults: enabled, unordered, personal, one-time, and the `common`, `seasonal-results`, and `special-egg` reward groups.
+
+</Steps>
+
+```text
+/eggs admin create treasure <#FFD166>Treasure Trail
+```
+
+The ID must be unique and use lowercase letters, digits, `_`, or `-` (up to 48 characters). The name accepts [MiniMessage](https://docs.advntr.dev/minimessage/format.html). New hunts are appended to the end of the hunt list via `menu-order`.
+
+To start from an existing hunt instead, clone its file. Cloning copies settings, not placed eggs:
+
+```text
+/eggs admin clone hunts easter spring-2027
+```
+
+### Hunt Icon
+
+Each hunt card uses a built-in themed icon. To use your own, drop any item onto the icon in the hunt's **Hunt Dashboard**. The full item, including its name and metadata, is saved to the hunt's `icon` field; the item in your inventory is not consumed. Set `icon: ''` to restore the default.
+
+---
+
+## Place Eggs
+
+<Steps>
+
+1. In the dashboard, open **Add Eggs** and click a template, or run `/eggs admin give <hunt> <template>`.
+2. You receive a **placement head** bound to that hunt and template, and **edit mode** turns on.
+3. Place the head like a block. The egg is saved at that block, and the chat shows the hunt's new total. The head itself is never consumed as a real block.
+
+</Steps>
+
+Alternatively, `/eggs admin place` puts the currently selected hunt and template at the block you are standing in.
+
+A destination must be loaded, empty, and not already used by another egg. Otherwise the placement is refused with a **Spot Already Used**, **Choose an Empty Space**, or **Visit This Area First** panel. If you act again while the previous write is still being saved, you see **Still Saving**.
+
+Placement heads only work in edit mode and only for administrators with `eastereggs.admin.place`. Leave edit mode with `/eggs admin edit off` (or the **[Turn Editing Off]** button) before testing collection. While editing, clicking an egg shows a reminder instead of collecting it.
+
+<Aside>
+The template decides whether an egg is a **placed head** (`BLOCK`) or a **floating display** (`DISPLAY`) that can rotate and bob. Changing a template's mode later keeps every placement's identity and history. See [templates](/easter-eggs/configuration/templates/).
+</Aside>
+
+---
+
+## Edit a Placed Egg
+
+Commands that act on an existing egg target the egg **you are looking at within six blocks**. In the editor, open **Placed Eggs** and click an egg to open its **Egg Tools**.
+
+| Action | Command | Effect |
+| --- | --- | --- |
+| Move | `/eggs admin move` | Moves the egg to your position. Its UUID, discoveries, and claims are kept |
+| Duplicate | `/eggs admin copy` | Creates a new egg with a new UUID at your position; the original stays |
+| Collection order | `/eggs admin order <number>` | Sets the order number, 0 or higher, used by ordered hunts and hints |
+| Clue | `/eggs admin hint <text>` | Sets a placement-specific clue that overrides the template clue |
+| Remove | `/eggs admin remove confirm` | Removes the egg after confirmation |
+
+In edit mode you can also **break an egg** to remove it.
+
+The dashboard's **Egg Hints** and **Collection Order** screens list every egg in collection order, so you can edit clues and order numbers without walking to each egg. Choosing an egg opens a chat prompt for the new value.
+
+<ScreenshotGallery label="Clue and order editors" images={shots(["hint-eggs", "order-eggs", "confirm"])} />
+
+### Collection Order
+
+Eggs are sorted by their order number; eggs with the same number are sorted by UUID. Placement assigns increasing numbers automatically. The order matters in two places:
+
+- In an **ordered** hunt, players must collect the first egg they have not found yet in this order.
+- `/eggs hint` always describes the first unfound egg in this order.
+
+### What Removal Keeps
+
+Removing an egg deletes the placement and its live head or display. It does **not** erase discoveries, earned claims, completions, or leaderboard history. Progress percentages and completion are recalculated against the eggs that remain.
+
+---
+
+## Hunt Settings
+
+The dashboard groups hunt settings into screens:
+
+| Screen | Settings |
+| --- | --- |
+| **Hunt Rules** | Open Hunt, Require Order, Who Can Collect?, Reward Period, and a link to Time Settings |
+| **Time Settings** | Timed Challenge, Offline Timer |
+| **Hints & Displays** | Text Hints, Hot & Cold, Progress Bar, Hide Found Eggs, World Protection |
+| **Reset & Removal** | Reset Attempts, Delete Hunt |
+
+<ScreenshotGallery label="Hunt settings screens" images={shots(["admin-rules", "admin-time", "admin-feedback", "admin-recovery"])} />
+
+Every toggle writes the hunt file and reloads it immediately. Settings not shown in the editor, such as time limits, schedules, and requirements, are edited in the [hunt file](/easter-eggs/configuration/hunts/) or with `/eggs admin set`:
+
+```text
+/eggs admin set hunts easter timed.limit-seconds 600
+/eggs admin set hunts easter schedule.enabled true
+/eggs admin set hunts easter schedule.end '2027-04-21T00:00:00'
+/eggs admin set templates pearl display.spin 2.5
+/eggs admin set particle golden-halo layers.primary.color '#FFC107'
+```
+
+The value is parsed as YAML, so quote strings that contain `#`, `:`, or leading zeros. The whole configuration is validated before the change is kept; an invalid value is rolled back.
+
+---
+
+## Delete a Hunt
+
+A hunt can be deleted only when it has no placed eggs and nothing else references it, such as another hunt's `COMPLETED_HUNT` requirement. Remove its eggs first, then run:
+
+```text
+/eggs admin delete treasure confirm
+```
+
+Without `confirm`, the command only asks for confirmation. Deleting a **bundled** hunt is undone on the next restart because missing defaults are restored; disable it with `enabled: false` instead.
