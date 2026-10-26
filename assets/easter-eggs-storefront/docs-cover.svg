@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800">
+ <defs>
+  <linearGradient id="night" x2="1" y2="1"><stop stop-color="#181430"/><stop offset=".55" stop-color="#211c3f"/><stop offset="1" stop-color="#14302f"/></linearGradient>
+  <linearGradient id="gold" x2="1"><stop stop-color="#c48a3e"/><stop offset=".5" stop-color="#ffe2a0"/><stop offset="1" stop-color="#c79049"/></linearGradient>
+  <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#b9a8ff" stroke-opacity=".05"/></pattern>
+ </defs>
+ <rect width="1600" height="800" fill="url(#night)"/><rect width="1600" height="800" fill="url(#grid)"/>
+ <path transform="translate(120 700) scale(2.2)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#5fd6ff" fill-opacity="0.07"/><path transform="translate(220 755) scale(1.2)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#7ff0b8" fill-opacity="0.07"/><path transform="translate(690 90) scale(1.4)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#ff8fc8" fill-opacity="0.07"/>
+ <g font-family="Verdana,DejaVu Sans,sans-serif">
+  <text x="80" y="250" fill="#ffd27a" font-size="20" font-weight="bold" letter-spacing="4">PAPER PLUGIN</text>
+  <text x="76" y="335" fill="#fff4e4" font-size="82" font-weight="bold">Easter</text>
+  <text x="76" y="425" fill="#ffd27a" font-size="82" font-weight="bold">Eggs</text>
+  <path d="M80 466H640" stroke="url(#gold)" stroke-opacity=".6"/>
+  <text x="80" y="514" fill="#d3cde6" font-size="25">Seasonal treasure hunts for your world.</text>
+  <rect x="80" y="560" width="168" height="74" rx="14" fill="#1a1631" stroke="#ffd27a" stroke-opacity=".45"/><text x="104" y="608" fill="#ffd27a" font-size="30" font-weight="bold">6</text><text x="136" y="606" fill="#efe9fb" font-size="20">hunts</text><rect x="266" y="560" width="168" height="74" rx="14" fill="#1a1631" stroke="#ffd27a" stroke-opacity=".45"/><text x="290" y="608" fill="#ffd27a" font-size="30" font-weight="bold">20</text><text x="344" y="606" fill="#efe9fb" font-size="20">eggs</text><rect x="452" y="560" width="168" height="74" rx="14" fill="#1a1631" stroke="#ffd27a" stroke-opacity=".45"/><text x="476" y="608" fill="#ffd27a" font-size="30" font-weight="bold">20</text><text x="530" y="606" fill="#efe9fb" font-size="20">effects</text>
+  <rect x="759" y="107" width="246" height="246" rx="12" fill="#141126" stroke="#d6b06a" stroke-width="2"/>
+     <path transform="translate(772 378) scale(0.26)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#ff8fc8" fill-opacity="1"/><text x="784" y="384" fill="#efe9fb" font-size="18" font-weight="bold">Golden Egg</text><rect x="1019" y="107" width="246" height="246" rx="12" fill="#141126" stroke="#d6b06a" stroke-width="2"/>
+     <path transform="translate(1032 378) scale(0.26)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#5fd6ff" fill-opacity="1"/><text x="1044" y="384" fill="#efe9fb" font-size="18" font-weight="bold">Pearl</text><rect x="1279" y="107" width="246" height="246" rx="12" fill="#141126" stroke="#d6b06a" stroke-width="2"/>
+     <path transform="translate(1292 378) scale(0.26)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#ffab40" fill-opacity="1"/><text x="1304" y="384" fill="#efe9fb" font-size="18" font-weight="bold">Pumpkin</text><rect x="759" y="411" width="246" height="246" rx="12" fill="#141126" stroke="#d6b06a" stroke-width="2"/>
+     <path transform="translate(772 682) scale(0.26)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#ff8fc8" fill-opacity="1"/><text x="784" y="688" fill="#efe9fb" font-size="18" font-weight="bold">Spring Rabbit</text><rect x="1019" y="411" width="246" height="246" rx="12" fill="#141126" stroke="#d6b06a" stroke-width="2"/>
+     <path transform="translate(1032 682) scale(0.26)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#5fd6ff" fill-opacity="1"/><text x="1044" y="688" fill="#efe9fb" font-size="18" font-weight="bold">Starfish</text><rect x="1279" y="411" width="246" height="246" rx="12" fill="#141126" stroke="#d6b06a" stroke-width="2"/>
+     <path transform="translate(1292 682) scale(0.26)" d="M0 -26C13 -26 22 -6 22 8C22 21 12 28 0 28C-12 28 -22 21 -22 8C-22 -6 -13 -26 0 -26Z" fill="#7ff0b8" fill-opacity="1"/><text x="1304" y="688" fill="#efe9fb" font-size="18" font-weight="bold">Snow Globe</text>
+ </g>
+</svg>
