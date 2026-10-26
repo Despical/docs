@@ -1,9 +1,46 @@
 ---
 title: messages.yml
-description: Reference for Easter Eggs messages.yml, covering MiniMessage chat panels, panel titles, placeholders, buttons, hovers, and the interactive help pages.
+description: Reference for Easter Eggs messages.yml and its 28 bundled languages, covering MiniMessage chat panels, panel titles, placeholders, buttons, hovers, and the interactive help pages.
 ---
 
 `plugins/EasterEggs/messages.yml` holds every chat message, panel title, clickable button, hover text, and help page. Inventory text is in [menus.yml](/easter-eggs/configuration/menus/). Apply changes with `/eggs admin reload`.
+
+## Languages
+
+Set `language` in `plugins/EasterEggs/config.yml` and run `/eggs admin reload`:
+
+```yaml
+language: tr
+```
+
+| Code | Language | Code | Language |
+| --- | --- | --- | --- |
+| `en` | English | `es` | Spanish |
+| `ru` | Russian | `de` | German |
+| `fr` | French | `pt` | Portuguese |
+| `pl` | Polish | `tr` | Turkish |
+| `zh` | Chinese | `id` | Indonesian |
+| `it` | Italian | `vi` | Vietnamese |
+| `nl` | Dutch | `ko` | Korean |
+| `cs` | Czech | `th` | Thai |
+| `hu` | Hungarian | `ar` | Arabic |
+| `ja` | Japanese | `uk` | Ukrainian |
+| `sv` | Swedish | `da` | Danish |
+| `ro` | Romanian | `sk` | Slovak |
+| `he` | Hebrew | `lt` | Lithuanian |
+| `ms` | Malay | `ta` | Tamil |
+
+Regional forms such as `pt-BR`, `zh_SG`, `ms-MY`, and `ta-SG` resolve to their base language.
+
+The language covers chat messages, panel titles, buttons, hovers, help pages, and the titles, labels, and descriptions in [menus.yml](/easter-eggs/configuration/menus/). Hunt names, template names, reward text, and hints are your own content and are shown as written.
+
+### Customizing a Translation
+
+On startup, missing bundled files are copied to `plugins/EasterEggs/languages/`. Edit `languages/<code>.yml` to change that translation, keeping its keys and placeholders, then reload. Keys are flat, for example `messages.found` or `menus.labels.start`.
+
+Text you changed in `messages.yml` or `menus.yml` takes priority over the selected language. Values still equal to the bundled English default follow the translation, so an untouched `messages.yml` never blocks it. To translate a message you customized earlier, restore its default or edit it directly.
+
+Keys missing from your copy fall back to the bundled translation, so plugin updates that add text keep working. Malformed YAML, a value that is not text, or an unknown language code rejects the reload and keeps the running configuration.
 
 ## Format
 

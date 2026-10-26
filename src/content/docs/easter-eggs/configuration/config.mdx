@@ -1,6 +1,6 @@
 ---
 title: config.yml
-description: Reference for Easter Eggs config.yml, covering storage, particle budgets, preference defaults, the reward inbox, leaderboards, boss bar, proximity feedback, metrics, and egg sounds.
+description: Reference for Easter Eggs config.yml, covering language, storage, particle budgets, preference defaults, the reward inbox, leaderboards, boss bar, proximity feedback, metrics, and egg sounds.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
@@ -13,6 +13,18 @@ config-version: 3
 ```
 
 `config-version` identifies the current configuration layout. A folder whose `config.yml` has a different value is treated as a legacy installation and the plugin refuses to start; see [Migrating Legacy Data](/easter-eggs/migration/). Changing the number does not convert anything.
+
+---
+
+## language
+
+```yaml
+language: en
+```
+
+Selects the language for chat messages, help pages, and menu text. Supported codes are `en`, `es`, `ru`, `de`, `fr`, `pt`, `pl`, `tr`, `zh`, `id`, `it`, `vi`, `nl`, `ko`, `cs`, `th`, `hu`, `ar`, `ja`, `uk`, `sv`, `da`, `ro`, `sk`, `he`, `lt`, `ms`, and `ta`. Regional forms such as `pt-BR` or `zh_SG` resolve to their base language. An unknown code rejects the reload and keeps the running configuration.
+
+Translations live in `languages/<code>.yml`. Custom text in `messages.yml` and `menus.yml` overrides them. See [Languages](/easter-eggs/configuration/messages/#languages).
 
 ---
 
