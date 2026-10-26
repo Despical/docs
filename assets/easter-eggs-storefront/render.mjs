@@ -299,6 +299,26 @@ await still('storage', 760, `${panel(760)}${heading('Built to keep your data saf
  <text x="488" y="602" fill="${C.muted}" font-size="15">One console command. Clear instructions if something is wrong.</text>
  ${footer(700, 'VALIDATED RELOADS  •  CRASH-SAFE CLAIMS  •  NOTHING OVERWRITTEN')}`);
 
+// 13b. Languages
+const languages = [['en', 'English'], ['es', 'Spanish'], ['ru', 'Russian'], ['de', 'German'], ['fr', 'French'], ['pt', 'Portuguese'], ['pl', 'Polish'],
+    ['tr', 'Turkish'], ['zh', 'Chinese'], ['id', 'Indonesian'], ['it', 'Italian'], ['vi', 'Vietnamese'], ['nl', 'Dutch'], ['ko', 'Korean'],
+    ['cs', 'Czech'], ['th', 'Thai'], ['hu', 'Hungarian'], ['ar', 'Arabic'], ['ja', 'Japanese'], ['uk', 'Ukrainian'], ['sv', 'Swedish'],
+    ['da', 'Danish'], ['ro', 'Romanian'], ['sk', 'Slovak'], ['he', 'Hebrew'], ['lt', 'Lithuanian'], ['ms', 'Malay'], ['ta', 'Tamil']];
+const seasonColors = [C.spring, C.summer, C.gold, C.winter];
+const samples = [['en', 'Found Golden Egg! (3/12)'], ['tr', 'Golden Egg bulundu! (3/12)'], ['es', '¡Golden Egg encontrado! (3/12)'], ['de', 'Golden Egg gefunden! (3/12)']];
+await still('languages', 820, `${panel(820)}${heading('Speak your community’s language.', '28 bundled translations for chat, help pages and every menu. Pick one line in config.yml.')}
+ ${languages.map(([code, name], i) => {
+     const x = 64 + (i % 4) * 182, y = 204 + Math.floor(i / 4) * 66, color = seasonColors[i % 4];
+     return `${card(x, y, 168, 52)}<rect x="${x + 10}" y="${y + 11}" width="44" height="30" rx="8" fill="#1a1631" stroke="${color}" stroke-opacity=".7"/><text x="${x + 32}" y="${y + 32}" text-anchor="middle" fill="${color}" font-size="15" font-weight="bold">${code}</text><text x="${x + 64}" y="${y + 32}" fill="${C.title}" font-size="15">${esc(name)}</text>`;
+ }).join('')}
+ ${card(800, 204, 416, 182)}<text x="828" y="244" fill="${C.gold}" font-size="16" font-weight="bold" letter-spacing="1">CONFIG.YML</text>
+ <rect x="828" y="264" width="360" height="52" rx="10" fill="url(#code)" stroke="#a99be0" stroke-opacity=".25"/><text x="848" y="297" fill="#9fe6c8" font-size="19" font-family="Consolas,DejaVu Sans Mono,monospace">language: tr</text>
+ <text x="828" y="350" fill="${C.body}" font-size="15">Regional codes such as pt-BR work too.</text>
+ ${card(800, 404, 416, 254)}<text x="828" y="444" fill="${C.gold}" font-size="16" font-weight="bold" letter-spacing="1">SAME MESSAGE, YOUR LANGUAGE</text>
+ ${samples.map(([code, text], i) => `<text x="828" y="${486 + i * 42}" fill="${C.muted}" font-size="14" font-weight="bold">${code}</text><text x="866" y="${486 + i * 42}" fill="#B8F5C9" font-size="16">${esc(text)}</text>`).join('')}
+ ${card(64, 676, 1152, 64)}<text x="640" y="716" text-anchor="middle" fill="${C.body}" font-size="17">Your own edits in messages.yml and menus.yml always win. Untouched defaults follow the language.</text>
+ ${footer(784, 'CHAT PANELS  •  HELP PAGES  •  MENU TITLES, LABELS AND LORE')}`);
+
 // 14. Developer API
 const kw = '#c39bff', ty = '#7fd6ff', st = '#ffd27a', cm = '#7d7a99', tx = '#e6e1f5';
 const code = [

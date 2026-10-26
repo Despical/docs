@@ -15,7 +15,7 @@ Without panel names every panel is rendered. Intermediate clips are cached in `.
 | --- | --- | --- |
 | `cover`, `seasons`, `styles`, `particles` | Animated WebP, 20 fps | Template recordings in `public/images/easter-eggs/videos/` |
 | `tour` | Animated WebP, 20 fps | 13.5 seconds of the cinematic recording |
-| `hunt-rules`, `hints`, `storage`, `api`, `start` | PNG | Drawn in SVG |
+| `hunt-rules`, `hints`, `storage`, `languages`, `api`, `start` | PNG | Drawn in SVG |
 | `rewards`, `menus`, `leaderboards`, `inbox`, `editor` | PNG | Cropped menu screenshots at native pixel size |
 | `divider` | PNG | Section divider for platforms without `[hr]` |
 
