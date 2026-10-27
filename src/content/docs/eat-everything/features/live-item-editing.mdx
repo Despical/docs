@@ -5,6 +5,11 @@ description: Edit the food data of the item in your hand with commands, inspect 
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
+import ScreenshotGallery from "../../../../components/ScreenshotGallery.astro";
+import gallery from "../../../../data/eat-everything-gallery.json";
+
+export const shots = (group, ids) => ids.map((id) => gallery[group].find((image) => image.id === id));
+
 Live editing means changing the food data of **one specific item stack** by running a command while holding it. It is the fastest way to find numbers that feel right, and the best way to learn how the pieces fit together before you write any YAML.
 
 ---
@@ -42,11 +47,7 @@ The `/ee` editing commands write these components straight onto the stack in you
 
 Commands show the current value when called without one, so `/ee nutrition` is also a quick way to check an item.
 
-![Changing the saturation](/images/eat-everything/chat/saturation.png)
-
-![Changing the eating time](/images/eat-everything/chat/eating-time.png)
-
-![Changing the edible state](/images/eat-everything/chat/edible.png)
+<ScreenshotGallery label="Editing the held item" images={shots("chat", ["saturation", "eating-time", "edible"])} />
 
 
 ---
