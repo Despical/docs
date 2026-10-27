@@ -1,0 +1,56 @@
+---
+title: Permissions
+description: Every Eat Everything permission node, its default, and how to grant access with a permissions plugin.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Each command checks its **own** permission node. Players have none of them by default; operators have all of them through the wildcard.
+
+| Permission | Allows | Default |
+| --- | --- | :---: |
+| `eateverything.version` | `/ee version` | op |
+| `eateverything.help` | `/ee help` | op |
+| `eateverything.reload` | `/ee reload` | op |
+| `eateverything.item` | `/ee item` | op |
+| `eateverything.info` | `/ee info` | op |
+| `eateverything.nutrition` | `/ee nutrition` | op |
+| `eateverything.saturation` | `/ee saturation` | op |
+| `eateverything.eatseconds` | `/ee eatseconds` | op |
+| `eateverything.edible` | `/ee edible` | op |
+| `eateverything.effect` | `/ee effect add` and `/ee effect clear` | op |
+| `eateverything.*` | All of the above | op |
+
+The bare `/ee` command needs no permission.
+
+Help and tab completion only show commands the sender may run, so players without any node see nothing to try.
+
+---
+
+## Granting Access
+
+<Tabs>
+    <TabItem label="LuckPerms">
+        ```bash
+        # Everything, for a staff group
+        /lp group admin permission set eateverything.* true
+
+        # Only inspecting and handing out items
+        /lp group helper permission set eateverything.info true
+        /lp group helper permission set eateverything.item true
+        ```
+    </TabItem>
+    <TabItem label="permissions.yml">
+        ```yaml
+        # Bukkit's own permissions.yml
+        eventhost:
+          description: Hands out event food
+          children:
+            eateverything.item: true
+            eateverything.info: true
+        ```
+    </TabItem>
+</Tabs>
+
+---
+
