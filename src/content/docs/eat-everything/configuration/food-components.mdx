@@ -38,3 +38,28 @@ The material that becomes edible, for example `STICK`, `DIAMOND_SWORD` or `STONE
 
 ---
 
+## Food Properties
+
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `nutrition` | whole number, 0 or more | `0` | Hunger points restored. Two points are one drumstick. |
+| `saturation` | number, 0 or more | `0` | Saturation restored. Higher values keep the player full for longer. |
+| `can-always-eat` | `true` / `false` | `false` | Allows eating on a full hunger bar. Enable it for potions and buffs. |
+
+Negative numbers are raised to `0`.
+
+## Consumption
+
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `eat-seconds` | number above 0 | `1.6` | How long eating takes. Values of zero or less use `1.6`. |
+| `animation` | name | `EAT` | Use animation: `NONE`, `EAT`, `DRINK`, `BLOCK`, `BOW`, `SPEAR`, `CROSSBOW`, `SPYGLASS`, `TOOT_HORN` or `BRUSH`. An unknown name uses `EAT`. |
+| `consume-particles` | `true` / `false` | `true` | Crumb or splash particles while eating. |
+| `sound` | sound key | empty | Sound played when eating finishes, for example `entity.player.burp`. Empty keeps the material's own eating or drinking sound. An invalid key is ignored. |
+
+The sound takes a vanilla sound event key, or the key of a sound from a resource pack, with or without the `minecraft:` prefix.
+
+---
+
+## Eating Effects
+
