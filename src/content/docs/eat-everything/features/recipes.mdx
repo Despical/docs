@@ -1,0 +1,119 @@
+---
+title: Recipes
+description: Copy-ready Eat Everything food components - healing soup, teleport apple, VIP cake, milk-like cleanser, quest rewards and more.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Paste any recipe under `food:` in `food-components.yml`, run `/ee reload` and get it with `/ee item <id>`. Change the numbers to taste. Colors use [hex codes](/eat-everything/configuration/messages#colors-and-formatting).
+
+---
+
+## Healing Soup
+
+A soup that heals over time and leaves an empty bowl.
+
+```yaml
+food:
+  healing-soup:
+    item: MUSHROOM_STEW
+    components:
+      nutrition: 6
+      saturation: 7.2
+      eat-seconds: 2.0
+      effects:
+        '1':
+          name: REGENERATION
+          amplifier: 1
+          duration: 120
+      conditions:
+        name: "&#FF8855Healing Soup"
+      converts-to:
+        material: BOWL
+```
+
+---
+
+## Instant Snack Stick
+
+Every stick in the game becomes a fast snack. There are no conditions, so it applies to all sticks.
+
+```yaml
+food:
+  snack-stick:
+    item: STICK
+    components:
+      nutrition: 2
+      saturation: 1
+      can-always-eat: true
+      eat-seconds: 0.5
+```
+
+---
+
+## Teleport Apple
+
+Like a chorus fruit with a configurable radius. A 5 minute cooldown stops chain-teleporting.
+
+```yaml
+food:
+  warp-apple:
+    item: APPLE
+    components:
+      can-always-eat: true
+      eat-seconds: 1.0
+      random-teleport-diameter: 64
+      cooldown: 300
+      conditions:
+        name: "&#AA55FFWarp Apple"
+```
+
+---
+
+## Cleansing Water
+
+Removes all potion effects, then gives a short speed boost. Because clearing happens before the new effects are applied, the boost is kept.
+
+```yaml
+food:
+  cleansing-water:
+    item: POTION
+    components:
+      can-always-eat: true
+      animation: DRINK
+      clear-all-effects: true
+      effects:
+        '1':
+          name: SPEED
+          duration: 200
+      conditions:
+        name: "&#55FFFFCleansing Water"
+```
+
+---
+
+## VIP Cake
+
+Only players with a permission can finish eating it. Explain the requirement in the lore.
+
+```yaml
+food:
+  vip-cake:
+    item: CAKE
+    components:
+      nutrition: 10
+      saturation: 10
+      can-always-eat: true
+      permission: "server.vip.cake"
+      effects:
+        '1':
+          name: ABSORPTION
+          duration: 600
+      conditions:
+        name: "&#FFD700VIP Cake"
+        lore:
+          - "&#AAAAAAFor VIP members only."
+```
+
+---
+
