@@ -6,6 +6,11 @@ tableOfContents: false
 
 import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import gallery from "../../../data/eat-everything-gallery.json";
+
+export const shots = (group, ids) => ids.map((id) => gallery[group].find((image) => image.id === id));
+
 ## Eat Everything 🍖
 
 **Eat Everything** lets players eat literally anything in Minecraft. Pick a sword, a stick, a diamond or a whole block, decide how much hunger it restores, how long it takes to eat, which potion effects it applies, what it leaves behind and which commands run when the last bite is gone.
@@ -24,7 +29,7 @@ It is a [Paper](https://papermc.io/) plugin built on Minecraft's modern **item d
     ></iframe>
 </div>
 
-![Three example foods](/images/eat-everything/storefront/anything.png)
+<ScreenshotGallery label="Example foods" images={shots("storefront", ["anything"])} />
 
 ## Get Started
 
