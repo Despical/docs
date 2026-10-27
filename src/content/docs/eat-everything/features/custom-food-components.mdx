@@ -32,3 +32,47 @@ Some consequences:
 
 ---
 
+## When Components Are Applied
+
+The plugin updates an item when it is touched, so it never scans inventories:
+
+| Moment | What is checked |
+| --- | --- |
+| A player uses an item | The item used. |
+| A player clicks in an inventory | The clicked item and the item on the cursor. |
+| A player picks up an item | The item picked up. |
+| An item appears as a dropped entity | The dropped item. |
+
+Items inside unopened chests are updated only when someone moves them. Items made with `/ee item` are already complete.
+
+---
+
+## The Update Marker
+
+After an item receives its component, the plugin stores a small marker in the item's persistent data (`eateverything:updated`). While the marker is present, the item is **not updated again**. This keeps inventory events cheap and prevents the plugin from rewriting items that another plugin or an admin edited afterwards.
+
+The consequence is that **changing a component does not change old items**:
+
+* `/ee reload` rebuilds the components but does not touch items that already carry the marker.
+* To test a change, create a **fresh** item with `/ee item <id>`.
+* To refresh items already in the wild, give players new ones or replace them with a script or another plugin.
+
+<Aside type="note">
+    The marker only controls *writing* the food data. Eating is checked against the current component every time, so a permission, cooldown or command you change in YAML takes effect on already-updated items after a reload.
+</Aside>
+
+---
+
+## When an Item Is Eaten
+
+Eating happens in this order:
+
+<Steps>
+    1. **Permission.** If the component has a `permission` and the player lacks it, eating is cancelled and nothing is consumed. No message is sent.
+    2. **Cooldown.** If `cooldown` is above zero, the material's cooldown starts and the hotbar shows its overlay.
+    3. **Commands.** The `commands` list runs top to bottom, as the console or, with `p:`, as the player.
+    4. **Vanilla consume effects.** The game then applies the random teleport, clears effects if asked, applies the potion effects with their probabilities, and hands back the leftover item.
+</Steps>
+
+---
+
