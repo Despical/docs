@@ -5,6 +5,11 @@ description: Install Eat Everything on a Paper server, create your first edible 
 
 import { Aside, Badge, Steps } from '@astrojs/starlight/components';
 
+import ScreenshotGallery from "../../../components/ScreenshotGallery.astro";
+import gallery from "../../../data/eat-everything-gallery.json";
+
+export const shots = (group, ids) => ids.map((id) => gallery[group].find((image) => image.id === id));
+
 This guide takes you from an empty `plugins/` folder to an edible item you designed yourself, first with in-game commands and then as a permanent entry in `food-components.yml`.
 
 ---
@@ -66,7 +71,7 @@ Commands are the fastest way to experiment because they edit the item **in your 
 
 Hold right-click to eat the stick. It behaves like vanilla food.
 
-![The result of /ee info on an edited item](/images/eat-everything/chat/info.png)
+<ScreenshotGallery label="The info panel of an edited item" images={shots("chat", ["info"])} />
 
 
 <Aside type="note">
