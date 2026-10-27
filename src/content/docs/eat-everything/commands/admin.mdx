@@ -56,3 +56,62 @@ Lists the subcommands **you** may use, six per page, with **Previous** and **Nex
 
 ---
 
+### Reload
+
+```bash
+/ee reload
+```
+
+Re-reads `config.yml`, `messages.yml` and `food-components.yml`, then rebuilds the loaded foods. Mistakes in `food-components.yml` are reported in the console and only the broken part is skipped, so a typo never leaves you without a working setup.
+
+<Aside type="caution" title="What reload does not do">
+    * `update-checker-enabled` and `metrics` are read at **startup** only.
+    * Items that already received a component keep their old values. Test changes with a fresh item from [`/ee item`](#item). See [the update marker](/eat-everything/features/custom-food-components#the-update-marker).
+</Aside>
+
+---
+
+### Item
+
+```bash
+/ee item <id> [amount]
+```
+
+Gives you the item described by a food component. `<id>` is the entry name under `food:` in `food-components.yml`, ignoring upper and lower case. Tab completion lists every loaded ID, and the amount suggests `1`, `16`, `32` and `64`.
+
+The item is built from the component: it already carries the food and consumable data, the leftover item, and the name, lore and enchantments the component's `conditions` look for. This is the cleanest way to test a component.
+
+* `amount` defaults to `1` and must be above zero.
+* Large amounts are split into full stacks of the item's maximum stack size.
+* Whatever does not fit in your inventory is dropped at your feet.
+
+```bash
+/ee item golden-stick
+/ee item healing-soup 16
+```
+
+---
+
+### Info
+
+```bash
+/ee info
+```
+
+Prints the food data of the item in your hand:
+
+* Nutrition, saturation, whether it can always be eaten, and the eating time.
+* The consume sound, if one is set.
+* Every status effect with its position, name, duration (ticks), amplifier and probability.
+* A clickable line that copies a `/give @s <item>[...]` command containing the item's full component string.
+
+If the item is not food, you are told so. The copy line is the quickest way to move a prototype into a datapack, a shop plugin or a crate reward.
+
+---
+
+## Item Editing Commands
+
+These commands change the item in your **main hand** immediately. Without a value they only report the current one. They affect that one stack, not the item type. For every item of a kind, use [food-components.yml](/eat-everything/configuration/food-components). See [Live Item Editing](/eat-everything/features/live-item-editing) for a workflow.
+
+If your hand is empty, you get the `not-holding-item` panel.
+
