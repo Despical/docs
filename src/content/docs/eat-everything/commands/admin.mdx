@@ -168,3 +168,52 @@ Only `true` and `false` are accepted; tab completion suggests both.
 
 ---
 
+### Effect Add
+
+```bash
+/ee effect add <effect> <duration> <amplifier> [probability]
+```
+
+Adds a potion effect that is applied when the item is eaten.
+
+| Argument | Rules |
+| --- | --- |
+| `effect` | A potion effect name, with or without namespace and in any case: `speed`, `SPEED`, `minecraft:speed`. Tab completion lists them all. |
+| `duration` | Ticks, above zero. 20 ticks are one second, so `200` is ten seconds. |
+| `amplifier` | Zero or more. `0` is level I, `1` is level II and so on. |
+| `probability` | Optional, above `0` and at most `1`. Defaults to `1`, which means always. `0.25` applies the effect a quarter of the time. |
+
+Effects added this way hide their particles and are not styled as beacon effects. For those options, define the effect in YAML. You can add several effects; each rolls its own probability.
+
+```bash
+/ee effect add regeneration 100 1
+/ee effect add speed 600 0 0.5
+```
+
+---
+
+### Effect Clear
+
+```bash
+/ee effect clear
+```
+
+Removes **every** consume effect from the item: potion effects, random teleport and clear-all-effects. Eating time, animation, sound and food values stay. If there is nothing to remove you are told so.
+
+---
+
+## Console Output and Errors
+
+Wrong input never reaches the command. You get a precise message instead:
+
+| Situation | Message key |
+| --- | --- |
+| Missing required argument | `framework.invalid-syntax` (shows the expected syntax) |
+| Text where a number is required | `framework.must-be-a-number` |
+| Not `true` or `false` | `framework.please-specify-one-of` |
+| No permission | `framework.permission-denied` |
+| A player-only command from the console | `framework.not-allowed-on-console` |
+| Unknown effect name | `effect.unknown` |
+| Unknown food ID | `item.unknown` |
+
+All of these are panels defined in [messages.yml](/eat-everything/configuration/messages) and can be reworded. The command library's own errors live in its `framework` section.
