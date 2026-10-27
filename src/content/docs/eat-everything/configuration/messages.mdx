@@ -50,3 +50,36 @@ When [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) i
 
 ---
 
+## Panels
+
+### Separator, title and body
+
+| Path | Meaning |
+| --- | --- |
+| `panel-separator` | The line drawn above every panel. Keep the strikethrough spaces. Set to `""` to hide it. |
+| `panel-title` | The title used by panels without a title of their own. |
+| `panel-titles.<name>` | The title of the panel whose body is `<name>`. |
+
+A panel is the body message plus its title. For example the body `saturation.updated-value` takes its title from `panel-titles.saturation.updated-value`.
+
+### Command answers
+
+| Body | Used when | Placeholders |
+| --- | --- | --- |
+| `about` | `/ee` and `/ee version` | `<version>`, `<author>`, `<label>` |
+| `unknown-arguments` | The sender typed arguments `/ee` does not know | `<label>`, `<arguments>` |
+| `reloaded` | `/ee reload` finished | |
+| `not-holding-item` | A held-item command was used with an empty hand | |
+| `item.unknown` | `/ee item` got an ID that is not defined | `<id>` |
+| `item.invalid-amount` | The amount is not above zero | |
+| `item.received` | `/ee item` gave you items | `<amount>`, `<id>` |
+| `saturation.*`, `nutrition.*`, `eat-seconds.*` | `info`, `invalid-value`, `same-value` and `updated-value` for each command | `<value>`, and `<previous>` for `updated-value` |
+| `edible.*` | `info`, `same-value`, `updated-value` | `<state>`, one of the `edible.states` texts |
+| `effect.*` | `usage`, `no-effect`, `removed`, `unknown`, `invalid-duration`, `invalid-amplifier`, `invalid-probability`, `added` | `<label>` for `usage`, `<effect>` for `unknown` |
+
+### The info panel
+
+The `info` section controls `/ee info`: the title and held-item line, one row per stat (`nutrition`, `saturation`, `can-always-eat`, `eat-seconds`, `sound`), the effect rows (`effects-empty`, `effects-total`, `effect-entry`) and the click-to-copy line with its hover text. The `effect-entry` row receives `<number>`, `<effect>`, `<duration>`, `<amplifier>` and `<probability>`.
+
+---
+
