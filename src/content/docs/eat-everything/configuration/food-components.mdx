@@ -148,3 +148,102 @@ Conditions also decide what `/ee item` gives you: the item is created with the n
 
 ---
 
+## `converts-to`
+
+The item the player gets back after eating, like a bowl after soup. Leave `material` empty for nothing. The remainder replaces the eaten item in the same slot (or joins the inventory when a stack was eaten).
+
+```yaml
+converts-to:
+  material: BOWL
+  name: "&#FFFFFFEmpty Bowl"
+  lore:
+    - "&#AAAAAAWash me."
+  amount: 1
+  item-flags: [ HIDE_ENCHANTS ]
+  enchantments:
+    - "UNBREAKING:1"
+  unbreakable: false
+```
+
+| Option | Default | Meaning |
+| --- | --- | --- |
+| `material` | empty | The leftover's material, for example `BOWL`. Empty means no leftover. An unknown name disables the leftover with a warning. |
+| `name` | none | Display name. Empty keeps the material's own name. |
+| `lore` | none | Lore lines. |
+| `amount` | `1` | How many are returned, 1 or more. |
+| `item-flags` | none | Tooltip sections to hide: `HIDE_ENCHANTS`, `HIDE_ATTRIBUTES`, `HIDE_UNBREAKABLE`, `HIDE_DESTROYS`, `HIDE_PLACED_ON`, `HIDE_ADDITIONAL_TOOLTIP`, `HIDE_DYE`, `HIDE_ARMOR_TRIM`, `HIDE_STORED_ENCHANTS`. The old `HIDE_POTION_EFFECTS` still works as an alias of `HIDE_ADDITIONAL_TOOLTIP`. Unknown flags are skipped. |
+| `enchantments` | none | `NAME:LEVEL` entries, for example `SHARPNESS:3`. Both parts are required. |
+| `unbreakable` | `false` | Makes the leftover unbreakable. |
+
+---
+
+## `commands`
+
+Commands run each time a player finishes eating the item. Write them without a leading slash.
+
+```yaml
+commands:
+  - "give %player% diamond 1"
+  - "p:spawn"
+  - "broadcast %player% ate a %material%"
+```
+
+* A command runs as the **console** by default, with full permissions.
+* A command starting with `p:` runs as the **player**, with only that player's permissions.
+* Placeholders are replaced before the command runs:
+
+| Placeholder | Value |
+| --- | --- |
+| `%player%` | The name of the player who ate the item. |
+| `%sender%` | The name of whoever runs the command: the player for `p:` commands, `CONSOLE` otherwise. |
+| `%consumption_time%` | The eating time in seconds, with one decimal. |
+| `%saturation%` | The saturation restored, with one decimal. |
+| `%nutrition%` | The hunger points restored. |
+| `%material%` | The material name in capitals, for example `STICK`. |
+
+Placeholders come from the food and the player's **name** only. The item's display name and lore are never inserted into commands, so a renamed item cannot inject commands.
+
+<Aside type="caution">
+    Console commands are powerful. Only list commands you would be comfortable running as the server, and never put `%`-placeholders in places where the value could be interpreted as another command.
+</Aside>
+
+---
+
+## Complete Example
+
+```yaml
+food:
+  royal-feast:
+    item: COOKED_BEEF
+    components:
+      nutrition: 10
+      saturation: 12.8
+      can-always-eat: true
+      eat-seconds: 2.4
+      animation: EAT
+      consume-particles: true
+      sound: "entity.player.burp"
+      cooldown: 30
+      permission: "server.royal"
+      effects:
+        '1':
+          name: ABSORPTION
+          amplifier: 1
+          duration: 1200
+        '2':
+          name: SPEED
+          duration: 600
+          probability: 0.5
+      conditions:
+        name: "&#FFAA00Royal Feast"
+        lore:
+          - "&#AAAAAAFit for a king."
+      converts-to:
+        material: BOWL
+        name: "&#FFFFFFEmpty Plate"
+      commands:
+        - "p:me burps loudly"
+        - "eco give %player% 25"
+```
+
+For more, see [Recipes](/eat-everything/features/recipes).
