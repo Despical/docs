@@ -51,3 +51,29 @@ A warning means one option was ignored. The rest of the entry still works.
 
 ## Common Problems
 
+### "My item is not edible"
+
+1. Is the material right? Run `/ee info` while holding the item: if it prints food data the item is food, if not it is not.
+2. Did you reload? Run `/ee reload` and look at the console.
+3. Items that already existed keep old data. Get a **fresh** one with `/ee item <id>`.
+4. Do the conditions match? Compare the name, lore and amount character by character, and the colors too.
+5. Is another entry for the same material **above** yours with no or broader conditions?
+
+### "Only some of my items are food"
+
+The `conditions` are working as intended. Only items matching **all** of them become food. Remove or loosen conditions, or see [Matching](/eat-everything/features/custom-food-components#matching).
+
+### "The sample food does nothing"
+
+The entry named `default` is an example and is never loaded. Create your own ID.
+
+### "My copied sample only matches items without lore"
+
+The sample contains `lore: []`, which means *no lore at all*. Delete the line to ignore lore.
+
+### "The commands do not run"
+
+* Only items matching a component run commands. An item edited only by `/ee` commands has none.
+* Run `/ee info` to confirm the item matches, and watch for a `permission` restricting it.
+* Commands are written without a leading slash.
+
