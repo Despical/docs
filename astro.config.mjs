@@ -2215,6 +2215,10 @@ export default defineConfig({
                                 label: "Miscellaneous",
                                 items: [
                                     {
+                                        label: "Troubleshooting",
+                                        link: "/eat-everything/misc/troubleshooting",
+                                    },
+                                    {
                                         label: "FAQ",
                                         link: "/eat-everything/misc/faq",
                                     },
