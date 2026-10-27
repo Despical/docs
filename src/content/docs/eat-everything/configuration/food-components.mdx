@@ -63,3 +63,15 @@ The sound takes a vanilla sound event key, or the key of a sound from a resource
 
 ## Eating Effects
 
+### `cooldown`
+
+Seconds before the player can use **that material** again after eating. The hotbar shows the white cooldown overlay, and it applies to the material, not only to this component: all items of the same material share it. Whole number, `0` or more. Default `0`.
+
+### `random-teleport-diameter`
+
+Teleports the player to a random location within this many blocks when eating finishes, the same effect as a chorus fruit. Number above `0` enables it. Default `0`.
+
+### `clear-all-effects`
+
+Removes every active potion effect from the player when eating finishes, like drinking milk. Default `false`.
+
