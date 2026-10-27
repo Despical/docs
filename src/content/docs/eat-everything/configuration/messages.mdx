@@ -5,6 +5,11 @@ description: Customise every Eat Everything chat panel - MiniMessage styling, pl
 
 import { Aside } from '@astrojs/starlight/components';
 
+import ScreenshotGallery from "../../../../components/ScreenshotGallery.astro";
+import gallery from "../../../../data/eat-everything-gallery.json";
+
+export const shots = (group, ids) => ids.map((id) => gallery[group].find((image) => image.id === id));
+
 `messages.yml` contains **every** line of text the plugin sends in chat. Command answers are shown as **panels**: a separator line, a centered bold title and centered body lines. The `help` and `info` screens, the help navigation buttons and the command library's error messages are all here. Edit freely, then run `/ee reload`.
 
 ---
@@ -98,7 +103,7 @@ The `help` section controls the paginated guide:
 | `general-title`, `general-description`, `general` | The `/ee help general` reference, laid out like the command list. `general` has one entry per option with a `name` and a `description`. |
 | `commands.<name>` | `syntax`, `description` and `hover` for each command. |
 
-![The help guide](/images/eat-everything/chat/help.png)
+<ScreenshotGallery label="The help guide" images={shots("chat", ["help"])} />
 
 Commands the viewer has no permission for are hidden. A command whose syntax contains `[` or `<` fills the chat box when clicked; the others run immediately. The `buttons` and `hovers` sections hold the text of the **Previous** and **Next** buttons.
 
