@@ -77,3 +77,24 @@ The sample contains `lore: []`, which means *no lore at all*. Delete the line to
 * Run `/ee info` to confirm the item matches, and watch for a `permission` restricting it.
 * Commands are written without a leading slash.
 
+### "Players cannot eat the item and see no message"
+
+A `permission` is set and the player lacks it. This is silent by design; explain the requirement in the item's lore.
+
+### "`/ee reload` did not change my existing items"
+
+Expected. Items carry an update marker. See [The Update Marker](/eat-everything/features/custom-food-components#the-update-marker). Use fresh items.
+
+### "A command says it must be used by a player"
+
+Commands that read or edit the item in your hand need a player. `help`, `reload`, `version` and `/ee` work from the console.
+
+### "The plugin does not load"
+
+* **Java:** requires Java 25. `Unsupported class file major version` means older Java.
+* **Server:** Paper or a fork is required; Spigot lacks the data component API.
+* **Minecraft:** 1.21.11 or newer.
+
+<Aside type="tip">
+    Still stuck? Open the [Discord](https://discord.gg/uXVU8jmtpU), and include your Paper version, the plugin version, the relevant part of `food-components.yml` and the console output.
+</Aside>
