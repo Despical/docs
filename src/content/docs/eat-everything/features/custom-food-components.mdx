@@ -76,3 +76,27 @@ Eating happens in this order:
 
 ---
 
+## Leftover Items
+
+A `converts-to` item is written as the item's **use remainder**, the same mechanism vanilla uses for the bowl left by stew. Because the game itself handles it, leftovers stack correctly, work with every inventory type and are handled for stacks of more than one item.
+
+---
+
+## Choosing Between Components and Commands
+
+| You want... | Use |
+| --- | --- |
+| To try values quickly | [Live item editing](/eat-everything/features/live-item-editing) |
+| A food that exists for everyone, consistently | A component |
+| Cooldowns, permissions, commands, leftovers, teleport | A component |
+| A single special reward item | Either; a component if you will hand out more than one |
+
+---
+
+## Debugging a Component That Does Not Apply
+
+1. Run `/ee reload` and read the console for warnings about that ID.
+2. Hold a **fresh** item from `/ee item <id>` and run `/ee info`. If the food data is correct, the component loads fine.
+3. Check the conditions. A name, lore or amount that differs from the config by even one color code or space fails. See [Troubleshooting](/eat-everything/misc/troubleshooting).
+4. Look for a broader entry above yours with the same material.
+5. Remember the marker: an old item keeps its old data.
