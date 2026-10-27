@@ -117,3 +117,106 @@ food:
 
 ---
 
+## Lucky Cookie
+
+Each effect rolls its own chance, so a cookie may give nothing, one buff, or both.
+
+```yaml
+food:
+  lucky-cookie:
+    item: COOKIE
+    components:
+      nutrition: 2
+      saturation: 1
+      can-always-eat: true
+      effects:
+        '1':
+          name: LUCK
+          duration: 600
+          probability: 0.3
+        '2':
+          name: JUMP_BOOST
+          amplifier: 1
+          duration: 300
+          probability: 0.5
+      conditions:
+        name: "&#FFAA00Lucky Cookie"
+```
+
+---
+
+## Reward Item That Runs Commands
+
+Eating pays out money (the first command assumes an economy plugin such as Essentials), announces it and makes the player emote. `p:` runs a command as the player.
+
+```yaml
+food:
+  coin-bread:
+    item: BREAD
+    components:
+      can-always-eat: true
+      cooldown: 60
+      commands:
+        - "eco give %player% 100"
+        - "broadcast %player% found a %material%!"
+        - "p:me feels rich"
+      conditions:
+        name: "&#FFD700Coin Bread"
+```
+
+<Aside type="caution">
+    Console commands run with full permissions. Keep reward items out of reach of players who could rename ordinary bread to match the name condition. Sign the item with a lore line or an enchantment that players cannot add in an anvil, and add it to the `conditions`.
+</Aside>
+
+---
+
+## Quest Item With an Enchantment Fingerprint
+
+Matching on an enchantment makes the item hard to fake with an anvil.
+
+```yaml
+food:
+  ancient-fruit:
+    item: GOLDEN_APPLE
+    components:
+      can-always-eat: true
+      conditions:
+        name: "&#55FF55Ancient Fruit"
+        enchantments:
+          - "MENDING"
+      commands:
+        - "advancement grant %player% only story:mine_stone"
+```
+
+---
+
+## Edible Sword (Leftover Included)
+
+Yes, a sword can be food. Eating it leaves a stick behind.
+
+```yaml
+food:
+  chewy-sword:
+    item: WOODEN_SWORD
+    components:
+      nutrition: 3
+      saturation: 2
+      eat-seconds: 3
+      animation: EAT
+      conditions:
+        name: "&#C0A060Chewy Sword"
+      converts-to:
+        material: STICK
+        name: "&#C0A060Gnawed Handle"
+        lore:
+          - "&#AAAAAAAll that remains."
+```
+
+---
+
+## Tips for Writing Your Own
+
+* Start with the `/ee` commands, run `/ee info`, then transfer the numbers.
+* Always give special foods a **name** or **lore** condition; otherwise every item of that material becomes that food.
+* Test with a fresh item from `/ee item`. Old items keep old data. See [the update marker](/eat-everything/features/custom-food-components#the-update-marker).
+* Watch the console after each reload. See [Troubleshooting](/eat-everything/misc/troubleshooting).
