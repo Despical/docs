@@ -1,77 +1,52 @@
 ---
 title: messages.yml
-description: Reference for command feedback, validation messages, and PlaceholderAPI usage in Eat Everything.
+description: Customise every Eat Everything chat panel - MiniMessage styling, placeholders, titles, the paginated help guide and the command library's error panels.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-The `messages.yml` file contains all user-facing command feedback used by **Eat Everything**.
-This includes permission failures, usage hints, invalid input messages, reload confirmation, item-give feedback, and editing success output.
+`messages.yml` contains **every** line of text the plugin sends in chat. Command answers are shown as **panels**: a separator line, a centered bold title and centered body lines. The `help` and `info` screens, the help navigation buttons and the command library's error messages are all here. Edit freely, then run `/ee reload`.
 
 ---
 
-## What This File Controls
+## How Messages Work
 
-Message paths are grouped under `commands`, with nested sections for individual subcommands such as:
-
-* `commands.saturation.*`
-* `commands.nutrition.*`
-* `commands.eat-seconds.*`
-* `commands.edible.*`
-* `commands.effect.*`
-* `commands.item.*`
-
-This structure makes it easy to localize or restyle command output without touching the Java code.
+* **Missing keys fall back to the bundled default.** After an update you never merge new keys by hand; anything absent from your file keeps working.
+* **Strings or lists.** A message may be one string or a list, one chat line per entry.
+* **Empty means silent.** Set a message body to `""` and that panel is not sent.
+* **Console.** The console receives each panel as one log line, `Title: body`, without colors, buttons or padding.
 
 ---
 
-## Supported Formatting
+## Styling With MiniMessage
 
-The plugin formats messages through the shared string utility used across your projects, so standard legacy color codes such as `&a`, `&c`, and `&7` are supported.
-
-Example:
+Messages use [MiniMessage](https://docs.advntr.dev/minimessage/format.html), the format Paper itself understands:
 
 ```yaml
-commands:
-  no-permission: "&cYou must be admin or higher to use this command!"
+reloaded: '<#B8C2D4>Configuration, messages and foods were <bold>reloaded</bold>.</#B8C2D4>'
 ```
 
----
+* Colors are hex tags, `<#RRGGBB>text</#RRGGBB>`. Named tags such as `<red>` and formats such as `<bold>`, `<italic>` and `<newline>` work too.
+* Wrap each value in **single quotes**. To write an apostrophe inside, double it (`''`).
+* Placeholders are written in angle brackets, `<value>`. Keep them exactly as written; the comment above each message lists what is available.
 
-## Placeholders in Messages
+The bundled messages use the palette `#B8C2D4` for body text, `#DCE3EE` for highlighted values, `#91D7E3` for commands, `#76F5A4` for success, `#FFD166` for notices and `#FF7777` for errors.
 
-**Eat Everything** supports two separate placeholder systems inside messages:
-
-### Positional Command Parameters
-
-Many messages use indexed replacements inserted by the command implementation:
-
-* `{0}`
-* `{1}`
-* `{2}`
-
-For example, the item receive message uses the requested amount and component ID.
-
-### PlaceholderAPI Integration
-
-If PlaceholderAPI is installed and the command sender is a player, the plugin passes the raw message through PlaceholderAPI before sending it.
-
-That means you can use supported PlaceholderAPI placeholders inside player-facing command messages.
-
-<Aside type="note">
-    **Eat Everything** does not register its own PlaceholderAPI expansion. The integration here is message parsing only.
+<Aside type="note" title="Food names use a different format">
+    Item names and lore in [food-components.yml](/eat-everything/configuration/food-components) use `&#RRGGBB` hex codes, because they are compared with real item names. Only `messages.yml` uses MiniMessage.
 </Aside>
 
 ---
 
-## Example Snippet
+## Placeholders
 
-```yaml
-commands:
-  correct-usage: "&cCorrect usage: {0}"
-  no-permission: "&cYou must be admin or higher to use this command!"
-  system-reloaded: "&aSystem files reloaded successfully."
+Values are inserted as **plain text**, never as markup. A player who names an item `<click:run_command:...>` or types a command argument full of tags cannot change how the message looks or what it does.
 
-  item:
-    received: "&aYou received &7{0}x &acustom food component item with ID &7{1}&a."
-```
+When [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) is installed, its placeholders such as `%player_name%` are resolved in messages sent to **players**. Legacy `&` and `§` color codes returned by other plugins are stripped; style messages with MiniMessage instead.
+
+<Aside type="note">
+    Eat Everything does not register placeholders of its own. PlaceholderAPI support only lets *other* plugins' placeholders appear inside its messages.
+</Aside>
+
+---
+
