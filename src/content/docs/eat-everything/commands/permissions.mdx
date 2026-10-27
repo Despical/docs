@@ -54,3 +54,20 @@ Help and tab completion only show commands the sender may run, so players withou
 
 ---
 
+## Permission-Locked Foods
+
+Eating an individual food can be restricted with the `permission` option of that food in [food-components.yml](/eat-everything/configuration/food-components#permission). This node is **yours to choose**; the plugin does not define it.
+
+```yaml
+food:
+  vip-cake:
+    item: CAKE
+    components:
+      permission: "server.vip.cake"
+```
+
+Players without the node cannot finish eating the item. Nothing is consumed, and no message is sent, so combine it with a lore line that explains the requirement.
+
+<Aside type="note">
+    `eateverything.*` does not grant your own food permissions. Give those to the ranks that should have them.
+</Aside>
