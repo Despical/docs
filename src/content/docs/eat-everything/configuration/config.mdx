@@ -37,3 +37,26 @@ The request runs in the background, so it never delays startup. Nothing is downl
 
 ---
 
+### `metrics`
+
+| | |
+| --- | --- |
+| **Type** | `true` or `false` |
+| **Default** | `true` |
+| **Applies** | At startup |
+
+Eat Everything reports anonymous statistics to [bStats](https://bstats.org/plugin/bukkit/Eat%20Everything/21994): the server software and version, the plugin version, the Java version and the player count. They show which versions are worth supporting. No player names, addresses, chat messages or configuration contents are collected.
+
+Set it to `false` to stop reporting for this plugin. bStats also has a **global** switch in `plugins/bStats/config.yml` that turns off reporting for every plugin at once.
+
+---
+
+## Notes
+
+* Both options are read when the server **starts**. Changing them and running `/ee reload` has no effect until the next restart.
+* A missing option falls back to its default, so you can delete a line you do not care about.
+* The file keeps its comments when the plugin creates it. Keep them; they document each option.
+
+<Aside type="tip">
+    Settings that look like they belong here, such as cooldowns or permissions, are set **per food** in `food-components.yml`.
+</Aside>
