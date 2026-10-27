@@ -56,11 +56,19 @@ const centeredChips = (y, items, color) => {
     return out;
 };
 
-async function shot(id, { scale = 1 } = {}) {
+// Panels are rendered at twice the layout size. Screenshots are enlarged with nearest-neighbour by an exact
+// factor so every game pixel stays a sharp 2x2 block instead of being smoothed by the rasterizer.
+const RESOLUTION = 2;
+async function shot(id, { scale = 1, trim } = {}) {
     const file = path.join(media, 'chat', `${id}.png`);
-    const meta = await sharp(file).metadata();
-    const w = Math.round(meta.width * scale), h = Math.round(meta.height * scale);
-    const png = await sharp(file).resize(w, h, { kernel: scale === 1 ? 'nearest' : 'lanczos3' }).png().toBuffer();
+    let image = sharp(file);
+    const meta = await image.metadata();
+    const width = trim ?? meta.width;
+    if (trim) image = image.extract({ left: 0, top: 0, width: trim, height: meta.height });
+    const w = Math.round(width * scale), h = Math.round(meta.height * scale);
+    const png = scale === 1
+        ? await image.resize(width * RESOLUTION, meta.height * RESOLUTION, { kernel: 'nearest' }).png().toBuffer()
+        : await image.resize(w * RESOLUTION, h * RESOLUTION, { kernel: 'lanczos3' }).png().toBuffer();
     return { w, h, href: `data:image/png;base64,${png.toString('base64')}` };
 }
 async function shotFrame(id, x, y, caption, options) {
@@ -73,7 +81,7 @@ async function still(name, h, content) {
     const markup = svg(h, content);
     await fs.writeFile(path.join(source, `${name}.svg`), markup);
     const target = path.join(output, `${name}.png`);
-    await sharp(Buffer.from(markup)).png({ compressionLevel: 9, palette: false }).toFile(target);
+    await sharp(Buffer.from(markup), { density: 72 * RESOLUTION }).png({ compressionLevel: 9, palette: false }).toFile(target);
     console.log(`${name}.png: ${((await fs.stat(target)).size / 1048576).toFixed(2)} MiB`);
 }
 
@@ -88,28 +96,40 @@ await still('cover', 520, `${background(520)}
  <text x="454" y="284" fill="${C.accent}" font-size="30" font-weight="bold">Turn any Minecraft item into food.</text>
  <text x="454" y="326" fill="${C.body}" font-size="19">Nutrition, effects, leftovers, cooldowns and commands for every item.</text>
  ${chipRow(366, ['Any item', 'Effects', 'Leftovers', 'Cooldowns', 'Permissions', 'Commands'], C.line, 454, 1216)}
- ${footer(452, 'PAPER 1.21.11 - 26.3   -   JAVA 25   -   /EE COMMANDS')}`);
+ <text x="454" y="452" fill="${C.accent}" font-size="17" font-weight="bold" letter-spacing=".5">PAPER AND FORKS   -   1.21.11+   -   JAVA 25</text>`);
 
 // Three example foods that show the range of what one entry can do.
-const stat = (x, y, label, value, color = C.body) => `<text x="${x}" y="${y}" fill="${C.muted}" font-size="15">${esc(label)}</text><text x="${x + 290}" y="${y}" text-anchor="end" fill="${color}" font-size="16" font-weight="bold">${esc(value)}</text>`;
-const food = (x, title, material, rows) => `${card(x, 196, 360, 330)}
- <text x="${x + 24}" y="246" fill="${C.title}" font-size="24" font-weight="bold">${esc(title)}</text>
- <text x="${x + 24}" y="272" fill="${C.muted}" font-size="14" letter-spacing="1">${esc(material)}</text>
- <path d="M${x + 24} 292H${x + 336}" stroke="${C.line}" stroke-opacity=".25"/>
- ${rows.map(([label, value, color], i) => stat(x + 24, 328 + i * 36, label, value, color)).join('')}`;
-await still('anything', 620, `${panel(620)}${heading('Eat literally anything', 'One entry in food-components.yml turns any item, tool or block into food.')}
- ${food(64, 'Golden Stick', 'STICK', [['Nutrition', '6'], ['Saturation', '4'], ['Eating time', '1.2 s'], ['Regeneration II', '50% chance', C.green], ['Always edible', 'yes', C.aqua]])}
- ${food(460, 'Healing Soup', 'MUSHROOM_STEW', [['Nutrition', '6'], ['Saturation', '7.2'], ['Eating time', '2.0 s'], ['Regeneration II', '6 seconds', C.green], ['Leaves behind', 'Empty Bowl', C.yellow]])}
- ${food(856, 'Warp Apple', 'APPLE', [['Random teleport', '64 blocks', C.aqua], ['Cooldown', '300 s', C.yellow], ['Always edible', 'yes', C.aqua], ['Permission', 'server.vip', C.red], ['Runs command', 'on every bite', C.green]])}
- ${footer(592, 'ANY ITEM - ANY VALUE - ONE ENTRY')}`);
+const icons = {
+    stick: `<g transform="rotate(-38)"><rect x="-6" y="-34" width="12" height="68" rx="6" fill="#c28a4e"/><rect x="-6" y="-34" width="5" height="68" rx="2.5" fill="#d9a468"/><rect x="-4" y="-10" width="14" height="6" rx="3" fill="#b27a3f" transform="rotate(30)"/></g>`,
+    soup: `<path d="M-30 -2H30C30 22 14 34 0 34C-14 34 -30 22 -30 -2Z" fill="#b8713f"/><path d="M-30 -2H30C30 22 14 34 0 34C-14 34 -30 22 -30 -2Z" fill="#000" opacity=".12"/><ellipse cx="0" cy="-2" rx="30" ry="8" fill="#e0a070"/><ellipse cx="0" cy="-3" rx="25" ry="5.5" fill="#d96a4a"/><path d="M-11 -18C-16 -26 -6 -30 -11 -40M3 -18C-2 -26 8 -30 3 -40M17 -18C12 -26 22 -30 17 -40" stroke="#e3d3c0" stroke-opacity=".7" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+    apple: `<path d="M0 -20C-12 -34 -34 -22 -30 2C-27 24 -10 34 0 28C10 34 27 24 30 2C34 -22 12 -34 0 -20Z" fill="#e0453a"/><path d="M-16 -8C-20 0 -18 10 -12 16" stroke="#ff8a7a" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/><rect x="-2" y="-34" width="5" height="16" rx="2.5" fill="#7a4f2a"/><path d="M3 -28C14 -40 28 -34 28 -34C26 -22 12 -22 3 -28Z" fill="#6bd47a"/>`,
+};
+const pips = (x, y, filled, total = 5) => Array.from({ length: total }, (_, i) => `<circle cx="${x + i * 30}" cy="${y}" r="10" fill="${i < filled ? C.accent : '#2c211a'}" stroke="${i < filled ? '#ffd9a0' : '#6a5646'}" stroke-opacity=".7"/>`).join('');
+const stat = (x, y, label, value, color = C.title) => `<text x="${x}" y="${y}" fill="${C.muted}" font-size="15">${esc(label)}</text><text x="${x + 296}" y="${y}" text-anchor="end" fill="${color}" font-size="16" font-weight="bold">${esc(value)}</text>`;
+const food = (x, icon, title, material, tint, hunger, rows, tag, tagColor) => `${card(x, 192, 368, 392)}
+ <rect x="${x}" y="192" width="368" height="116" rx="14" fill="${tint}" fill-opacity=".14"/>
+ <circle cx="${x + 70}" cy="250" r="44" fill="#1a120d" stroke="${tint}" stroke-opacity=".8" stroke-width="2"/>
+ <g transform="translate(${x + 70} 252)">${icons[icon]}</g>
+ <text x="${x + 134}" y="246" fill="${C.title}" font-size="25" font-weight="bold">${esc(title)}</text>
+ <text x="${x + 134}" y="274" fill="${C.muted}" font-size="14" letter-spacing="1.2">${esc(material)}</text>
+ <text x="${x + 28}" y="346" fill="${C.muted}" font-size="14">Hunger</text>
+ ${pips(x + 120, 342, hunger)}
+ <path d="M${x + 28} 370H${x + 340}" stroke="${C.line}" stroke-opacity=".22"/>
+ ${rows.map(([label, value, color], i) => stat(x + 28, 402 + i * 34, label, value, color)).join('')}
+ ${chip(x + 28, 534, tag, tagColor, 312).markup}`;
+await still('anything', 660, `${panel(660)}${heading('Eat literally anything', 'One entry in food-components.yml turns any item, tool or block into food.')}
+ ${food(64, 'stick', 'Golden Stick', 'STICK', '#c28a4e', 3, [['Saturation', '4'], ['Eating time', '1.2 s'], ['Regeneration II', '50% chance', C.green], ['Always edible', 'yes', C.aqua]], 'Heals while you chew', C.green)}
+ ${food(456, 'soup', 'Healing Soup', 'MUSHROOM_STEW', '#d96a4a', 3, [['Saturation', '7.2'], ['Eating time', '2.0 s'], ['Regeneration II', '6 seconds', C.green], ['Leaves behind', 'Empty Bowl', C.yellow]], 'Leaves a bowl behind', C.yellow)}
+ ${food(848, 'apple', 'Warp Apple', 'APPLE', '#e0453a', 2, [['Random teleport', '64 blocks', C.aqua], ['Cooldown', '300 s', C.yellow], ['Permission', 'server.vip', C.red], ['Runs command', 'on every bite', C.green]], 'Teleports and cools down', C.aqua)}
+ ${footer(634, 'ANY ITEM - ANY VALUE - ONE ENTRY')}`);
 
 // Live editing screenshots.
-await still('editing', 860, `${panel(860)}${heading('Edit the item in your hand', 'Change any food value with a command and see the result instantly.')}
- ${await shotFrame('saturation', 36, 200, '/ee saturation 3.5')}
- ${await shotFrame('eating-time', 644, 200, '/ee eatseconds 5.33')}
- ${await shotFrame('edible', 36, 462, '/ee edible false')}
- ${await shotFrame('nutrition', 644, 462, '/ee nutrition 2')}
- ${footer(824, 'NO CONFIGURATION NEEDED - PERFECT FOR PROTOTYPING')}`);
+await still('editing', 740, `${background(740)}${heading('Edit the item in your hand', 'Change any food value with a command and see the result instantly.')}<path d="M80 162H1200" stroke="${C.line}" stroke-opacity=".3"/>
+ ${await shotFrame('saturation', 34, 204, '/ee saturation 3.5', { trim: 588 })}
+ ${await shotFrame('eating-time', 656, 204, '/ee eatseconds 5.33', { trim: 588 })}
+ ${await shotFrame('edible', 34, 460, '/ee edible false', { trim: 588 })}
+ ${await shotFrame('nutrition', 656, 460, '/ee nutrition 2', { trim: 588 })}
+ ${footer(708, 'NO CONFIGURATION NEEDED - PERFECT FOR PROTOTYPING')}`);
 
 // Inspect panel next to a short explanation.
 const point = (y, color, title, text) => `<circle cx="760" cy="${y}" r="7" fill="${color}"/><text x="784" y="${y + 6}" fill="${C.title}" font-size="19" font-weight="bold">${esc(title)}</text><text x="784" y="${y + 30}" fill="${C.body}" font-size="15">${esc(text)}</text>`;
@@ -121,10 +141,9 @@ await still('info', 580, `${panel(580)}${heading('Inspect any item', '/ee info s
  ${footer(548, 'THE FASTEST WAY TO DEBUG A FOOD')}`);
 
 // Help screens, scaled to fit side by side.
-await still('help', 560, `${panel(560)}${heading('Help that guides you', 'Hover for details, click to run, and read what every option means.')}
+await still('help', 510, `${panel(510)}${heading('Help that guides you', 'Hover for details, click to run, and read what every option means.')}
  ${await shotFrame('help', 52, 204, 'Paged command guide', { scale: 0.9 })}
- ${await shotFrame('help-general', 652, 204, 'Plain-language option reference', { scale: 0.9 })}
- ${footer(526, 'ONLY THE COMMANDS YOU MAY USE ARE SHOWN')}`);
+ ${await shotFrame('help-general', 652, 204, 'Plain-language option reference', { scale: 0.9 })}`);
 
 // A YAML entry with callouts.
 const yaml = [
@@ -154,19 +173,27 @@ await still('config', 760, `${panel(760)}${heading('Define it once in YAML', 'Re
 
 // Feature grid.
 const feature = (x, y, color, title, lines) => `${card(x, y, 368, 150)}<rect x="${x}" y="${y + 18}" width="5" height="40" rx="2" fill="${color}"/><text x="${x + 24}" y="${y + 46}" fill="${C.title}" font-size="21" font-weight="bold">${esc(title)}</text>${lines.map((line, i) => `<text x="${x + 24}" y="${y + 80 + i * 24}" fill="${C.body}" font-size="15">${esc(line)}</text>`).join('')}`;
-await still('features', 590, `${panel(590)}${heading('Everything a food needs', 'Reusable, permission-aware and easy to tune.')}
+await still('features', 560, `${panel(560)}${heading('Everything a food needs', 'Reusable, permission-aware and easy to tune.')}
  ${feature(64, 190, C.green, 'Potion effects', ['Duration, level, icon and particles.', 'Every effect has its own chance.'])}
  ${feature(456, 190, C.yellow, 'Exact matching', ['Name, lore, amount and enchantments.', 'A plain stick can stay a stick.'])}
  ${feature(848, 190, C.aqua, 'Leftover items', ['A bowl after soup, a bottle after', 'a drink, or any item you design.'])}
  ${feature(64, 366, C.accent, 'Cooldowns', ['The hotbar overlay shows when the', 'food can be used again.'])}
  ${feature(456, 366, C.red, 'Permissions', ['Lock any food behind your own', 'permission node.'])}
- ${feature(848, 366, C.blue, 'Commands', ['Run console or player commands on', 'every bite, with placeholders.'])}
- ${footer(562, 'PAPER 1.21.11 - 26.3   -   JAVA 25   -   PLACEHOLDERAPI OPTIONAL')}`);
+ ${feature(848, 366, C.blue, 'Commands', ['Run console or player commands on', 'every bite, with placeholders.'])}`);
+
+// Quick start with four numbered steps.
+const step = (x, number, title, lines, color) => `${card(x, 196, 276, 270)}<circle cx="${x + 48}" cy="252" r="26" fill="#1d1510" stroke="${color}" stroke-width="2"/><text x="${x + 48}" y="261" text-anchor="middle" fill="${color}" font-size="26" font-weight="bold">${number}</text><text x="${x + 24}" y="318" fill="${C.title}" font-size="21" font-weight="bold">${esc(title)}</text>${lines.map((line, i) => `<text x="${x + 24}" y="${352 + i * 26}" fill="${line.startsWith('/') ? C.blue : C.body}" font-size="15" ${line.startsWith('/') ? 'font-family="Consolas,DejaVu Sans Mono,monospace"' : ''}>${esc(line)}</text>`).join('')}`;
+await still('start', 540, `${panel(540)}${heading('Up and running in minutes', 'Four steps from an empty plugins folder to your first food.')}
+ ${step(64, 1, 'Install', ['Place the JAR in your', 'plugins folder and', 'restart the server.'], C.accent)}
+ ${step(364, 2, 'Prototype', ['Hold any item and run', '/ee nutrition 6', '/ee effect add speed 200 1'], C.green)}
+ ${step(664, 3, 'Define', ['Add a food to', 'food-components.yml', 'and run /ee reload.'], C.aqua)}
+ ${step(964, 4, 'Share', ['Hand it out with', '/ee item <id>', 'or from a command.'], C.yellow)}
+ ${footer(508, 'REQUIRES PAPER OR A FORK - MINECRAFT 1.21.11+ - JAVA 25')}`);
 
 // Section divider for marketplaces without [hr] support.
 if (wanted('divider')) {
     const divider = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="16" viewBox="0 0 800 16"><defs><linearGradient id="d"><stop stop-color="#ffb347" stop-opacity="0"/><stop offset=".15" stop-color="#ffb347" stop-opacity=".75"/><stop offset=".85" stop-color="#76f5a4" stop-opacity=".75"/><stop offset="1" stop-color="#76f5a4" stop-opacity="0"/></linearGradient></defs><rect x="0" y="7" width="800" height="2" rx="1" fill="url(#d)"/><circle cx="400" cy="8" r="5" fill="#ffb347"/></svg>`;
     await fs.writeFile(path.join(source, 'divider.svg'), divider);
-    await sharp(Buffer.from(divider)).png().toFile(path.join(output, 'divider.png'));
+    await sharp(Buffer.from(divider), { density: 72 * RESOLUTION }).png().toFile(path.join(output, 'divider.png'));
     console.log('divider.png');
 }
