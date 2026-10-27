@@ -66,7 +66,7 @@ A panel is the body message plus its title. For example the body `saturation.upd
 
 | Body | Used when | Placeholders |
 | --- | --- | --- |
-| `about` | `/ee` and `/ee version` | `<version>`, `<author>`, `<label>` |
+| `about` | `/ee` | `<version>`, `<author>`, `<label>` |
 | `unknown-arguments` | The sender typed arguments `/ee` does not know | `<label>`, `<arguments>` |
 | `reloaded` | `/ee reload` finished | |
 | `not-holding-item` | A held-item command was used with an empty hand | |
@@ -95,8 +95,10 @@ The `help` section controls the paginated guide:
 | `navigation` | The footer: `<previous>`, `<page>`, `<pages>` and `<next>`. |
 | `disabled-navigation` | A button that has nowhere to go. `<label>` is its text. |
 | `invalid-page` | The requested page does not exist. |
-| `general-title`, `general` | The `/ee help general` reference. |
+| `general-title`, `general-description`, `general` | The `/ee help general` reference, laid out like the command list. `general` has one entry per option with a `name` and a `description`. |
 | `commands.<name>` | `syntax`, `description` and `hover` for each command. |
+
+![The help guide](/images/eat-everything/chat/help.png)
 
 Commands the viewer has no permission for are hidden. A command whose syntax contains `[` or `<` fills the chat box when clicked; the others run immediately. The `buttons` and `hovers` sections hold the text of the **Previous** and **Next** buttons.
 
