@@ -83,3 +83,50 @@ The `info` section controls `/ee info`: the title and held-item line, one row pe
 
 ---
 
+## The Help Guide
+
+The `help` section controls the paginated guide:
+
+| Key | Meaning |
+| --- | --- |
+| `title`, `description` | The heading of every page. |
+| `row` | One command per line: `<command>` is the clickable syntax and `<description>` the summary. |
+| `command-row`, `detail-row` | Used instead of `row` when a command is too long for one chat line. |
+| `navigation` | The footer: `<previous>`, `<page>`, `<pages>` and `<next>`. |
+| `disabled-navigation` | A button that has nowhere to go. `<label>` is its text. |
+| `invalid-page` | The requested page does not exist. |
+| `general-title`, `general` | The `/ee help general` reference. |
+| `commands.<name>` | `syntax`, `description` and `hover` for each command. |
+
+Commands the viewer has no permission for are hidden. A command whose syntax contains `[` or `<` fills the chat box when clicked; the others run immediately. The `buttons` and `hovers` sections hold the text of the **Previous** and **Next** buttons.
+
+---
+
+## Command Library Errors
+
+The `framework` section customises errors raised before a command runs. Each entry has a `title` and a `body`, rendered as a panel:
+
+| Key | Shown when | Placeholders |
+| --- | --- | --- |
+| `permission-denied` | The sender may not use the command. | |
+| `unknown-command` | The command does not exist. | |
+| `invalid-syntax` | Required arguments are missing or too many were given. | `{command}`, `{syntax}` |
+| `must-be-a-number` | A number was expected. | `{num}` |
+| `not-allowed-on-console` | A player-only command was run from the console. | |
+| `please-specify-one-of` | The value must be one of a fixed list, such as `true` or `false`. | `{valid}` |
+| `error-performing-command` | The command failed unexpectedly. | |
+
+These placeholders use **curly braces** and are filled in by the command library. Leave them as written. An empty `body` restores the library's own English message.
+
+---
+
+## Example: A Quieter Server
+
+```yaml
+reloaded: ''   # reload silently
+
+framework:
+  permission-denied:
+    title: '<#FF7777><bold>No Access</bold></#FF7777>'
+    body: '<#B8C2D4>That command is for staff.</#B8C2D4>'
+```
