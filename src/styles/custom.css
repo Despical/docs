@@ -237,3 +237,19 @@ table td code {
     border-radius: 12px;
     display: block;
 }
+
+/* Two-column "message / explanation" tables: keep the message column narrow and let it wrap. */
+.message-table table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.message-table th:first-child,
+.message-table td:first-child {
+    width: 34%;
+}
+
+.message-table td code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
