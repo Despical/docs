@@ -1,74 +1,46 @@
 ---
 title: Getting Started
-description: Install Eat Everything on your Paper server. Create custom edible items, configure food data components, and build reusable YAML food presets.
+description: Install Eat Everything on a Paper server, create your first edible item with commands and with YAML, and avoid the common first-boot mistakes.
 ---
 
 import { Aside, Badge, Steps } from '@astrojs/starlight/components';
 
-Welcome to **Eat Everything**. This plugin is built around [Paper](https://papermc.io/)'s food and consumable data components, allowing you to turn regular items into fully configurable food and define reusable custom consumable presets in YAML.
-
-If you are coming from older Bukkit food plugins, the big difference here is that **Eat Everything** works with Paper's modern item data model rather than a pile of ad-hoc metadata tricks. That makes it especially useful for modern Paper servers that want clean, component-based consumables.
+This guide takes you from an empty `plugins/` folder to an edible item you designed yourself, first with in-game commands and then as a permanent entry in `food-components.yml`.
 
 ---
 
-## Prerequisites
+## Requirements
 
-Before installing the plugin, make sure your server matches the technology used by the project:
-
-* **Java Version:** [Java 25](https://www.oracle.com/java/technologies/downloads/) or newer is required.
-* **Server Software:** [**Paper**](https://papermc.io/) or a compatible Paper fork is required. Plain Spigot is not supported.
-* **Minecraft Version:** Paper 26.2 is the currently supported target.
-* [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) <Badge text="Optional" variant="tip" /> : Only needed if you want PlaceholderAPI placeholders inside plugin messages.
-* **Permissions Plugin** <Badge text="Optional" variant="tip" /> : A plugin such as [LuckPerms](https://www.spigotmc.org/resources/luckperms.28140/) is recommended to manage per-command access.
+| Requirement | Details |
+| --- | --- |
+| **Java** | [Java 25](https://adoptium.net/) or newer. The plugin is compiled for Java 25 and will not load on older versions. |
+| **Server** | [Paper](https://papermc.io/downloads/paper) or a compatible fork. Plain Spigot is **not** supported because the plugin uses Paper's data component API. |
+| **Minecraft** | 1.21.11 and newer, tested up to 26.3. |
+| [**PlaceholderAPI**](https://www.spigotmc.org/resources/placeholderapi.6245/) | Optional; lets PlaceholderAPI placeholders work inside `messages.yml`. |
+| **A permissions plugin** | Optional; such as [LuckPerms](https://luckperms.net/), to give staff access to individual commands. |
 
 <Aside type="caution" title="Java 25 is required">
-    The plugin is compiled for Java 25. It will not load on a server running Java 21 or an older release.
+    If your server logs `UnsupportedClassVersionError` or "Unsupported class file major version" when loading Eat Everything, you are running an older Java. Switch the server to Java 25 and start it again.
 </Aside>
 
 ---
 
 ## Installation
 
-Setting up **Eat Everything** is straightforward. Follow these steps to get started:
-
 <Steps>
-    1. Download the latest **Eat Everything** build from [Hub](https://hub.despical.dev/plugins/eat-everything), [SpigotMC](https://www.spigotmc.org/resources/eat-everything.116884/) or [BuiltByBit](https://builtbybit.com/resources/eat-everything.50202/).
-    2. Place the `eat-everything-x.x.x.jar` file into your server's `plugins/` directory.
-    3. Restart the server to generate the default configuration files.
-    4. Join the server and run `/eateverything` or `/ee` to verify that the plugin loaded correctly.
+    1. Download the plugin from [Hub](https://hub.despical.dev/plugins/eat-everything), [SpigotMC](https://www.spigotmc.org/resources/eat-everything.116884/) or [BuiltByBit](https://builtbybit.com/resources/eat-everything.50202/).
+    2. Stop the server and place `eat-everything-x.x.x.jar` in the `plugins/` folder.
+    3. Start the server. The `plugins/EatEverything/` folder is created with all configuration files.
+    4. Run `/ee` in game or in the console. You should see the plugin version.
 </Steps>
 
----
+On first start the plugin creates:
 
-## First-Run Configuration
+* `config.yml`: the update checker and anonymous metrics. See [config.yml](/eat-everything/configuration/config).
+* `messages.yml`: all chat text. See [messages.yml](/eat-everything/configuration/messages).
+* `food-components.yml`: your reusable foods, with a fully commented example. See [food-components.yml](/eat-everything/configuration/food-components).
 
-On first startup, the plugin generates a dedicated folder containing three main files:
-
-* `config.yml`: Contains global plugin options such as the update checker.
-* `messages.yml`: Holds all command feedback, usage errors, and item-editing responses.
-* `food-components.yml`: Defines reusable custom food components that can be matched to items and automatically applied.
-
-Important notes for first boot:
-
-* The generated `default` entry inside `food-components.yml` is an example only and is **not** registered as a real component.
-* Invalid materials, invalid enchantment names, or invalid potion effect names are logged during component loading.
+Existing files are never overwritten by updates. A message or option added in a newer version still works with an older file because the plugin falls back to the bundled default for anything missing.
 
 ---
 
-## Common First-Boot Mistakes
-
-* Running the plugin on Spigot instead of Paper.
-* Expecting the sample `default` component to register.
-* Editing a config and assuming already-tagged items in the world will update retroactively.
-* Using broad component rules before testing a precise name or lore-based match.
-
-Already-updated items can keep their old applied data, so after changing component definitions, always test with freshly generated items.
-
----
-
-## Next Steps
-
-* **[Commands & Permissions](/eat-everything/commands/admin)**: Learn every editing and utility command in detail.
-* **[food-components.yml](/eat-everything/configuration/food-components)**: Build reusable consumables with conditions, conversions, and execution commands.
-* **[Live Item Editing](/eat-everything/features/live-item-editing)**: Learn the fastest workflow for experimenting with Paper food data on a held item.
-* **[Custom Food Components](/eat-everything/features/custom-food-components)**: Understand how component matching and automatic application works internally.
