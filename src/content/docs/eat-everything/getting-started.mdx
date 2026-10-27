@@ -107,3 +107,20 @@ food:
 
 ---
 
+## First-Boot Checklist
+
+* The sample entry called `default` is **never loaded**. Copy it and give it a new ID.
+* Check the console after every reload. Mistakes such as an unknown material, effect or sound are reported and only the broken part is skipped.
+* Test with **fresh** items after changing a component. Items that already received a component keep their old values. See [Custom Food Components](/eat-everything/features/custom-food-components#the-update-marker).
+* The sample `lore: []` condition matches only items **without** lore. Remove the line if you do not care about lore.
+* Run the server on Paper. On Spigot the plugin cannot start.
+
+---
+
+## Next Steps
+
+* **[Command Reference](/eat-everything/commands/admin)**: every subcommand and its rules.
+* **[Permissions](/eat-everything/commands/permissions)**: give staff exactly the access they need.
+* **[food-components.yml](/eat-everything/configuration/food-components)**: the complete schema.
+* **[Recipes](/eat-everything/features/recipes)**: copy-ready examples.
+* **[Troubleshooting](/eat-everything/misc/troubleshooting)**: what each console warning means.
