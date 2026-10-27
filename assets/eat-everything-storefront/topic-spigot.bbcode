@@ -18,15 +18,21 @@ It is built on Minecraft's own food and consumable item components, so edible it
 
 Every item can be food. Set how much hunger it restores, how long eating takes, which animation and sound play, and whether it can be eaten on a full stomach. One entry describes the whole food, and every setting except the item itself is optional.
 
+[url=https://docs.despical.dev/eat-everything/configuration/food-components/][b]Every food option →[/b][/url]
+
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/editing.png[/img][/center]
 
 Prototype without touching a file. Hold an item and change it with a command: [icode]/ee nutrition[/icode], [icode]/ee saturation[/icode], [icode]/ee eatseconds[/icode], [icode]/ee edible[/icode] and [icode]/ee effect add[/icode]. Every command shows the current value when you leave the value out, rejects invalid input with a clear message, and the result is saved on the item itself.
 
+[url=https://docs.despical.dev/eat-everything/features/live-item-editing/][b]Live item editing →[/b][/url]
+
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/info.png[/img][/center]
 
 [icode]/ee info[/icode] prints every food value of the item in your hand, its effects with their duration, level and chance, and a clickable line that copies a [b]/give command[/b] recreating the exact item. Paste it into a datapack, a shop or a crate and you are done.
+
+[url=https://docs.despical.dev/eat-everything/commands/admin/#info][b]The info command →[/b][/url]
 
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/config.png[/img][/center]
@@ -40,44 +46,74 @@ Prototype without touching a file. Hold an item and change it with a command: [i
 [*][b]Commands.[/b] Run console commands, or player commands with a [i]p:[/i] prefix, on every bite, with the player's name and the food's values as placeholders.
 [/list]
 
+[url=https://docs.despical.dev/eat-everything/features/recipes/][b]Recipe book of ready-made foods →[/b][/url]
+
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/features.png[/img][/center]
 
 Items are updated the moment a player touches, picks up or sees them, so nothing scans your inventories. Conditions are parsed once when the file loads, mistakes in your configuration are reported in the console and only the broken part is skipped, and [icode]/ee reload[/icode] applies every change without a restart.
+
+[url=https://docs.despical.dev/eat-everything/features/custom-food-components/][b]How foods are matched and applied →[/b][/url]
 
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/help.png[/img][/center]
 
 Every chat message is a clean panel you can restyle. Messages use MiniMessage with hex colors, values are inserted as plain text so nobody can inject markup through an item name, and the command library's own errors are editable too. The paginated [b]/ee help[/b] guide only lists the commands you may use, with hover details and click-to-fill.
 
-[center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
-[size=5][b]Commands[/b][/size]
-All commands use [icode]/eateverything[/icode] or [icode]/ee[/icode]. Every command checks its own permission.
-
-[list]
-[*][icode]/ee[/icode] - Show the plugin version.
-[*][icode]/ee help [page][/icode] and [icode]/ee help general[/icode] - Browse the commands or read what every option means. [i]eateverything.help[/i]
-[*][icode]/ee info[/icode] - Inspect the item in your hand and copy it as a give command. [i]eateverything.info[/i]
-[*][icode]/ee item <id> [amount][/icode] - Get a configured food. [i]eateverything.item[/i]
-[*][icode]/ee nutrition [value][/icode] - Read or set the hunger points. [i]eateverything.nutrition[/i]
-[*][icode]/ee saturation [value][/icode] - Read or set the saturation. [i]eateverything.saturation[/i]
-[*][icode]/ee eatseconds [value][/icode] - Read or set the eating time. [i]eateverything.eatseconds[/i]
-[*][icode]/ee edible [true|false][/icode] - Allow eating on a full hunger bar. [i]eateverything.edible[/i]
-[*][icode]/ee effect add <effect> <duration> <amplifier> [probability][/icode] - Add a food effect. [i]eateverything.effect[/i]
-[*][icode]/ee effect clear[/icode] - Remove every food effect. [i]eateverything.effect[/i]
-[*][icode]/ee reload[/icode] - Reload the configuration, messages and foods. [i]eateverything.reload[/i]
-[/list]
-Grant everything at once with [i]eateverything.*[/i].
+[url=https://docs.despical.dev/eat-everything/configuration/messages/][b]Customize every message →[/b][/url]
 
 [center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
-[size=5][b]Requirements[/b][/size]
+[spoiler=Commands and permissions]
+All commands use [icode]/eateverything[/icode] or [icode]/ee[/icode]. Every command has its own permission, and [icode]eateverything.*[/icode] grants them all (operators by default).
+
+[b]Everyday commands[/b]
 [list]
-[*][b]Server:[/b] Paper or a compatible fork. Spigot is not supported.
-[*][b]Minecraft:[/b] 1.21.11 and newer, tested up to 26.3.
-[*][b]Java:[/b] 25 or newer.
-[*][b]Optional:[/b] PlaceholderAPI, so its placeholders work inside the plugin's messages.
+[*][icode]/ee[/icode]: show the plugin version.
+[*][icode]/ee info[/icode]: inspect the item in your hand and copy it as a give command. [icode]eateverything.info[/icode]
+[*][icode]/ee item <id> [amount][/icode]: get a configured food. [icode]eateverything.item[/icode]
+[*][icode]/ee help [page][/icode] and [icode]/ee help general[/icode]: browse the commands or read what every option means. [icode]eateverything.help[/icode]
+[*][icode]/ee reload[/icode]: reload the configuration, messages and foods. [icode]eateverything.reload[/icode]
 [/list]
 
-[size=5][b]Documentation and support[/b][/size]
-Every option is explained in the [url=https://docs.despical.dev/eat-everything/]documentation[/url], with a [url=https://docs.despical.dev/eat-everything/features/recipes/]recipe book[/url] of ready-to-use foods and a [url=https://docs.despical.dev/eat-everything/misc/troubleshooting/]troubleshooting guide[/url] for every console message. Questions are welcome on [url=https://discord.gg/uXVU8jmtpU]Discord[/url].
+[b]Item editing commands[/b] (players only, they change the item in your main hand)
+[list]
+[*][icode]/ee nutrition [value][/icode]: read or set the hunger points. [icode]eateverything.nutrition[/icode]
+[*][icode]/ee saturation [value][/icode]: read or set the saturation. [icode]eateverything.saturation[/icode]
+[*][icode]/ee eatseconds [value][/icode]: read or set the eating time. [icode]eateverything.eatseconds[/icode]
+[*][icode]/ee edible [true|false][/icode]: allow eating on a full hunger bar. [icode]eateverything.edible[/icode]
+[*][icode]/ee effect add <effect> <duration> <amplifier> [probability][/icode]: add a food effect. [icode]eateverything.effect[/icode]
+[*][icode]/ee effect clear[/icode]: remove every food effect. [icode]eateverything.effect[/icode]
+[/list]
+
+[b]Food permissions:[/b] a food can require any permission node you choose with the [i]permission[/i] option, so VIP food, event food and staff food are one line each.
+
+[url=https://docs.despical.dev/eat-everything/commands/admin/][b]Full command reference →[/b][/url]  ·  [url=https://docs.despical.dev/eat-everything/commands/permissions/][b]Permissions →[/b][/url]
+[/spoiler]
+
+[center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
+[center][img]https://docs.despical.dev/images/eat-everything/storefront/start.png[/img][/center]
+
+[b]Requirements:[/b] Paper or a compatible fork for Minecraft 1.21.11 to 26.3, and Java 25. PlaceholderAPI is optional and lets its placeholders work inside the plugin's messages. Spigot is not supported.
+
+[list=1]
+[*]Place the JAR in your plugins folder and restart.
+[*]Hold any item and run [icode]/ee nutrition 6[/icode], or add a food to food-components.yml.
+[*]Run [icode]/ee reload[/icode], then [icode]/ee item <id>[/icode] to get the food.
+[*]Eat it and fine-tune the values.
+[/list]
+
+[url=https://docs.despical.dev/eat-everything/getting-started/][b]Installation guide →[/b][/url]  ·  [url=https://docs.despical.dev/eat-everything/misc/troubleshooting/][b]Troubleshooting →[/b][/url]
+
+[center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
+[center][size=6][b]bStats Metrics[/b][/size][/center]
+
+Eat Everything reports anonymous, aggregate usage statistics through [b]bStats[/b]. Disable it with [icode]metrics: false[/icode] in config.yml.
+
+[center][url=https://bstats.org/plugin/bukkit/Eat%20Everything/21994][img]https://bstats.org/signatures/bukkit/Eat%20Everything.svg[/img][/url][/center]
+
+[center][img]https://docs.despical.dev/images/eat-everything/storefront/divider.png[/img][/center]
+[center][size=5][b]If it fits in your inventory, it fits on the menu.[/b][/size]
+Created by [b]Despical[/b].
+
+[url=https://docs.despical.dev/eat-everything/][b]Documentation[/b][/url]  ·  [url=https://www.youtube.com/watch?v=RJytcjv3KtY][b]Showcase video[/b][/url]  ·  [url=https://discord.gg/uXVU8jmtpU][b]Discord support[/b][/url][/center]
 [/size][/font]
