@@ -44,3 +44,66 @@ Existing files are never overwritten by updates. A message or option added in a 
 
 ---
 
+## Your First Edible Item: With Commands
+
+Commands are the fastest way to experiment because they edit the item **in your main hand**. Give yourself an item that is normally not food, for example a stick, hold it and run:
+
+```bash
+/ee nutrition 6
+/ee saturation 4
+/ee eatseconds 1.2
+/ee effect add regeneration 100 1
+/ee info
+```
+
+<Steps>
+    1. `/ee nutrition 6` restores three drumsticks of hunger and makes the stick eatable at any hunger level.
+    2. `/ee saturation 4` sets how long the player stays full.
+    3. `/ee eatseconds 1.2` makes eating take 1.2 seconds instead of the default 1.6.
+    4. `/ee effect add regeneration 100 1` adds Regeneration II (amplifier 1) for 100 ticks, which is 5 seconds.
+    5. `/ee info` prints every value and a clickable **copy** line that gives you a `/give` command recreating the exact item.
+</Steps>
+
+Hold right-click to eat the stick. It behaves like vanilla food.
+
+<Aside type="note">
+    Item changes made with commands exist only on that one item stack. Players who craft, loot or receive another stick will not get the behavior. To make a *kind* of item edible for everyone, use `food-components.yml`.
+</Aside>
+
+---
+
+## Your First Edible Item: With YAML
+
+Open `plugins/EatEverything/food-components.yml` and add an entry under `food`. The entry key (`golden-stick` here) is the ID you will use in commands.
+
+```yaml
+food:
+  golden-stick:
+    item: STICK
+    components:
+      nutrition: 6
+      saturation: 4
+      can-always-eat: true
+      eat-seconds: 1.2
+      effects:
+        '1':
+          name: REGENERATION
+          amplifier: 1
+          duration: 100
+          probability: 0.5
+      conditions:
+        name: "&#FFAA00Golden Stick"
+```
+
+<Steps>
+    1. Save the file and run `/ee reload`. Warnings about mistakes appear in the console.
+    2. Run `/ee item golden-stick 3` to receive three fresh sticks. They are already named **Golden Stick**, because the item command builds the item from the component and gives it the name, lore and enchantments its `conditions` ask for.
+    3. Eat one. Half of the time you also get Regeneration II.
+</Steps>
+
+<Aside type="tip" title="Conditions decide which items are food">
+    Because of the `name` condition, a plain stick stays a plain stick. Only sticks named **Golden Stick** are recognized, for example ones renamed in an anvil or given by `/ee item`. Remove the `conditions` block to make **every** stick edible.
+</Aside>
+
+---
+
