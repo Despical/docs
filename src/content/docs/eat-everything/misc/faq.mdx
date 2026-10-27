@@ -72,3 +72,62 @@ They read or edit the item in your main hand. `/ee`, `version`, `help` and `relo
 
 ---
 
+## Do consume commands run as the console or the player?
+
+As the **console**. Start a command with `p:` to run it as the player.
+
+```yaml
+commands:
+  - "say %player% ate a %material%"
+  - "p:me feels strange"
+```
+
+Placeholders are listed in [food-components.yml](/eat-everything/configuration/food-components#commands).
+
+---
+
+## Can an edible item clear potion effects?
+
+Yes. Set `clear-all-effects: true`. Effects the same food grants are applied afterwards and are kept.
+
+---
+
+## What does `/ee effect clear` remove?
+
+Every consume effect on the item: potion effects, random teleport and clear-all-effects. Food values, eating time, animation and sound stay.
+
+---
+
+## Can eating leave something behind?
+
+Yes. Use `converts-to` for a bowl, bottle or any customised item.
+
+---
+
+## Does Eat Everything add PlaceholderAPI placeholders?
+
+No. With PlaceholderAPI installed, other plugins' placeholders work **inside Eat Everything's messages**.
+
+---
+
+## How are messages styled?
+
+`messages.yml` uses [MiniMessage](https://docs.advntr.dev/minimessage/format.html), for example `<#B8C2D4>text</#B8C2D4>` for hex colors and `<bold>` for bold. Every command answer is a panel with a separator line and a centered title. Names inside `food-components.yml`, such as item names and lore, use `&#RRGGBB` hex codes. See [messages.yml](/eat-everything/configuration/messages).
+
+---
+
+## Does it collect data?
+
+Anonymous usage statistics go to [bStats](https://bstats.org/plugin/bukkit/Eat%20Everything/21994): server and plugin versions, Java version and player count. Set `metrics: false` in `config.yml` or disable bStats globally in `plugins/bStats/config.yml`. The update checker contacts a public SpigotMC mirror at startup unless `update-checker-enabled` is `false`.
+
+---
+
+## Can players cheat by renaming an item?
+
+If your food matches only on a name, a player can anvil-rename a matching item to receive its behavior. Add a lore line or an enchantment players cannot apply to the `conditions`, and keep powerful commands behind a `permission`.
+
+---
+
+## Where can I get help?
+
+Join the [Discord server](https://discord.gg/uXVU8jmtpU) and include your server and plugin versions, the relevant configuration and the console output.
