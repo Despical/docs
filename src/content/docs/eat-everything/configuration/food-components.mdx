@@ -75,3 +75,76 @@ Teleports the player to a random location within this many blocks when eating fi
 
 Removes every active potion effect from the player when eating finishes, like drinking milk. Default `false`.
 
+### `effects`
+
+A list of potion effects applied when eating finishes. Each entry needs a **unique key**; `'1'`, `'2'`, `'3'` is the convention.
+
+```yaml
+effects:
+  '1':
+    name: REGENERATION
+    amplifier: 1
+    duration: 100
+    probability: 0.5
+  '2':
+    name: minecraft:speed
+    duration: 200
+```
+
+| Option | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `name` | potion effect | none | **Required.** Effect name, case-insensitive, with or without `minecraft:`. Unknown names skip the entry. |
+| `amplifier` | whole number, 0 or more | `0` | `0` is level I, `1` is level II. |
+| `duration` | ticks, 1 or more | `1` | 20 ticks are one second. Values below 1 become 1. |
+| `ambient` | `true` / `false` | `false` | Styles the effect like a beacon's: translucent particles. |
+| `show-particles` | `true` / `false` | `true` | Whether the effect shows particles around the player. |
+| `show-icon` | `true` / `false` | `true` | Whether the effect shows an icon in the corner of the screen. |
+| `probability` | number above 0, at most 1 | `1` | Chance this effect is applied each time. `1` is always. Anything else is skipped with a warning. |
+
+Each effect rolls its probability **separately**, so three effects with `probability: 0.5` give each a half chance independently.
+
+<Aside type="note" title="Order of consume effects">
+    When eating finishes, the plugin applies the random teleport first, then clears all effects, then applies the `effects` in file order. Clearing before applying means `clear-all-effects` never removes the effects this same food grants.
+</Aside>
+
+---
+
+## `permission`
+
+The permission node a player needs to finish eating. Leave empty to allow everyone. Default empty.
+
+A player without it cannot complete eating: the action is cancelled and nothing is consumed. **No message is sent.** The node is not defined by the plugin; choose any name and grant it with your permissions plugin.
+
+---
+
+## `conditions`
+
+Conditions decide which items of the material this component applies to. **All present conditions must match** (logical AND). The block is optional: leaving it out makes the component apply to **every** item of that material.
+
+```yaml
+conditions:
+  name: "&#FFAA00Golden Stick"
+  lore:
+    - "&#AAAAAAA shiny stick"
+  amount: -1
+  enchantments:
+    - "SHARPNESS:3"
+```
+
+| Condition | How it is compared |
+| --- | --- |
+| `name` | The item's display name must equal the text exactly, after colors are applied. Leave it empty `""` or write `skip-check` to accept any name. |
+| `lore` | The item's lore must equal these lines, in order. **An empty list `[]` means "no lore at all".** Remove the whole `lore` key to accept any lore. |
+| `amount` | The stack size must equal the number. `-1` accepts any amount. |
+| `enchantments` | The item must carry every listed enchantment. Write `NAME` for any level or `NAME:LEVEL` for an exact level. Extra enchantments are fine. |
+
+<Aside type="caution" title="The sample lore line">
+    The bundled example contains `lore: []`. If you copy it and keep that line, only items **without** lore are matched. Delete the line when you do not care about lore.
+</Aside>
+
+Text in `name` and `lore` uses `&#RRGGBB` hex colors. It is compared after conversion, so `"&#FFAA00Golden Stick"` matches an item named with exactly that color and text. Enchantment names are the short vanilla names in any case, for example `SHARPNESS`, `UNBREAKING` or `MENDING`.
+
+Conditions also decide what `/ee item` gives you: the item is created with the name, lore and enchantments the conditions ask for, so it is recognized by its own component.
+
+---
+
