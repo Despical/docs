@@ -2168,8 +2168,12 @@ export default defineConfig({
                                 label: "Commands",
                                 items: [
                                     {
-                                        label: "Commands & Permissions",
+                                        label: "Command Reference",
                                         link: "/eat-everything/commands/admin",
+                                    },
+                                    {
+                                        label: "Permissions",
+                                        link: "/eat-everything/commands/permissions",
                                     },
                                 ],
                             },
