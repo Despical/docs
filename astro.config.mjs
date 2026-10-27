@@ -2205,6 +2205,10 @@ export default defineConfig({
                                         label: "Custom Food Components",
                                         link: "/eat-everything/features/custom-food-components",
                                     },
+                                    {
+                                        label: "Recipes",
+                                        link: "/eat-everything/features/recipes",
+                                    },
                                 ],
                             },
                             {
