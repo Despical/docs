@@ -5,6 +5,11 @@ description: Every Eat Everything command with its syntax, permission, validatio
 
 import { Aside } from '@astrojs/starlight/components';
 
+import ScreenshotGallery from "../../../../components/ScreenshotGallery.astro";
+import gallery from "../../../../data/eat-everything-gallery.json";
+
+export const shots = (group, ids) => ids.map((id) => gallery[group].find((image) => image.id === id));
+
 Every command starts with `/eateverything` or the alias `/ee`. Commands that edit or read the **item in your main hand** can only be used by players. The rest also work from the console.
 
 The command framework is [Aikar's Command Framework](https://github.com/aikar/commands): arguments are validated before a command runs, tab completion only suggests what you may use, and error messages come from [messages.yml](/eat-everything/configuration/messages).
@@ -52,9 +57,7 @@ Lists the subcommands **you** may use, six per page, with the commands you use w
 
 `/ee help general` prints a plain-language reference of the food options (nutrition, saturation, effects and so on). The older spelling `--general` still works. The command rows, hover cards and the reference text come from the `help` section of `messages.yml`.
 
-![The first page of the paginated help guide](/images/eat-everything/chat/help.png)
-
-![The general option reference](/images/eat-everything/chat/help-general.png)
+<ScreenshotGallery label="The paginated help guide" images={shots("chat", ["help", "help-2", "help-general"])} />
 
 
 ---
@@ -67,7 +70,7 @@ Lists the subcommands **you** may use, six per page, with the commands you use w
 
 Re-reads `config.yml`, `messages.yml` and `food-components.yml`, then rebuilds the loaded foods. Mistakes in `food-components.yml` are reported in the console and only the broken part is skipped, so a typo never leaves you without a working setup.
 
-![The reload confirmation panel](/images/eat-everything/chat/reload.png)
+<ScreenshotGallery label="The reload confirmation" images={shots("chat", ["reload"])} />
 
 
 <Aside type="caution" title="What reload does not do">
@@ -113,7 +116,7 @@ Prints the food data of the item in your hand:
 
 If the item is not food, you are told so. The copy line is the quickest way to move a prototype into a datapack, a shop plugin or a crate reward.
 
-![The info panel of an edited item](/images/eat-everything/chat/info.png)
+<ScreenshotGallery label="The info panel" images={shots("chat", ["info"])} />
 
 
 ---
@@ -136,7 +139,7 @@ Reads or sets the hunger points the item restores. Two points fill one drumstick
 * Setting a value also makes the item **always edible**, otherwise a player with a full hunger bar could not eat it.
 * Setting the value it already has answers with the `nutrition.same-value` panel.
 
-![Reading and changing the nutrition](/images/eat-everything/chat/nutrition.png)
+<ScreenshotGallery label="The nutrition command" images={shots("chat", ["nutrition"])} />
 
 
 ---
@@ -153,7 +156,7 @@ Reads or sets how much saturation the item restores. Saturation is the hidden bu
 * Setting a value also makes the item always edible.
 * A value the item already has is rejected.
 
-![Changing and reading the saturation](/images/eat-everything/chat/saturation.png)
+<ScreenshotGallery label="The saturation command" images={shots("chat", ["saturation"])} />
 
 
 ---
@@ -169,7 +172,7 @@ Reads or sets how many seconds eating takes. Vanilla food takes `1.6`.
 * Must be a number above zero, for example `0.5` for a quick snack or `5` for a feast.
 * If the item has no consumable data yet, a default one is attached first.
 
-![Reading and changing the eating time](/images/eat-everything/chat/eating-time.png)
+<ScreenshotGallery label="The eat seconds command" images={shots("chat", ["eating-time"])} />
 
 
 ---
@@ -184,7 +187,7 @@ Reads or sets whether the item can be eaten on a **full** hunger bar. Use `true`
 
 Only `true` and `false` are accepted; tab completion suggests both.
 
-![Reading and changing the edible state](/images/eat-everything/chat/edible.png)
+<ScreenshotGallery label="The edible command" images={shots("chat", ["edible"])} />
 
 
 ---
@@ -211,7 +214,7 @@ Effects added this way hide their particles and are not styled as beacon effects
 /ee effect add speed 600 0 0.5
 ```
 
-![The effect usage and confirmation panels](/images/eat-everything/chat/effect.png)
+<ScreenshotGallery label="The effect commands" images={shots("chat", ["effect"])} />
 
 
 ---
