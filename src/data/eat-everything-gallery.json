@@ -1,0 +1,94 @@
+{
+  "chat": [
+    {
+      "id": "edible",
+      "title": "Always Edible",
+      "src": "/images/eat-everything/chat/edible.png",
+      "alt": "The Always Edible chat panel in Minecraft",
+      "width": 600,
+      "height": 178
+    },
+    {
+      "id": "nutrition",
+      "title": "Nutrition",
+      "src": "/images/eat-everything/chat/nutrition.png",
+      "alt": "The Nutrition chat panel in Minecraft",
+      "width": 600,
+      "height": 264
+    },
+    {
+      "id": "saturation",
+      "title": "Saturation",
+      "src": "/images/eat-everything/chat/saturation.png",
+      "alt": "The Saturation chat panel in Minecraft",
+      "width": 600,
+      "height": 176
+    },
+    {
+      "id": "eating-time",
+      "title": "Eating Time",
+      "src": "/images/eat-everything/chat/eating-time.png",
+      "alt": "The Eating Time chat panel in Minecraft",
+      "width": 600,
+      "height": 176
+    },
+    {
+      "id": "effect",
+      "title": "Food Effects",
+      "src": "/images/eat-everything/chat/effect.png",
+      "alt": "The Food Effects chat panel in Minecraft",
+      "width": 640,
+      "height": 210
+    },
+    {
+      "id": "info",
+      "title": "Food Info",
+      "src": "/images/eat-everything/chat/info.png",
+      "alt": "The Food Info chat panel in Minecraft",
+      "width": 640,
+      "height": 264
+    },
+    {
+      "id": "help",
+      "title": "Help: Commands",
+      "src": "/images/eat-everything/chat/help.png",
+      "alt": "The Help: Commands chat panel in Minecraft",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "id": "help-2",
+      "title": "Help: Next Page",
+      "src": "/images/eat-everything/chat/help-2.png",
+      "alt": "The Help: Next Page chat panel in Minecraft",
+      "width": 640,
+      "height": 226
+    },
+    {
+      "id": "help-general",
+      "title": "Help: Food Options",
+      "src": "/images/eat-everything/chat/help-general.png",
+      "alt": "The Help: Food Options chat panel in Minecraft",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "id": "reload",
+      "title": "Reload",
+      "src": "/images/eat-everything/chat/reload.png",
+      "alt": "The Reload chat panel in Minecraft",
+      "width": 600,
+      "height": 86
+    }
+  ],
+  "storefront": [
+    {
+      "id": "anything",
+      "title": "Example Foods",
+      "src": "/images/eat-everything/storefront/anything.png",
+      "alt": "Three example foods: a golden stick, a healing soup and a warp apple",
+      "width": 1280,
+      "height": 620
+    }
+  ]
+}
