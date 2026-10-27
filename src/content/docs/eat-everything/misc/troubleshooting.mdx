@@ -1,0 +1,53 @@
+---
+title: Troubleshooting
+description: Every warning and error Eat Everything can print to the console, what it means and how to fix it, plus fixes for the most common problems.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+When something in your configuration is wrong, Eat Everything tells you in the console and skips **only the broken part**. The rest of your setup keeps working. Check the console after every `/ee reload`.
+
+---
+
+## Console Messages
+
+The left column shows how each message **starts**, so you can find it quickly. `…` stands for the rest of the line, which names the component and the value that caused it.
+
+### Errors
+
+An error means a whole entry or file could not be used.
+
+<div class="message-table">
+
+| Message | What it means and how to fix it |
+| --- | --- |
+| `We could not find the food section…` | The file has no top-level `food:` key, is empty or is not valid YAML. Restore the key, or copy the bundled file again. |
+| `No item material found with the name…` | The `item` is missing, misspelled or not an item. Use names such as `STICK` or `DIAMOND_SWORD`. The whole entry is skipped. |
+
+</div>
+
+### Warnings
+
+A warning means one option was ignored. The rest of the entry still works.
+
+<div class="message-table">
+
+| Message | What it means and how to fix it |
+| --- | --- |
+| `Unknown animation…` | The animation falls back to `EAT`. Use `NONE`, `EAT`, `DRINK`, `BLOCK`, `BOW`, `SPEAR`, `CROSSBOW`, `SPYGLASS`, `TOOT_HORN` or `BRUSH`. |
+| `Ignoring invalid sound key…` | The sound is not a valid key. Use lowercase letters, digits and `._-/`, for example `entity.player.burp`. |
+| `No potion effect type found…` | The effect name is wrong or missing. Use names such as `REGENERATION`, `SPEED` or `JUMP_BOOST`. Only that effect is skipped. |
+| `Ignoring invalid probability…` | `probability` must be above `0` and at most `1`. That effect is skipped. |
+| `Ignoring invalid converts-to material…` | The leftover material is unknown, so the food leaves nothing behind. |
+| `Ignoring malformed converts-to enchantment…` | Leftover enchantments need both parts, `NAME:LEVEL`, for example `UNBREAKING:2`. |
+| `Ignoring unknown converts-to enchantment…` | The leftover enchantment name does not exist. |
+| `Ignoring unknown item flag…` | Use a real item flag. See the [flag list](/eat-everything/configuration/food-components#converts-to). |
+| `Ignoring malformed enchantment condition…` | A condition enchantment must be `NAME` or `NAME:LEVEL`. |
+| `Ignoring enchantment condition…the level is not a number.` | The part after the colon must be a whole number. |
+
+</div>
+
+---
+
+## Common Problems
+
