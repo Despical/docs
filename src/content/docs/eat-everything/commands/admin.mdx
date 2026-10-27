@@ -115,3 +115,56 @@ These commands change the item in your **main hand** immediately. Without a valu
 
 If your hand is empty, you get the `not-holding-item` panel.
 
+### Nutrition
+
+```bash
+/ee nutrition [value]
+```
+
+Reads or sets the hunger points the item restores. Two points fill one drumstick, so `6` is three drumsticks.
+
+* Must be a whole number above zero.
+* Setting a value also makes the item **always edible**, otherwise a player with a full hunger bar could not eat it.
+* Setting the value it already has answers with the `nutrition.same-value` panel.
+
+---
+
+### Saturation
+
+```bash
+/ee saturation [value]
+```
+
+Reads or sets how much saturation the item restores. Saturation is the hidden buffer that delays hunger loss after eating.
+
+* Must be a number of zero or more (decimals allowed, for example `4.5`).
+* Setting a value also makes the item always edible.
+* A value the item already has is rejected.
+
+---
+
+### EatSeconds
+
+```bash
+/ee eatseconds [value]
+```
+
+Reads or sets how many seconds eating takes. Vanilla food takes `1.6`.
+
+* Must be a number above zero, for example `0.5` for a quick snack or `5` for a feast.
+* If the item has no consumable data yet, a default one is attached first.
+
+---
+
+### Edible
+
+```bash
+/ee edible [true|false]
+```
+
+Reads or sets whether the item can be eaten on a **full** hunger bar. Use `true` for potions, buffs and utility consumables, and `false` for ordinary food.
+
+Only `true` and `false` are accepted; tab completion suggests both.
+
+---
+
