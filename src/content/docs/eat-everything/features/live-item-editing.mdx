@@ -44,3 +44,33 @@ Commands show the current value when called without one, so `/ee nutrition` is a
 
 ---
 
+## Reading the Result With `/ee info`
+
+`/ee info` is the debugging tool for live editing. It prints the final state of the item, including effects from earlier edits or from another plugin, plus a clickable **copy** line. Clicking it puts a full `/give @s <item>[...]` command on your clipboard containing the item's exact component string. You can paste that into:
+
+* a datapack or function,
+* a shop or crate plugin that accepts give commands,
+* another server, to reproduce the item exactly.
+
+---
+
+## Best Use Cases
+
+* **Balancing**: tune nutrition, saturation and eating time by trial and error.
+* **One-off rewards**: hand-craft a single special item for an event.
+* **Testing**: build an item that behaves like a planned food before you write YAML.
+* **Staff tooling**: let trusted staff create items without editing files. See [Permissions](/eat-everything/commands/permissions).
+
+## When Live Editing Is Not Enough
+
+Live editing changes one stack. It cannot:
+
+* make a *type* of item edible for everyone,
+* set cooldowns, permissions, commands, leftovers or random teleport,
+* survive a player crafting or looting a fresh copy of the item.
+
+For those, define a component in [food-components.yml](/eat-everything/configuration/food-components). The two approaches combine well: prototype live, finish in YAML.
+
+<Aside type="note">
+    Items edited by command are not tied to a component. They are never touched by `/ee reload`, and the plugin's commands, cooldown and permission features only apply to items that match a configured component.
+</Aside>
