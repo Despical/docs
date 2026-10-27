@@ -1,28 +1,39 @@
 ---
 title: config.yml
-description: Detailed explanation of the global configuration file used by Eat Everything.
+description: The general Eat Everything settings - the update checker and anonymous bStats metrics.
 ---
 
-The `config.yml` file in **Eat Everything** is intentionally small. It controls startup behavior rather than gameplay logic, because the real item behavior lives in command-edited data components and `food-components.yml`.
+import { Aside } from '@astrojs/starlight/components';
 
----
-
-## Global Settings
-
-* **`update-checker-enabled`**: When set to `true`, the plugin checks Spigot for a newer public version during startup and logs a console message if an update is available.
-
----
-
-## Operational Notes
-
-* Disabling the update checker has no effect on item editing, custom components, or command registration.
-* This file is read during startup and after `/ee reload`.
-* If you prefer fully offline production environments, setting the value to `false` disables the external version check.
-
----
-
-## Example Configuration
+`config.yml` holds the plugin-wide switches. Everything about the food itself lives in [food-components.yml](/eat-everything/configuration/food-components), and all chat text in [messages.yml](/eat-everything/configuration/messages).
 
 ```yaml
+# Whether the plugin looks for a newer release at startup.
 update-checker-enabled: true
+
+# Whether the plugin sends anonymous usage statistics to bStats at startup.
+metrics: true
 ```
+
+---
+
+## Settings
+
+### `update-checker-enabled`
+
+| | |
+| --- | --- |
+| **Type** | `true` or `false` |
+| **Default** | `true` |
+| **Applies** | At startup |
+
+When enabled, the plugin asks a public mirror of SpigotMC for the newest published version once at startup. If it is newer than the one you run, a single line is printed to the console:
+
+```text
+[EatEverything] Found a new version available: v1.8.0
+```
+
+The request runs in the background, so it never delays startup. Nothing is downloaded or installed, and an unreachable mirror is ignored silently. Disable it on servers that must not make outgoing connections.
+
+---
+
