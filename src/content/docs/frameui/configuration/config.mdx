@@ -33,14 +33,14 @@ The default maintained connection provides Studio access and generated resource-
 Set a supported language code, then run `/frameui reload`:
 
 ```yaml
-language: tr
+language: en
 ```
 
 This selects plugin messages and the initial language of personal Studio links. Studio's header selector can change the browser language independently. See [Messages and Languages](/frameui/configuration/messages/).
 
 ## Automatic Playback
 
-Use per-effect **Events → When to play** selections in Studio, or edit `play-on` in the effect file. See [Automatic Playback](/frameui/automatic-playback/).
+Use per-effect **Events → Player events** selections in Studio, or edit `play-on` in the effect file. See [Automatic Playback](/frameui/automatic-playback/).
 
 ## Startup and Welcome Messages
 
@@ -72,4 +72,4 @@ Run `/frameui reload` for languages, filters, messages, effect rules and addon s
 
 ## bStats Metrics
 
-FrameUI reports aggregate usage statistics through [bStats](https://bstats.org/plugin/bukkit/FrameUI%20by%20Despical/34803). To disable reporting, set `enabled: false` in `plugins/bStats/config.yml` and restart the server. This shared bStats setting is separate from FrameUI's `config.yml`. FrameUI adds no custom charts or player identifiers.
+FrameUI reports aggregate usage statistics through [bStats](https://bstats.org/plugin/bukkit/FrameUI%20by%20Despical/34988). To disable reporting, set `enabled: false` in `plugins/bStats/config.yml` and restart the server. This shared bStats setting is separate from FrameUI's `config.yml`. FrameUI adds no custom charts or player identifiers.
