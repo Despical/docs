@@ -5,7 +5,7 @@ description: Bind loading effects to joins, teleports, world changes and native 
 
 ## Bind Events in Studio
 
-Open Studio with `/frameui editor`, choose an effect and open **Events**. Under **When to play**, select any combination of **Join**, **Teleport** and **World change**. Use **Plugin events** for an optional integration. Import or save the design to apply the selection.
+Open Studio with `/frameui editor`, choose an effect and open **Events**. Under **Player events**, tick any combination of events such as **Join**, **Teleport**, **World change**, **Respawn**, **Death** or **Fall asleep**. Each ticked event shows its own options, including the worlds it applies to. Use **Plugin events** for an optional integration. Import or save the design to apply the selection.
 
 Leaving every event unchecked makes a design manual-only. Editing a draft changes its preview immediately; it does not change the server until imported or saved.
 
@@ -19,7 +19,73 @@ play-on: ['join', 'world-change']
 
 Use a filename and matching ID such as `lobby-arrival.yml` / `id: 'lobby-arrival'`. Keep the effect's `template` set to a valid [animation ID](/frameui/effects/). Run `/frameui reload` after manual changes.
 
-The `play-on` list controls automatic playback for each effect. `command` cannot be an automatic binding.
+The `play-on` list controls automatic playback for each effect. Names listed there are always accepted, even when the global `triggers` filter does not include them. `command` cannot be an automatic binding.
+
+## Player Events
+
+These events are built into FrameUI and need no other plugin. Add the ID to `play-on`, or tick the matching card under **Events → Player events** in Studio.
+
+| `play-on` ID | Plays when | Extra options under `filters.events.<id>` |
+| --- | --- | --- |
+| `join` | A player joins the server. | Use `filters.worlds` |
+| `first-join` | A player joins for the very first time. | `worlds` |
+| `teleport` | A player teleports inside a world. | Use `filters.worlds` and `filters.distance` |
+| `world-change` | A player changes world. | Use `filters.source-worlds` and `filters.worlds` |
+| `respawn` | A player respawns after dying or leaving the End. | `reasons`, `spawn-points` |
+| `death` | A player dies. The effect plays over the death screen. | `causes`, `sources` |
+| `bed-enter` | A player lies down in a bed. | `worlds` |
+| `bed-leave` | A player gets out of bed. | `wake` |
+| `level-up` | A player reaches a higher experience level. | `min-level`, `max-level`, `every` |
+| `advancement` | A player completes an advancement that is shown in the advancement screen. | `kinds`, `include`, `exclude` |
+| `vehicle-enter` | A player boards a vehicle or rideable mob. | `vehicles`, `types`, `exclude-types`, `seats` |
+| `vehicle-exit` | A player gets off a vehicle or rideable mob. | `vehicles`, `types`, `exclude-types`, `seats` |
+
+A first join also counts as a join. When both are assigned, FrameUI chooses one effect across the two events instead of playing two screens.
+
+Every event under `filters.events` accepts `worlds.include` and `worlds.exclude` for the world the player is in. Empty lists and `0` mean no restriction, and a value you do not set is treated that way.
+
+```yaml
+play-on: ['bed-enter', 'bed-leave', 'death']
+filters:
+  events:
+    bed-leave:
+      wake: ['morning']
+    death:
+      worlds:
+        include: ['survival']
+      causes: ['lava', 'fall']
+      sources: ['environment']
+```
+
+This effect plays when a player lies down, when a player wakes after sleeping through the night, and when a player dies in `survival` from lava or a fall.
+
+### Option Reference
+
+| Option | Accepts |
+| --- | --- |
+| `reasons` | `death`, `end-portal`, `plugin` |
+| `spawn-points` | `bed`, `anchor`, `world` |
+| `causes` | Bukkit damage causes in lowercase with hyphens, such as `fall`, `lava`, `fire-tick`, `entity-attack`, `projectile`, `void` or `kill` |
+| `sources` | `player`, `mob`, `environment` |
+| `wake` | `morning` for waking at dawn, `interrupted` for leaving the bed early |
+| `min-level`, `max-level` | Level bounds. `max-level: 0` means no maximum. |
+| `every` | Plays only on every Nth level. `0` plays on every level. |
+| `kinds` | `task`, `goal`, `challenge` |
+| `include`, `exclude` (advancement) | Full advancement IDs such as `minecraft:story/*`. `*` and `?` are wildcards. |
+| `vehicles` | `boat` (boats and rafts), `minecart`, `horse` (horses, donkeys, mules), `camel`, `pig`, `strider`, `happy-ghast` |
+| `types`, `exclude-types` | Extra Minecraft entity IDs such as `pig` or `*_boat`. `*` and `?` are wildcards. |
+| `seats` | `driver` for the first rider, `passenger` for everyone else |
+
+### Caption Placeholders
+
+Captions can use `{player}`, `{world}`, `{effect}` and `{event}`. Some events add more: `{level}` for `level-up`, `{advancement}` for `advancement`, and `{vehicle}` for the vehicle events.
+
+### Notes
+
+- Death effects keep the HUD visible and stay on the death screen. Respawn has its own screen, so a death and respawn pair can each have an effect.
+- Respawning and some vehicle changes wait a few ticks so the client has finished moving the player before the screen opens.
+- A bed that the game refuses, for example during the day or with monsters nearby, does not count as lying down.
+- Recipes and advancement tab roots never trigger `advancement`.
 
 ## Selection Rules
 
