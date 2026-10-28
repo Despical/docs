@@ -10,6 +10,7 @@ description: FrameUI command syntax, independent permissions, aliases, console s
 | `/frameui` or `/frameui help` | `frameui.command.help` | Everyone | Show the help panel. |
 | `/frameui effects [category] [page]` | `frameui.command.effects` | Operator | Browse the catalog. |
 | `/frameui preview <effect>` | `frameui.command.preview` | Operator | Preview a named effect or `random`. |
+| `/frameui play <player> <effect>` | `frameui.command.play` | Operator | Play a named effect or `random` for an online player. |
 | `/frameui stop` | `frameui.command.stop` | Everyone | Close your active or pending effect. |
 | `/frameui editor` | `frameui.command.editor` | Operator | Open your personal connected Studio session. |
 | `/frameui status` | `frameui.command.status` | Operator | Show active screens, pending resource packs and loaded effect count. |
@@ -20,6 +21,17 @@ description: FrameUI command syntax, independent permissions, aliases, console s
 | `/frameui welcome hide` | `frameui.command.welcome` | Everyone | Disable your automatic welcome panel and show a confirmation. |
 
 `/frameui list` aliases `effects`; `/frameui studio` aliases `editor`. Aliases use the same permission as their primary command. The preview command requires an effect argument; use `/frameui preview random` for an eligible random candidate.
+
+## Play for Another Player
+
+`/frameui play <player> <effect>` opens an effect for an online player, from the console or in game. Use `random` as the effect to pick an eligible candidate. The target's own filters and cooldowns apply, exactly as for `preview`. The player is asked to accept the resource pack first if they do not have it yet.
+
+```text
+/frameui play Steve aurora
+/frameui play Steve random
+```
+
+Use it from command blocks, quests or other plugins that run console commands. The sender needs `frameui.command.play`; the target does not need any permission to receive the effect.
 
 ## Catalog Categories
 
