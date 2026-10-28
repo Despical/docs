@@ -32,7 +32,9 @@ Use `/frameui effects all 1` to find IDs. `/frameui preview random` can only sel
 
 ## Automatic Effects Never Play
 
-Open **Events → When to play** or inspect `play-on` in the saved server file. Default automatic assignments are empty. A browser draft must be imported or saved before it affects the server.
+Open **Events → Player events** or inspect `play-on` in the saved server file. Default automatic assignments are empty. A browser draft must be imported or saved before it affects the server.
+
+For player events such as `respawn`, `death` or `vehicle-enter`, also check the options under `filters.events.<event>`. A `causes`, `vehicles` or `wake` list that does not match the situation silently skips the effect. The resource pack must be accepted before any automatic effect can appear.
 
 For plugin events, check the integration state, native event ID, target name, world filters and actual successful local teleport. A pending TPA is not a teleport.
 
