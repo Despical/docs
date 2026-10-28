@@ -15,15 +15,35 @@ Global `global-filters` and each effect's `filters` must both pass. Commands obe
 | `source-worlds.include`, `source-worlds.exclude` | World the player leaves; current world for join/manual previews. |
 | `game-modes.include`, `game-modes.exclude` | Survival, creative, adventure or spectator. |
 | `teleport-causes` | Allowed Bukkit causes, such as `command`, `plugin` or `nether-portal`; travel only. |
-| `triggers` | Base `join`, `teleport`, `world-change`, `command` eligibility. Empty disables these base triggers unless extended by an explicit binding. |
+| `triggers` | Base `join`, `teleport`, `world-change`, `command` eligibility. Empty disables these base triggers unless extended by an explicit `play-on` binding. |
 | `distance.min`, `distance.max` | Travel distance; `max: -1` is unlimited. |
 | `height.min`, `height.max` | Inclusive destination Y-coordinate bounds. |
 | `time.min`, `time.max` | Inclusive destination world time, `0`–`23999`. |
 | `weather` | `clear`, `rain`, `thunder`; these are separate conditions. |
 | `cooldown-ticks` | Per-player cooldown for this effect; `0` disables it. |
 | `addon-targets.include`, `addon-targets.exclude` | Per-effect native plugin destination names. |
+| `events.<event>` | Per-event options and worlds for [player events](/frameui/automatic-playback/#player-events), such as `respawn`, `death` or `level-up`. |
 
 Empty include lists generally allow every value. Exclusions always win. `teleport-causes: []` and `weather: []` allow all causes and conditions. The base `triggers` list is the exception: an empty list does not mean all triggers.
+
+## Player Event Filters
+
+`filters.events` holds one section per player event. Each section can limit the worlds the player is in and, depending on the event, its own conditions.
+
+```yaml
+filters:
+  events:
+    level-up:
+      min-level: 10
+      every: 5
+    vehicle-enter:
+      vehicles: ['boat']
+      seats: ['driver']
+```
+
+This plays on levels 10, 15, 20 and so on, and when a player takes the driver seat of a boat or raft. Sections for events that are not in `play-on` are ignored. See the [option reference](/frameui/automatic-playback/#option-reference) for every key.
+
+The global `global-filters` section does not have an `events` block; set player event options on each effect.
 
 ## World and Destination Matching
 
