@@ -240,6 +240,31 @@ export default defineConfig({
                 },
                 {
                     icon: "github",
+                    label: "pixel-painter:GitHub",
+                    href: "https://github.com/Despical/PixelPainter",
+                },
+                {
+                    icon: "seti:java",
+                    label: "pixel-painter:Javadoc",
+                    href: "https://javadoc.despical.dev/pixel-painter/",
+                },
+                {
+                    icon: "external",
+                    label: "pixel-painter:Hub",
+                    href: "https://hub.despical.dev/plugins/pixel-painter",
+                },
+                {
+                    icon: "external",
+                    label: "pixel-painter:SpigotMC",
+                    href: "https://www.spigotmc.org/resources/pixel-painter-1-8-1-21-11.104770/",
+                },
+                {
+                    icon: "external",
+                    label: "pixel-painter:BuiltByBit",
+                    href: "https://builtbybit.com/resources/pixel-painter.50284/",
+                },
+                {
+                    icon: "github",
                     label: "kotl:GitHub",
                     href: "https://github.com/Despical/KOTL",
                 },
