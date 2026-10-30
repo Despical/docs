@@ -1,26 +1,26 @@
 ---
 title: "Getting Started"
-description: "Install Pixel Painter 2.0, add a PNG or JPEG, estimate block counts and create or undo your first painting."
+description: "Install Pixel Painter 2.0, add a PNG, JPEG or WebP image, estimate block counts and create or undo your first painting."
 ---
 
 ## Requirements
 
 | Component | Requirement |
 | --- | --- |
-| Server | Paper for Minecraft 1.21.11 or later |
+| Server | Paper, a Paper-based fork or Folia, Minecraft 1.21.11 through 26.3 |
 | Java | 25 or later |
 | Plugin guide | Pixel Painter 2.0.0 |
-| Source files | PNG or JPEG (`.png`, `.jpg`, `.jpeg`) |
+| Source files | PNG, JPEG or WebP (`.png`, `.jpg`, `.jpeg`, `.webp`) |
 | Command access | Server operator or explicit `pp.*` child permissions |
 
-Pixel Painter runs world operations on the traditional Paper server thread. Folia and Spigot are not supported. No resource pack or external editing plugin is required.
+Spigot and CraftBukkit are not supported. No resource pack or external editing plugin is required. See [Compatibility](/pixel-painter/compatibility/) for the full matrix.
 
 ---
 
 ## Install
 
-1. Obtain a Pixel Painter JAR matching this guide. When building the current source, use `gradlew.bat clean build` on Windows or `./gradlew clean build` elsewhere with Java 25.
-2. Stop the server and copy `pixel-painter-2.0.0.jar` into `plugins/`. Use the shaded plugin JAR, rather than the `-plain`, `-sources` or `-javadoc` artifacts.
+1. Download the Pixel Painter JAR matching this guide, or build the current source with `./gradlew clean build` on Linux and macOS or `gradlew.bat clean build` on Windows using Java 25.
+2. Stop the server and copy `pixel-painter-2.0.0.jar` into `plugins/`. The build produces only this shaded JAR.
 3. Start the server. Pixel Painter creates missing resources without replacing existing configuration.
 4. Check the console for `PixelPainter ready`, then run `/pp help` in game as an operator.
 
@@ -41,7 +41,7 @@ plugins/PixelPainter/
 
 ## Add Your First Image
 
-Copy a readable PNG or JPEG such as `portrait.png` into `plugins/PixelPainter/images/`. Lowercase names with letters, digits, hyphens and underscores are convenient. Spaces and nested directories are not accepted.
+Copy a readable PNG, JPEG or WebP such as `portrait.png` into `plugins/PixelPainter/images/`. Lowercase names with letters, digits, hyphens and underscores are convenient. Spaces and nested directories are not accepted.
 
 ```text
 /pp list
@@ -51,7 +51,7 @@ Copy a readable PNG or JPEG such as `portrait.png` into `plugins/PixelPainter/im
 
 The estimate selects the complete block palette, enables dithering and preserves low-alpha pixels. Height is **64 actual block rows**. Width follows the source aspect ratio; for a 2:1 image, the result is 128 blocks wide and 64 blocks high.
 
-`preview` displays counts in chat. It does not create an in-world preview or reserve terrain.
+`preview` displays counts in chat. It does not create an in-world preview or reserve terrain. If preparing a large image takes more than three seconds, a short "Preparing" message appears in your action bar.
 
 ---
 
@@ -63,7 +63,7 @@ Choose a clear region and stand at the intended **bottom-left block**. For a nor
 /pp create portrait.png north 64 true all true
 ```
 
-The origin is captured when you send the command. Moving afterward does not move the painting, but changing worlds before preparation finishes rejects it. The requested area must fit the world border, build height and configured chunk budget.
+The origin is captured when you send the command. Moving afterward does not move the painting, but changing worlds before preparation finishes rejects it. The requested area must fit the build height and configured chunk budget. If it only crosses the world border, the error panel offers a **[Paint anyway]** button that confirms the same request for one minute.
 
 A private progress bar tracks world work. The completion message includes a recovery ID. Painting refuses to overwrite a block entity such as a chest or sign, and it rejects regions overlapping an existing recovery journal.
 

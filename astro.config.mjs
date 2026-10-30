@@ -1452,6 +1452,7 @@ export default defineConfig({
                                 label: "Basics",
                                 items: [
                                     {label: "Getting Started", link: "/pixel-painter/getting-started/"},
+                                    {label: "Compatibility", link: "/pixel-painter/compatibility/"},
                                     {label: "Core Concepts", link: "/pixel-painter/concepts/"},
                                     {label: "Creating Paintings", link: "/pixel-painter/creating-paintings/"},
                                     {label: "Image Files and Downloads", link: "/pixel-painter/image-files/"},
@@ -1480,6 +1481,14 @@ export default defineConfig({
                                     {label: "Developer Reference", link: "/pixel-painter/developers/"},
                                     {label: "Troubleshooting", link: "/pixel-painter/troubleshooting/"},
                                     {label: "FAQ", link: "/pixel-painter/misc/faq/"},
+                                ],
+                            },
+                            {
+                                label: "Resources",
+                                items: [
+                                    {label: "Javadocs", link: "https://javadoc.despical.dev/pixel-painter/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                    {label: "Source Code", link: "https://github.com/Despical/PixelPainter", attrs: {target: "_blank", rel: "noopener noreferrer"}},
+                                    {label: "Issue Tracker", link: "https://github.com/Despical/PixelPainter/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                 ],
                             },
                         ],

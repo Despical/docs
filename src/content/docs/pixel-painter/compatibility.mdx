@@ -1,0 +1,50 @@
+---
+title: "Compatibility"
+description: "Supported Minecraft versions, Paper forks, Folia, the Java 25 requirement and what is not supported by Pixel Painter 2.0."
+---
+
+## Supported Servers
+
+Pixel Painter 2.0 supports **Paper and Paper-based server forks, versions 1.21.11 through 26.3 inclusive**, and **Folia** on the same range. The server must run **Java 25 or newer**, including when it runs Minecraft 1.21.11. Minecraft Java Edition clients that can join the server work as usual; the plugin needs no client mod or resource pack.
+
+| Server software | Minecraft versions | Status |
+| --- | --- | --- |
+| Paper | 1.21.11 through 26.3 | Supported |
+| Paper-based forks (for example Purpur) | 1.21.11 through 26.3 | Supported while they keep Paper's plugin API |
+| Folia | 1.21.11 through 26.3 | Supported, see [Folia](#folia) |
+| Spigot, CraftBukkit | Any | Not supported |
+| Paper 1.21.10 and earlier | 1.21.10 and earlier | Not supported |
+| Minecraft 1.8 through 1.12 | 1.8 through 1.12 | Not supported |
+
+The plugin compiles against the Paper 1.21.11 API and declares that minimum `api-version`. It relies on Paper's Adventure components, region schedulers and modern block data, which older servers and Spigot do not provide. Pixel Painter 1.x supported legacy versions; version 2.0 intentionally does not.
+
+Materials that do not exist on the running server version are skipped when the palette loads, so the same `palette.yml` works across the supported range.
+
+---
+
+## Folia
+
+Pixel Painter declares `folia-supported: true` and schedules all work through Paper's global, region and entity schedulers, which also exist on Paper where they run on the single server thread.
+
+- Block reads and writes always run on the thread that owns the chunk being edited. A painting is split into chunk-sized batches, and one batch runs at a time.
+- Chunk loading is asynchronous and uses plugin chunk tickets, so a large painting does not block a region.
+- Messages and boss bars reach the player through the player's own scheduler.
+- Image decoding, downloads and journal writes stay on the plugin's two background workers.
+
+Only one world job runs at a time on the whole server, on Folia as well. A painting that spans several regions is still painted batch by batch, never from several regions at once.
+
+---
+
+## Java
+
+Pixel Painter requires Java 25 or newer, matching the Paper builds it supports. Confirm that the server process, not only your IDE, uses Java 25.
+
+---
+
+## Validation
+
+- Compiled and unit-tested against the minimum Paper API on Java 25.
+- Started and smoke-tested on Paper 1.21.11 and 26.3.
+- Started on Folia 26.3 with the shaded plugin JAR: commands registered, configuration loaded and reload worked.
+
+The upper bound of the range follows the newest build the plugin was exercised on. A newer Minecraft release may work, but is not covered by this guide until it is validated.

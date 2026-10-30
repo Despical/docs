@@ -1,6 +1,6 @@
 ---
 title: "Pixel Painter Documentation"
-description: "Turn PNG and JPEG images into Minecraft block art with perceptual color matching, 335 block colors, dithering, bounded painting and persistent undo."
+description: "Turn PNG, JPEG and WebP images into Minecraft block art with perceptual color matching, 305 block colors, dithering, bounded painting and persistent undo on Paper, its forks and Folia."
 tableOfContents: false
 ---
 
@@ -10,7 +10,9 @@ import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 
 **Pixel Painter** turns an image into a wall or floor made from Minecraft blocks. Choose its height and direction, compare material counts, then paint with perceptual color matching and optional dithering. Transparent pixels can preserve the terrain behind the image. Persistent undo journals keep original block properties available after cancellation or a server restart.
 
-The plugin requires **Paper 1.21.11 or later** and **Java 25**. All command permissions default to operators. This guide describes **Pixel Painter 2.0.0**; older builds use different commands, sizing and undo behavior. Spigot and Folia are not supported.
+Pixel Painter supports **Paper, Paper-based forks and Folia for Minecraft 1.21.11 through 26.3** and requires **Java 25**. This guide describes **Pixel Painter 2.0.0**; older builds use different commands, sizing and undo behavior. Spigot and CraftBukkit are not supported. See [Compatibility](/pixel-painter/compatibility/) for the exact matrix.
+
+All command permissions default to operators.
 
 ---
 
@@ -18,18 +20,19 @@ The plugin requires **Paper 1.21.11 or later** and **Java 25**. All command perm
 
 <CardGrid>
     <LinkCard title="Getting Started" description="Install the plugin, add an image and create your first painting." href="/pixel-painter/getting-started/" />
+    <LinkCard title="Compatibility" description="Supported Minecraft versions, Paper forks, Folia and the Java requirement." href="/pixel-painter/compatibility/" />
     <LinkCard title="Core Concepts" description="Understand source pixels, block dimensions, palettes and recovery journals." href="/pixel-painter/concepts/" />
     <LinkCard title="Creating Paintings" description="Choose a wall or floor direction and preserve transparent areas." href="/pixel-painter/creating-paintings/" />
-    <LinkCard title="Image Files and Downloads" description="Manage PNG/JPEG sources and configure trusted download hosts." href="/pixel-painter/image-files/" />
+    <LinkCard title="Image Files and Downloads" description="Manage PNG, JPEG and WebP sources and configure trusted download hosts." href="/pixel-painter/image-files/" />
 </CardGrid>
 
 ---
 
 ## Colors and Terrain
 
-The bundled palette contains **335 different materials**: concrete, wool, terracotta, logs, wood, ores, foliage, glass, stable ice, mushrooms and newer copper, cherry, bamboo, pale oak, resin and tuff families. Oklab matching chooses representative colors; Floyd-Steinberg dithering adds detail to gradients when enabled.
+The bundled palette contains **305 opaque block materials**: concrete, wool, terracotta, logs, wood, ores, foliage, stable ice, mushrooms and newer waxed copper, cherry, bamboo, pale oak, resin and tuff families. Glass and blocks that change on their own after placement, such as unwaxed copper, mycelium and nylium, are never used. Oklab matching chooses representative colors; Floyd-Steinberg dithering adds detail to gradients when enabled.
 
-Painting runs one world job at a time with a configurable tick budget. The service validates build height, world borders, chunk count, journal capacity and region overlap, then saves its undo journal before placing any blocks.
+Painting runs one world job at a time with a configurable block budget. The service validates build height, world borders, chunk count, journal capacity and region overlap, then saves its undo journal before placing any blocks. A painting that only crosses the world border can still be confirmed with a **[Paint anyway]** button.
 
 <CardGrid>
     <LinkCard title="Palettes and Dithering" description="Choose block families, extend colors and understand texture differences." href="/pixel-painter/palettes-and-dithering/" />
@@ -46,9 +49,9 @@ Painting runs one world job at a time with a configurable tick budget. The servi
     <LinkCard title="config.yml" description="Image limits, processing budget, undo capacity, filters and trusted hosts." href="/pixel-painter/configuration/config/" />
     <LinkCard title="messages.yml" description="MiniMessage feedback, chat panels, hover descriptions and progress labels." href="/pixel-painter/configuration/messages/" />
     <LinkCard title="palette.yml" description="Material-to-color mapping, validation and supported block families." href="/pixel-painter/configuration/palette/" />
-    <LinkCard title="Developer Reference" description="Explore implementation responsibilities, threading contracts and local Javadocs." href="/pixel-painter/developers/" />
+    <LinkCard title="Developer Reference" description="Package responsibilities, threading contracts and the published Javadocs." href="/pixel-painter/developers/" />
     <LinkCard title="Troubleshooting" description="Diagnose rejected dimensions, unavailable files, conflicts and failed reloads." href="/pixel-painter/troubleshooting/" />
-    <LinkCard title="FAQ" description="Version compatibility, source deletion, material costs and recovery questions." href="/pixel-painter/misc/faq/" />
+    <LinkCard title="FAQ" description="Version compatibility, Folia, source deletion, material costs and recovery questions." href="/pixel-painter/misc/faq/" />
 </CardGrid>
 
-Pixel Painter is licensed under GPL-3.0-or-later. See the [developer reference](/pixel-painter/developers/) for implementation details and local Javadoc generation.
+Pixel Painter is licensed under GPL-3.0-or-later. The source is on [GitHub](https://github.com/Despical/PixelPainter) and the API reference is published as [Javadocs](https://javadoc.despical.dev/pixel-painter/).
