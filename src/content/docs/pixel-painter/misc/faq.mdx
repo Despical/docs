@@ -15,6 +15,18 @@ It is a material estimate in chat. It shows dimensions, transparency and selecte
 
 No. Pixel Painter is an administrative world-editing tool. The estimate counts selected materials but does not take blocks from inventories.
 
+## Which Servers and Versions Are Supported?
+
+Paper, Paper-based forks and Folia, Minecraft 1.21.11 through 26.3, on Java 25. Spigot, CraftBukkit and Paper 1.21.10 or earlier are not supported. See [Compatibility](/pixel-painter/compatibility/).
+
+## Does It Work on Folia?
+
+Yes. Pixel Painter declares Folia support and runs block work on the thread that owns each chunk. Only one painting job runs on the whole server at a time. See the [Folia notes](/pixel-painter/compatibility/#folia).
+
+## Can I Use WebP Images?
+
+Yes. PNG, JPEG and WebP are supported. Animated files use their first frame only.
+
 ## Does It Respect WorldGuard or Other Region Plugins?
 
 There is no dedicated region-protection integration. World borders, build height, journal ownership and overlap are checked internally. Give mutation permissions only to trusted editors and select an appropriate area.
@@ -33,19 +45,19 @@ Version 1 stored undo in memory, so there are no persistent records to migrate. 
 
 ## What Happens If I Delete a Source Image?
 
-The file disappears from the source browser. Already placed blocks and saved journals remain. Undo does not need the original PNG/JPEG.
+The file disappears from the source browser. Already placed blocks and saved journals remain. Undo does not need the original image file.
 
 ## Can I Paint over an Older Painting?
 
 The service rejects any overlap with a retained journal's inclusive region. Undo that painting successfully first to release the area. Transparent pixels do not carve holes in the reserved bounding box.
 
-## Are All 335 Materials Available on Every Server?
+## Are All 305 Materials Available on Every Server?
 
-The bundled palette has 335 material keys. Entries absent from the server registry are skipped. Global include/exclude filters and named command families can reduce the active selection further.
+The bundled palette has 305 material keys. Entries absent from the server registry are skipped. Global include/exclude filters and named command families can reduce the active selection further.
 
 ## Why Do Some Blocks Look Different from the Source Color?
 
-Matching uses representative texture averages. Different block faces, biome tint, lighting, translucency and copper weathering affect the world appearance. Restrict the palette to concrete or exclude materials that do not fit the artwork.
+Matching uses representative texture averages. Different block faces, biome tint and lighting affect the world appearance. Restrict the palette to concrete or exclude materials that do not fit the artwork.
 
 ## Does Undo Restore Chests and Their Contents?
 

@@ -5,7 +5,7 @@ description: "Understand Pixel Painter source pixels, exact block dimensions, se
 
 ## Source Image and Painting
 
-A **source image** is a PNG or JPEG file in `plugins/PixelPainter/images/`. A **painting** is the block output selected from that file. Deleting a source file does not delete an existing painting or its recovery journal.
+A **source image** is a PNG, JPEG or WebP file in `plugins/PixelPainter/images/`. A **painting** is the block output selected from that file. Deleting a source file does not delete an existing painting or its recovery journal.
 
 Source dimensions are pixels; output dimensions are Minecraft blocks. The height argument controls exact output rows. Width is rounded to the nearest aspect-preserving integer, with a minimum of one block.
 
@@ -61,7 +61,7 @@ A **palette entry** pairs a Bukkit material with a representative sRGB color. Ok
 
 ## Job and Journal
 
-A **job** is the active server-thread operation. Only one world job runs at a time, including periods when it waits for journal I/O. Image requests use separate bounded workers.
+A **job** is the active world operation. Only one world job runs at a time, including periods when it waits for journal I/O. Block access is split into chunk-sized batches that run on the thread owning each chunk, so jobs behave the same on Paper and Folia. Image requests use separate bounded workers.
 
 A **journal** is a durable recovery record created before painting starts. It stores ownership, world, bounds and original/target block data. It remains after successful painting, cancellation or restart until conflict-free restoration removes it.
 

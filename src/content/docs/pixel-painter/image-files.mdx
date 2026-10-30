@@ -1,11 +1,11 @@
 ---
 title: "Image Files and Downloads"
-description: "Manage PNG/JPEG files, safe flat filenames, trusted HTTPS sources, byte/pixel limits and source deletion."
+description: "Manage PNG, JPEG and WebP files, safe flat filenames, trusted HTTPS sources, byte/pixel limits and source deletion."
 ---
 
 ## Local Sources
 
-Place PNG or JPEG files directly inside `plugins/PixelPainter/images/`. Files may use `.png`, `.jpg` or `.jpeg` extensions. GIF, WebP and other formats are not supported.
+Place PNG, JPEG or WebP files directly inside `plugins/PixelPainter/images/`. Files may use `.png`, `.jpg`, `.jpeg` or `.webp` extensions. Animated formats decode only their first frame; GIF and other formats are not supported.
 
 The base name starts with a letter or digit and contains at most 64 letters, digits, underscores or hyphens. An allowed extension is optional in a command. Spaces, path separators, nested folders and names such as `../image.png` are rejected.
 
@@ -15,7 +15,7 @@ The base name starts with a letter or digit and contains at most 64 letters, dig
 /pp specs poster
 ```
 
-Lookup ignores case. If both `poster.png` and `poster.jpg` exist, use the full name to resolve the ambiguity. Listing ignores symbolic links and files outside the supported name/extension policy.
+Lookup ignores case. If both `poster.png` and `poster.webp` exist, use the full name to resolve the ambiguity. Listing ignores symbolic links and files outside the supported name/extension policy.
 
 ---
 
@@ -25,7 +25,7 @@ Lookup ignores case. If both `poster.png` and `poster.jpg` exist, use the full n
 /pp download poster https://i.imgur.com/example.png
 ```
 
-The URL above is a syntax example: use a real PNG or JPEG URL. An omitted destination extension becomes `.png`. The file is validated by its decoded format, not merely its name.
+The URL above is a syntax example: use a real PNG, JPEG or WebP URL. An omitted destination extension becomes `.png`. The file is validated by its decoded format, not merely its name.
 
 Configure exact trusted hosts in `config.yml`:
 

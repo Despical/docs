@@ -5,7 +5,7 @@ description: "Explore Pixel Painter implementation Javadocs, package responsibil
 
 ## Implementation Documentation
 
-If you have the Gradle source project, generate class, method and package Javadocs locally using the [build instructions below](#build-locally).
+The generated API reference is published at [javadoc.despical.dev/pixel-painter](https://javadoc.despical.dev/pixel-painter/). It is rebuilt from the `main` branch. You can also generate class, method and package Javadocs locally using the [build instructions below](#build-locally).
 
 These are implementation references. Pixel Painter does not currently publish a separate stable API artifact or register a dedicated Bukkit `ServicesManager` API. Do not assume that implementation classes are a versioned extension contract.
 
@@ -20,8 +20,10 @@ These are implementation references. Pixel Painter does not currently publish a 
 | `config` | Bounded settings, literal message templates and configuration publication |
 | `core` | World-independent positions, inclusive bounds, orientation and Oklab mathematics |
 | `image` | Validated sources, palettes, resizing, diffusion and prepared plans |
-| `service` | Bounded workers, server-thread jobs, chunk ownership and restoration |
+| `service` | Bounded workers, region-aware scheduling, jobs, chunk ownership and restoration |
 | `storage` | Copied journal records, binary persistence and startup recovery |
+| `listener` | Quit and world-unload listeners that release painting resources |
+| `listener` | Quit and world-unload listeners that release painting resources |
 
 `PixelPainter` initializes configuration and services before registering commands. `ConfigurationManager` validates all resource candidates before changing active references. `TaskExecutor` owns two workers and a queue of eight waiting tasks. `PaintService` owns one world-operation slot, including waiting journal I/O.
 
@@ -29,11 +31,11 @@ These are implementation references. Pixel Painter does not currently publish a 
 
 ## Thread Boundaries
 
-Live player/world access, palette resolution, job submission and history queries belong to the server thread. Image decoding, resizing, color matching, downloads and journal I/O run on bounded workers.
+`Scheduling` wraps Paper's global, region and entity schedulers. On Paper they all run on the server thread; on Folia each runs on the thread that owns the target. Block access happens only inside region tasks, one chunk batch at a time, and `PaintService` merges each batch result under its lock. Player messages and boss bars are sent through the player's scheduler. Image decoding, resizing, color matching, downloads and journal I/O run on bounded workers.
 
 A prepared `PaintPlan` copies its pixel array and material counts. `Position`, `Bounds` and journal records identify geometry without retaining live worlds. Palette entries cache Oklab coordinates; their coordinate arrays must be treated as read-only when shared with workers.
 
-Worker callbacks return to the server thread while enabled. Queue rejection reaches the failure callback immediately. Shutdown may suppress a callback even when a journal write succeeded, so recovery must rely on durable records rather than callback delivery alone.
+Worker callbacks return to the global region thread while enabled. Queue rejection reaches the failure callback immediately. Shutdown may suppress a callback even when a journal write succeeded, so recovery must rely on durable records rather than callback delivery alone.
 
 ---
 
@@ -58,10 +60,8 @@ Windows uses `gradlew.bat` with the same tasks. The build produces:
 
 | Output | Purpose |
 | --- | --- |
-| `build/libs/pixel-painter-2.0.0.jar` | Shaded server plugin |
-| `build/libs/pixel-painter-2.0.0-plain.jar` | Unshaded implementation artifact |
-| `build/libs/pixel-painter-2.0.0-sources.jar` | Source archive |
-| `build/libs/pixel-painter-2.0.0-javadoc.jar` | Generated documentation archive |
+| `build/libs/pixel-painter-2.0.0.jar` | Shaded server plugin, the only plugin artifact |
+| `build/libs/pixel-painter-2.0.0-javadoc.jar` | Generated documentation archive, from `javadocJar` |
 | `build/docs/javadoc/index.html` | Local HTML documentation entry point |
 
 Javadoc validation treats warnings as errors. CI validates documentation separately from the ordinary plugin build. Follow the contribution and security instructions included with your source project before submitting changes.

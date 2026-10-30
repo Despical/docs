@@ -1,13 +1,15 @@
 ---
 title: "Palettes and Dithering"
-description: "Choose among 335 block materials, family palettes, perceptual matching, transparency and Floyd-Steinberg dithering."
+description: "Choose among 305 block materials, family palettes, perceptual matching, transparency and Floyd-Steinberg dithering."
 ---
 
 ## Material Coverage
 
-The bundled `palette.yml` contains **335 different materials**. The count represents material names, not multiple views of one block. Supported entries vary with the running server registry; a material missing from that server is skipped.
+The bundled `palette.yml` contains **305 different materials**. The count represents material names, not multiple views of one block. Supported entries vary with the running server registry; a material missing from that server is skipped.
 
-Families include concrete, wool, terracotta and glazed terracotta; logs, wood, hyphae and stripped variants; ores, masonry, copper, resin and tuff; stable ice, mushrooms, foliage and glass. Persistent leaf data prevents natural decay. Blocks with gravity or block-entity state are rejected.
+Families include concrete, wool, terracotta and glazed terracotta; logs, wood, hyphae and stripped variants; ores, masonry, waxed and oxidized copper, resin and tuff; stable ice, mushrooms and foliage. Persistent leaf data prevents natural decay. Blocks with gravity or block-entity state are rejected.
+
+Pixel Painter never places glass, and it ignores blocks that change on their own after placement: unwaxed copper (which oxidizes), mycelium (which turns into dirt) and nylium (which turns into netherrack). Such entries are skipped even when a custom `palette.yml` lists them, so every painting keeps its colors and can always be restored. Waxed copper and fully oxidized copper are used instead.
 
 ```text
 /pp materials
@@ -38,7 +40,7 @@ Concrete powder is not part of the concrete family. Terracotta without a color p
 
 The matcher converts source sRGB colors and palette colors into Oklab coordinates, then chooses the entry with the smallest squared distance. Repeated source colors are cached during a planning task.
 
-A representative texture average cannot reproduce every visible face exactly. Logs, columns and directional materials may look different from above. Glass and foliage depend on background blocks, light and biome tint. Copper may weather after placement. Use exclusions when those effects do not suit the artwork.
+A representative texture average cannot reproduce every visible face exactly. Logs, columns and directional materials may look different from above. Foliage depends on biome tint and light, and logs and directional blocks look different from above. Use exclusions when those effects do not suit the artwork.
 
 The palette does not install a resource pack or recolor Minecraft textures.
 

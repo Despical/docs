@@ -78,11 +78,19 @@ Before world mutation the service checks:
 
 - No other world operation is active.
 - The captured world still exists and the requesting player has not changed worlds during preparation.
-- The region fits build height, world border, coordinate and chunk limits.
+- The region fits build height, coordinate and chunk limits, and the world border.
 - The undo journal count and recorded-block budgets have enough capacity.
 - No retained journal reserves an overlapping region.
 - No selected opaque position contains a block entity.
 
-World capture runs incrementally, then the complete recovery journal is written before blocks are placed. If a block changes after capture, the painting preserves the conflict rather than overwriting it. Completion reports how many conflicts were skipped.
+World capture runs incrementally in chunk-sized batches, then the complete recovery journal is written before blocks are placed. If a block changes after capture, the painting preserves the conflict rather than overwriting it. Completion reports how many conflicts were skipped.
+
+If the only failed check is the world border, the panel shows **Past World Border** with a **[Paint anyway]** button. Clicking it confirms the same painting for one minute; the confirmation is dropped if you leave the server. The build height and coordinate limits can never be overridden, and undoing such a painting is never blocked by the border.
+
+If the only failed check is the world border, the panel shows **Past World Border** with a **[Paint anyway]** button. Clicking it confirms the same painting for one minute; the confirmation is dropped if you leave the server. The build height and coordinate limits can never be overridden, and undoing such a painting is never blocked by the border.
+
+If the only failed check is the world border, the panel shows **Past World Border** with a **[Paint anyway]** button. Clicking it confirms the same painting for one minute; the confirmation is dropped if you leave the server. The build height and coordinate limits can never be overridden, and undoing such a painting is never blocked by the border.
+
+If the only failed check is the world border, the panel shows **Past World Border** with a **[Paint anyway]** button. Clicking it confirms the same painting for one minute; the confirmation is dropped if you leave the server. The build height and coordinate limits can never be overridden, and undoing such a painting is never blocked by the border.
 
 The plugin does not call a region-protection integration or consume survival materials. Give creation permission only to trusted editors.

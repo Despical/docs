@@ -5,7 +5,7 @@ description: "Complete Pixel Painter command syntax, permissions, aliases, optio
 
 ## Root Commands
 
-`/pp` and `/pixelpainter` share the same command tree. Empty input opens help; `/pp help [page]` lists commands available to the sender's permissions. Rows suggest commands on click and show detailed explanations on hover.
+`/pp` and `/pixelpainter` share the same command tree. Empty input opens help; `/pp help [page]` lists commands available to the sender's permissions. Rows suggest commands on click and show detailed explanations on hover. Tab completion offers images, directions, heights, booleans, palettes and journal IDs, and stops after the last argument of each command. Tab completion offers images, directions, heights, booleans, palettes and journal IDs, and stops after the last argument of each command. Tab completion offers images, directions, heights, booleans, palettes and journal IDs, and stops after the last argument of each command.
 
 Required arguments use angle brackets; optional arguments use square brackets. Do not type those brackets. Image names may omit their extension only when unambiguous.
 
@@ -30,6 +30,12 @@ Required arguments use angle brackets; optional arguments use square brackets. D
 
 `/pp howmanyblocks` is an alias for `preview`. `/pp info` is an alias for `specs`. The old block-count permission name `pp.howmanyblocks` is retained for compatibility.
 
+A painting that crosses the world border is answered with a **[Paint anyway]** button. It runs a hidden `/pp confirm`, which needs `pp.create`, applies to your latest request only and expires after one minute.
+
+A painting that crosses the world border is answered with a **[Paint anyway]** button. It runs a hidden `/pp confirm`, which needs `pp.create`, applies to your latest request only and expires after one minute.
+
+A painting that crosses the world border is answered with a **[Paint anyway]** button. It runs a hidden `/pp confirm`, which needs `pp.create`, applies to your latest request only and expires after one minute.
+
 ---
 
 ## Creation and Estimates
@@ -49,7 +55,7 @@ The second creation and the estimate use the same settings: concrete, dithering 
 | Palette | `all`, `concrete`, `wool`, `terracotta` | `all` |
 | Dithering | `true`, `false` | `false` |
 
-The estimate shows output dimensions, selected/transparent pixel counts and the eight most-used materials. Additional material types are summarized as a remaining count. It does not display a world preview.
+If preparing takes more than three seconds, a "Preparing" message appears in your action bar. If preparing takes more than three seconds, a "Preparing" message appears in your action bar. If preparing takes more than three seconds, a "Preparing" message appears in your action bar. The estimate shows output dimensions, selected/transparent pixel counts and the eight most-used materials. Additional material types are summarized as a remaining count. It does not display a world preview.
 
 ---
 

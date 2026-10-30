@@ -11,13 +11,13 @@ Each job captures its operational settings. A successful reload affects future r
 
 | Stage | Work |
 | --- | --- |
-| Loading region | Acquire one chunk ticket per tick and keep the region loaded |
+| Loading region | Acquire one chunk ticket per tick, load the chunk asynchronously and keep the region loaded |
 | Capturing terrain | Scan selected positions, reject block entities and record differences |
 | Saving journal | Write and flush recovery data before any painting mutation |
 | Painting | Apply bounded changes while checking the captured original state |
 | Restoring | Compare current blocks with recorded painting targets and restore originals |
 
-`performance.blocks-per-tick` limits pixels or entries processed per tick. Chunk generation can still be expensive, so prefer pre-generated regions for large paintings. Image decoding, resizing, matching and journal I/O use background workers; live Bukkit block access remains on the server thread.
+`performance.blocks-per-tick` limits pixels or entries processed per batch. Work is grouped by chunk, and one batch of one chunk runs per tick on the region scheduler that owns that chunk, so the same job works on Paper and Folia. Chunk generation can still be expensive, so prefer pre-generated regions for large paintings. Image decoding, resizing, matching and journal I/O use background workers; live block access stays on the owning thread.
 
 ---
 

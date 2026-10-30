@@ -13,7 +13,7 @@ For a reproducible report, include the plugin/server/Java versions, command and 
 
 ## Plugin Does Not Enable
 
-Check that the server runs Paper 1.21.11+ on Java 25 and that you installed the shaded plugin JAR. A configuration or complete-journal validation failure disables the plugin.
+Check that the server runs Paper, a Paper fork or Folia from 1.21.11 through 26.3 on Java 25 and that you installed the shaded plugin JAR. Spigot and CraftBukkit cannot load it. A configuration or complete-journal validation failure disables the plugin.
 
 For invalid YAML or message syntax, fix the cited file and restart. For a corrupt complete journal, preserve it with a world/data backup before investigating. An old unsupported material allowlist may also reject initialization; see [upgrade behavior](/pixel-painter/configuration/config/#upgrading-from-version-1).
 
@@ -23,7 +23,7 @@ For invalid YAML or message syntax, fix the cited file and restart. For a corrup
 
 Check `plugins/PixelPainter/images/` and `/pp list`. Use a supported extension and a flat name without spaces. If a base name matches more than one extension, include the extension. Unsupported formats, unreadable files and symbolic links are not normal sources.
 
-A filename ending in `.png` does not make arbitrary bytes a valid PNG. Re-export the source as PNG or JPEG when decoding fails.
+A filename ending in `.png` does not make arbitrary bytes a valid PNG. Re-export the source as PNG, JPEG or WebP when decoding fails.
 
 ---
 
@@ -39,9 +39,33 @@ A download can also exceed source byte/pixel limits or time out. Check [download
 
 Requested height must be a positive whole number within `max-height`. Width follows the source ratio, and the entire resized area must fit `max-blocks`. Transparent pixels still count toward output allocation.
 
-For vertical art, the top row must remain below the world's maximum build height. All art must remain inside the current world border and coordinate bounds. Large flat artwork can exceed `max-chunks` even when its vertical height is unchanged.
+For vertical art, the top row must remain below the world's maximum build height. All art must remain inside the coordinate bounds. A painting that only crosses the world border shows a **[Paint anyway]** button; click it within a minute to confirm. Large flat artwork can exceed `max-chunks` even when its vertical height is unchanged.
 
 Reduce the requested height, choose a clearer origin or pre-generate the target chunks before increasing limits.
+
+---
+
+## Painting Stops with a Border Message
+
+The **Past World Border** panel appears when the area crosses the border. Click **[Paint anyway]**, or move the origin inside the border. If the button reports that nothing is pending, a minute has passed; run the create command again. The height limit panel cannot be overridden.
+
+---
+
+## Blocks Left After Undo
+
+Older journals made before 2.0.0 final may contain mycelium, nylium or unwaxed copper, which change on their own after placement. Current builds treat their decayed forms (dirt, netherrack, weathered copper) as the painted block and restore them. Update to the latest 2.0.0 JAR and run `/pp undo` again.
+
+---
+
+## Painting Stops with a Border Message
+
+The **Past World Border** panel appears when the area crosses the border. Click **[Paint anyway]**, or move the origin inside the border. If the button reports that nothing is pending, a minute has passed; run the create command again. The height limit panel cannot be overridden.
+
+---
+
+## Blocks Left After Undo
+
+Older journals made before 2.0.0 final may contain mycelium, nylium or unwaxed copper, which change on their own after placement. Current builds treat their decayed forms (dirt, netherrack, weathered copper) as the painted block and restore them. Update to the latest 2.0.0 JAR and run `/pp undo` again.
 
 ---
 
