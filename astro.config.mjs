@@ -1487,8 +1487,6 @@ export default defineConfig({
                                 label: "Resources",
                                 items: [
                                     {label: "Javadocs", link: "https://javadoc.despical.dev/pixel-painter/", attrs: {target: "_blank", rel: "noopener noreferrer"}},
-                                    {label: "Source Code", link: "https://github.com/Despical/PixelPainter", attrs: {target: "_blank", rel: "noopener noreferrer"}},
-                                    {label: "Issue Tracker", link: "https://github.com/Despical/PixelPainter/issues", attrs: {target: "_blank", rel: "noopener noreferrer"}},
                                 ],
                             },
                         ],
