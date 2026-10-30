@@ -5,7 +5,7 @@ description: "Extend Pixel Painter material colors, understand validation, persi
 
 ## Material Colors
 
-The file is `plugins/PixelPainter/palette.yml`. Its `blocks` section maps Bukkit material names to quoted six-digit sRGB colors. The bundled file contains **335 material entries** derived from representative Minecraft 1.21.11 textures; it contains numeric colors, not redistributed texture images.
+The file is `plugins/PixelPainter/palette.yml`. Its `blocks` section maps Bukkit material names to quoted six-digit sRGB colors. The bundled file contains **305 material entries** derived from representative Minecraft 1.21.11 textures; it contains numeric colors, not redistributed texture images.
 
 ```yaml
 blocks:
@@ -28,7 +28,9 @@ For an available material, the loader requires:
 - No block-entity state.
 - A color matching the quoted `#RRGGBB` format.
 
-Supported transparent cubes include glass, tinted/stained glass, packed ice and blue ice. Leaves receive `persistent=true` in their placement data. Block entities and gravity blocks are rejected before they can be selected.
+Supported transparent cubes include packed ice and blue ice. Leaves receive `persistent=true` in their placement data. Block entities and gravity blocks are rejected before they can be selected.
+
+Glass (`GLASS`, `TINTED_GLASS` and every `*_STAINED_GLASS`) and blocks that change on their own after placement (`MYCELIUM`, `CRIMSON_NYLIUM`, `WARPED_NYLIUM` and unwaxed, non-oxidized copper) are skipped silently when listed, so a custom palette never breaks a reload because of them.
 
 Unknown materials are skipped, allowing a palette file to be shared across supported server versions. An explicit `palette.include` material must still be available after filtering; missing inclusions reject reload instead of silently reducing the requested allowlist.
 
@@ -45,9 +47,8 @@ An empty final palette or malformed available entry rejects loading. Startup fai
 | Leaves | 11 |
 | Glazed terracotta | 16 |
 | Ores | 18 |
-| Stained glass | 16 |
 
-These are selected family counts, not an exhaustive breakdown of all 335 materials. Hyphae, stems, concrete, wool, masonry, copper and other families provide additional entries.
+These are selected family counts, not an exhaustive breakdown of all 305 materials. Hyphae, stems, concrete, wool, masonry, copper and other families provide additional entries.
 
 The command family `terracotta` uses the `_TERRACOTTA` suffix, which includes glazed variants. The family named `all` respects global filters rather than ignoring `config.yml`.
 
@@ -57,7 +58,7 @@ The command family `terracotta` uses the `_TERRACOTTA` suffix, which includes gl
 
 Matching measures Oklab distance between source pixels and these representative colors. It does not sample a live block under the current world's light.
 
-Logs and columns may show different top/end textures. Foliage tint changes with the biome, and glass depends on blocks behind it. Copper can weather naturally. Try a concrete-only palette for a more uniform surface, or exclude materials that do not suit the intended result.
+Logs and columns may show different top/end textures. Foliage tint changes with the biome. Try a concrete-only palette for a more uniform surface, or exclude materials that do not suit the intended result.
 
 The shipped palette avoids unsuitable default candidates such as TNT, gravity blocks and block entities. Extending the file is an administrator action: choose materials whose gameplay behavior you understand, not merely any material that passes structural validation.
 
@@ -71,8 +72,8 @@ Keep color definitions here and filtering in `config.yml`:
 palette:
   include: []
   exclude:
-    - GLASS
-    - TINTED_GLASS
+    - BEDROCK
+    - SPONGE
 ```
 
-This example excludes those two names only; it does not exclude stained-glass variants automatically. Lists use exact names, not wildcard patterns. See [config.yml](/pixel-painter/configuration/config/#global-material-filters) and [palettes and dithering](/pixel-painter/palettes-and-dithering/).
+This example excludes those two names only. Lists use exact names, not wildcard patterns. See [config.yml](/pixel-painter/configuration/config/#global-material-filters) and [palettes and dithering](/pixel-painter/palettes-and-dithering/).

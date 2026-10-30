@@ -34,9 +34,9 @@ performance:
   blocks-per-tick: 500
 ```
 
-The range is **1–5000**. One world job runs at a time. The value bounds scanned pixels or processed block entries per tick; higher values allow more work in a tick, while lower values spread the job across more ticks.
+The range is **1–5000**. One world job runs at a time. The value bounds the pixels or block entries in one chunk batch, and one batch runs per tick; higher values allow more work in a tick, while lower values spread the job across more ticks.
 
-Chunk acquisition loads at most one chunk per tick separately from that loop. Newly generated chunks can still take significant time. The region stays loaded with plugin chunk tickets until the operation ends.
+Chunk acquisition requests at most one chunk per tick and loads it asynchronously. Because work is grouped by chunk, a painting takes at least one tick per chunk it touches. Newly generated chunks can still take significant time. The region stays loaded with plugin chunk tickets until the operation ends.
 
 Two background workers and eight waiting task slots handle image/file operations. These executor sizes are implementation constants rather than config settings.
 

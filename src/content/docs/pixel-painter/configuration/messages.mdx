@@ -1,85 +1,299 @@
 ---
 title: "messages.yml"
-description: "Customize Pixel Painter MiniMessage templates, literal placeholders, operation feedback, chat cards, hover explanations and command help."
+description: "Customize Pixel Painter MiniMessage templates, literal placeholders, chat panels, the preparing action bar, hover explanations and the border confirmation button."
 ---
 
 ## File and Validation
 
-Edit `plugins/PixelPainter/messages.yml`, then run `/pp reload`. The loader merges bundled defaults with configured overrides and validates every configured value as text with strict MiniMessage syntax.
+Edit `plugins/PixelPainter/messages.yml`, then run `/pp reload`. The loader merges the bundled defaults with your overrides and validates every value as text with strict MiniMessage syntax. Missing keys use the bundled template, so you may override single keys.
 
-Missing keys use the bundled template. Unknown string keys can be stored, but have no effect unless a renderer asks for them. A non-text value or malformed template rejects the reload; the previous messages stay active.
-
-Use quoted YAML strings and balanced MiniMessage tags. Put line breaks inside a message with `<newline>`.
+An invalid YAML file, a non-text value or a malformed MiniMessage tag rejects the reload; the previous messages stay active. Use quoted YAML strings and balanced tags. Put line breaks inside a message with `<newline>`.
 
 ---
 
-## Literal and Rich Placeholders
+## Key Layout
 
-Dynamic strings are supplied as unparsed placeholders, so a source name or error value cannot inject new formatting. Rich placeholders contain Adventure components supplied by the renderer.
+| Prefix | Content |
+| --- | --- |
+| `chat.` | Shared layout: separator, bullet prefix, page buttons, help and undo buttons, the **[Paint anyway]** button and their hover text |
+| `commands.` | Panels, feedback and errors for every command |
+| `progress.` | The private boss bar and its stage labels |
+
+A key with a `-title` companion is shown to players as a centered panel: `commands.completed-title` is the heading and `commands.completed` is the body. The console receives the same text without formatting. A key without a title companion, such as `commands.preparing`, is sent as a single line.
+
+`commands.preparing` is shown in the player's **action bar**, and only when the request takes longer than three seconds.
+
+---
+
+## Placeholders
+
+Placeholders are written in braces, for example `{image}`. Dynamic values are inserted as literal text, so a source name or error text cannot inject formatting. Rich placeholders contain Adventure components supplied by the renderer.
 
 | Placeholder | Typical use |
 | --- | --- |
-| `<image>` | Recorded or requested source name |
-| `<id>` | Recovery journal ID |
-| `<blocks>` | Applied, selected or recorded block count, depending on the message |
-| `<conflicts>` | Preserved later edits |
-| `<width>`, `<height>` | Output blocks or original source pixels according to context |
-| `<skipped>` | Transparent output positions in an estimate |
-| `<percent>` | Current stage percentage |
-| `<page>`, `<pages>` | Page navigation |
-| `<material>`, `<count>` | Material rows or additional material-type count |
-| `<usage>` | Command syntax after an argument-count error |
-| `<reason>` | Reload validation failure |
-| `<world>`, `<origin>` | Journal hover details |
-| `<stage>` | Rich configured stage label |
-| `<command>`, `<description>` | Rich help content |
-| `<previous>`, `<next>` | Rich page-navigation controls |
+| `{image}` | Recorded or requested source name |
+| `{id}` | Recovery journal ID |
+| `{blocks}`, `{conflicts}` | Applied or recorded block count and preserved later edits |
+| `{width}`, `{height}` | Output blocks or original source pixels according to context |
+| `{percent}`, `{stage}` | Current stage percentage and its configured label |
+| `{page}`, `{pages}` | Page navigation and the page-range error |
+| `{material}`, `{count}`, `{label}`, `{value}` | Material rows and estimate rows |
+| `{syntax}` | Command syntax after an argument-count error |
+| `{reason}` | Reload validation failure |
+| `{world}`, `{origin}` | Journal hover details |
+| `{command}`, `{description}`, `{section}` | Help rows and headings; `{version}` is also available in `commands.help-subtitle` |
+| `{previous}`, `{next}` | Rich page-navigation controls |
 
-Keep the placeholders used by a template when translating it. Counts are contextual: the completion template reports applied writes, while a history row describes journal entries.
+Keep the placeholders a template needs when you translate it. Counts are contextual: the completion template reports applied writes, while a history row describes journal entries.
 
 ---
 
-## Common Feedback
+## Panels and Descriptions
 
-```yaml
-prefix: '<#8BD5CA>PixelPainter</#8BD5CA><#606A7B>:</#606A7B> '
-preparing: '<#B8C2D4>Preparing your request...</#B8C2D4>'
-reloaded: '<#91B78A>Settings, messages and palette reloaded.</#91B78A>'
-error-permission: '<#FF5555>You do not have permission to use this command.</#FF5555>'
-```
+Help, image, history, material and estimate panels have a `-title` heading and a `-description` line under it. The description line carries the usage hint, for example `commands.images-description` ("Click an image to fill in a create command."). There are no separate footers.
 
-`Messages.send` prepends `prefix`. Panel headings and rows are rendered separately, so changing `prefix` does not rebrand every card automatically.
+Click behavior is attached by code. Help, image and history rows suggest commands; page buttons run navigation commands. Replacing a visible label does not change the command argument contract or grant extra permissions. The renderer displays eight entries per page, and help hover details are wrapped for readability. These layout limits are implementation settings, not YAML keys.
 
-Operation templates include `queued`, `completed`, `cancelled`, `undo-started`, `undone`, `undo-conflicts`, `nothing-changed` and `operation-failed`. Source feedback includes `downloaded`, `deleted` and `specs`.
+`commands.help-desc-<action>` is the short row description and `commands.help-detail-<action>` is the longer explanation shown on hover. Actions include `create`, `preview`, `undo`, `cancel`, `list`, `specs`, `history`, `materials`, `download`, `delete`, `reload` and `help`.
 
 ---
 
-## Panels and Navigation
+## Border Confirmation
 
-Each help, source, history, materials or estimate panel has configured titles, descriptions, rows and footers. The default presentation uses mint accents, slate body text and cyan controls; panel titles are bold.
-
-```yaml
-help-title: '<#DCE3EE><bold>Pixel Painter Commands</bold></#DCE3EE>'
-help-row: '  <#606A7B>•</#606A7B> <command> <#606A7B>·</#606A7B> <#B8C2D4><description></#B8C2D4>'
-help-footer: '<#A8B8C9>Hover for details. Click to fill in a command.</#A8B8C9>'
-```
-
-Click behavior is attached by code. Help, image and history rows suggest commands; page buttons run navigation commands. Replacing the visible label does not change the command argument contract or grant extra permissions.
-
-The renderer displays eight entries per page. Help hover details are wrapped for readability. These layout limits are implementation settings, not YAML keys.
+A painting that crosses the world border is answered by `commands.border-title` and `commands.border`, followed by the `chat.confirm-button` and its `chat.confirm-hover`. The button runs the hidden `/pp confirm` command. `commands.confirm-expired` is shown when nothing is pending or the minute has passed.
 
 ---
 
-## Help Text and Progress
+## Progress
 
-`help-<action>` contains a short row description. `detail-<action>` contains the longer explanation shown on hover. Actions include `create`, `preview`, `undo`, `cancel`, `list`, `specs`, `history`, `materials`, `download`, `delete`, `reload` and `help`.
-
-`progress` combines the current source, stage and percentage. Stage keys are `stage-chunks`, `stage-scan`, `stage-save`, `stage-build` and `stage-undo`. These labels change wording; they do not alter how work is scheduled.
+`progress.bar` combines the current source, stage and percentage. Stage keys are `progress.stage-chunks`, `progress.stage-scan`, `progress.stage-save`, `progress.stage-build` and `progress.stage-undo`. These labels change wording; they do not alter how work is scheduled.
 
 ---
 
 ## Keep Error Meaning Accurate
 
-The error group covers permissions, argument syntax, source validation, dimensions, trusted hosts, worker saturation, world/bounds checks, block entities, overlapping journals and reload failures.
+The error group covers permissions, argument syntax, source validation, dimensions, trusted hosts, worker saturation, world and border checks, block entities, overlapping journals and reload failures.
 
-When customizing messages, preserve the distinction between cancellation and restoration, source-file deletion and painting removal, and rejected reloads versus successful publication. A message should not claim a world/file mutation that the operation did not perform.
+When customizing messages, preserve the distinction between cancellation and restoration, source-file deletion and painting removal, and rejected reloads versus successful publication. A message should not claim a world or file mutation that the operation did not perform.
+
+---
+
+## Bundled Messages
+
+<details>
+<summary>Show the complete default messages.yml</summary>
+
+```yaml
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#                                                                             #
+#                                 PixelPainter                                #
+#                                 by Despical                                 #
+#                                                                             #
+#                   https://docs.despical.dev/pixel-painter                   #
+#                                                                             #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Chat panels, hover text and progress labels use Adventure MiniMessage.
+# Reload with /pp reload after editing. Invalid YAML, non-text values or malformed
+# MiniMessage tags reject the reload and keep the previous message set active.
+# Missing keys fall back to the bundled defaults, so you may override single keys.
+#
+# Placeholders such as {image}, {id} and {blocks} are inserted as literal text.
+# Rich placeholders such as {command}, {previous} and {next} are supplied by the
+# panel renderer. Keep required placeholders when you edit a message.
+# A key with a "-title" companion is shown to players as a centered panel;
+# the console receives the same text without formatting.
+
+# Shared chat layout
+chat.separator: '<#394555><strikethrough>                                                                        </strikethrough></#394555>'
+chat.table-row-prefix: '  <#606A7B>•</#606A7B> '
+chat.button-previous: '[Previous]'
+chat.button-next: '[Next]'
+chat.hover-previous: '<#7ABFCC>Click to open the previous page.</#7ABFCC>'
+chat.hover-next: '<#7ABFCC>Click to open the next page.</#7ABFCC>'
+chat.page-navigation: '{previous}  <#A8B8C9>{page} / {pages}</#A8B8C9>  {next}'
+chat.help-button: '<#7ABFCC>[Command help]</#7ABFCC>'
+chat.help-hover: '<#7ABFCC>Click to fill in /pp help.</#7ABFCC>'
+chat.error-help-button: '<#A96B66>[</#A96B66><#E39A90>Command help</#E39A90><#A96B66>]</#A96B66>'
+chat.error-help-hover: '<#C8847E>Click to fill in <#F2B2A8>/pp help</#F2B2A8>.</#C8847E>'
+chat.confirm-button: '<#7ABFCC>[Paint anyway]</#7ABFCC>'
+chat.confirm-hover: '<#7ABFCC>Click to paint past the world border.</#7ABFCC>'
+chat.undo-button: '<#7ABFCC>[Undo]</#7ABFCC>'
+chat.undo-hover: '<#7ABFCC>Click to fill in /pp undo {id}.</#7ABFCC>'
+
+# Help panel
+commands.help-title: '<#DCE3EE><bold>PixelPainter Commands</bold></#DCE3EE>'
+commands.help-subtitle: '<#A8B8C9>Hover for details. Click a command to fill it in.</#A8B8C9>'
+commands.help-section: '  <#8AADD3>{section}</#8AADD3>'
+commands.help-group-paint: 'Paint & estimate'
+commands.help-group-images: 'Images & history'
+commands.help-group-manage: 'Manage'
+commands.help-group-reference: 'Reference'
+commands.help-command: '<#91D7E3>{command}</#91D7E3>'
+commands.help-row: '  <#606A7B>•</#606A7B> {command} <#606A7B>·</#606A7B> <#B8C2D4>{description}</#B8C2D4>'
+commands.help-hover: '<#91D7E3>{command}</#91D7E3><newline><newline><#B8C2D4>{description}</#B8C2D4><newline><newline><#7ABFCC>Click to fill in this command.</#7ABFCC>'
+commands.help-desc-create: 'Paint an image'
+commands.help-detail-create: 'Start at your current block position, the bottom-left corner. Height is the exact number of block rows. Transparent pixels preserve terrain.'
+commands.help-desc-preview: 'Estimate blocks and materials'
+commands.help-detail-preview: 'Calculate the same dimensions, transparency and color matching as create, without changing the world. This is a material estimate, not an in-world preview. /pp howmanyblocks is an alias.'
+commands.help-desc-undo: 'Restore original terrain'
+commands.help-detail-undo: 'Restore the latest accessible painting, or choose a journal ID or source image. Only blocks still matching the painting are restored. Journals survive server restarts.'
+commands.help-desc-cancel: 'Stop your current operation'
+commands.help-detail-cancel: 'Stop image planning or the running world job. Already placed blocks remain available through persistent undo. Downloads and file deletion must finish before they can be cleared.'
+commands.help-desc-list: 'Browse source images'
+commands.help-detail-list: 'List PNG, JPEG and WebP files in plugins/PixelPainter/images. Click a row to fill in a create command.'
+commands.help-desc-specs: 'Inspect source dimensions'
+commands.help-detail-specs: 'Read the original image width and height in pixels. /pp info is an alias.'
+commands.help-desc-history: 'Browse undo journals'
+commands.help-detail-history: 'Browse your persistent painting records. Administrators with pp.admin can also see records of other players. Click a row to fill in its undo command.'
+commands.help-desc-materials: 'Browse supported blocks'
+commands.help-detail-materials: 'View supported block colors, filtered by all, concrete, wool or terracotta. Edit palette.yml to add more colors.'
+commands.help-desc-download: 'Download a source image'
+commands.help-detail-download: 'Download a PNG, JPEG or WebP from a configured trusted HTTPS host. Files are size-limited and decoded before saving. Existing files are never replaced.'
+commands.help-desc-delete: 'Delete a source image'
+commands.help-detail-delete: 'Remove an image file from the images folder. Existing paintings and their undo journals remain available.'
+commands.help-desc-reload: 'Reload configuration'
+commands.help-detail-reload: 'Validate and reload config.yml, messages.yml and palette.yml together. Invalid input keeps the previous active settings. Existing jobs retain their limits and colors.'
+commands.help-desc-help: 'View command help'
+commands.help-detail-help: 'Show the commands available to you. /pp opens this page too.'
+
+# Source image browser
+commands.images-title: '<#DCE3EE><bold>Source Images</bold></#DCE3EE>'
+commands.images-description: '<#A8B8C9>Click an image to fill in a create command.</#A8B8C9>'
+commands.images-row: '{image}'
+commands.images-hover: '<#7ABFCC>Click to prepare a create command.<newline>Choose a direction and height before sending.</#7ABFCC>'
+
+# Persistent painting history
+commands.history-title: '<#DCE3EE><bold>Painting History</bold></#DCE3EE>'
+commands.history-description: '<#A8B8C9>Click a row to fill in its undo command.</#A8B8C9>'
+commands.history-row: '<#8BD5CA>{id}</#8BD5CA> <#606A7B>·</#606A7B> <#B8C2D4>{image} · {blocks} recorded blocks</#B8C2D4>'
+commands.history-hover: '<#8792A6>World: </#8792A6><#DCE3EE>{world}</#DCE3EE><newline><#8792A6>Origin: </#8792A6><#DCE3EE>{origin}</#DCE3EE><newline><newline><#7ABFCC>Click to fill in /pp undo {id}.</#7ABFCC>'
+
+# Block palette
+commands.materials-title: '<#DCE3EE><bold>Block Palette</bold></#DCE3EE>'
+commands.materials-description: '<#A8B8C9>Palettes: all · concrete · wool · terracotta</#A8B8C9>'
+commands.materials-row: '<#B8C2D4>{material}</#B8C2D4>'
+
+# Painting estimate
+commands.plan-title: '<#DCE3EE><bold>Painting Estimate</bold></#DCE3EE>'
+commands.plan-description: '<#A8B8C9>Estimate only. Use the same settings to create.</#A8B8C9>'
+commands.plan-row: '{label}<#8792A6>:</#8792A6> <#8BD5CA>{value}</#8BD5CA>'
+commands.plan-size: '<#B8C2D4>Size</#B8C2D4>'
+commands.plan-size-value: '{width} × {height} blocks'
+commands.plan-painted: '<#B8C2D4>Painted pixels</#B8C2D4>'
+commands.plan-skipped: '<#B8C2D4>Transparent pixels</#B8C2D4>'
+commands.plan-material-row: '<#B8C2D4>{material}</#B8C2D4> <#606A7B>·</#606A7B> <#DCE3EE>{count}</#DCE3EE>'
+commands.plan-more: '<#8792A6>And {count} more block types.</#8792A6>'
+commands.empty: '  <#8792A6>No entries yet.</#8792A6>'
+
+# Operation feedback
+commands.preparing: '<#A8B8C9>Preparing your request...</#A8B8C9>'
+commands.queued-title: '<#DCE3EE><bold>Painting Queued</bold></#DCE3EE>'
+commands.queued: '<#DCE3EE>{image}</#DCE3EE> <#606A7B>·</#606A7B> <#A8B8C9>Undo ID: </#A8B8C9><#8BD5CA>{id}</#8BD5CA>'
+commands.completed-title: '<#DCE3EE><bold>Painting Complete</bold></#DCE3EE>'
+commands.completed: '<#A8B8C9>{blocks} blocks painted. Conflicts skipped: {conflicts}.</#A8B8C9>'
+commands.cancelled-title: '<#D5B877><bold>Operation Cancelled</bold></#D5B877>'
+commands.cancelled: '<#A8B8C9>Any saved changes can be restored with /pp undo {id}.</#A8B8C9>'
+commands.preparation-cancelled-title: '<#D5B877><bold>Preparation Cancelled</bold></#D5B877>'
+commands.preparation-cancelled: '<#A8B8C9>Image preparation was cancelled.</#A8B8C9>'
+commands.undo-started-title: '<#DCE3EE><bold>Restoring Terrain</bold></#DCE3EE>'
+commands.undo-started: '<#A8B8C9>Restoring terrain for </#A8B8C9><#8BD5CA>{id}</#8BD5CA><#A8B8C9>...</#A8B8C9>'
+commands.undone-title: '<#DCE3EE><bold>Terrain Restored</bold></#DCE3EE>'
+commands.undone: '<#A8B8C9>{blocks} blocks restored.</#A8B8C9>'
+commands.undo-conflicts-title: '<#D5B877><bold>Partially Restored</bold></#D5B877>'
+commands.undo-conflicts: '<#A8B8C9>Restored {blocks} blocks; {conflicts} changed blocks were preserved. The undo journal is retained for retry.</#A8B8C9>'
+commands.nothing-changed-title: '<#DCE3EE><bold>Nothing to Change</bold></#DCE3EE>'
+commands.nothing-changed: '<#A8B8C9>No blocks needed changing. No undo journal was created.</#A8B8C9>'
+commands.operation-failed-title: '<#FF5555><bold>Painting Stopped</bold></#FF5555>'
+commands.operation-failed: '<#D99089>Check the console. Any saved undo journal is retained: {id}.</#D99089>'
+commands.downloaded-title: '<#DCE3EE><bold>Image Downloaded</bold></#DCE3EE>'
+commands.downloaded: '<#A8B8C9>Downloaded {image}.</#A8B8C9>'
+commands.deleted-title: '<#DCE3EE><bold>Image Deleted</bold></#DCE3EE>'
+commands.deleted: '<#DCE3EE>{image}</#DCE3EE> <#606A7B>·</#606A7B> <#A8B8C9>Placed art and undo records are retained.</#A8B8C9>'
+commands.reloaded-title: '<#DCE3EE><bold>Settings Reloaded</bold></#DCE3EE>'
+commands.reloaded: '<#A8B8C9>Settings, messages and palette reloaded.</#A8B8C9>'
+commands.reload-rejected-title: '<#FF5555><bold>Reload Rejected</bold></#FF5555>'
+commands.reload-rejected: '<#D99089>Previous settings remain active. Reason: {reason}</#D99089>'
+commands.specs-title: '<#DCE3EE><bold>Image Specs</bold></#DCE3EE>'
+commands.specs: '<#DCE3EE>{image}</#DCE3EE> <#606A7B>·</#606A7B> <#A8B8C9>{width} × {height} source pixels</#A8B8C9>'
+
+# Progress boss bar
+progress.bar: '<#8BD5CA>{image}</#8BD5CA> <#606A7B>·</#606A7B> {stage} <#B8C2D4>· {percent}%</#B8C2D4>'
+progress.stage-chunks: '<#B8C2D4>Loading region</#B8C2D4>'
+progress.stage-scan: '<#B8C2D4>Capturing terrain</#B8C2D4>'
+progress.stage-save: '<#B8C2D4>Saving undo journal</#B8C2D4>'
+progress.stage-build: '<#B8C2D4>Painting</#B8C2D4>'
+progress.stage-undo: '<#B8C2D4>Restoring terrain</#B8C2D4>'
+
+# Permission, input and operation errors
+commands.permission-denied-title: '<#FF5555><bold>Permission Required</bold></#FF5555>'
+commands.permission-denied: '<#A8B8C9>You do not have permission to use this command.</#A8B8C9>'
+commands.unknown-command-title: '<#FF5555><bold>Unknown Command</bold></#FF5555>'
+commands.unknown-command: '<#D99089>This command was not recognized.</#D99089>'
+commands.invalid-syntax-title: '<#D5B877><bold>Command Usage</bold></#D5B877>'
+commands.invalid-syntax: '<#91D7E3>{syntax}</#91D7E3>'
+commands.player-only-title: '<#D5B877><bold>In-Game Command</bold></#D5B877>'
+commands.player-only: '<#A8B8C9>This command is available in game.</#A8B8C9>'
+commands.invalid-number-title: '<#D5B877><bold>Invalid Number</bold></#D5B877>'
+commands.invalid-number: '<#A8B8C9>Enter a positive whole number.</#A8B8C9>'
+commands.invalid-boolean-title: '<#D5B877><bold>Invalid Option</bold></#D5B877>'
+commands.invalid-boolean: '<#A8B8C9>Use true or false for boolean options.</#A8B8C9>'
+commands.invalid-direction-title: '<#FF5555><bold>Direction Unavailable</bold></#FF5555>'
+commands.invalid-direction: '<#D99089>Choose north, south, east, west, flat_northeast, flat_southeast, flat_northwest or flat_southwest.</#D99089>'
+commands.invalid-palette-title: '<#FF5555><bold>Palette Unavailable</bold></#FF5555>'
+commands.invalid-palette: '<#D99089>Choose all, concrete, wool or terracotta.</#D99089>'
+commands.invalid-filename-title: '<#FF5555><bold>Invalid File Name</bold></#FF5555>'
+commands.invalid-filename: '<#D99089>Use 1-64 letters, digits, underscores or hyphens, optionally ending in .png, .jpg, .jpeg or .webp.</#D99089>'
+commands.missing-image-title: '<#FF5555><bold>Image Not Found</bold></#FF5555>'
+commands.missing-image: '<#D99089>No matching image was found in the images folder.</#D99089>'
+commands.ambiguous-image-title: '<#D5B877><bold>Ambiguous Image</bold></#D5B877>'
+commands.ambiguous-image: '<#A8B8C9>More than one image has this name. Include the file extension.</#A8B8C9>'
+commands.image-exists-title: '<#D5B877><bold>Image Exists</bold></#D5B877>'
+commands.image-exists: '<#A8B8C9>An image with this name already exists.</#A8B8C9>'
+commands.image-format-title: '<#FF5555><bold>Unsupported Image</bold></#FF5555>'
+commands.image-format: '<#D99089>Only readable PNG, JPEG and WebP images are supported.</#D99089>'
+commands.file-size-title: '<#FF5555><bold>File Too Large</bold></#FF5555>'
+commands.file-size: '<#D99089>The source file exceeds limits.max-file-mb.</#D99089>'
+commands.source-size-title: '<#FF5555><bold>Image Too Large</bold></#FF5555>'
+commands.source-size: '<#D99089>The source image exceeds limits.max-source-pixels.</#D99089>'
+commands.size-title: '<#FF5555><bold>Painting Too Large</bold></#FF5555>'
+commands.size: '<#D99089>This painting exceeds the configured height or block limit.</#D99089>'
+commands.download-host-title: '<#FF5555><bold>Download Blocked</bold></#FF5555>'
+commands.download-host: '<#D99089>This URL must use HTTPS and an exact host listed in downloads.allowed-hosts. Local addresses are not allowed.</#D99089>'
+commands.download-failed-title: '<#FF5555><bold>Download Failed</bold></#FF5555>'
+commands.download-failed: '<#D99089>The image download failed, timed out or exceeded the file limit.</#D99089>'
+commands.preparing-busy-title: '<#D5B877><bold>Still Preparing</bold></#D5B877>'
+commands.preparing-busy: '<#A8B8C9>Your previous image request is still being prepared.</#A8B8C9>'
+commands.file-busy-title: '<#D5B877><bold>File Operation Running</bold></#D5B877>'
+commands.file-busy: '<#A8B8C9>Your file operation must finish before another request or cancellation.</#A8B8C9>'
+commands.queue-full-title: '<#D5B877><bold>Worker Queue Full</bold></#D5B877>'
+commands.queue-full: '<#A8B8C9>The image worker queue is full. Try again shortly.</#A8B8C9>'
+commands.busy-title: '<#D5B877><bold>World Busy</bold></#D5B877>'
+commands.busy: '<#A8B8C9>Another world operation is running. Wait for it to finish.</#A8B8C9>'
+commands.no-job-title: '<#DCE3EE><bold>No Active Painting</bold></#DCE3EE>'
+commands.no-job: '<#A8B8C9>You have no active painting to cancel.</#A8B8C9>'
+commands.missing-history-title: '<#FF5555><bold>Journal Not Found</bold></#FF5555>'
+commands.missing-history: '<#D99089>No accessible undo journal matches this ID or image.</#D99089>'
+commands.history-full-title: '<#FF5555><bold>Undo Storage Full</bold></#FF5555>'
+commands.history-full: '<#D99089>Undo older paintings to free capacity.</#D99089>'
+commands.world-title: '<#FF5555><bold>World Unavailable</bold></#FF5555>'
+commands.world: '<#D99089>The painting world is unavailable, or you changed worlds during preparation.</#D99089>'
+commands.bounds-title: '<#FF5555><bold>Out of Bounds</bold></#FF5555>'
+commands.bounds: '<#D99089>This painting would cross the world height limit.</#D99089>'
+commands.border-title: '<#D5B877><bold>Past World Border</bold></#D5B877>'
+commands.border: '<#A8B8C9>This painting would cross the world border.</#A8B8C9>'
+commands.confirm-expired-title: '<#D5B877><bold>Nothing to Confirm</bold></#D5B877>'
+commands.confirm-expired: '<#A8B8C9>There is no pending painting, or it expired. Run the create command again.</#A8B8C9>'
+commands.chunks-title: '<#FF5555><bold>Too Many Chunks</bold></#FF5555>'
+commands.chunks: '<#D99089>This painting exceeds limits.max-chunks. Choose a smaller height.</#D99089>'
+commands.overlap-title: '<#FF5555><bold>Area In Use</bold></#FF5555>'
+commands.overlap: '<#D99089>This area overlaps a saved painting. Undo that painting before reusing the area.</#D99089>'
+commands.block-entity-title: '<#FF5555><bold>Blocked by Block Entity</bold></#FF5555>'
+commands.block-entity: '<#D99089>This area contains a block entity such as a chest or sign. Choose another position. No blocks were placed.</#D99089>'
+commands.invalid-page-title: '<#FF5555><bold>Page Unavailable</bold></#FF5555>'
+commands.invalid-page: '<#D99089>Choose a page from 1 to {pages}.</#D99089>'
+commands.operation-error-title: '<#FF5555><bold>Operation Failed</bold></#FF5555>'
+commands.operation-error: '<#D99089>The operation failed. Check the console for details.</#D99089>'
+```
+
+</details>
