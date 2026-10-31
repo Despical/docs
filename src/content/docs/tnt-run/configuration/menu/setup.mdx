@@ -91,7 +91,28 @@ Available levels:
 | `confirm-arena-record-reset` | `LIME_DYE` | Permanently clears this arena's records. |
 | `cancel-arena-record-reset` | `RED_DYE` | Returns without changing records. |
 
-### 7. Registration & Navigation
+### 7. Arena Music
+
+The **Configure Arena Music** (`MUSIC_DISC_BLOCKS`) item opens the music hub. See [Arena Music](/tnt-run/features/music) for how the phases work.
+
+| Item Key | Material | Purpose |
+|:---------|:---------|:--------|
+| `music-settings` | `MUSIC_DISC_BLOCKS` | Opens the music hub from the main menu. |
+| `music-lobby-selector` | `MUSIC_DISC_CAT` | Opens the song list for the lobby phase. |
+| `music-game-selector` | `MUSIC_DISC_PIGSTEP` | Opens the song list for the in-game phase. |
+| `music-end-selector` | `MUSIC_DISC_13` | Opens the song list for the end-game phase. |
+| `music-game-continue-enabled` | `LIME_DYE` | Lobby → In-Game: an identical song keeps playing. |
+| `music-game-continue-disabled` | `RED_DYE` | Lobby → In-Game: an identical song restarts. |
+| `music-end-continue-enabled` | `LIME_DYE` | In-Game → End-Game: an identical song keeps playing. |
+| `music-end-continue-disabled` | `RED_DYE` | In-Game → End-Game: an identical song restarts. |
+| `song-item` | `MUSIC_DISC_BLOCKS` | A selectable song. Right-click previews it. |
+| `song-no-selection` | `BARRIER` | Makes the phase silent. |
+| `song-nbs-not-installed` | `BARRIER` | Shown when NoteBlockAPI is missing. |
+| `music-border` | `GRAY_STAINED_GLASS_PANE` | Glass frame around the music menus. Set `decoration-only: false` to show its tooltip. |
+| `music-previous-page`, `music-next-page` | `ARROW` | Song list pagination. |
+| `music-go-back` | `ARROW` | Returns to the music hub. |
+
+### 8. Registration & Navigation
 
 | Item Key | Material | Purpose |
 |:---------|:---------|:--------|
