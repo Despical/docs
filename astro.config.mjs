@@ -1775,6 +1775,10 @@ export default defineConfig({
                                         label: "Spectator Mode",
                                         link: "/tnt-run/features/spectator-mode",
                                     },
+                                    {
+                                        label: "Arena Music",
+                                        link: "/tnt-run/features/music",
+                                    },
                                 ],
                             },
                             {

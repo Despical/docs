@@ -1,0 +1,97 @@
+---
+title: Arena Music
+description: Play different NoteBlockAPI songs in the TNT Run lobby, during the round, and after the game ends, and choose whether an identical song continues or restarts.
+---
+
+import { Aside, Steps } from "@astrojs/starlight/components";
+
+**TNT Run** can play `.nbs` songs to everyone inside an arena. Every arena has its own music, and each part of a round can use a different song — or stay silent.
+
+<Aside type="note">
+    Arena music requires the optional [NoteBlockAPI](https://github.com/xxmicloxx/NoteBlockAPI) plugin. Without it TNT Run works normally and the music menu shows a "NoteBlockAPI Not Installed" notice.
+</Aside>
+
+---
+
+## Music Phases
+
+A round is split into three phases. Each phase stores its own song.
+
+| Phase | Plays when | Game states |
+|:--|:--|:--|
+| **Lobby** | Players are waiting for the game to start, including the countdown. | `WAITING`, `STARTING` |
+| **In-Game** | The round is running and the floor is disappearing. | `IN_GAME` |
+| **End-Game** | The round is over and the placements are shown. | `ENDING` |
+
+Spectators hear the music of the current phase as well. A player who joins as a spectator in the middle of a round starts with the in-game song.
+
+---
+
+## Choosing Songs
+
+<Steps>
+
+1. Open the arena editor with `/tntrun edit <arena_id>`.
+2. Click **Configure Arena Music** (`MUSIC_DISC_BLOCKS`).
+3. Pick **Lobby Music**, **In-Game Music**, or **End-Game Music**.
+4. In the song list:
+    * `LEFT CLICK` a song to assign it.
+    * `RIGHT CLICK` a song to preview it.
+    * Choose **No Song** (`BARRIER`) to keep that phase silent.
+
+</Steps>
+
+Previews stop automatically when you close the menu, change the page, or leave the server. Changes are saved with the arena and apply from the next phase change.
+
+---
+
+## Continue or Restart
+
+When two neighboring phases use the **same song**, you can decide what happens at the switch:
+
+| Toggle | Switch | `CONTINUES` | `RESTARTS` |
+|:--|:--|:--|:--|
+| **Lobby → In-Game** (`music-game-continue-*`) | The round begins. | The song keeps playing without interruption. | The song starts again from the beginning. |
+| **In-Game → End-Game** (`music-end-continue-*`) | The round ends. | The song keeps playing without interruption. | The song starts again from the beginning. |
+
+If the songs are different, the previous song always stops and the new one starts from the beginning. The toggles are shown as a green dye (`LIME_DYE`) when the song continues and a red dye (`RED_DYE`) when it restarts. Both default to **continue**.
+
+---
+
+## When Music Stops
+
+* A player leaves the arena, disconnects, or is kicked.
+* The game is force-stopped by an administrator, or the server reloads or shuts down.
+* The ending phase finishes and players are returned to the end location.
+
+---
+
+## Adding Songs
+
+Songs live in `plugins/TNTRun/musics/`. Drop any `.nbs` file into the folder and restart the server; the file name (without `.nbs`) becomes the song name shown in the menu.
+
+TNT Run copies five bundled songs into the folder on the first start only. Songs you delete are never restored, and an arena that references a missing song is reset to **No Song** at startup with a console warning.
+
+On startup the console lists every loaded song with its length:
+
+```text
+Loaded 5 songs (14:32 of music) in 38 ms from the musics folder:
+ - Bangarang [3:35]
+ - Rude [3:07]
+ ...
+```
+
+---
+
+## Customizing the Menu
+
+The music screens use these item keys in [`setup-menu.yml`](/tnt-run/configuration/menu/setup):
+
+| Item Key | Purpose |
+|:--|:--|
+| `music-settings` | Opens the music hub from the main menu. |
+| `music-lobby-selector`, `music-game-selector`, `music-end-selector` | Open the song list for one phase. |
+| `music-game-continue-enabled` / `-disabled`, `music-end-continue-enabled` / `-disabled` | Continue/restart toggles for each state. |
+| `song-item`, `song-no-selection` | Entries in the song list. |
+| `music-border` | Glass frame around the music menus. Set `decoration-only: false` to show its tooltip or change `material`. |
+| `music-previous-page`, `music-next-page`, `music-go-back` | Navigation buttons. |
