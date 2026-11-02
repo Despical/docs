@@ -20,6 +20,7 @@ The command framework is [Aikar's Command Framework](https://github.com/aikar/co
 | [`/ee help [general]`](#help) | `eateverything.help` | ✔ |
 | [`/ee reload`](#reload) | `eateverything.reload` | ✔ |
 | [`/ee item <id> [amount]`](#item) | `eateverything.item` | |
+| [`/ee list`](#list) | `eateverything.list` | ✔ |
 | [`/ee info`](#info) | `eateverything.info` | |
 | [`/ee nutrition [value]`](#nutrition) | `eateverything.nutrition` | |
 | [`/ee saturation [value]`](#saturation) | `eateverything.saturation` | |
@@ -98,6 +99,16 @@ The item is built from the component: it already carries the food and consumable
 /ee item golden-stick
 /ee item healing-soup 16
 ```
+
+---
+
+### List
+
+```bash
+/ee list
+```
+
+Lists the ID of every food defined under `food:` in `food-components.yml`, in alphabetical order, with the total count. Use an ID with [`/ee item`](#item). If no food is configured you are told so. The text lives under `list` in `messages.yml`.
 
 ---
 
