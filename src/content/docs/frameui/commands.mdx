@@ -22,6 +22,8 @@ description: FrameUI command syntax, independent permissions, aliases, console s
 
 `/frameui list` aliases `effects`; `/frameui studio` aliases `editor`. Aliases use the same permission as their primary command. The preview command requires an effect argument; use `/frameui preview random` for an eligible random candidate.
 
+On Spigot, `/frameui preview` and `/frameui play` report the request as blocked because screen effects need Paper or a Paper fork. Every other command works on Spigot, Paper and forks.
+
 ## Play for Another Player
 
 `/frameui play <player> <effect>` opens an effect for an online player, from the console or in game. Use `random` as the effect to pick an eligible candidate. The target's own filters and cooldowns apply, exactly as for `preview`. The player is asked to accept the resource pack first if they do not have it yet.
