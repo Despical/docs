@@ -17,9 +17,9 @@ Read the error above this line in the console. Common causes are an invalid conf
 
 The server stopped while rewards were being delivered. Run `/eggs admin deliveries` and resolve each entry. See [Uncertain Deliveries](/easter-eggs/operations/#uncertain-deliveries).
 
-### A deleted hunt or template came back
+### I deleted bundled hunts, templates, or rewards
 
-Bundled files that are missing are restored on every startup. Set `enabled: false` in a bundled hunt instead of deleting it.
+They stay deleted; the plugin does not recreate them. To bring them back, run `/eggs admin restore [all|hunts|templates|particle|rewards]`. It only writes missing files and never overwrites yours. If a hunt references a reward group that no longer exists, the configuration is rejected until you restore `rewards.yml` or fix the hunt.
 
 ---
 

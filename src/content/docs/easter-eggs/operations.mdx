@@ -38,7 +38,7 @@ A successful reload keeps active attempts, running timers, discoveries, earned c
 On startup the plugin:
 
 1. Refuses to start if `config.yml` belongs to an older version (`config-version` is not `3`). See [Migrating Legacy Data](/easter-eggs/migration/).
-2. Restores any missing bundled file. Existing files are never overwritten.
+2. On a first install, writes every bundled file. On an existing install it only writes missing core files (`config.yml`, `messages.yml`, `menus.yml`, `languages/`); deleted hunts, templates, particle presets, and `rewards.yml` stay deleted. Existing files are never overwritten.
 3. Validates the full configuration and connects to the database.
 4. Pauses timers of offline-paused attempts that were running when the server last stopped.
 5. Moves interrupted reward actions and inbox claims to the uncertain state, and logs how many need inspection.
@@ -99,7 +99,22 @@ The command takes a player UUID. Find it in your server's `usercache.json` or wi
 - Removing an egg deletes the placement but keeps its discoveries, claims, and leaderboard history.
 - A hunt can be deleted only after all of its eggs are removed and no other hunt requires it.
 - If you delete a template or preset file that a placed egg or template still uses, the next reload is rejected and the running configuration keeps it.
-- Bundled files you delete are restored at the next startup; disable a bundled hunt with `enabled: false` instead.
+- Bundled hunts, templates, particle presets, and `rewards.yml` that you delete stay deleted. The plugin also starts when those folders or `rewards.yml` are missing, but a hunt that references a reward group that no longer exists is rejected with a clear error.
+- The console lists how many bundled files are missing at startup. Turn the notice off with [`missing-files-notice`](/easter-eggs/configuration/config/#missing-files-notice).
+
+### Restoring Bundled Files
+
+Run `/eggs admin restore` with no argument to see how many bundled files are missing per group. Choose a group to bring them back:
+
+```text
+/eggs admin restore all
+/eggs admin restore hunts
+/eggs admin restore templates
+/eggs admin restore particle
+/eggs admin restore rewards
+```
+
+Only missing files are written, so your edited files are never overwritten. The configuration is reloaded afterwards.
 
 ---
 

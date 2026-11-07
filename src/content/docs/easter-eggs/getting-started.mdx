@@ -37,7 +37,7 @@ Download the latest plugin JAR from [Hub](https://hub.despical.dev/plugins/easte
 
 </Steps>
 
-The first startup creates the following files. Missing bundled files are restored on every startup; files you have edited or deleted-and-replaced are never overwritten.
+The first startup creates the following files. Later startups only recreate missing core files (`config.yml`, `messages.yml`, `menus.yml`, `languages/`); the bundled hunts, templates, particle presets, and `rewards.yml` are not written again, and your edits are never overwritten.
 
 <FileTree>
 - plugins/EasterEggs/
@@ -59,7 +59,7 @@ The first startup creates the following files. Missing bundled files are restore
 </FileTree>
 
 <Aside type="caution">
-Restoring missing defaults means a bundled hunt, template, or preset you delete comes back after a restart. To retire a bundled hunt, set `enabled: false` in its file instead of deleting it.
+You can delete any bundled hunt, template, particle preset, or reward file you do not need; they stay deleted. To bring them back later, run `/eggs admin restore`. See [Restoring Bundled Files](/easter-eggs/operations/#restoring-bundled-files).
 </Aside>
 
 ---
