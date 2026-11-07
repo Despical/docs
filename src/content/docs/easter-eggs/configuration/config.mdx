@@ -5,7 +5,7 @@ description: Reference for Easter Eggs config.yml, covering language, storage, p
 
 import { Aside } from "@astrojs/starlight/components";
 
-`plugins/EasterEggs/config.yml` holds server-wide settings. Hunts, templates, effects, rewards, menus, and messages each have their own files. Apply changes with `/eggs admin reload`; storage settings and `metrics` need a full restart.
+`plugins/EasterEggs/config.yml` holds server-wide settings. Hunts, templates, effects, rewards, menus, and messages each have their own files. Apply changes with `/eggs admin reload`; storage settings and `metrics` need a full restart, and `missing-files-notice` is read at startup.
 
 ```yaml
 # Bundled configuration generation. Keep this at 3.
@@ -182,6 +182,16 @@ metrics: true
 ```
 
 Sends anonymous usage statistics to [bStats](https://bstats.org/). Restart after changing it.
+
+---
+
+## missing-files-notice
+
+```yaml
+missing-files-notice: true
+```
+
+Logs a console notice at startup when bundled hunts, templates, particle presets, or rewards are missing. The plugin never recreates them automatically; use `/eggs admin restore` to bring them back. Set it to `false` to silence the notice. The default is `true`.
 
 ---
 
