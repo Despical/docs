@@ -10,7 +10,7 @@ description: FrameUI language selection, startup and administrator greetings, gl
 ```yaml
 language: en
 startup-banner: true
-update-notifier: true
+check-for-updates: true
 
 editor:
   public-url: 'https://frameui.despical.dev/'
@@ -57,16 +57,16 @@ Set `startup-banner: false` to log only `Loaded <count> effects.` at startup and
 
 Existing installations can add this key manually; omission defaults to `true`. Only YAML booleans `true` and `false` are accepted, not quoted strings. Reload to change future automatic join greetings; the console banner appears on the next startup. See [Welcome Controls](/frameui/commands/#welcome-controls).
 
-## Update Notifier
+## Update Check
 
 ```yaml
-# Should we check for updates on plugin start/after an admin join?
-update-notifier: true
+# Check for a newer FrameUI release on startup and log a console message if one exists.
+check-for-updates: true
 ```
 
-The default `true` checks the SpigotMC listing once when the plugin starts. When a newer version exists, FrameUI logs the download link in the console and tells operators or players with `frameui.admin` when they join. The request runs in the background, so a slow or unreachable website never delays startup or players.
+The default `true` checks the SpigotMC listing once when the plugin starts. When a newer version exists, FrameUI logs its number and the download link in the console. The request runs in the background, so a slow or unreachable website never delays startup.
 
-Set `update-notifier: false` to skip the check and the join notice. Existing installations can add this key manually; omission defaults to `true`. Reload to change the join notice; the check itself runs only at startup.
+Set `check-for-updates: false` to skip the check. Existing installations can add this key manually; omission defaults to `true`. The check runs only at startup, so a reload does not repeat it.
 
 ## Global Filters
 
