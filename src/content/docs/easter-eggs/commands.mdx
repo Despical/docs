@@ -79,6 +79,7 @@ These also work from the console.
 | `/eggs admin set <hunts\|templates\|particle> <id> <key> <value>` | Change one YAML key; the value is parsed as YAML and validated |
 | `/eggs admin clone <hunts\|templates\|particle> <source> <new-id>` | Copy a definition into a new file; hunt clones do not copy placed eggs |
 | `/eggs admin reload` | Validate and apply every configuration file |
+| `/eggs admin restore [all\|hunts\|templates\|particle\|rewards]` | Bring back deleted bundled files; without an argument, list what is missing |
 
 ```text
 /eggs admin create treasure <gold>Treasure Trail
@@ -87,6 +88,8 @@ These also work from the console.
 /eggs admin clone templates golden-egg silver-egg
 /eggs admin reload
 ```
+
+`restore` only writes bundled files that are missing and never overwrites an existing file. After restoring, it reloads the configuration. See [Restoring Bundled Files](/easter-eggs/operations/#restoring-bundled-files).
 
 `set` writes the file and reloads it. If the resulting configuration is invalid, the file is restored and the error is shown. Changes to `config.yml` storage settings are refused until a restart; see [Operations and Recovery](/easter-eggs/operations/).
 
