@@ -45,6 +45,7 @@ export default defineConfig({
             description: "Official documentation for Despical's Minecraft plugins, developer tools, frameworks, setup guides, API references, and operational notes.",
             social: [
                 {icon: 'external', label: 'frameui:Studio', href: 'https://frameui.despical.dev/'},
+                {icon: 'external', label: 'frameui:Hub', href: 'https://hub.despical.dev/plugins/frameui'},
                 {icon: 'external', label: 'frameui:SpigotMC', href: 'https://www.spigotmc.org/resources/frameui.140228/'},
                 {icon: 'external', label: 'frameui-studio:Open Studio', href: 'https://frameui.despical.dev/'},
                 {icon: 'github', label: 'frameui-studio:GitHub', href: 'https://github.com/Despical/FrameUIStudio'},
