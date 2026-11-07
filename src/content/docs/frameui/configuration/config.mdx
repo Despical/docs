@@ -10,6 +10,7 @@ description: FrameUI language selection, startup and administrator greetings, gl
 ```yaml
 language: en
 startup-banner: true
+update-notifier: true
 
 editor:
   public-url: 'https://frameui.despical.dev/'
@@ -55,6 +56,17 @@ Set `startup-banner: false` to log only `Loaded <count> effects.` at startup and
 `/frameui welcome preview` still opens the panel manually when this setting is false, without changing a player's saved preference. `/frameui welcome show` and `hide` save only that player's automatic-greeting preference; `show` does not override the global setting or open a preview. **Never show again** is available on automatic greetings and saves the same preference as `hide`.
 
 Existing installations can add this key manually; omission defaults to `true`. Only YAML booleans `true` and `false` are accepted, not quoted strings. Reload to change future automatic join greetings; the console banner appears on the next startup. See [Welcome Controls](/frameui/commands/#welcome-controls).
+
+## Update Notifier
+
+```yaml
+# Should we check for updates on plugin start/after an admin join?
+update-notifier: true
+```
+
+The default `true` checks the SpigotMC listing once when the plugin starts. When a newer version exists, FrameUI logs the download link in the console and tells operators or players with `frameui.admin` when they join. The request runs in the background, so a slow or unreachable website never delays startup or players.
+
+Set `update-notifier: false` to skip the check and the join notice. Existing installations can add this key manually; omission defaults to `true`. Reload to change the join notice; the check itself runs only at startup.
 
 ## Global Filters
 
