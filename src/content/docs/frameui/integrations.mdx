@@ -22,7 +22,7 @@ Optional plugins are not required for FrameUI itself. Missing dependencies leave
 | Towny | `towny-town-spawn`, `towny-nation-spawn`, `towny-outpost` |
 | Lands | `lands-spawn` |
 | SuperiorSkyblock2 | `superiorskyblock-create`, `superiorskyblock-home`, `superiorskyblock-visit`, `superiorskyblock-warp` |
-| PlaceholderAPI | Caption placeholder expansion; no playback trigger. |
+| PlaceholderAPI | Caption placeholder expansion and `%frameui_...%` placeholders; no playback trigger. |
 
 EssentialsX spawn events also require EssentialsSpawn. Native travel effects need an actual local teleport. A cancelled teleport, pending request or command with no resulting movement does not start a travel effect. Proxy transfers use a Join binding on the destination server.
 
@@ -61,3 +61,22 @@ The lists add effect candidates for native events. They accept exact effect IDs,
 ## PlaceholderAPI
 
 With PlaceholderAPI installed and enabled in its addon configuration, caption text can use placeholders supplied by installed expansions. The browser preview cannot resolve live Minecraft player data. Check the result in game.
+
+### FrameUI placeholders
+
+When PlaceholderAPI is installed, FrameUI also registers the `frameui` expansion, so other plugins such as scoreboards, tab lists, chat formats and holograms can show FrameUI state. The placeholders are registered automatically and refreshed by `/frameui reload`; no extra command or download is needed.
+
+| Placeholder | Value |
+| --- | --- |
+| `%frameui_active%` | `true` while the player sees an effect. |
+| `%frameui_pending%` | `true` while an effect waits for the resource pack. |
+| `%frameui_effect%` | ID of the player's current effect, or empty. |
+| `%frameui_effect_name%` | Display name of the current effect, or empty. |
+| `%frameui_effect_category%` | Category of the current effect, or empty. |
+| `%frameui_trigger%` | Event that started the current effect, or empty. |
+| `%frameui_active_count%` | Players currently seeing an effect. |
+| `%frameui_pending_count%` | Players waiting for the resource pack. |
+| `%frameui_effects_loaded%` | Number of loaded effects. |
+| `%frameui_version%` | Installed FrameUI version. |
+
+The player placeholders report `false` or an empty value while the player has no active effect. Turning off the integration in `addons/placeholderapi.yml` also removes these placeholders.
