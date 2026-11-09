@@ -1,6 +1,6 @@
 ---
 title: PlaceholderAPI
-description: Easter Eggs PlaceholderAPI placeholders for egg totals, per-hunt player progress, attempt status and time, and leaderboard positions.
+description: Easter Eggs PlaceholderAPI placeholders for egg totals, hunt names, per-hunt player progress, completed hunts, attempt status and time, and leaderboard positions.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
@@ -16,6 +16,7 @@ Replace `<hunt>` with a hunt ID such as `easter`, and `<position>` with a rank s
 | `%eastereggs_total%` | Eggs placed across all hunts |
 | `%eastereggs_total_type%` | Number of configured templates |
 | `%eastereggs_hunt:<hunt>:total%` | Eggs placed in one hunt |
+| `%eastereggs_hunt:<hunt>:name%` | Hunt display name without formatting tags |
 
 ## Player Progress
 
@@ -25,6 +26,8 @@ Available for online players and refreshed every second.
 | --- | --- |
 | `%eastereggs_total_found%` | Eggs found in the current attempts of all hunts |
 | `%eastereggs_total_left%` | Eggs placed minus eggs found, across all hunts |
+| `%eastereggs_total_percent%` | Progress across all hunts from `0` to `100` |
+| `%eastereggs_hunts_completed%` | Hunts the player has completed at least once |
 | `%eastereggs_hunt:<hunt>:found%` | Eggs found in the current attempt |
 | `%eastereggs_hunt:<hunt>:left%` | Eggs still to find |
 | `%eastereggs_hunt:<hunt>:percent%` | Progress from `0` to `100` |
