@@ -21,6 +21,10 @@ The nested `be-immortal-until-phantoms-killed` section can make the boss invulne
 
 This is useful when you want the fight to force target switching instead of allowing players to ignore the support mobs.
 
+### SUMMON waves
+
+The Phantom phase happens once per fight. For more shielded waves, use `SUMMON` abilities with `invulnerable: true`: the boss cannot be hit until every minion of that wave is dead, and overlapping waves add up. Hits during a shield use the same warning message and the `vulnerable-again` reward event fires once the last shield is gone. See the [examples](/warden-party/examples/).
+
 ---
 
 ## Permission and Feedback

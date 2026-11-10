@@ -1,0 +1,47 @@
+---
+title: Abilities & Phases
+description: Special attacks and fight stages for Warden Party bosses, including SUMMON waves that shield the boss.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Available since **Warden Party 2.0.0**. Both sections live in the boss file (`plugins/WardenParty/bosses/<id>.yml`) and can be edited in game with `/wp editor`.
+
+## Abilities
+
+An ability fires either every `every` seconds or once when health drops to `health-below` percent. Unknown types, effects and entities are logged once and skipped, so a typo never breaks the fight.
+
+| Type | Options | Effect |
+| --- | --- | --- |
+| `SHOCKWAVE` | `radius`, `damage` | Knocks players back |
+| `LIGHTNING` | `radius`, `amount`, `damage` | Strikes random players |
+| `POTION` | `radius`, `effect`, `duration`, `amplifier` | Applies a potion effect |
+| `PULL` | `radius`, `damage` | Drags players toward the boss |
+| `SUMMON` | `entity`, `amount`, `invulnerable` | Spawns minions that vanish with the boss |
+| `HEAL` | `amount` | Gives health back |
+| `COMMANDS` | `commands` | Runs console commands |
+
+Every ability also accepts `message` (sent to players in reach), `sound` and `phases: [id]` to limit it to the listed phases.
+
+### Shielding the boss with SUMMON
+
+Set `invulnerable: true` on a `SUMMON` ability and the boss cannot be hit until every minion of that wave is dead. Waves add up, so overlapping waves keep the boss protected until all of them are gone. Hits while shielded show the Phantom phase's immortal message, and the `vulnerable-again` reward event fires once the last shield is gone. See the [examples](/warden-party/examples/).
+
+<Aside type="note">
+The [Phantom phase](/warden-party/features/phantom-phase/) happens once per fight. Use shielded `SUMMON` abilities when you want several waves.
+</Aside>
+
+## Phases
+
+A phase starts when health drops to `health-below` percent and can change the boss. Anything you leave out keeps its current value, and phases start in order from the highest percentage.
+
+| Option | Effect |
+| --- | --- |
+| `name`, `hologram` | New floating texts |
+| `scale`, `speed-amplifier`, `attack-damage` | New numbers |
+| `glow-color` | New glow, `RESET` removes it |
+| `bar-color` | New boss bar color |
+| `message`, `title`, `subtitle` | Shown to everybody |
+| `sound` | Played at the boss |
+| `heal` | Health given back |
+| `commands` | Console commands |

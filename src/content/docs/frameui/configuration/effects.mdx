@@ -12,10 +12,11 @@ Each definition is stored in `plugins/FrameUI/effects/<id>.yml`. Copy a bundled 
 | `id` | Match the filename without `.yml`. Use lowercase letters, digits and single hyphens, up to 48 characters. |
 | `name` | Display name, up to 64 characters. |
 | `template` | One of the 50 stable animation IDs in the [gallery](/frameui/effects/). Presets are compositions built on these templates. |
-| `enabled` | Whether the effect is eligible. |
-| `priority` | Highest eligible value wins. |
-| `weight` | Positive random-selection weight among equal priorities. |
-| `play-on` | Automatic base or native addon events. Empty means manual-only. |
+| `category` | Library group. Bundled IDs resolve to Animations or Presets; custom IDs appear under My Effects. Up to 40 characters. |
+| `enabled` | Whether the effect is eligible; defaults to `true`. |
+| `priority` | Integer from `-10000` to `10000`; highest eligible value wins. Default `0`. |
+| `weight` | Integer from `1` to `10000`; random-selection weight among equal priorities. Default `1`. |
+| `play-on` | List of automatic base or native addon events. Empty means manual-only; `command` is not an automatic binding. |
 
 Connected Studio creates a copy of a bundled definition rather than overwriting it. New custom definitions appear under **My Effects**. Keep the template ID when giving a copy its own ID.
 
@@ -79,6 +80,8 @@ Each timing value is bounded to `1200` ticks. `minimum-ticks` must be at least `
 
 Caption text is plain text. Built-in replacements are `{player}`, `{world}`, `{source-world}` and `{effect}`. Optional PlaceholderAPI support expands installed placeholders in captions. Caption colors are `title-color`, `subtitle-color` and `detail-color` under `captions`.
 
+`captions.enabled` controls the three built-in caption lines. `title` allows up to 64 characters, `subtitle` up to 96, and each detail string up to 128. Each line has its own background and text styles, such as `title-background`, `title-background-opacity` and `title-font-size`; see [Text Style Reference](#text-style-reference). Use quoted six-digit hex colors, including the leading `#`.
+
 `join-detail`, `teleport-detail` and `preview-detail` select the detail text for the corresponding context. The browser preview uses sample values; test dynamic text in Minecraft.
 
 ## Appearance and Images
@@ -109,6 +112,29 @@ The `elements` section controls composition:
 
 Image, text and indicator position, scale and stretch controls live in the same section. Positions use normalized screen coordinates, where `0.5` is the center. Individual caption offsets, scale and stretch can refine the shared text layout. Use [direct editing in Studio](/frameui-studio/design/) to place elements visually.
 
+### Placement and Size
+
+All keys below belong under `elements`. X grows to the right and Y grows downward from the top-left corner. Positions outside `0`–`1` let an element extend beyond the screen.
+
+| Key | Default | Accepted values |
+| --- | --- | --- |
+| `image-x`, `image-y` | `0.5`, `0.5` | `-10` to `10` |
+| `image-scale` | `1` | `0.01` to `10` |
+| `image-stretch-x`, `image-stretch-y` | `1` | `0.01` to `10` |
+| `image-delay` | `0` | `0` to `0.8`; entrance delay as a fraction of the entrance phase |
+| `text-x`, `text-y` | `0.5`, `0.64` | `-10` to `10`; shared caption placement |
+| `text-scale`, `text-stretch-x`, `text-stretch-y` | `1` | `0.01` to `10` |
+| `progress-x`, `progress-y` | `0.5`, `0.8` | `-10` to `10` |
+| `progress-width` | `0.34` | `0.01` to `2` |
+| `progress-scale` | `1` | `0.05` to `20` |
+| `title-offset-x`, `subtitle-offset-x`, `detail-offset-x` | `0` | `-20` to `20`; individual caption offsets |
+| `title-offset-y`, `subtitle-offset-y`, `detail-offset-y` | `0` | `-20` to `20` |
+| `title-scale`, `subtitle-scale`, `detail-scale` | `1` | `0.01` to `10` |
+| `title-stretch-x`, `subtitle-stretch-x`, `detail-stretch-x` | `1` | `0.01` to `10` |
+| `title-stretch-y`, `subtitle-stretch-y`, `detail-stretch-y` | `1` | `0.01` to `10` |
+
+Individual caption transforms apply after the shared text transform. Omitted caption animation keys inherit `text-animation`; legacy `appearance.title-motion: grow` can supply the title entrance when the shared animation is omitted.
+
 Loading indicators are animated decoration; they do not measure the server's actual loading progress.
 
 ### Indicator and Image Backgrounds
@@ -138,6 +164,58 @@ elements:
 ```
 
 Additional image objects use their existing unprefixed `background` and `background-opacity` keys inside `elements.objects.<id>`, together with `opacity` and `priority`. An opaque image covers its background. Indicator backgrounds are not drawn when `progress` is `none`. All new backgrounds default to transparent, preserving saved designs that omit these keys.
+
+## Additional Text and Images
+
+`elements.objects` adds independently positioned objects alongside the main image and three built-in captions. An effect supports **up to 12 extra text objects and 8 extra images**, with at most 20 objects in total. Object IDs begin with a lowercase letter and contain up to 32 lowercase letters, digits or hyphens.
+
+```yaml
+elements:
+  objects:
+    server-label:
+      type: 'text'
+      text: 'Welcome to {world}'
+      color: '#F1F4FA'
+      x: 0.5
+      y: 0.25
+      scale: 1
+      animation: 'fade'
+      font-size: 120
+      align-x: 'center'
+      background: '#081221'
+      background-opacity: 0.6
+      padding: 4
+      priority: 30
+    server-logo:
+      type: 'image'
+      image: 'images/logo.png'
+      x: 0.5
+      y: 0.4
+      scale: 0.5
+      fit: 'contain'
+      opacity: 1
+      animation: 'grow'
+      priority: 10
+```
+
+Place `logo.png` in `plugins/FrameUI/images/` before loading this example. Additional image paths must be flat `images/<name>.png` paths; the filename may contain letters, digits, underscores and hyphens. The main `appearance.image` also permits subdirectories inside `images/`.
+
+| Object key | Default | Accepted values |
+| --- | --- | --- |
+| `type` | `text` | `text` or `image` |
+| `text` | `Text` | Plain text, up to 128 characters; supports the same dynamic replacements as captions |
+| `color` | `#F1F4FA` | Six-digit hex text color |
+| `image` | Empty | Required local PNG path for an image object |
+| `x`, `y` | `0.5` | `-10` to `10` |
+| `scale`, `stretch-x`, `stretch-y` | `1` | `0.01` to `10` |
+| `opacity` | `1` | `0` to `1` |
+| `fit` | `contain` | `cover` or `contain` |
+| `animation` | `fade` | `fade`, `grow`, `slide-up`, `slide-down`, `slide-left`, `slide-right`, `none`; images also allow `wipe` and `page` |
+| `background` | `#081221` | Six-digit hex color |
+| `background-opacity` | `0` | `0` to `1` |
+| `priority` | `20` for text, `10` for images | Integer from `-100` to `100` |
+
+Extra text also accepts every unprefixed key in [Text Style Reference](#text-style-reference). Studio preserves these objects in connected saves and YAML/ZIP exports. Across the loaded library, effects and additional image layers share a limit of 256 shader slots.
 
 ## Player Presentation
 

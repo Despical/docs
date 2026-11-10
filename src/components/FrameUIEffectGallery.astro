@@ -1,5 +1,6 @@
 ---
 import effects from '../data/frameui-effects.json';
+import FrameUIEffectPlayer from './FrameUIEffectPlayer.astro';
 ---
 
 <section class="effect-gallery not-content" aria-label="FrameUI effect previews" data-effect-gallery>
@@ -11,10 +12,7 @@ import effects from '../data/frameui-effects.json';
     <div class="effect-grid">
         {effects.map(effect => (
             <article class="effect-card" data-effect-card data-category={effect.category} data-search={`${effect.name} ${effect.id}`.toLowerCase()}>
-                <video controls playsinline preload="none" poster={`/images/frameui/${effect.id}.webp?v=1080p`} width="1920" height="1080" aria-label={`${effect.name} animated Studio preview`}>
-                    <source src={`/images/frameui/${effect.id}.mp4?v=1080p`} type="video/mp4" />
-                    <a href={`/images/frameui/${effect.id}.mp4?v=1080p`}>Watch {effect.name}</a>
-                </video>
+                <FrameUIEffectPlayer id={effect.id} name={effect.name} seconds={effect.seconds} />
                 <div class="effect-info">
                     <h3>{effect.name}</h3>
                     <p>{effect.category} <span aria-hidden="true">·</span> {effect.seconds.toFixed(1)} seconds</p>
@@ -61,14 +59,14 @@ import effects from '../data/frameui-effects.json';
 </script>
 
 <style>
-    .gallery-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(10rem, .45fr); gap: 1rem; }
-    label { display: grid; gap: .4rem; font-size: .9rem; font-weight: 600; }
-    input, select { width: 100%; min-width: 0; padding: .65rem .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-text); font: inherit; }
+    .gallery-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(10rem, .45fr); align-items: end; gap: 1rem; }
+    .gallery-controls label { display: grid; min-width: 0; gap: .4rem; margin: 0; font-size: .9rem; font-weight: 600; }
+    .gallery-controls input, .gallery-controls select { box-sizing: border-box; width: 100%; min-width: 0; margin: 0; padding: .65rem .8rem; border: 1px solid var(--sl-color-gray-4); border-radius: .4rem; background: var(--sl-color-bg); color: var(--sl-color-text); font: inherit; }
+    .gallery-controls select { appearance: none; padding-inline-end: 2.5rem; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .8rem center; background-size: 1rem; }
     .gallery-count { color: var(--sl-color-gray-2); font-size: .875rem; margin: 1rem 0; }
     .effect-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
-    .effect-card { overflow: hidden; border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; background: var(--sl-color-bg); }
+    .effect-card { border: 1px solid var(--sl-color-gray-5); border-radius: .6rem; background: var(--sl-color-bg); }
     .effect-card[hidden] { display: none; }
-    video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #11171e; }
     .effect-info { padding: .9rem 1rem 1rem; }
     h3 { margin: 0; font-size: 1.1rem; color: var(--sl-color-white); }
     .effect-info p { margin: .25rem 0 .6rem; font-size: .8rem; color: var(--sl-color-gray-2); }

@@ -1,0 +1,139 @@
+---
+title: Examples
+description: Copy-ready snippets for Warden Party boss files, appearance integrations, MythicMobs mobs and custom item rewards.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Copy-ready snippets for common setups. Files marked **partial** are merged into an existing boss file such as `plugins/WardenParty/bosses/default.yml`; never replace the whole file with them.
+
+<Aside type="note">
+Optional integrations are not bundled with Warden Party. Install the required plugin first and see the matching integration page for setup steps.
+</Aside>
+
+## Appearance
+
+### MythicMobs (partial)
+
+Requires the `PartyBoss` mob below. See the [MythicMobs guide](/warden-party/integrations/mythicmobs/).
+
+```yaml
+# Partial boss file: merge the appearance section into an EXISTING complete boss, for example
+# plugins/WardenParty/bosses/default.yml. Do not replace the whole file or delete other options.
+# Requires the PartyBoss MythicMobs definition and its ModelEngine model/pack.
+# https://docs.despical.dev/warden-party/integrations/mythicmobs/
+appearance:
+  type: MYTHICMOBS
+  mythicmobs:
+    mob-id: "PartyBoss"
+    level: 1
+```
+
+### ModelEngine (partial)
+
+Requires ModelEngine 4.x, an imported model and its resource pack. See the [ModelEngine guide](/warden-party/integrations/modelengine/).
+
+```yaml
+# Partial boss file: merge the appearance section into an EXISTING complete boss.
+# Requires ModelEngine 4.x, an imported model and its client resource pack.
+# MythicMobs is optional in this mode; the underlying creature is a Warden.
+# https://docs.despical.dev/warden-party/integrations/modelengine/
+appearance:
+  type: MODELENGINE
+  modelengine:
+    model-id: "forest_guardian"
+    hide-base-entity: true
+    override-hitbox: true
+```
+
+### LibsDisguises (partial)
+
+```yaml
+# Partial boss file: merge the appearance section into an EXISTING complete boss.
+# Requires LibsDisguises. The boss is a Warden that everybody sees as the disguise.
+# Use player-name to look like a player instead of a mob.
+appearance:
+  type: LIBSDISGUISES
+  libsdisguises:
+    disguise: IRON_GOLEM
+    player-name: ""
+```
+
+### BetterModel (partial)
+
+```yaml
+# Partial boss file: merge the appearance section into an EXISTING complete boss.
+# Requires BetterModel and a model that it has loaded (see BetterModel's models folder).
+# The underlying creature is a Warden; its own model is not hidden automatically, so
+# use a model that covers it or make the Warden small with scale.
+appearance:
+  type: BETTERMODEL
+  bettermodel:
+    model-id: "demon_knight"
+```
+
+## MythicMobs mob definition
+
+Save as `plugins/MythicMobs/Mobs/PartyBoss.yml`, then run `/mm reload`.
+
+```yaml
+# Copy to plugins/MythicMobs/Mobs/PartyBoss.yml, then run /mm reload.
+# Replace forest_guardian with an imported ModelEngine model ID.
+# Setup: https://docs.despical.dev/warden-party/integrations/mythicmobs/
+PartyBoss:
+  Type: WARDEN
+  Options:
+    Despawn: false
+    PreventOtherDrops: true
+  Skills:
+    - model{mid=forest_guardian} @self ~onSpawn
+```
+
+## Custom item rewards (partial)
+
+```yaml
+# Partial boss file: custom item plugins in rewards and in the item filter.
+# ItemsAdder, Oraxen and Nexo are optional; names look like <plugin>:<id>.
+# Only items from a plugin that is installed and running can be created or recognized.
+
+# Only players holding this custom item (or a diamond sword) can hit the boss.
+material-whitelist:
+  - DIAMOND_SWORD
+  - "itemsadder:mypack:ruby_sword"
+
+commands:
+  die:
+    '1':
+      chance: 100
+      commands:
+        - "[give] itemsadder:mypack:ruby 2"
+        - "[give] oraxen:ruby_shard 4"
+        - "[give] nexo:ruby_gem 1"
+        - "[give] DIAMOND 3"
+  top-players:
+    most-damage-taken:
+      '1':
+        chance: 100
+        commands:
+          - "[give] nexo:tank_shield 1"
+```
+
+## SUMMON wave that shields the boss (partial)
+
+The boss cannot be hit until every minion of the wave is dead. Several waves add up, so the boss becomes hittable again only after all of them are gone.
+
+```yaml
+abilities:
+  guards-80:
+    type: SUMMON
+    health-below: 80
+    entity: ZOMBIE
+    amount: 4
+    invulnerable: true
+  guards-20:
+    type: SUMMON
+    health-below: 20
+    entity: ZOMBIE
+    amount: 4
+    invulnerable: true
+```

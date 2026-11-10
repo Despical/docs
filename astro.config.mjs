@@ -2144,8 +2144,16 @@ export default defineConfig({
                                         link: "/warden-party/features/phantom-phase",
                                     },
                                     {
+                                        label: "Abilities & Phases",
+                                        link: "/warden-party/features/abilities-and-phases",
+                                    },
+                                    {
                                         label: "Rewards & Commands",
                                         link: "/warden-party/features/rewards-and-commands",
+                                    },
+                                    {
+                                        label: "Examples",
+                                        link: "/warden-party/examples",
                                     },
                                 ],
                             },
