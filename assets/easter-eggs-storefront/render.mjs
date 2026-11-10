@@ -319,16 +319,6 @@ await still('languages', 820, `${panel(820)}${heading('Speak your community’s 
  ${card(64, 676, 1152, 64)}<text x="640" y="716" text-anchor="middle" fill="${C.body}" font-size="17">Your own edits in messages.yml and menus.yml always win. Untouched defaults follow the language.</text>
  ${footer(784, 'CHAT PANELS  •  HELP PAGES  •  MENU TITLES, LABELS AND LORE')}`);
 
-// 13c. Release announcement
-const news = [['6 seasonal hunts', C.spring], ['20 animated eggs', C.summer], ['20 particle effects', C.gold], ['Timed challenges', C.winter],
-    ['Fair rewards', C.spring], ['Leaderboards', C.summer], ['In-game editor', C.gold], ['28 languages', C.winter]];
-await still('announcement', 720, `${panel(720)}${heading('Easter Eggs 3.0.0 is out!', 'A complete rewrite of seasonal treasure hunts for Paper 1.21.11 to 26.3.')}
- ${egg(640, 300, 2.6, C.gold)}<path d="M612 270q28-16 56 0" stroke="#fff4e4" stroke-opacity=".6" stroke-width="5" fill="none"/>
- ${egg(470, 330, 1.6, C.spring)}${egg(810, 330, 1.6, C.winter)}${egg(360, 350, 1.1, C.summer)}${egg(920, 350, 1.1, C.summer)}
- ${news.map(([t, c], i) => chip(104 + (i % 4) * 272, 452 + Math.floor(i / 4) * 56, t, c, 256).markup).join('')}
- ${card(240, 580, 800, 70)}<text x="640" y="623" text-anchor="middle" fill="${C.body}" font-size="19">Upgrading? Old eggs and player progress import with one command.</text>
- ${footer(690, 'HUB  •  SPIGOTMC  •  BUILTBYBIT  •  DOCS.DESPICAL.DEV')}`);
-
 // 14. Developer API
 const kw = '#c39bff', ty = '#7fd6ff', st = '#ffd27a', cm = '#7d7a99', tx = '#e6e1f5';
 const code = [
