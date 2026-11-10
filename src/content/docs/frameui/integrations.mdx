@@ -76,7 +76,11 @@ When PlaceholderAPI is installed, FrameUI also registers the `frameui` expansion
 | `%frameui_trigger%` | Event that started the current effect, or empty. |
 | `%frameui_active_count%` | Players currently seeing an effect. |
 | `%frameui_pending_count%` | Players waiting for the resource pack. |
+| `%frameui_cooldown%` | Seconds left on the shared cooldown, `0` when ready. |
+| `%frameui_cooldown_ticks%` | Ticks left on the shared cooldown. |
+| `%frameui_cooldown_<effect>%` | Seconds left on one effect's cooldown, for example `%frameui_cooldown_fade-in%`. |
+| `%frameui_cooldown_ticks_<effect>%` | Ticks left on one effect's cooldown. |
 | `%frameui_effects_loaded%` | Number of loaded effects. |
 | `%frameui_version%` | Installed FrameUI version. |
 
-The player placeholders report `false` or an empty value while the player has no active effect. Turning off the integration in `addons/placeholderapi.yml` also removes these placeholders.
+The player placeholders report `false` or an empty value while the player has no active effect. Cooldown placeholders report `0` when no cooldown is running. Turning off the integration in `addons/placeholderapi.yml` also removes these placeholders.
